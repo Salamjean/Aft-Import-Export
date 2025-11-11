@@ -245,7 +245,7 @@ class DevisController extends Controller
     private function sendNotificationToAdmins(Devis $devis)
     {
         try {
-            $emails = ['salamjeanlouis3@gmail.com', 'ariellaarchelle@gmail.com'];
+            $emails = ['contact@aft-app.com', 'entrepot.paris@aft-app.com'];
             
             foreach ($emails as $email) {
                 // Créer un utilisateur temporaire pour la notification
