@@ -6,17 +6,28 @@ use App\Http\Controllers\Controller;
 use App\Models\Colis;
 use App\Models\Conteneur;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class AgentChargerController extends Controller
 {
-     /**
+  /**
  * Page pour le chargement des colis dans les conteneurs
  */
 public function charge(Request $request)
 {
-    // Récupérer tous les colis d'abord
+    // Récupérer l'agent connecté et son agence
+    $agent = Auth::guard('agent')->user();
+    
+    if (!$agent || !$agent->agence_id) {
+        // Si l'agent n'a pas d'agence, retourner une collection vide
+        $colis = collect()->paginate(10);
+        return view('agent.scan.charge', compact('colis'));
+    }
+
+    // Récupérer les colis filtrés par l'agence de l'agent
     $allColis = Colis::with(['agenceExpedition', 'agenceDestination', 'conteneur'])
+                    ->where('agence_expedition_id', $agent->agence_id) // Filtrer par l'agence d'expédition
                     ->orderBy('created_at', 'desc')
                     ->get();
 
