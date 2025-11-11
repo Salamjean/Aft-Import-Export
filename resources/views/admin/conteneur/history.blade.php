@@ -512,9 +512,11 @@ function downloadConteneurPDF(id, name) {
     });
 
     // Créer un lien temporaire pour le téléchargement
-    const link = document.createElement('a');
-    link.href = "{{route('conteneur.pdf', $conteneur->id)}}";
-    link.style.display = 'none';
+   @if(isset($conteneur) && $conteneur)
+        const link = document.createElement('a');
+        link.href = "{{ route('conteneur.pdf', $conteneur->id) }}";
+        link.style.display = 'none';
+    @endif
     
     // Ajouter au document et déclencher le clic
     document.body.appendChild(link);
