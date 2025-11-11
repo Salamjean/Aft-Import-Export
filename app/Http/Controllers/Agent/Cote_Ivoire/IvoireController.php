@@ -15,13 +15,14 @@ class IvoireController extends Controller
     {
         try {
             $conteneur = Conteneur::with(['colis' => function($query) {
-                $query->orderBy('created_at', 'desc');
+                $query->whereNotIn('statut', ['valide', 'entrepot'])
+                ->orderBy('created_at', 'desc');
             }])->findOrFail($conteneurId);
 
             return view('ivoire.conteneur.list', compact('conteneur'));
             
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return redirect()->route('conteneur.history')
+            return redirect()->route('ivoire.conteneur.history')
                 ->with('error', 'Conteneur non trouvé.');
         }
     }

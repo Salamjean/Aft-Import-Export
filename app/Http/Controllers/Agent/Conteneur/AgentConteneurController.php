@@ -141,9 +141,15 @@ class AgentConteneurController extends Controller
         if (!$agent || !$agent->agence_id) {
             // Si l'agent n'a pas d'agence, retourner une collection vide
             $conteneurs = collect()->paginate(10);
-            return view('agent.conteneur.index', compact('conteneurs'));
+            return view('agent.conteneur.history', compact('conteneurs'));
         }
-        $conteneurs = Conteneur::withCount('colis')->where('agence_id', $agent->agence_id)->where('statut','fermer')->paginate(10);
+        
+        $conteneurs = Conteneur::withCount(['colis' => function($query) {
+            $query->whereIn('statut', ['charge', 'decharge', 'livre', 'annule']);
+        }])->where('agence_id', $agent->agence_id)
+        ->where('statut','fermer')
+        ->paginate(10);
+        
         return view('agent.conteneur.history', compact('conteneurs'));
     }
 
@@ -151,7 +157,8 @@ class AgentConteneurController extends Controller
     {
         try {
             $conteneur = Conteneur::with(['colis' => function($query) {
-                $query->orderBy('created_at', 'desc');
+                $query->whereNotIn('statut', ['valide', 'entrepot'])
+                ->orderBy('created_at', 'desc');
             }])->findOrFail($conteneurId);
 
             return view('agent.conteneur.colis', compact('conteneur'));
@@ -203,7 +210,8 @@ class AgentConteneurController extends Controller
     {
         try {
             $conteneur = Conteneur::with(['colis' => function($query) {
-                $query->orderBy('created_at', 'desc');
+                $query->whereNotIn('statut', ['valide', 'entrepot'])
+                ->orderBy('created_at', 'desc');
             }])->findOrFail($conteneurId);
 
             // Calculer les statistiques pour chaque colis et regrouper les produits

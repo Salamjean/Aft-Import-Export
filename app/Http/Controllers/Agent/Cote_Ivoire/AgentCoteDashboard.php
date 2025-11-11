@@ -135,7 +135,8 @@ class AgentCoteDashboard extends Controller
     {
         try {
             $conteneur = Conteneur::with(['colis' => function($query) {
-                $query->orderBy('created_at', 'desc');
+                $query->whereNotIn('statut', ['valide', 'entrepot'])
+                ->orderBy('created_at', 'desc');
             }])->findOrFail($conteneurId);
 
             return view('ivoire.conteneur.colis', compact('conteneur'));

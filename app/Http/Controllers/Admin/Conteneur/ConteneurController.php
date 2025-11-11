@@ -117,7 +117,10 @@ class ConteneurController extends Controller
     }
 
     public function history(){
-        $conteneurs = Conteneur::withCount('colis')->where('statut','fermer')->paginate(10);
+        $conteneurs = Conteneur::withCount(['colis' => function($query) {
+            $query->whereIn('statut', ['charge', 'decharge', 'livre', 'annule']);
+        }])->where('statut','fermer')->paginate(10);
+        
         return view('admin.conteneur.history', compact('conteneurs'));
     }
 
@@ -125,7 +128,8 @@ class ConteneurController extends Controller
     {
         try {
             $conteneur = Conteneur::with(['colis' => function($query) {
-                $query->orderBy('created_at', 'desc');
+                $query->whereNotIn('statut', ['valide', 'entrepot'])
+                    ->orderBy('created_at', 'desc');
             }])->findOrFail($conteneurId);
 
             return view('admin.conteneur.colis', compact('conteneur'));
@@ -177,7 +181,8 @@ public function open($id)
     {
         try {
             $conteneur = Conteneur::with(['colis' => function($query) {
-                $query->orderBy('created_at', 'desc');
+                $query->whereNotIn('statut', ['valide', 'entrepot'])
+                ->orderBy('created_at', 'desc');
             }])->findOrFail($conteneurId);
 
             // Calculer les statistiques pour chaque colis et regrouper les produits

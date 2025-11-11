@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Agent\Scan;
 
 use App\Http\Controllers\Controller;
 use App\Models\Colis;
+use App\Models\Conteneur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -170,6 +171,98 @@ public function scanQRCodeCharge(Request $request)
         $colisNumero = $statutsIndividuels[$qrCode]['colis_numero'] ?? '?';
         $uniteNumero = $statutsIndividuels[$qrCode]['unite_numero'] ?? '?';
 
+        // Vérifier si le colis a déjà un conteneur assigné
+        $ancienConteneurId = $colis->conteneur_id;
+        
+        // Si un conteneur_id est fourni dans la requête, on l'utilise
+        // Sinon, on essaie de récupérer le conteneur actuellement ouvert
+        if (!$conteneurId) {
+            // Récupérer le conteneur actuellement ouvert
+            $conteneurOuvert = Conteneur::where('statut', 'ouvert')->first();
+            
+            if ($conteneurOuvert) {
+                $conteneurId = $conteneurOuvert->id;
+                Log::info('Conteneur ouvert trouvé automatiquement', [
+                    'conteneur_id' => $conteneurId,
+                    'conteneur_name' => $conteneurOuvert->name_conteneur
+                ]);
+            } else {
+                // Vérifier si le colis avait un ancien conteneur
+                if ($ancienConteneurId) {
+                    $ancienConteneur = Conteneur::find($ancienConteneurId);
+                    if ($ancienConteneur && $ancienConteneur->statut === 'fermer') {
+                        return response()->json([
+                            'success' => false,
+                            'message' => '❌ Le conteneur précédent (#'.$ancienConteneurId.') est fermé. Veuillez scanner un conteneur ouvert d\'abord.',
+                            'colis' => [
+                                'id' => $colis->id,
+                                'reference_colis' => $colis->reference_colis,
+                                'statut' => $colis->statut,
+                                'ancien_conteneur_id' => $ancienConteneurId
+                            ]
+                        ], 400);
+                    }
+                }
+                
+                return response()->json([
+                    'success' => false,
+                    'message' => '❌ Aucun conteneur ouvert disponible. Veuillez ouvrir un conteneur d\'abord.'
+                ], 400);
+            }
+        }
+
+        // Vérifier que le conteneur est ouvert
+        $conteneur = Conteneur::find($conteneurId);
+        if (!$conteneur) {
+            return response()->json([
+                'success' => false,
+                'message' => '❌ Conteneur non trouvé'
+            ], 404);
+        }
+
+        if ($conteneur->statut !== 'ouvert') {
+            return response()->json([
+                'success' => false,
+                'message' => '❌ Le conteneur #'.$conteneurId.' est fermé. Veuillez utiliser un conteneur ouvert.'
+            ], 400);
+        }
+
+        // Vérifier si l'unité était déjà dans un autre conteneur
+        $conteneurPrecedent = null;
+        if ($ancienConteneurId && $ancienConteneurId != $conteneurId) {
+            $conteneurPrecedent = Conteneur::find($ancienConteneurId);
+            if ($conteneurPrecedent && $conteneurPrecedent->statut === 'fermer') {
+                Log::info('Colis transféré depuis un conteneur fermé', [
+                    'ancien_conteneur_id' => $ancienConteneurId,
+                    'nouveau_conteneur_id' => $conteneurId
+                ]);
+            }
+        }
+
+        if ($ancienStatut === 'charge') {
+            // Si déjà chargé, vérifier si c'est dans le même conteneur
+            $localisationActuelle = $statutsIndividuels[$qrCode]['localisation_actuelle'] ?? '';
+            if (str_contains($localisationActuelle, 'Conteneur #' . $conteneurId)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'ℹ️ Cette unité est déjà chargée dans ce conteneur',
+                    'colis' => [
+                        'id' => $colis->id,
+                        'reference_colis' => $colis->reference_colis,
+                        'statut' => $colis->statut,
+                        'conteneur_id' => $colis->conteneur_id
+                    ],
+                    'unite' => [
+                        'code_colis' => $qrCode,
+                        'statut' => 'charge',
+                        'produit' => $produit,
+                        'position' => "Colis {$colisNumero} - Unité {$uniteNumero}",
+                        'localisation' => $localisationActuelle
+                    ]
+                ]);
+            }
+        }
+
         // Vérifications
         // if ($ancienStatut !== 'entrepot') {
         //     return response()->json([
@@ -189,40 +282,23 @@ public function scanQRCodeCharge(Request $request)
         //     ]);
         // }
 
-        if ($ancienStatut === 'charge') {
-            return response()->json([
-                'success' => false,
-                'message' => 'ℹ️ Cette unité est déjà chargée dans un conteneur',
-                'colis' => [
-                    'id' => $colis->id,
-                    'reference_colis' => $colis->reference_colis,
-                    'statut' => $colis->statut
-                ],
-                'unite' => [
-                    'code_colis' => $qrCode,
-                    'statut' => 'charge',
-                    'produit' => $produit,
-                    'position' => "Colis {$colisNumero} - Unité {$uniteNumero}"
-                ]
-            ]);
-        }
-
         // Mise à jour de l'unité individuelle
         $statutsIndividuels[$qrCode]['statut'] = 'charge';
-        $statutsIndividuels[$qrCode]['localisation_actuelle'] = $conteneurId ? 'Conteneur #' . $conteneurId : 'Conteneur';
+        $statutsIndividuels[$qrCode]['localisation_actuelle'] = 'Conteneur #' . $conteneurId;
         $statutsIndividuels[$qrCode]['date_modification'] = now()->toDateTimeString();
-        $statutsIndividuels[$qrCode]['notes'] = 'Chargé dans le conteneur le ' . now()->format('d/m/Y H:i');
+        $statutsIndividuels[$qrCode]['notes'] = 'Chargé dans le conteneur #' . $conteneurId . ' le ' . now()->format('d/m/Y H:i');
         
         $statutsIndividuels[$qrCode]['historique'][] = [
             'statut' => 'charge',
             'date' => now()->toDateTimeString(),
-            'localisation' => $conteneurId ? 'Conteneur #' . $conteneurId : 'Conteneur',
+            'localisation' => 'Conteneur #' . $conteneurId,
             'agence_id' => null,
-            'notes' => 'Chargé dans le conteneur'
+            'notes' => 'Chargé dans le conteneur #' . $conteneurId
         ];
 
-        // Mise à jour du colis
+        // Mise à jour du colis avec le nouveau conteneur
         $colis->statuts_individuels = json_encode($statutsIndividuels);
+        $colis->conteneur_id = $conteneurId; // Mettre à jour l'ID du conteneur
         
         // ✅ LOGIQUE PRINCIPALE : Vérifier si TOUTES les unités sont chargées
         $tousCharges = $this->verifierTousCharges($statutsIndividuels);
@@ -234,11 +310,13 @@ public function scanQRCodeCharge(Request $request)
             Log::info('🎉 TOUTES LES UNITÉS CHARGÉES - Statut global mis à jour', [
                 'colis_id' => $colis->id,
                 'ancien_statut_global' => $ancienStatutGlobal,
-                'nouveau_statut_global' => 'charge'
+                'nouveau_statut_global' => 'charge',
+                'conteneur_id' => $conteneurId
             ]);
         } else {
             Log::info('Progression du chargement', [
                 'colis_id' => $colis->id,
+                'conteneur_id' => $conteneurId,
                 'unites_chargees' => $this->compterIndividuelsCharges($statutsIndividuels),
                 'total_unites' => count($statutsIndividuels)
             ]);
@@ -253,11 +331,13 @@ public function scanQRCodeCharge(Request $request)
 
         Log::info('Scan charge réussi:', [
             'colis_id' => $colis->id,
+            'conteneur_id' => $conteneurId,
             'unite' => $qrCode,
             'ancien_statut' => $ancienStatut,
             'nouveau_statut' => 'charge',
             'progression' => $unitesChargees . '/' . $totalUnites,
-            'tous_charges' => $tousCharges
+            'tous_charges' => $tousCharges,
+            'ancien_conteneur' => $ancienConteneurId
         ]);
 
         return response()->json([
@@ -269,6 +349,7 @@ public function scanQRCodeCharge(Request $request)
                 'id' => $colis->id,
                 'reference_colis' => $colis->reference_colis,
                 'statut' => $colis->statut,
+                'conteneur_id' => $colis->conteneur_id,
                 'total_unites' => $totalUnites,
                 'unites_chargees' => $unitesChargees,
                 'progression' => $progression,
@@ -280,7 +361,12 @@ public function scanQRCodeCharge(Request $request)
                 'nouveau_statut' => 'charge',
                 'produit' => $produit,
                 'position' => "Colis {$colisNumero} - Unité {$uniteNumero}",
-                'localisation' => $conteneurId ? 'Conteneur #' . $conteneurId : 'Conteneur'
+                'localisation' => 'Conteneur #' . $conteneurId
+            ],
+            'conteneur' => [
+                'id' => $conteneurId,
+                'name' => $conteneur->name_conteneur,
+                'numero' => $conteneur->numero_conteneur
             ]
         ]);
 
