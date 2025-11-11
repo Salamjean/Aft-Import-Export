@@ -307,8 +307,6 @@
                                             <option value="">Sélectionnez un indicatif</option>
                                             <option value="+225">+225 (Côte d'Ivoire)</option>
                                             <option value="+33">+33 (France)</option>
-                                            <option value="+1">+1 (USA/Canada)</option>
-                                            <option value="+44">+44 (UK)</option>
                                             <option value="+86">+86 (Chine)</option>
                                         </select>
                                     </div>
@@ -1017,94 +1015,79 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // Templates pour les différentes méthodes de paiement
     const paiementTemplates = {
-        espece: `
-            <div class="paiement-method-fields">
-                <div class="form-group">
-                    <label class="form-label required">Montant en Espèce</label>
-                    <input type="number" class="modern-input" name="montant_espece" 
-                           step="0.01" min="0" required>
-                    <small class="text-muted">Entrez le montant reçu en espèces</small>
-                </div>
+    espece: `
+        <div class="paiement-method-fields">
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                Le montant payé sera enregistré dans le champ "Montant Payé" ci-dessous.
             </div>
-        `,
-        
-        virement_bancaire: `
-            <div class="paiement-method-fields">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-label required">Nom de la Banque</label>
-                            <input type="text" class="modern-input" name="nom_banque" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-label required">Numéro de Compte</label>
-                            <input type="text" class="modern-input" name="numero_compte" required>
-                        </div>
+        </div>
+    `,
+    
+    virement_bancaire: `
+        <div class="paiement-method-fields">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label required">Nom de la Banque</label>
+                        <input type="text" class="modern-input" name="nom_banque" required>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="form-label required">Montant du Virement</label>
-                    <input type="number" class="modern-input" name="montant_virement" 
-                           step="0.01" min="0" required>
-                </div>
-            </div>
-        `,
-        
-        cheque: `
-            <div class="paiement-method-fields">
-                <div class="form-group">
-                    <label class="form-label required">Montant du Chèque</label>
-                    <input type="number" class="modern-input" name="montant_cheque" 
-                           step="0.01" min="0" required>
-                    <small class="text-muted">Entrez le montant du chèque</small>
-                </div>
-            </div>
-        `,
-        
-        mobile_money: `
-            <div class="paiement-method-fields">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-label required">Opérateur</label>
-                            <select class="modern-select" name="operateur_mobile_money" required>
-                                <option value="">Sélectionnez un opérateur</option>
-                                <option value="WAVE">WAVE</option>
-                                <option value="ORANGE">ORANGE</option>
-                                <option value="MOOV">MOOV</option>
-                                <option value="MTN">MTN</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-label required">Numéro de Téléphone</label>
-                            <input type="text" class="modern-input" name="numero_mobile_money" required>
-                        </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label required">Numéro de Compte</label>
+                        <input type="text" class="modern-input" name="numero_compte" required>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="form-label required">Montant Mobile Money</label>
-                    <input type="number" class="modern-input" name="montant_mobile_money" 
-                           step="0.01" min="0" required>
+            </div>
+        </div>
+    `,
+    
+    cheque: `
+        <div class="paiement-method-fields">
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                Le montant du chèque sera enregistré dans le champ "Montant Payé" ci-dessous.
+            </div>
+        </div>
+    `,
+    
+    mobile_money: `
+        <div class="paiement-method-fields">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label required">Opérateur</label>
+                        <select class="modern-select" name="operateur_mobile_money" required>
+                            <option value="">Sélectionnez un opérateur</option>
+                            <option value="WAVE">WAVE</option>
+                            <option value="ORANGE">ORANGE</option>
+                            <option value="MOOV">MOOV</option>
+                            <option value="MTN">MTN</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label required">Numéro de Téléphone</label>
+                        <input type="text" class="modern-input" name="numero_mobile_money" required>
+                    </div>
                 </div>
             </div>
-        `,
-        
-        livraison: `
-            <div class="paiement-method-fields">
-                <div class="alert alert-info">
-                    <i class="fas fa-info-circle me-2"></i>
-                    Le paiement sera effectué à la livraison du colis.
-                </div>
-                <input type="hidden" name="montant_livraison" value="0">
+        </div>
+    `,
+    
+    livraison: `
+        <div class="paiement-method-fields">
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                Le paiement sera effectué à la livraison du colis. Le montant payé sera de 0.
             </div>
-        `
-    };
+            <input type="hidden" name="montant_livraison" value="0">
+        </div>
+    `
+};
 
     // Gestion des étapes
     function showStep(step) {
@@ -1382,6 +1365,118 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+// Fonction identique à celle de l'admin pour charger les agences - VERSION CORRIGÉE
+function updateAgencesInModals(agences) {
+    console.log('🔄 updateAgencesInModals appelée avec:', agences);
+    
+    const selects = document.querySelectorAll('#addProduitModal select[name="agence_destination_id"], #addServiceModal select[name="agence_destination_id"]');
+    
+    console.log('🔍 Nombre de selects trouvés:', selects.length);
+    
+    selects.forEach((select, index) => {
+        console.log(`🔍 Traitement du select ${index + 1}:`, select);
+        select.innerHTML = '<option value="">Sélectionnez une agence</option>';
+        
+        if (agences && agences.length > 0) {
+            agences.forEach(agence => {
+                const option = document.createElement('option');
+                option.value = agence.id;
+                option.textContent = `${agence.name} (${agence.pays})`;
+                select.appendChild(option);
+            });
+            console.log(`✅ ${agences.length} agences ajoutées au select ${index + 1}`);
+        } else {
+            console.warn('⚠️ Aucune agence à ajouter');
+        }
+    });
+}
+
+// Modifier la fonction updateConteneurEtReference pour inclure le chargement des agences
+async function updateConteneurEtReference() {
+    const modeTransit = document.getElementById('mode_transit').value;
+    
+    if (!modeTransit) {
+        console.log('Mode de transit non sélectionné');
+        return;
+    }
+
+    try {
+        const url = "{{ route('agent.colis.get-conteneur-reference') }}";
+        const params = new URLSearchParams({
+            mode_transit: modeTransit
+        });
+
+        console.log('Envoi requête:', `${url}?${params}`);
+        
+        const response = await fetch(`${url}?${params}`, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        });
+        
+        console.log('Statut réponse:', response.status);
+        
+        if (!response.ok) {
+            throw new Error(`Erreur HTTP: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('Données reçues:', data);
+        
+        if (data.success) {
+            // Mettre à jour le conteneur
+            document.getElementById('current_conteneur_name').textContent = data.conteneur.name_conteneur;
+            document.getElementById('current_conteneur_type').textContent = data.conteneur.type_conteneur;
+            document.getElementById('conteneur_id_input').value = data.conteneur.id;
+            
+            // Mettre à jour la référence
+            document.getElementById('reference_display').textContent = data.reference;
+            document.getElementById('reference_colis_input').value = data.reference;
+            
+            // Mettre à jour l'agence d'expédition
+            if (data.agenceExpedition) {
+                document.getElementById('agence_expedition_display').textContent = data.agenceExpedition.name;
+                document.getElementById('agence_expedition_id').value = data.agenceExpedition.id;
+                document.getElementById('devise_expedition_display').textContent = data.agenceExpedition.devise;
+                document.getElementById('devise').value = data.agenceExpedition.devise;
+                updateAllDevises(data.agenceExpedition.devise);
+            }
+            
+            // CHARGER LES AGENCES DANS LES MODALS (comme dans l'admin)
+            if (data.agencesDestination) {
+                updateAgencesInModals(data.agencesDestination);
+            }
+            
+            console.log('Mise à jour réussie');
+            
+            // Mettre à jour le type de calcul après la mise à jour de la devise
+            setTimeout(() => {
+                updateTypeCalcul();
+                toggleInfoCalculAuto();
+                updatePrixKgDisplay();
+            }, 100);
+            
+            // Mettre à jour le récapitulatif si on est à l'étape 7
+            if (currentStep === 7) {
+                updateRecap();
+            }
+            
+        } else {
+            throw new Error(data.message || 'Erreur inconnue du serveur');
+        }
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour du conteneur:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Erreur',
+            text: 'Impossible de mettre à jour le conteneur et la référence: ' + error.message,
+            confirmButtonColor: '#0e914b'
+        });
+    }
+}
+
     function hideProduitResults(index = null) {
         if (index !== null) {
             const colisItem = document.querySelector(`.colis-item[data-index="${index}"]`);
@@ -1398,6 +1493,114 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    function saveProduit() {
+    const form = document.getElementById('addProduitForm');
+    const formData = new FormData(form);
+
+    // Utiliser exactement la même route que l'admin
+    const url = "{{ route('admin.produits.store') }}";
+
+    fetch(url, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Erreur HTTP: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            const produitInput = document.querySelector(`[name="colis[${currentProduitIndex}][produit]"]`);
+            const prixInput = document.querySelector(`[name="colis[${currentProduitIndex}][prix_unitaire]"]`);
+            
+            produitInput.value = data.produit.designation;
+            prixInput.value = data.produit.prix_unitaire;
+            
+            $('#addProduitModal').modal('hide');
+            form.reset();
+            
+            Swal.fire({
+                icon: 'success',
+                title: 'Produit ajouté',
+                text: 'Le produit a été ajouté avec succès',
+                confirmButtonColor: '#0e914b'
+            });
+
+            updateMontants();
+        } else {
+            throw new Error(data.message || 'Erreur lors de l\'ajout du produit');
+        }
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Erreur',
+            text: 'Une erreur est survenue lors de l\'ajout du produit: ' + error.message,
+            confirmButtonColor: '#0e914b'
+        });
+    });
+}
+
+function saveService() {
+    const form = document.getElementById('addServiceForm');
+    const formData = new FormData(form);
+
+    // Utiliser exactement la même route que l'admin
+    const url = "{{ route('admin.services.store') }}";
+    
+    fetch(url, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Erreur HTTP: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            const serviceSelect = document.getElementById('service_id');
+            const newOption = document.createElement('option');
+            newOption.value = data.service.id;
+            newOption.textContent = `${data.service.designation} - ${data.service.prix_unitaire} XOF`;
+            newOption.setAttribute('data-prix', data.service.prix_unitaire);
+            serviceSelect.appendChild(newOption);
+            
+            $('#addServiceModal').modal('hide');
+            form.reset();
+            
+            Swal.fire({
+                icon: 'success',
+                title: 'Service ajouté',
+                text: 'Le service a été ajouté avec succès',
+                confirmButtonColor: '#0e914b'
+            });
+        } else {
+            throw new Error(data.message || 'Erreur lors de l\'ajout du service');
+        }
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Erreur',
+            text: 'Une erreur est survenue lors de l\'ajout du service: ' + error.message,
+            confirmButtonColor: '#0e914b'
+        });
+    });
+}
     // Recherche de produits
     document.addEventListener('input', function(e) {
         if (e.target.classList.contains('produit-input')) {
@@ -1417,13 +1620,77 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Gestion des boutons d'ajout de produit
-    document.addEventListener('click', function(e) {
-        if (e.target.closest('.add-produit-btn')) {
-            currentProduitIndex = e.target.closest('.add-produit-btn').getAttribute('data-index');
-            $('#addProduitModal').modal('show');
+    // Écouteurs pour recharger les agences à l'ouverture des modals
+document.addEventListener('click', function(e) {
+    if (e.target.closest('.add-produit-btn')) {
+        currentProduitIndex = e.target.closest('.add-produit-btn').getAttribute('data-index');
+        console.log('🔄 Ouverture modal produit, rechargement des agences...');
+        // Recharger les agences depuis l'API
+        loadAgencesFromAPI();
+        $('#addProduitModal').modal('show');
+    }
+});
+
+// Écouteur pour le bouton d'ajout de service
+document.getElementById('add-service-btn').addEventListener('click', function() {
+    console.log('🔄 Ouverture modal service, rechargement des agences...');
+    // Recharger les agences depuis l'API
+    loadAgencesFromAPI();
+    $('#addServiceModal').modal('show');
+});
+
+// Fonction pour charger les agences depuis l'API
+async function loadAgencesFromAPI() {
+    const modeTransit = document.getElementById('mode_transit').value;
+    
+    if (!modeTransit) {
+        console.warn('⚠️ Mode de transit non sélectionné pour charger les agences');
+        return;
+    }
+
+    try {
+        const url = "{{ route('agent.colis.get-conteneur-reference') }}";
+        const params = new URLSearchParams({
+            mode_transit: modeTransit
+        });
+
+        console.log('🔄 Chargement des agences depuis API...');
+        
+        const response = await fetch(`${url}?${params}`, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error(`Erreur HTTP: ${response.status}`);
         }
-    });
+        
+        const data = await response.json();
+        
+        if (data.success && data.agencesDestination) {
+            console.log('✅ Agences chargées:', data.agencesDestination);
+            updateAgencesInModals(data.agencesDestination);
+        } else {
+            console.warn('⚠️ Aucune agence dans la réponse');
+            // Fallback : utiliser l'agence de destination actuelle
+            const agenceDestinationId = document.getElementById('agence_destination_id').value;
+            const agenceDestinationName = document.getElementById('agence_destination').value;
+            if (agenceDestinationId) {
+                const fallbackAgences = [{
+                    id: agenceDestinationId,
+                    name: agenceDestinationName,
+                    pays: 'Côte d\'Ivoire'
+                }];
+                updateAgencesInModals(fallbackAgences);
+            }
+        }
+    } catch (error) {
+        console.error('❌ Erreur lors du chargement des agences:', error);
+    }
+}
 
     // Suppression de colis
     document.addEventListener('click', function(e) {

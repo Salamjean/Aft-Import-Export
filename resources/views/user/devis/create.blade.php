@@ -192,7 +192,7 @@
                                 <h4 class="mb-2 fw-bold" style="color: #0e914b;">Vos Informations</h4>
                                 <p class="text-muted">Vos informations personnelles pré-remplies</p>
                             </div>
-                            
+                            <p style="color: red">Pour les devis de <span style="font-weight: bold">FRANCE</span> les valeurs sont en EURO et pour <span style="font-weight: bold">CHINE</span> en FCFA</p>
                             <div class="info-card" style="
                                 background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
                                 border-radius: 15px;
@@ -371,7 +371,6 @@
                                             <div class="col-md-6">
                                                 <label class="form-label fw-bold" style="color: #0e914b;">
                                                     Valeur <span class="text-danger">*</span>
-                                                    <small class="text-muted" id="devise_indication">(€)</small>
                                                 </label>
                                                 <input type="number" class="form-control" name="colis[0][valeur]" step="0.01" min="0" required
                                                        style="border-radius: 10px; height: 45px; border: 1px solid #e9ecef;">

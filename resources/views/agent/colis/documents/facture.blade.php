@@ -36,7 +36,6 @@
             left: 10%;
             width: 80%;
             height: 50%;
-            background-image: url(assets/img/aft.jpg);
             background-size: cover;
             background-position: center;
             opacity: 0.1;
@@ -186,7 +185,6 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
-            margin: 15px 0;
         }
 
         .declaration-card {
@@ -379,6 +377,122 @@
                 display: none !important;
             }
         }
+
+        .client-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            border: 2px solid black;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .client-header {
+            color: black;
+            padding: 5px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+            border: 1px solid black;
+        }
+
+        .client-cell {
+            padding: 5px;
+            text-align: center;
+            border: 1px solid #ddd;
+            vertical-align: top;
+            background: #f8f9fa;
+            width: 50%;
+        }
+
+        .client-cell p {
+            margin: 8px 0;
+            font-size: 12px;
+        }
+
+        .client-cell strong {
+            color: black;
+            font-size: 13px;
+        }
+
+        .payment-table-column {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid #fea219;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.payment-table-column th,
+.payment-table-column td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e1e1e1;
+    font-size: 12px;
+}
+
+.payment-header-left {
+    background: linear-gradient(135deg, #fea219 0%, #208938 100%);
+    color: white;
+    font-weight: bold;
+    text-align: left;
+    width: 60%;
+}
+
+.payment-header-right {
+    background: linear-gradient(135deg, #fea219 0%, #208938 100%);
+    color: white;
+    font-weight: bold;
+    text-align: right;
+    width: 40%;
+}
+
+.payment-designation {
+    background: #f8f9fa;
+    text-align: left;
+}
+
+.payment-montant {
+    background: white;
+    text-align: right;
+    font-weight: bold;
+    color: #208938;
+}
+
+.payment-total-row {
+    border-top: 2px solid #fea219;
+}
+
+.payment-total-designation {
+    background: #fffaf0;
+    font-weight: bold;
+    text-align: left;
+}
+
+.payment-total-montant {
+    background: #fffaf0;
+    text-align: right;
+    font-weight: bold;
+    color: #208938;
+    font-size: 13px;
+}
+
+.payment-rest-row {
+    border-top: 2px solid #208938;
+}
+
+.payment-rest-designation {
+    background: #f0f8f0;
+    font-weight: bold;
+    text-align: left;
+}
+
+.payment-rest-montant {
+    background: #f0f8f0;
+    text-align: right;
+    font-weight: bold;
+    color: #208938;
+    font-size: 13px;
+}
     </style>
 </head>
 <body>
@@ -407,52 +521,28 @@
 
 
         <!-- Informations client -->
-        <div class="client-details-grid">
-            <div class="client-card">
-                <h3>EXPÉDITEUR</h3>
-                <p><strong>{{ $colis->name_expediteur }} {{ $colis->prenom_expediteur ?? '' }}</strong></p>
-                <p>Téléphone: {{ $colis->contact_expediteur }}</p>
-                <p>Adresse: {{ $colis->adresse_expediteur }}</p>
-            </div>
-            <div class="client-card">
-                <h3>DESTINATAIRE</h3>
-                <p><strong>{{ $colis->name_destinataire }} {{ $colis->prenom_destinataire }}</strong></p>
-                <p>Téléphone: {{ $colis->indicatif }} {{ $colis->contact_destinataire }}</p>
-                <p>Adresse: {{ $colis->adresse_destinataire }}</p>
-            </div>
-        </div>
-
-        {{-- <!-- Informations expédition -->
-        <div class="info-grid">
-            <div class="info-card">
-                <h4>INFORMATIONS EXPÉDITION</h4>
-                <div class="info-item">
-                    <span class="info-label">Service:</span>
-                    <span class="info-value">{{ $colis->service->nom ?? 'Non spécifié' }}</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">Conteneur:</span>
-                    <span class="info-value">{{ $colis->conteneur->numero_conteneur ?? 'Non spécifié' }}</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">Statut:</span>
-                    <span class="info-value">{{ ucfirst($colis->statut) }}</span>
-                </div>
-            </div>
-            <div class="info-card">
-                <h4>AGENCES</h4>
-                <div class="info-item">
-                    <span class="info-label">Expédition:</span>
-                    <span class="info-value">{{ $colis->agenceExpedition->nom ?? 'Non spécifié' }}</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">Destination:</span>
-                    <span class="info-value">{{ $colis->agenceDestination->nom ?? 'Non spécifié' }}</span>
-                </div>
-            </div>
-        </div> --}}
-
-        <!-- Détails des colis -->
+        <table class="client-table">
+            <thead>
+                <tr>
+                    <th class="client-header">EXPÉDITEUR</th>
+                    <th class="client-header">DESTINATAIRE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="client-cell">
+                        <p><strong>{{ $colis->name_expediteur }} {{ $colis->prenom_expediteur ?? '' }}</strong></p>
+                        <p>Téléphone: {{ $colis->contact_expediteur }}</p>
+                        <p>Adresse: {{ $colis->adresse_expediteur }}</p>
+                    </td>
+                    <td class="client-cell">
+                        <p><strong>{{ $colis->name_destinataire }} {{ $colis->prenom_destinataire }}</strong></p>
+                        <p>Téléphone: {{ $colis->indicatif }} {{ $colis->contact_destinataire }}</p>
+                        <p>Adresse: {{ $colis->adresse_destinataire }}</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         <table class="items-table">
             <thead>
                 <tr>
@@ -472,7 +562,7 @@
                             $produit = $detail['produit'] ?? 'AUTRE COLIS USAGE';
                             $quantite = $detail['quantite'] ?? 1;
                             $prixUnitaire = $detail['prix_unitaire'] ?? 20.00;
-                            $montantLigne = $prixUnitaire;
+                            $montantLigne = $quantite * $prixUnitaire;
                             $totalGeneral += $montantLigne;
                         @endphp
                         <tr>
@@ -487,6 +577,19 @@
                         <td colspan="4" style="text-align: center;">Aucun détail de colis disponible</td>
                     </tr>
                 @endif
+
+                <!-- Dans le tableau items-table, après la boucle des colisDetails -->
+                @if(isset($service) && $service && $colis->prix_service)
+                <tr>
+                    <td>{{ strtoupper($service->designation) }} - SERVICE SUPPLÉMENTAIRE</td>
+                    <td class="col-qty">1</td>
+                    <td class="col-price">{{ number_format($colis->prix_service, 0, ',', ' ') }}</td>
+                    <td class="col-montant">{{ number_format($colis->prix_service, 0, ',', ' ') }}</td>
+                </tr>
+                @php
+                    $totalGeneral += $colis->prix_service;
+                @endphp
+                @endif
                 
                 <!-- Ligne totale -->
                 <tr>
@@ -496,33 +599,36 @@
             </tbody>
         </table>
 
-        <div class="barcode"></div>
-
         <!-- Déclaration et Paiement -->
         <div class="summary-grid">
-            {{-- <div class="declaration-card">
-                <h4>DÉCLARATION</h4>
-                <p>Je soussigné(e) <strong>{{ $entreprise['nom'] }}</strong>, déclare avoir établi la présente facture pour les services de transport et logistique rendus.</p>
-                <p><strong>Référence:</strong> {{ $colis->reference_colis }}</p>
-                <p><strong>Service:</strong> {{ $colis->service->nom ?? 'Non spécifié' }}</p>
-                <p><strong>Date:</strong> {{ $dateFacture }}</p>
-            </div> --}}
-            <div class="payment-card">
-                <h4>RÉSUMÉ DES MONTANTS</h4>
-                <div class="payment-item">
-                    <span>Montant total:</span>
-                    <span class="amount">{{ number_format($montantTotal, 0, ',', ' ') }} {{$devise}}</span>
-                </div>
-                <div class="payment-item">
-                    <span>Montant payé:</span>
-                    <span>{{ number_format($montantPaye, 0, ',', ' ') }} {{$devise}}</span>
-                </div>
-                <div class="payment-item payment-total">
-                    <span>Reste à payer:</span>
-                    <span class="amount">{{ number_format($resteAPayer, 0, ',', ' ') }} {{$devise}}</span>
-                </div>
-            </div>
-        </div>
+                    <table class="payment-table-column">
+                    <tr>
+                        <td class="payment-designation">Montant colis</td>
+                        <td class="payment-montant">{{ number_format($montantTotal - ($colis->prix_service ?? 0), 0, ',', ' ') }}</td>
+                    </tr>
+                    
+                    @if(isset($service) && $service && $colis->prix_service)
+                    <tr>
+                        <td class="payment-designation">Service ({{ $service->designation }})</td>
+                        <td class="payment-montant">{{ number_format($colis->prix_service, 0, ',', ' ') }}</td>
+                    </tr>
+                    @endif
+                    
+                    <tr class="payment-total-row">
+                        <td class="payment-total-designation"><strong>TOTAL GÉNÉRAL</strong></td>
+                        <td class="payment-total-montant"><strong>{{ number_format($montantTotal, 0, ',', ' ') }}</strong></td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="payment-designation">Montant payé</td>
+                        <td class="payment-montant">{{ number_format($montantPaye, 0, ',', ' ') }}</td>
+                    </tr>
+                    
+                    <tr class="payment-rest-row">
+                        <td class="payment-rest-designation"><strong>RESTE À PAYER</strong></td>
+                        <td class="payment-rest-montant"><strong>{{ number_format($resteAPayer, 0, ',', ' ') }}</strong></td>
+                    </tr>
+                </table>
 
         <!-- Totaux -->
         {{-- <div class="totals-summary">

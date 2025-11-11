@@ -375,10 +375,11 @@
             $colisPayes = $conteneur->colis->where('statut_paiement', 'totalement_paye')->count();
             $colisPartiels = $conteneur->colis->where('statut_paiement', 'partiellement_paye')->count();
             $colisNonPayes = $conteneur->colis->where('statut_paiement', 'non_paye')->count();
+            $devise = $conteneur->colis->first()->devise ?? '';
         @endphp
         
         Total: {{ $totalColis }} colis | 
-        Montant total: {{ number_format($totalMontant, 0) }} FCFA |
+        Montant total: {{ number_format($totalMontant, 0) }} {{ $devise }} |
         Payés: {{ $colisPayes }} | 
         Partiels: {{ $colisPartiels }} | 
         Non payés: {{ $colisNonPayes }}

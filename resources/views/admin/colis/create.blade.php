@@ -319,8 +319,6 @@
                                             <option value="">Sélectionnez un indicatif</option>
                                             <option value="+225">+225 (Côte d'Ivoire)</option>
                                             <option value="+33">+33 (France)</option>
-                                            <option value="+1">+1 (USA/Canada)</option>
-                                            <option value="+44">+44 (UK)</option>
                                             <option value="+86">+86 (Chine)</option>
                                         </select>
                                     </div>
@@ -1038,94 +1036,79 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // Templates pour les différentes méthodes de paiement
     const paiementTemplates = {
-        espece: `
-            <div class="paiement-method-fields">
-                <div class="form-group">
-                    <label class="form-label required">Montant en Espèce</label>
-                    <input type="number" class="modern-input" name="montant_espece" 
-                           step="0.01" min="0" required>
-                    <small class="text-muted">Entrez le montant reçu en espèces</small>
-                </div>
+    espece: `
+        <div class="paiement-method-fields">
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                Le montant payé sera enregistré dans le champ "Montant Payé" ci-dessous.
             </div>
-        `,
-        
-        virement_bancaire: `
-            <div class="paiement-method-fields">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-label required">Nom de la Banque</label>
-                            <input type="text" class="modern-input" name="nom_banque" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-label required">Numéro de Compte</label>
-                            <input type="text" class="modern-input" name="numero_compte" required>
-                        </div>
+        </div>
+    `,
+    
+    virement_bancaire: `
+        <div class="paiement-method-fields">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label required">Nom de la Banque</label>
+                        <input type="text" class="modern-input" name="nom_banque" required>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="form-label required">Montant du Virement</label>
-                    <input type="number" class="modern-input" name="montant_virement" 
-                           step="0.01" min="0" required>
-                </div>
-            </div>
-        `,
-        
-        cheque: `
-            <div class="paiement-method-fields">
-                <div class="form-group">
-                    <label class="form-label required">Montant du Chèque</label>
-                    <input type="number" class="modern-input" name="montant_cheque" 
-                           step="0.01" min="0" required>
-                    <small class="text-muted">Entrez le montant du chèque</small>
-                </div>
-            </div>
-        `,
-        
-        mobile_money: `
-            <div class="paiement-method-fields">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-label required">Opérateur</label>
-                            <select class="modern-select" name="operateur_mobile_money" required>
-                                <option value="">Sélectionnez un opérateur</option>
-                                <option value="WAVE">WAVE</option>
-                                <option value="ORANGE">ORANGE</option>
-                                <option value="MOOV">MOOV</option>
-                                <option value="MTN">MTN</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-label required">Numéro de Téléphone</label>
-                            <input type="text" class="modern-input" name="numero_mobile_money" required>
-                        </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label required">Numéro de Compte</label>
+                        <input type="text" class="modern-input" name="numero_compte" required>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="form-label required">Montant Mobile Money</label>
-                    <input type="number" class="modern-input" name="montant_mobile_money" 
-                           step="0.01" min="0" required>
+            </div>
+        </div>
+    `,
+    
+    cheque: `
+        <div class="paiement-method-fields">
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                Le montant du chèque sera enregistré dans le champ "Montant Payé" ci-dessous.
+            </div>
+        </div>
+    `,
+    
+    mobile_money: `
+        <div class="paiement-method-fields">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label required">Opérateur</label>
+                        <select class="modern-select" name="operateur_mobile_money" required>
+                            <option value="">Sélectionnez un opérateur</option>
+                            <option value="WAVE">WAVE</option>
+                            <option value="ORANGE">ORANGE</option>
+                            <option value="MOOV">MOOV</option>
+                            <option value="MTN">MTN</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label required">Numéro de Téléphone</label>
+                        <input type="text" class="modern-input" name="numero_mobile_money" required>
+                    </div>
                 </div>
             </div>
-        `,
-        
-        livraison: `
-            <div class="paiement-method-fields">
-                <div class="alert alert-info">
-                    <i class="fas fa-info-circle me-2"></i>
-                    Le paiement sera effectué à la livraison du colis.
-                </div>
-                <input type="hidden" name="montant_livraison" value="0">
+        </div>
+    `,
+    
+    livraison: `
+        <div class="paiement-method-fields">
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                Le paiement sera effectué à la livraison du colis. Le montant payé sera de 0.
             </div>
-        `
-    };
+            <input type="hidden" name="montant_livraison" value="0">
+        </div>
+    `
+};
 
     // Gestion des étapes
     function showStep(step) {

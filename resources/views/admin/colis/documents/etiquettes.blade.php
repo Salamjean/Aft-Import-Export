@@ -252,12 +252,18 @@
                         <tr>
                             <td class="ref-cell">
                                 <div style="text-align:center;margin-bottom:1mm;">
-                                    @if($colisItem->qr_code_path && file_exists(public_path($colisItem->qr_code_path)))
-                                        <img src="{{ public_path($colisItem->qr_code_path) }}" class="qr-code-img-ref" alt="QR Ref">
+                                     @if(!empty($colisItem->qr_code_absolute_path) && file_exists($colisItem->qr_code_absolute_path))
+                                        <img src="{{ $colisItem->qr_code_absolute_path }}" class="qr-code-img-header" alt="QR Code" style="width: 80px; margin-top:30px">
+                                    @else
+                                        <div class="qr-placeholder">
+                                            QR Code<br>Non trouvé<br>
+                                            <small>{{ $colisItem->qr_code_path }}</small>
+                                        </div>
                                     @endif
                                     <span class="reference-number">{{ $colisItem->reference_colis }}</span>
                                 </div>
                                 <div class="type-colis-info">Colis {{ $colisItem->type_colis ?? 'Standard' }}</div>
+                                
                             </td>
                             <td class="count-cell">
                                 <span class="counter-text">{{ $colisItem->numero_etiquette }} / {{ $colisItem->quantite_totale }}</span>
