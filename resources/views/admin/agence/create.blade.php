@@ -154,7 +154,7 @@
                                                         data-agence-adresse="{{ $agenceItem->adresse }}">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
-                                                <form action="{{ route('agence.destroy', $agenceItem->id) }}" 
+                                                {{-- <form action="{{ route('agence.destroy', $agenceItem->id) }}" 
                                                       method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
@@ -164,7 +164,7 @@
                                                             data-agence-name="{{ $agenceItem->name }}">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
-                                                </form>
+                                                </form> --}}
                                             </div>
                                         </td>
                                     </tr>
