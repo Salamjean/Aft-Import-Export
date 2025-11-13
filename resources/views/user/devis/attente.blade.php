@@ -761,7 +761,7 @@ function confirmAnnulation(devisId, devisNumber) {
             // Créer le formulaire pour l'annulation
             const form = document.createElement('form');
             form.method = 'POST';
-            form.action = `/user/devis/${devisId}/annuler`;
+            form.action = `/user/quote/${devisId}/annuler`;
             
             const csrfToken = document.createElement('input');
             csrfToken.type = 'hidden';

@@ -163,7 +163,7 @@ class DevisController extends Controller
         return view('user.devis.create', compact('agences', 'user'));
     }
 
-   public function store(Request $request)
+ public function store(Request $request)
 {
     $validated = $request->validate([
         'mode_transit' => 'required|string|in:Maritime,Aerien',
@@ -193,6 +193,21 @@ class DevisController extends Controller
         $agenceExpedition = Agence::findOrFail($validated['agence_expedition_id']);
         $agenceDestination = Agence::findOrFail($validated['agence_destination_id']);
 
+        // CORRECTION : S'assurer que les données des colis sont bien formatées
+        $colisData = [];
+        foreach ($validated['colis'] as $index => $colis) {
+            $colisData[] = [
+                'quantite' => $colis['quantite'],
+                'produit' => $colis['produit'],
+                'valeur' => $colis['valeur'],
+                'type_colis' => $colis['type_colis'] ?? null,
+                'longueur' => $colis['longueur'] ?? null,
+                'largeur' => $colis['largeur'] ?? null,
+                'hauteur' => $colis['hauteur'] ?? null,
+                'description' => $colis['description'] ?? null,
+            ];
+        }
+
         $devis = Devis::create([
             'mode_transit' => $validated['mode_transit'],
             'agence_expedition_id' => $validated['agence_expedition_id'],
@@ -206,15 +221,18 @@ class DevisController extends Controller
             'contact_client' => $validated['contact_client'],
             'adresse_client' => $validated['adresse_client'],
             'devise' => $agenceDestination->devise,
-            'colis' => $validated['colis'],
+            'colis' => $colisData, // Utiliser les données formatées
             'user_id' => Auth::id(),
             'statut' => 'en_attente',
         ]);
 
         DB::commit();
 
-        // CORRECTION : Ajouter un log pour vérifier l'envoi
-        Log::info('Devis créé avec succès, ID: ' . $devis->id);
+        Log::info('Devis créé avec succès', [
+            'devis_id' => $devis->id,
+            'user_id' => Auth::id(),
+            'colis_count' => count($colisData)
+        ]);
         
         // Envoi des notifications aux administrateurs
         $this->sendNotificationToAdmins($devis);
@@ -228,14 +246,14 @@ class DevisController extends Controller
         Log::error('Erreur création devis', [
             'error' => $e->getMessage(),
             'user_id' => Auth::id(),
-            'input' => $request->except(['colis', 'password']),
-            'trace' => $e->getTraceAsString() // Ajout du stack trace
+            'input' => $request->all(),
+            'trace' => $e->getTraceAsString()
         ]);
         
         return redirect()
             ->back()
             ->withInput()
-            ->with('error', 'Erreur lors de la soumission de votre demande. Veuillez réessayer.');
+            ->with('error', 'Erreur lors de la soumission de votre demande: ' . $e->getMessage());
     }
 }
 
@@ -289,4 +307,6 @@ class DevisController extends Controller
 
     return response()->json($devis);
 }
+
+
 }

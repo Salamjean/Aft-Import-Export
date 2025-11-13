@@ -420,7 +420,7 @@ Route::middleware('auth')->prefix('user')->group(function(){
         Route::get('/confirmed',[DevisController::class,'confirmed'])->name('user.devis.confirmed');
         Route::get('/create',[DevisController::class,'create'])->name('user.devis.create');
         Route::post('/create', [DevisController::class, 'store'])->name('user.devis.store');
-        Route::delete('/devis/{devis}/annuler', [DevisController::class, 'annuler'])->name('user.devis.annuler');
+        Route::delete('/{devis}/annuler', [DevisController::class, 'annuler'])->name('user.devis.annuler');
         Route::get('/{devis}/details', [DevisController::class, 'getDevisDetails'])->name('user.devis.details');
         Route::post('/{devis}/accepter', [DevisController::class, 'accepter'])->name('user.devis.accepter');
     });

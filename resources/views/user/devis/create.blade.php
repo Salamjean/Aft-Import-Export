@@ -730,42 +730,48 @@ document.addEventListener('DOMContentLoaded', function() {
         updateAgences();
     });
 
-    function updateAgences() {
-        const modeTransit = document.getElementById('mode_transit').value;
-        const paysExpedition = document.getElementById('pays_expedition').value;
-        
-        let agenceExpeditionName = '';
-        let agenceDestinationName = '';
+    // Dans la fonction updateAgences(), corrigez l'affectation des IDs
+function updateAgences() {
+    const modeTransit = document.getElementById('mode_transit').value;
+    const paysExpedition = document.getElementById('pays_expedition').value;
+    
+    let agenceExpeditionName = '';
+    let agenceDestinationName = '';
 
-        if (modeTransit === 'Maritime') {
-            agenceExpeditionName = 'DS Translog Carrefour Angré';
-        } else if (modeTransit === 'Aerien') {
-            agenceExpeditionName = 'DS Translog Angré 8ème Tranche';
-        }
-        
-        if (paysExpedition === 'Chine') {
-            agenceDestinationName = 'Agence de Chine';
-        } else if (paysExpedition === 'France') {
-            agenceDestinationName = 'AFT Agence Louis Bleriot';
-        }
-
-        document.getElementById('agence_expedition').value = agenceExpeditionName;
-        document.getElementById('agence_destination').value = agenceDestinationName;
-
-        if (agencesData[agenceExpeditionName]) {
-            currentAgenceExpeditionId = agencesData[agenceExpeditionName].id;
-            const deviseExpedition = agencesData[agenceExpeditionName].devise;
-            document.getElementById('agence_expedition_id').value = currentAgenceExpeditionId;
-            currentDevise = deviseExpedition;
-            updateDeviseIndication();
-        }
-
-        if (agencesData[agenceDestinationName]) {
-            currentAgenceDestinationId = agencesData[agenceDestinationName].id;
-            const deviseDestination = agencesData[agenceDestinationName].devise;
-            document.getElementById('agence_destination_id').value = currentAgenceDestinationId;
-        }
+    if (modeTransit === 'Maritime') {
+        agenceExpeditionName = 'DS Translog Carrefour Angré';
+    } else if (modeTransit === 'Aerien') {
+        agenceExpeditionName = 'DS Translog Angré 8ème Tranche';
     }
+    
+    if (paysExpedition === 'Chine') {
+        agenceDestinationName = 'Agence de Chine';
+    } else if (paysExpedition === 'France') {
+        agenceDestinationName = 'AFT Agence Louis Bleriot';
+    }
+
+    document.getElementById('agence_expedition').value = agenceExpeditionName;
+    document.getElementById('agence_destination').value = agenceDestinationName;
+
+    // CORRECTION : S'assurer que les IDs sont bien définis
+    if (agencesData[agenceExpeditionName]) {
+        currentAgenceExpeditionId = agencesData[agenceExpeditionName].id;
+        document.getElementById('agence_expedition_id').value = currentAgenceExpeditionId;
+    } else {
+        console.error('Agence expédition non trouvée:', agenceExpeditionName);
+    }
+
+    if (agencesData[agenceDestinationName]) {
+        currentAgenceDestinationId = agencesData[agenceDestinationName].id;
+        document.getElementById('agence_destination_id').value = currentAgenceDestinationId;
+        // Mettre à jour la devise
+        currentDevise = agencesData[agenceDestinationName].devise;
+    } else {
+        console.error('Agence destination non trouvée:', agenceDestinationName);
+    }
+    
+    updateDeviseIndication();
+}
 
     function updateDeviseIndication() {
         const deviseSymbols = {
