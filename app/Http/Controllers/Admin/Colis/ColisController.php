@@ -526,261 +526,303 @@ public function edit($id)
         return max($increments) + 1;
     }
 
-    public function update(Request $request, $id)
-    {
-        // Validation des données (identique à la méthode store)
-        $validated = $request->validate([
-            // Transport
-            'conteneur_id' => 'required|exists:conteneurs,id',
-            'reference_colis' => 'required|string',
-            'mode_transit' => 'required|in:Maritime,Aerien',
-            'agence_expedition_id' => 'required|exists:agences,id',
-            'agence_destination_id' => 'required|exists:agences,id',
-            'devise' => 'required|string',
-            
-            // Expéditeur
-            'type_expediteur' => 'required|in:particulier,societe',
-            'name_expediteur' => 'required|string|max:255',
-            'prenom_expediteur' => 'nullable|string|max:255',
-            'email_expediteur' => 'required|email',
-            'contact_expediteur' => 'required|string|max:255',
-            'adresse_expediteur' => 'required|string',
-            
-            // Destinataire
-            'name_destinataire' => 'required|string|max:255',
-            'prenom_destinataire' => 'required|string|max:255',
-            'email_destinataire' => 'required|email',
-            'indicatif' => 'required|string',
-            'contact_destinataire' => 'required|string|max:255',
-            'adresse_destinataire' => 'required|string',
-            
-            // Colis
-            'colis' => 'required|array',
-            'colis.*.quantite' => 'required|integer|min:1',
-            'colis.*.produit' => 'required|string',
-            'colis.*.prix_unitaire' => 'required|numeric|min:0',
-            'colis.*.longueur' => 'nullable|numeric|min:0',
-            'colis.*.largeur' => 'nullable|numeric|min:0',
-            'colis.*.hauteur' => 'nullable|numeric|min:0',
-            'colis.*.poids' => 'nullable|numeric|min:0',
-            'colis.*.description' => 'nullable|string',
-            
-            // Services
-            'service_id' => 'nullable|exists:services,id',
-            'prix_service' => 'nullable|numeric|min:0',
-            
-            // Paiement
-            'methode_paiement' => 'required|in:espece,virement_bancaire,cheque,mobile_money,livraison',
-            'nom_banque' => 'required_if:methode_paiement,virement_bancaire|nullable|string|max:255',
-            'numero_compte' => 'required_if:methode_paiement,virement_bancaire|nullable|string|max:255',
-            'operateur_mobile_money' => 'required_if:methode_paiement,mobile_money|nullable|in:WAVE,ORANGE,MOOV,MTN',
-            'numero_mobile_money' => 'required_if:methode_paiement,mobile_money|nullable|string|max:255',
-            'montant_espece' => 'required_if:methode_paiement,espece|nullable|numeric|min:0',
-            'montant_virement' => 'required_if:methode_paiement,virement_bancaire|nullable|numeric|min:0',
-            'montant_cheque' => 'required_if:methode_paiement,cheque|nullable|numeric|min:0',
-            'montant_mobile_money' => 'required_if:methode_paiement,mobile_money|nullable|numeric|min:0',
-            'montant_livraison' => 'nullable|numeric|min:0',
-            'montant_paye' => 'required|numeric|min:0',
-            'reste_a_payer' => 'nullable|numeric|min:0',
-            'statut_paiement' => 'required|in:non_paye,partiellement_paye,totalement_paye',
-            'notes_paiement' => 'nullable|string',
-        ]);
+public function update(Request $request, $id)
+{
+    // Validation des données (identique à store)
+    $validated = $request->validate([
+        // Transport
+        'conteneur_id' => 'required|exists:conteneurs,id',
+        'reference_colis' => 'required|string',
+        'mode_transit' => 'required|in:Maritime,Aerien',
+        'agence_expedition_id' => 'required|exists:agences,id',
+        'agence_destination_id' => 'required|exists:agences,id',
+        'devise' => 'required|string',
+        
+        // Expéditeur
+        'user_id' => 'nullable|exists:users,id',
+        'type_expediteur' => 'required|in:particulier,societe',
+        'name_expediteur' => 'required|string|max:255',
+        'prenom_expediteur' => 'nullable|string|max:255',
+        'email_expediteur' => 'nullable|email',
+        'contact_expediteur' => 'required|string|max:255',
+        'adresse_expediteur' => 'required|string',
+        
+        // Destinataire
+        'name_destinataire' => 'required|string|max:255',
+        'prenom_destinataire' => 'required|string|max:255',
+        'email_destinataire' => 'nullable|email',
+        'indicatif' => 'required|string',
+        'contact_destinataire' => 'required|string|max:255',
+        'adresse_destinataire' => 'required|string',
+        
+        // Colis
+        'colis' => 'required|array',
+        'colis.*.quantite' => 'required|integer|min:1',
+        'colis.*.produit' => 'required|string',
+        'colis.*.prix_unitaire' => 'required|numeric|min:0',
+        'colis.*.longueur' => 'nullable|numeric|min:0',
+        'colis.*.largeur' => 'nullable|numeric|min:0',
+        'colis.*.hauteur' => 'nullable|numeric|min:0',
+        'colis.*.poids' => 'nullable|numeric|min:0',
+        'colis.*.description' => 'nullable|string',
+        'colis.*.type_colis' => 'required|in:Standard,Fragile',
+        
+        // Services
+        'service_id' => 'nullable|exists:services,id',
+        'prix_service' => 'nullable|numeric|min:0',
+        
+        // Paiement
+        'methode_paiement' => 'required|in:espece,virement_bancaire,cheque,mobile_money,livraison',
+        'nom_banque' => 'required_if:methode_paiement,virement_bancaire|nullable|string|max:255',
+        'numero_compte' => 'required_if:methode_paiement,virement_bancaire|nullable|string|max:255',
+        'operateur_mobile_money' => 'required_if:methode_paiement,mobile_money|nullable|in:WAVE,ORANGE,MOOV,MTN',
+        'numero_mobile_money' => 'required_if:methode_paiement,mobile_money|nullable|string|max:255',
+        'montant_paye' => 'required|numeric|min:0',
+        'reste_a_payer' => 'nullable|numeric|min:0',
+        'statut_paiement' => 'required|in:non_paye,partiellement_paye,totalement_paye',
+        'notes_paiement' => 'nullable|string',
+    ]);
 
-        try {
-            // Récupérer le colis existant
-            $colis = Colis::findOrFail($id);
-            
-            // Vérifier si la référence a changé
-            $referenceFinale = $request->reference_colis;
-            $referenceModifiee = false;
-            
-            if ($colis->reference_colis !== $request->reference_colis) {
-                $referenceFinale = $this->verifierEtGenererReference($request->reference_colis, $request->mode_transit, $request->agence_expedition_id);
-                if ($referenceFinale !== $colis->reference_colis) {
-                    $referenceModifiee = true;
-                }
-            }
+    try {
+        // Récupérer le colis existant
+        $colis = Colis::findOrFail($id);
+        
+        // Calcul des montants
+        $montantColis = $this->calculerMontantColis($request->colis, $request->mode_transit);
+        $montantTotal = $montantColis + ($request->prix_service ?? 0);
+        
+        // Calculer la quantité totale
+        $quantiteTotale = $this->calculerQuantiteTotale($request->colis);
+        
+        // Récupérer les noms des agences
+        $agenceExpedition = Agence::find($request->agence_expedition_id);
+        $agenceDestination = Agence::find($request->agence_destination_id);
 
-            // Calcul des montants
-            $montantColis = $this->calculerMontantColis($request->colis, $request->mode_transit);
-            $montantTotal = $montantColis + ($request->prix_service ?? 0);
-            
-            // Calculer la quantité totale
-            $quantiteTotale = $this->calculerQuantiteTotale($request->colis);
-            
-            // Récupérer les noms des agences
-            $agenceExpedition = Agence::find($request->agence_expedition_id);
-            $agenceDestination = Agence::find($request->agence_destination_id);
+        // Générer le code_colis principal
+        $codeColisPrincipal = $this->genererCodeColis($quantiteTotale, $colis->reference_colis);
+        
+        // Récupérer les codes colis existants pour conserver les statuts
+        $anciensCodesColis = json_decode($colis->code_colis, true) ?? [];
+        $anciensStatutsIndividuels = json_decode($colis->statuts_individuels, true) ?? [];
 
-            // Mettre à jour les codes colis individuels si la quantité a changé
-            $codesColis = json_decode($colis->code_colis, true);
-            $statutsIndividuels = json_decode($colis->statuts_individuels, true);
-            
-            // Vérifier si les quantités ont changé
-            $quantiteTotaleExistante = 0;
-            foreach ($codesColis['individuels'] ?? [] as $codeIndividuel) {
-                $quantiteTotaleExistante++;
-            }
-            
-            if ($quantiteTotale !== $quantiteTotaleExistante) {
-                // Regénérer les codes colis individuels
-                $codesColis = [
-                    'principal' => $codesColis['principal'],
-                    'individuels' => []
-                ];
+        // Créer un tableau pour stocker tous les codes_colis et leurs statuts
+        $codesColis = [
+            'principal' => $codeColisPrincipal,
+            'individuels' => []
+        ];
+
+        // Remplir les tableaux codesColis et statutsIndividuels
+        $statutsIndividuels = [];
+        $compteurUnite = 1;
+
+        foreach ($request->colis as $index => $item) {
+            for ($unite = 1; $unite <= $item['quantite']; $unite++) {
+                // Vérifier si on peut réutiliser un ancien code colis
+                $ancienCodeColis = $this->trouverAncienCodeColis($anciensCodesColis, $index, $unite);
                 
-                $statutsIndividuels = [];
-                
-                $compteurUnite = 1;
-                foreach ($request->colis as $index => $item) {
-                    for ($unite = 1; $unite <= $item['quantite']; $unite++) {
-                        $codeColisIndividuel = $this->genererCodeColisUnique();
-                        
-                        $codesColis['individuels'][] = [
-                            'code_colis' => $codeColisIndividuel,
+                if ($ancienCodeColis && isset($anciensStatutsIndividuels[$ancienCodeColis])) {
+                    // Réutiliser l'ancien code colis et son statut
+                    $codeColisIndividuel = $ancienCodeColis;
+                    
+                    // Mettre à jour le statut existant avec les nouvelles informations
+                    $statutsIndividuels[$codeColisIndividuel] = array_merge(
+                        $anciensStatutsIndividuels[$codeColisIndividuel],
+                        [
                             'colis_numero' => $index + 1,
                             'unite_numero' => $unite,
                             'produit' => $item['produit'],
-                            'description' => $item['description'] ?? null,
-                            'poids' => $item['poids'] ?? null,
-                            'dimensions' => [
-                                'longueur' => $item['longueur'] ?? null,
-                                'largeur' => $item['largeur'] ?? null,
-                                'hauteur' => $item['hauteur'] ?? null,
-                            ]
-                        ];
-
-                        $statutsIndividuels[$codeColisIndividuel] = [
-                            'code_colis' => $codeColisIndividuel,
-                            'colis_numero' => $index + 1,
-                            'unite_numero' => $unite,
-                            'produit' => $item['produit'],
-                            'statut' => 'valide',
-                            'date_creation' => now()->toDateTimeString(),
                             'date_modification' => now()->toDateTimeString(),
                             'localisation_actuelle' => $agenceExpedition->name,
                             'agence_actuelle_id' => $agenceExpedition->id,
-                            'notes' => 'Colis modifié et mis à jour',
-                            'historique' => [
-                                [
-                                    'statut' => 'valide',
-                                    'date' => now()->toDateTimeString(),
-                                    'localisation' => $agenceExpedition->name,
-                                    'agence_id' => $agenceExpedition->id,
-                                    'notes' => 'Colis modifié avec mise à jour des informations'
-                                ]
+                            'notes' => 'Colis modifié - ' . ($anciensStatutsIndividuels[$codeColisIndividuel]['notes'] ?? 'Colis mis à jour')
+                        ]
+                    );
+                    
+                    // Ajouter une entrée dans l'historique
+                    $statutsIndividuels[$codeColisIndividuel]['historique'][] = [
+                        'statut' => $statutsIndividuels[$codeColisIndividuel]['statut'],
+                        'date' => now()->toDateTimeString(),
+                        'localisation' => $agenceExpedition->name,
+                        'agence_id' => $agenceExpedition->id,
+                        'notes' => 'Colis modifié avec nouvelles informations'
+                    ];
+                } else {
+                    // Générer un nouveau code colis unique
+                    $codeColisIndividuel = $this->genererCodeColisUnique();
+                    
+                    // Créer un nouveau statut individuel
+                    $statutsIndividuels[$codeColisIndividuel] = [
+                        'code_colis' => $codeColisIndividuel,
+                        'colis_numero' => $index + 1,
+                        'unite_numero' => $unite,
+                        'produit' => $item['produit'],
+                        'statut' => 'valide',
+                        'date_creation' => now()->toDateTimeString(),
+                        'date_modification' => now()->toDateTimeString(),
+                        'localisation_actuelle' => $agenceExpedition->name,
+                        'agence_actuelle_id' => $agenceExpedition->id,
+                        'notes' => 'Nouveau colis ajouté lors de la modification',
+                        'historique' => [
+                            [
+                                'statut' => 'valide',
+                                'date' => now()->toDateTimeString(),
+                                'localisation' => $agenceExpedition->name,
+                                'agence_id' => $agenceExpedition->id,
+                                'notes' => 'Colis créé lors de la modification'
                             ]
-                        ];
-
-                        $compteurUnite++;
-                    }
+                        ]
+                    ];
                 }
-                
-                // Regénérer les QR codes si les quantités ont changé
-                $qrCodesData = $this->genererEtSauvegarderQRCode(
-                    $request->colis, 
-                    $referenceFinale, 
-                    $codesColis['principal'], 
-                    [
-                        'name_expediteur' => $request->name_expediteur,
-                        'name_destinataire' => $request->name_destinataire,
-                        'montant_total' => $montantTotal,
-                        'devise' => $request->devise,
-                        'quantite_totale' => $quantiteTotale,
-                        'agence_expedition' => $agenceExpedition->name,
-                        'agence_destination' => $agenceDestination->name
-                    ], 
-                    $codesColis['individuels']
-                );
-            } else {
-                // Garder les QR codes existants
-                $qrCodesData = json_decode($colis->qr_codes, true);
-            }
 
-            // Mettre à jour le colis
-            $colis->update([
-                'conteneur_id' => $request->conteneur_id,
-                'reference_colis' => $referenceFinale,
-                'code_colis' => json_encode($codesColis),
-                'mode_transit' => $request->mode_transit,
-                'agence_expedition_id' => $request->agence_expedition_id,
-                'agence_destination_id' => $request->agence_destination_id,
-                'agence_destination' => $agenceDestination->name,
-                'agence_expedition' => $agenceExpedition->name,
-                'devise' => $request->devise,
-                
-                // Expéditeur
+                // Ajouter au tableau des codes individuels
+                $codesColis['individuels'][] = [
+                    'code_colis' => $codeColisIndividuel,
+                    'colis_numero' => $index + 1,
+                    'unite_numero' => $unite,
+                    'produit' => $item['produit'],
+                    'description' => $item['description'] ?? null,
+                    'poids' => $item['poids'] ?? null,
+                    'dimensions' => [
+                        'longueur' => $item['longueur'] ?? null,
+                        'largeur' => $item['largeur'] ?? null,
+                        'hauteur' => $item['hauteur'] ?? null,
+                    ]
+                ];
+
+                $compteurUnite++;
+            }
+        }
+
+        // Générer les nouveaux QR codes
+        $qrCodesData = $this->genererEtSauvegarderQRCode(
+            $request->colis, 
+            $colis->reference_colis, 
+            $codeColisPrincipal, 
+            [
                 'name_expediteur' => $request->name_expediteur,
-                'prenom_expediteur' => $request->prenom_expediteur,
-                'email_expediteur' => $request->email_expediteur,
-                'contact_expediteur' => $request->contact_expediteur,
-                'adresse_expediteur' => $request->adresse_expediteur,
-                
-                // Destinataire
                 'name_destinataire' => $request->name_destinataire,
-                'prenom_destinataire' => $request->prenom_destinataire,
-                'email_destinataire' => $request->email_destinataire,
-                'indicatif' => $request->indicatif,
-                'contact_destinataire' => $request->contact_destinataire,
-                'adresse_destinataire' => $request->adresse_destinataire,
-                
-                // Colis
-                'colis' => json_encode($request->colis),
-                'montant_colis' => $montantColis,
-                'montant_paye_colis' => $request->montant_paye,
-                'statut' => 'valide',
-                
-                // Services
-                'service_id' => $request->service_id,
-                'prix_service' => $request->prix_service,
                 'montant_total' => $montantTotal,
-                
-                // Paiement
-                'methode_paiement' => $request->methode_paiement,
-                'nom_banque' => $request->nom_banque,
-                'numero_compte' => $request->numero_compte,
-                'operateur_mobile_money' => $request->operateur_mobile_money,
-                'numero_mobile_money' => $request->numero_mobile_money,
-                'montant_espece' => $request->montant_espece,
-                'montant_virement' => $request->montant_virement,
-                'montant_cheque' => $request->montant_cheque,
-                'montant_mobile_money' => $request->montant_mobile_money,
-                'montant_livraison' => $request->montant_livraison,
-                'montant_paye' => $request->montant_paye,
-                'reste_a_payer' => $request->reste_a_payer,
-                'statut_paiement' => $request->statut_paiement,
-                'notes_paiement' => $request->notes_paiement,
-                
-                // QR Codes
-                'qr_codes' => json_encode($qrCodesData),
-                
-                // Statuts individuels
-                'statuts_individuels' => json_encode($statutsIndividuels),
-                
-                // Date de modification
-                'updated_at' => now(),
-            ]);
+                'devise' => $request->devise,
+                'quantite_totale' => $quantiteTotale,
+                'agence_expedition' => $agenceExpedition->name,
+                'agence_destination' => $agenceDestination->name
+            ], 
+            $codesColis['individuels']
+        );
 
-            // Message de succès
-            $messageSucces = 'Colis modifié avec succès. Code principal: ' . $codesColis['principal'] . 
-                        '. ' . count($codesColis['individuels']) . ' codes individuels.';
+        // Mettre à jour le colis existant
+        $colis->update([
+            'conteneur_id' => $request->conteneur_id,
+            'reference_colis' => $colis->reference_colis, // Garder la référence originale
+            'code_colis' => json_encode($codesColis),
+            'mode_transit' => $request->mode_transit,
+            'agence_expedition_id' => $request->agence_expedition_id,
+            'agence_destination_id' => $request->agence_destination_id,
+            'agence_destination' => $agenceDestination->name,
+            'agence_expedition' => $agenceExpedition->name,
+            'devise' => $request->devise,
             
-            if ($referenceModifiee) {
-                $messageSucces .= ' La référence a été ajustée à "' . $referenceFinale . '".';
-            }
-
-            return redirect()->route('colis.index')
-                ->with('success', $messageSucces);
-
-        } catch (\Exception $e) {
-            Log::error('Erreur modification colis: ' . $e->getMessage());
-            Log::error('Trace: ' . $e->getTraceAsString());
+            // Expéditeur
+            'user_id' => $request->user_id,
+            'name_expediteur' => $request->name_expediteur,
+            'prenom_expediteur' => $request->prenom_expediteur,
+            'email_expediteur' => $request->email_expediteur,
+            'contact_expediteur' => $request->contact_expediteur,
+            'adresse_expediteur' => $request->adresse_expediteur,
             
-            return redirect()->back()
-                ->with('error', 'Erreur lors de la modification du colis: ' . $e->getMessage())
-                ->withInput();
+            // Destinataire
+            'name_destinataire' => $request->name_destinataire,
+            'prenom_destinataire' => $request->prenom_destinataire,
+            'email_destinataire' => $request->email_destinataire,
+            'indicatif' => $request->indicatif,
+            'contact_destinataire' => $request->contact_destinataire,
+            'adresse_destinataire' => $request->adresse_destinataire,
+            
+            // Colis
+            'colis' => json_encode($request->colis),
+            'montant_colis' => $montantColis,
+            'montant_paye_colis' => $request->montant_paye,
+            'statut' => 'valide',
+            
+            // Services
+            'service_id' => $request->service_id,
+            'prix_service' => $request->prix_service,
+            'montant_total' => $montantTotal,
+            
+            // Paiement
+            'methode_paiement' => $request->methode_paiement,
+            'nom_banque' => $request->nom_banque,
+            'numero_compte' => $request->numero_compte,
+            'operateur_mobile_money' => $request->operateur_mobile_money,
+            'numero_mobile_money' => $request->numero_mobile_money,
+            'montant_paye' => $request->montant_paye,
+            'reste_a_payer' => $request->reste_a_payer,
+            'statut_paiement' => $request->statut_paiement,
+            'notes_paiement' => $request->notes_paiement,
+            
+            // QR Codes avec chemins des fichiers
+            'qr_codes' => json_encode($qrCodesData),
+            
+            // Statuts individuels mis à jour
+            'statuts_individuels' => json_encode($statutsIndividuels),
+        ]);
+
+        // Compter les nouveaux codes colis générés
+        $nouveauxCodes = array_filter($codesColis['individuels'], function($code) use ($anciensCodesColis) {
+            return !$this->codeExisteDansAnciens($code['code_colis'], $anciensCodesColis);
+        });
+
+        $messageSucces = 'Colis modifié avec succès. Référence: ' . $colis->reference_colis;
+        
+        if (count($nouveauxCodes) > 0) {
+            $messageSucces .= '. ' . count($nouveauxCodes) . ' nouveaux codes colis générés avec leurs QR codes.';
+        }
+
+        return redirect()->route('colis.index')
+            ->with('success', $messageSucces);
+
+    } catch (\Exception $e) {
+        Log::error('Erreur modification colis: ' . $e->getMessage());
+        Log::error('Trace: ' . $e->getTraceAsString());
+        
+        return redirect()->back()
+            ->with('error', 'Erreur lors de la modification du colis: ' . $e->getMessage())
+            ->withInput();
+    }
+}
+
+// Méthode pour trouver un ancien code colis
+private function trouverAncienCodeColis($anciensCodesColis, $nouvelIndex, $nouvelleUnite)
+{
+    if (!isset($anciensCodesColis['individuels']) || !is_array($anciensCodesColis['individuels'])) {
+        return null;
+    }
+
+    foreach ($anciensCodesColis['individuels'] as $ancienCode) {
+        if (isset($ancienCode['colis_numero']) && $ancienCode['colis_numero'] == $nouvelIndex + 1 &&
+            isset($ancienCode['unite_numero']) && $ancienCode['unite_numero'] == $nouvelleUnite) {
+            return $ancienCode['code_colis'];
         }
     }
+    
+    return null;
+}
+
+// Méthode pour vérifier si un code existe dans les anciens codes
+private function codeExisteDansAnciens($codeColis, $anciensCodesColis)
+{
+    if (!isset($anciensCodesColis['individuels']) || !is_array($anciensCodesColis['individuels'])) {
+        return false;
+    }
+
+    foreach ($anciensCodesColis['individuels'] as $ancienCode) {
+        if (isset($ancienCode['code_colis']) && $ancienCode['code_colis'] === $codeColis) {
+            return true;
+        }
+    }
+    
+    return false;
+}
 
 /**
  * Mettre à jour les statuts individuels lorsque les colis changent
