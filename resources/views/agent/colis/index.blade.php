@@ -936,7 +936,7 @@ function confirmDelete(colisId, reference) {
             });
 
             // Envoyer la requête de suppression
-            fetch(`/agent/colis/${colisId}`, {
+            fetch(`/agent/parcel/${colisId}`, {
                 method: 'DELETE',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',

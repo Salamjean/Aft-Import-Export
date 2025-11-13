@@ -127,7 +127,7 @@ Route::prefix('admin')->group(function () {
             Route::post('/create',[ColisController::class,'store'])->name('colis.store');
             Route::get('/{id}/edit', [ColisController::class, 'edit'])->name('colis.edit');
             Route::put('/{id}', [ColisController::class, 'update'])->name('colis.update');
-            Route::delete('/parcel/{id}', [ColisController::class, 'destroy'])->name('colis.destroy');
+            Route::delete('/{id}', [ColisController::class, 'destroy'])->name('colis.destroy');
             Route::get('/{colis}', [ColisController::class, 'show'])->name('colis.show');
             Route::post('/{colis}/paiement', [ColisController::class, 'enregistrerPaiement'])->name('colis.paiement');
             // Routes séparées pour chaque document
@@ -305,7 +305,7 @@ Route::middleware('agent')->prefix('agent')->group(function(){
         Route::post('/create',[AgentColisController::class,'store'])->name('agent.colis.store');
         Route::get('/{id}/edit', [AgentColisController::class, 'edit'])->name('agent.colis.edit');
         Route::put('/{id}', [AgentColisController::class, 'update'])->name('agent.colis.update');
-        Route::delete('/parcel/{id}', [AgentColisController::class, 'destroy'])->name('agent.colis.destroy');
+        Route::delete('/{id}', [AgentColisController::class, 'destroy'])->name('agent.colis.destroy');
         Route::get('/{colis}', [AgentColisController::class, 'show'])->name('agent.colis.show');
         Route::post('/{colis}/paiement', [AgentColisController::class, 'enregistrerPaiement'])->name('agent.colis.paiement');
         // Routes séparées pour chaque document

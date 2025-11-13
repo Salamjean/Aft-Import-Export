@@ -1592,4 +1592,26 @@ public function getConteneurAndReference(Request $request)
 
         return view('admin.colis.history', compact('colis'));
     }
+
+    public function destroy($id)
+    {
+        try {
+            $colis = Colis::findOrFail($id);
+            
+            // Ajoutez ici toute logique de suppression supplémentaire si nécessaire
+            
+            $colis->delete();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Colis supprimé avec succès'
+            ]);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur lors de la suppression du colis'
+            ], 500);
+        }
+    }
 }
