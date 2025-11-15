@@ -140,6 +140,7 @@
                                 <tr>
                                     <th style="text-align: center" class="ps-4">Référence</th>
                                     <th style="text-align: center">Agence</th>
+                                    <th style="text-align: center">Type de Demande</th>
                                     <th style="text-align: center">Nature Objet</th>
                                     <th style="text-align: center">Quantité</th>
                                     <th style="text-align: center">Client</th>
@@ -177,6 +178,15 @@
                                                     <br><small class="text-muted">{{ $demande->agence->pays }}</small>
                                                 </div>
                                             </div>
+                                        </td>
+                                        <td style="text-align: center">
+                                            <span class="type-badge type-{{ $demande->type_recuperation }}">
+                                                @if($demande->type_recuperation === 'depot')
+                                                    🚚 Dépôt
+                                                @else
+                                                    ⚡ Récuperation
+                                                @endif
+                                            </span>
                                         </td>
                                         <td style="text-align: center">
                                             <span class="badge bg-light text-dark border">{{ $demande->nature_objet }}</span>
@@ -311,6 +321,17 @@
     border: none;
     border-top: 4px solid var(--primary-orange);
 }
+
+.type-badge {
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.type-depot { background: #e3f2fd; color: #1976d2; }
+.type-recuperation { background: #fff3e0; color: #f57c00; }
 
 .modern-table {
     border-collapse: separate;
@@ -574,6 +595,13 @@ function displayDetailsModal(demandeData) {
                         <div class="mb-2"><strong>Pays:</strong> ${demandeData.agence.pays}</div>
                         <div class="mb-2"><strong>Adresse:</strong> ${demandeData.agence.adresse}</div>
                         <div class="mb-2"><strong>Devise:</strong> ${demandeData.agence.devise}</div>
+                        <div class="mb-2">
+                            <strong>Type de Demande:</strong> 
+                            <span class="type-badge type-${demandeData.type_recuperation}">
+                                ${demandeData.type_recuperation}
+                            </span>
+                        </div>
+
                     </div>
                 </div>
                 

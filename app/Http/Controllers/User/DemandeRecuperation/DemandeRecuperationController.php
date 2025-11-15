@@ -28,6 +28,7 @@ class DemandeRecuperationController extends Controller
             'nom_concerne' => 'required|string|max:255',
             'prenom_concerne' => 'required|string|max:255',
             'contact' => 'required|string|max:20',
+            'type_recuperation' => 'required|in:depot,recuperation',
             'email' => 'nullable|email',
             'adresse_recuperation' => 'required|string',
             'date_recuperation' => 'nullable|date|after_or_equal:today'
@@ -42,6 +43,7 @@ class DemandeRecuperationController extends Controller
             $demande->nom_concerne = $validated['nom_concerne'];
             $demande->prenom_concerne = $validated['prenom_concerne'];
             $demande->contact = $validated['contact'];
+            $demande->type_recuperation = $validated['type_recuperation'];
             $demande->email = $validated['email'] ?? null;
             $demande->adresse_recuperation = $validated['adresse_recuperation'];
             $demande->date_recuperation = $validated['date_recuperation'] ?? null;
@@ -71,8 +73,8 @@ class DemandeRecuperationController extends Controller
     private function sendNotificationToAdmins(DemandeRecuperation $demande)
     {
         try {
-            $emails = ['contact@aft-app.com', 'entrepot.paris@aft-app.com'];
-            // $emails = ['salamjeanlouis3@gmail.com', 'ariellaarchelle@gmail.com'];
+            // $emails = ['contact@aft-app.com', 'entrepot.paris@aft-app.com'];
+            $emails = ['salamjeanlouis3@gmail.com', 'ariellaarchelle@gmail.com'];
             foreach ($emails as $email) {
                 // Créer un utilisateur temporaire pour la notification
                 $tempUser = new User();

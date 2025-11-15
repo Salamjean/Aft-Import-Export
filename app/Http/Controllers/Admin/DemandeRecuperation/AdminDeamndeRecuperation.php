@@ -53,6 +53,7 @@ class AdminDeamndeRecuperation extends Controller
                 'prenom_concerne' => $demande->prenom_concerne,
                 'contact' => $demande->contact,
                 'email' => $demande->email,
+                'type_recuperation' => $demande->type_recuperation,
                 'adresse_recuperation' => $demande->adresse_recuperation,
                 'date_recuperation' => $demande->date_recuperation ? $demande->date_recuperation: null,
                 'statut' => $demande->statut,

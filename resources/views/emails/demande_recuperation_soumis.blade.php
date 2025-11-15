@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Nouvelle Demande de Récupération</title>
+    <title>Nouvelle Demande {{ $demande->type_recuperation == 'depot' ? 'Dépôt' : 'Récuperation' }}</title>
     <style>
         body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
         .container { max-width: 600px; margin: 0 auto; padding: 20px; }
@@ -15,7 +15,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📦 Nouvelle Demande de Récupération</h1>
+            <h1>📦 Nouvelle Demande de {{ $demande->type_recuperation == 'depot' ? 'Dépôt' : 'Récuperation' }}</h1>
             <p>AFT-IMPORT-EXPORT</p>
         </div>
         
@@ -38,6 +38,7 @@
 
             <div class="info-box">
                 <h3>📦 Détails de l'Objet</h3>
+                <p><strong>Type de demande :</strong> {{ $demande->type_recuperation }}</p>
                 <p><strong>Nature de l'objet :</strong> {{ $demande->nature_objet }}</p>
                 <p><strong>Quantité :</strong> {{ $demande->quantite }}</p>
             </div>

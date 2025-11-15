@@ -12,6 +12,7 @@ class DemandeRecuperation extends Model
     protected $fillable = [
         'user_id',
         'agence_id',
+        'type_recuperation',
         'quantite',
         'nature_objet',
         'nom_concerne',
@@ -63,6 +64,10 @@ class DemandeRecuperation extends Model
 
         return $reference;
     }
+
+    protected $casts = [
+        'type_recuperation' => 'string',
+    ];
 
     public function user()
     {

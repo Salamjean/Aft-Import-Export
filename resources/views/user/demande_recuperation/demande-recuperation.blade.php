@@ -8,7 +8,7 @@
             <div class="page-header bg-gradient-orange rounded-3 p-4 shadow">
                 <div class="row align-items-center">
                     <div class="col-md-10">
-                        <h1 class="text-white mb-2">📦 Demande de Récupération</h1>
+                        <h1 class="text-white mb-2">📦 Demande de Dépôt ou Récupération</h1>
                         <p class="text-white-50 mb-0">Formulaire de demande de récupération d'objets</p>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                                 </h6>
                             </div>
                             
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <label class="form-label fw-semibold">Nature de l'objet <span class="text-danger">*</span></label>
                                 <input type="text" class="modern-input @error('nature_objet') is-invalid @enderror" 
                                        name="nature_objet" value="{{ old('nature_objet') }}" 
@@ -51,7 +51,7 @@
                                 </small>
                             </div>
 
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <label class="form-label fw-semibold">Quantité <span class="text-danger">*</span></label>
                                 <input type="number" class="modern-input @error('quantite') is-invalid @enderror" 
                                        name="quantite" value="{{ old('quantite', 1) }}" 
@@ -60,7 +60,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-4 mb-3">
+                            <div class="col-3 mb-3">
                                     <label class="form-label fw-semibold">Agence de destination <span class="text-danger">*</span></label>
                                     <select class="modern-select @error('agence_id') is-invalid @enderror" name="agence_id" required>
                                         <option value="">Sélectionnez une agence</option>
@@ -77,6 +77,21 @@
                                         Choisissez l'agence vers laquelle l'objet sera envoyé après récupération
                                     </small>
                                 </div>
+                                <div class="col-md-3 mb-3">
+                                    <label class="form-label fw-semibold">Type de demande <span class="text-danger">*</span></label>
+                                    <select class="modern-select @error('type_recuperation') is-invalid @enderror" name="type_recuperation" required>
+                                        <option value="">Sélectionnez de demande</option>
+                                        <option value="depot" {{ old('type_recuperation') == 'depot' ? 'selected' : '' }}>
+                                            🚚 Dépôt
+                                        </option>
+                                        <option value="recuperation" {{ old('type_recuperation') == 'recuperation' ? 'selected' : '' }}>
+                                            ⚡ Récuperation
+                                        </option>
+                                    </select>
+                                    @error('type_recuperation')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
                         </div>
 
                         <!-- Informations personnelles -->
@@ -90,8 +105,8 @@
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">Nom <span class="text-danger">*</span></label>
                                 <input type="text" class="modern-input @error('nom_concerne') is-invalid @enderror" 
-                                       name="nom_concerne" value="{{ old('nom_concerne') }}" 
-                                       placeholder="Votre nom" required>
+                                       name="nom_concerne" value="{{Auth::user()->name ?? 'Non defini'}}" 
+                                       placeholder="Votre nom" readonly>
                                 @error('nom_concerne')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -100,8 +115,8 @@
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">Prénom <span class="text-danger">*</span></label>
                                 <input type="text" class="modern-input @error('prenom_concerne') is-invalid @enderror" 
-                                       name="prenom_concerne" value="{{ old('prenom_concerne') }}" 
-                                       placeholder="Votre prénom" required>
+                                       name="prenom_concerne" value="{{Auth::user()->prenom ?? 'Non defini'}}" 
+                                       placeholder="Votre prénom" readonly>
                                 @error('prenom_concerne')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -110,8 +125,8 @@
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">Téléphone <span class="text-danger">*</span></label>
                                 <input type="tel" class="modern-input @error('contact') is-invalid @enderror" 
-                                       name="contact" value="{{ old('contact') }}" 
-                                       placeholder="Votre numéro de téléphone" required>
+                                       name="contact" value="{{Auth::user()->contact ?? 'Non defini'}}" 
+                                       placeholder="Votre numéro de téléphone" readonly>
                                 @error('contact')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -120,8 +135,8 @@
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">Email</label>
                                 <input type="email" class="modern-input @error('email') is-invalid @enderror" 
-                                       name="email" value="{{ old('email') }}" 
-                                       placeholder="votre@email.com">
+                                       name="email" value="{{Auth::user()->email ?? 'Non defini'}}" 
+                                       placeholder="votre@email.com" readonly>
                                 @error('email')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
