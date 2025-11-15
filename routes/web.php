@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\Colis\EtiquetteController;
 use App\Http\Controllers\Admin\Colis\ProduitController;
 use App\Http\Controllers\Admin\Colis\ServiceController;
 use App\Http\Controllers\Admin\Conteneur\ConteneurController;
+use App\Http\Controllers\Admin\DemandeRecuperation\AdminDeamndeRecuperation;
 use App\Http\Controllers\Admin\Devis\AdminDevisController;
 use App\Http\Controllers\Admin\Programme\DepotController;
 use App\Http\Controllers\Admin\Programme\ProgrammeController;
@@ -35,6 +36,7 @@ use App\Http\Controllers\Agent\Cote_Ivoire\IvoireScanController;
 use App\Http\Controllers\Agent\Cote_Ivoire\IvoireScanDechargerController;
 use App\Http\Controllers\Agent\Cote_Ivoire\IvoireScanLivrerController;
 use App\Http\Controllers\Agent\Cote_Ivoire\LivraisonController;
+use App\Http\Controllers\Agent\DemandeRecuperation\AgentDemandeRecuperation;
 use App\Http\Controllers\Agent\Devis\AgentDevisController;
 use App\Http\Controllers\Agent\Programme\AgentDepotController;
 use App\Http\Controllers\Agent\Programme\AgentProgrammeController;
@@ -50,6 +52,7 @@ use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\User\Colis\UserColisController;
 use App\Http\Controllers\User\Contact\ContactController;
+use App\Http\Controllers\User\DemandeRecuperation\DemandeRecuperationController;
 use App\Http\Controllers\User\Devis\DevisController;
 use App\Http\Controllers\User\UserAuthenticate;
 use App\Http\Controllers\User\UserController;
@@ -206,6 +209,14 @@ Route::prefix('admin')->group(function () {
         Route::get('/AllUsers',[ClientController::class,'client'])->name('client.all');
         Route::get('/AllProspects',[ClientController::class,'prospect'])->name('prospect.all');
     });
+
+    //Les routes pour affichés les demandes de recuperations 
+    Route::prefix('request')->group(function(){
+        Route::get('requestAll',[AdminDeamndeRecuperation::class,'index'])->name('admin.demande.recuperation');
+        Route::get('/{id}/details', [AdminDeamndeRecuperation::class, 'details'])->name('admin.demandes-recuperation.details');
+        Route::post('/{id}/traiter', [AdminDeamndeRecuperation::class, 'traiter'])->name('admin.demandes-recuperation.traiter');
+        Route::post('/{id}/annuler', [AdminDeamndeRecuperation::class, 'annuler'])->name('admin.demandes-recuperation.annuler');
+     });
 });
 
 Route::get('/colis/get-conteneur-reference', [ColisController::class, 'getConteneurAndReference'])->name('colis.get-conteneur-reference');
@@ -381,6 +392,14 @@ Route::middleware('agent')->prefix('agent')->group(function(){
         Route::get('/AllUsers',[AgentClientController::class,'client'])->name('agent.client.all');
         Route::get('/AllProspects',[AgentClientController::class,'prospect'])->name('agent.prospect.all');
     });
+
+     //Les routes pour affichés les demandes de recuperations 
+    Route::prefix('request')->group(function(){
+        Route::get('requestAll',[AgentDemandeRecuperation::class,'index'])->name('agent.demande.recuperation');
+        Route::get('/{id}/details', [AgentDemandeRecuperation::class, 'details'])->name('agent.demandes-recuperation.details');
+        Route::post('/{id}/traiter', [AgentDemandeRecuperation::class, 'traiter'])->name('agent.demandes-recuperation.traiter');
+        Route::post('/{id}/annuler', [AgentDemandeRecuperation::class, 'annuler'])->name('agent.demandes-recuperation.annuler');
+     });
 });
 
 //Les routes de gestion des @chauffeur
@@ -401,6 +420,8 @@ Route::middleware('chauffeur')->prefix('driver')->group(function(){
         Route::get('/{type}/{id}/download-etiquettes', [ChauffeurProgrammeController::class, 'downloadEtiquettes'])->name('chauffeur.programmes.download-etiquettes');
         Route::post('/recuperation/{id}/save-destination', [ChauffeurProgrammeController::class, 'saveDestinationInfo'])->name('chauffeur.recuperation.save-destination');
     });
+
+     
 });
 
 //Les routes de gestion @users 
@@ -431,6 +452,15 @@ Route::middleware('auth')->prefix('user')->group(function(){
         Route::get('/parcelindex',[UserColisController::class,'index'])->name('user.colis.index');
         Route::get('/{colis}', [UserColisController::class, 'show'])->name('user.colis.show');
         Route::get('/{id}/facture', [UserColisController::class, 'generateFacture'])->name('agent.colis.facture');
+    });
+
+    //Les routes de demande de recuperation 
+    Route::get('/demande-recuperation', [DemandeRecuperationController::class, 'create'])->name('demande-recuperation.create');
+    Route::post('/demande-recuperation', [DemandeRecuperationController::class, 'store'])->name('demande-recuperation.store');
+    Route::prefix('request')->group(function(){
+        Route::get('requestAll',[DemandeRecuperationController::class,'index'])->name('user.demande.recuperation');
+        Route::get('/{id}/details', [DemandeRecuperationController::class, 'details'])->name('user.demandes-recuperation.details');
+        Route::post('/{id}/annuler', [DemandeRecuperationController::class, 'annuler'])->name('agent.demandes-recuperation.annuler');
     });
 });
 

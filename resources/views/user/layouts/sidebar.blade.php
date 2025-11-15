@@ -68,37 +68,43 @@
               </a>
             </div>
             {{-- <div class="mdc-list-item mdc-drawer-item">
+              <a class="mdc-drawer-link" href="{{route('demande-recuperation.create')}}">
+                <i class="fas fa-truck-pickup mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true"></i>
+                Recupération 
+              </a>
+            </div> --}}
+            {{-- <div class="mdc-list-item mdc-drawer-item">
               <a class="mdc-drawer-link" href="#">
                 <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">home</i>
                 Mes factures
               </a>
             </div> --}}
-            {{-- <div class="mdc-list-item mdc-drawer-item">
+            <div class="mdc-list-item mdc-drawer-item">
               <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-agent">
                 <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">home</i>
-                Agent
+                Recupération
                 <i class="mdc-drawer-arrow material-icons">chevron_right</i>
               </a>
               <div class="mdc-expansion-panel" id="ui-sub-agent">
                 <nav class="mdc-list mdc-drawer-submenu">
                   <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="#">
-                      Ajout Agent
+                    <a class="mdc-drawer-link" href="{{route('demande-recuperation.create')}}">
+                     Demande
                     </a>
                   </div>
                   <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="#">
-                      Liste Agent
+                    <a class="mdc-drawer-link" href="{{route('user.demande.recuperation')}}">
+                     Liste
                     </a>
                   </div>
-                  <div class="mdc-list-item mdc-drawer-item">
+                  {{-- <div class="mdc-list-item mdc-drawer-item">
                     <a class="mdc-drawer-link" href="#">
                       Présences
                     </a>
-                  </div>
+                  </div> --}}
                 </nav>
               </div>
-            </div> --}}
+            </div>
             {{-- <div class="mdc-list-item mdc-drawer-item">
               <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu">
                 <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">home</i>

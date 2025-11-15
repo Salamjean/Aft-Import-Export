@@ -245,5 +245,12 @@
                 </nav>
               </div>
             </div>
+            
+            <div class="mdc-list-item mdc-drawer-item">
+              <a class="mdc-drawer-link" href="{{route('admin.demande.recuperation')}}">
+                <i class="fas fa-box mdc-list-item__start-detail mdc-drawer-item-icon"></i>
+                Récuperation demandé
+              </a>
+            </div>
           </div>
     </aside>
