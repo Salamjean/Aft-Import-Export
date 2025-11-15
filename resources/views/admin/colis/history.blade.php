@@ -128,9 +128,15 @@
                                     <td class="text-center">
                                         <span class="status-badge status-{{ $item->statut }}">
                                             @if($item->statut == 'valide')
-                                                valide
-                                            @elseif($item->statut == 'traite')
-                                                Traité
+                                                Validé
+                                            @elseif($item->statut == 'charge')
+                                                Chargé
+                                            @elseif($item->statut == 'entrepot')
+                                                Entrepôt
+                                            @elseif($item->statut == 'decharge')
+                                                Déchargé
+                                            @elseif($item->statut == 'livre')
+                                                Livré
                                             @else
                                                 Annulé
                                             @endif
@@ -376,9 +382,25 @@
     color: #856404;
 }
 
-.status-traite {
+.status-charge {
+    background-color: #ffeaa7;
+    color: #856404;
+    border: 1px solid #fdcb6e;
+}
+
+.status-entrepot {
     background-color: #d1edff;
     color: #0c63e4;
+}
+
+.status-decharge {
+    background-color: #cce7ff;
+    color: #0066cc;
+}
+
+.status-livre {
+    background-color: #d1f7e4;
+    color: #0d8b5a;
 }
 
 .status-annule {

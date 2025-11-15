@@ -115,6 +115,16 @@ class ChauffeurProgrammeController extends Controller
                 
             } else {
                 $programme = Recuperation::where('chauffeur_id', Auth::guard('chauffeur')->user()->id)->findOrFail($id);
+                
+                // Vérifier si les informations du destinataire sont déjà renseignées
+                if (!$programme->nom_destinataire || !$programme->contact_destinataire) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Informations du destinataire manquantes',
+                        'requires_destination' => true
+                    ], 422);
+                }
+                
                 $codes = $this->getCodesFromProgramme($programme);
                 $filename = 'etiquettes-recuperation-' . $programme->reference . '.pdf';
                 
@@ -126,10 +136,47 @@ class ChauffeurProgrammeController extends Controller
                 'programme' => $programme,
                 'codes' => $codes,
                 'type' => $type
-            ])->setPaper([0, 0, 141.73, 226.77], 'portrait'); // 50x80mm
+            ])->setPaper([0, 0, 141.73, 226.77], 'portrait');
 
             return $pdf->download($filename);
             
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    // Nouvelle méthode pour sauvegarder les informations du destinataire
+    public function saveDestinationInfo(Request $request, $id)
+    {
+        try {
+            $request->validate([
+                'nom_destinataire' => 'required|string|max:255',
+                'prenom_destinataire' => 'required|string|max:255',
+                'email_destinataire' => 'nullable|email',
+                'indicatif_destinataire' => 'required|string|max:10',
+                'contact_destinataire' => 'required|string|max:20',
+                'adresse_destinataire' => 'required|string'
+            ]);
+
+            $recuperation = Recuperation::where('chauffeur_id', Auth::guard('chauffeur')->user()->id)->findOrFail($id);
+            
+            $recuperation->update([
+                'nom_destinataire' => $request->nom_destinataire,
+                'prenom_destinataire' => $request->prenom_destinataire,
+                'email_destinataire' => $request->email_destinataire,
+                'indicatif_destinataire' => $request->indicatif_destinataire,
+                'contact_destinataire' => $request->contact_destinataire,
+                'adresse_destinataire' => $request->adresse_destinataire
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Informations du destinataire sauvegardées avec succès'
+            ]);
+
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,

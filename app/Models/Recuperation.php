@@ -22,7 +22,13 @@ class Recuperation extends Model
         'path_qrcode',
         'chauffeur_id',
         'date_recuperation',
-        'statut'
+        'statut',
+        'nom_destinataire',
+        'prenom_destinataire',
+        'email_destinataire',
+        'indicatif_destinataire',
+        'contact_destinataire',
+        'adresse_destinataire'
     ];
 
     protected $casts = [

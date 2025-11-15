@@ -383,9 +383,25 @@
     color: #856404;
 }
 
-.status-traite {
+.status-charge {
+    background-color: #ffeaa7;
+    color: #856404;
+    border: 1px solid #fdcb6e;
+}
+
+.status-entrepot {
     background-color: #d1edff;
     color: #0c63e4;
+}
+
+.status-decharge {
+    background-color: #cce7ff;
+    color: #0066cc;
+}
+
+.status-livre {
+    background-color: #d1f7e4;
+    color: #0d8b5a;
 }
 
 .status-annule {

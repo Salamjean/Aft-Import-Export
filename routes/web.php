@@ -399,6 +399,7 @@ Route::middleware('chauffeur')->prefix('driver')->group(function(){
         Route::get('/history',[ChauffeurProgrammeController::class,'history'])->name('chauffeur.history');
         Route::get('/{type}/{id}/details', [ChauffeurProgrammeController::class, 'showDetails'])->name('chauffeur.programmes.details');
         Route::get('/{type}/{id}/download-etiquettes', [ChauffeurProgrammeController::class, 'downloadEtiquettes'])->name('chauffeur.programmes.download-etiquettes');
+        Route::post('/recuperation/{id}/save-destination', [ChauffeurProgrammeController::class, 'saveDestinationInfo'])->name('chauffeur.recuperation.save-destination');
     });
 });
 

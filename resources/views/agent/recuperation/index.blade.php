@@ -673,12 +673,28 @@ function displayDetailsModal(recuperationData) {
         
         codesHtml = `
             <div class="row mt-4">
+            </div>
+        `;
+    }
+    
+    // Section destinataire (si les informations existent)
+    let destinataireHtml = '';
+    if (recuperationData.nom_destinataire && recuperationData.contact_destinataire) {
+        destinataireHtml = `
+            <div class="row mt-4">
                 <div class="col-12">
-                    <h6 class="text-primary mb-3">
-                        <i class="fas fa-qrcode me-2"></i>Codes Générés (${recuperationData.quantite})
+                    <h6 class="text-success mb-3">
+                        <i class="fas fa-map-marker-alt me-2"></i>Informations du Destinataire
                     </h6>
-                    <div class="bg-light rounded p-3">
-                        ${codes}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-2"><strong>Nom:</strong> ${recuperationData.nom_destinataire} ${recuperationData.prenom_destinataire}</div>
+                            <div class="mb-2"><strong>Contact:</strong> ${recuperationData.indicatif_destinataire} ${recuperationData.contact_destinataire}</div>
+                            ${recuperationData.email_destinataire ? `<div class="mb-2"><strong>Email:</strong> ${recuperationData.email_destinataire}</div>` : ''}
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-2"><strong>Adresse:</strong> ${recuperationData.adresse_destinataire}</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -708,9 +724,10 @@ function displayDetailsModal(recuperationData) {
                         <div class="mb-2"><strong>Nom:</strong> ${recuperationData.nom_concerne} ${recuperationData.prenom_concerne}</div>
                         <div class="mb-2"><strong>Contact:</strong> ${recuperationData.contact}</div>
                         <div class="mb-2"><strong>Email:</strong> ${recuperationData.email || 'Non renseigné'}</div>
-                        <div class="mb-2"><strong>Adresse:</strong> ${recuperationData.adresse_recuperation}</div>
+                        <div class="mb-2"><strong>Adresse récupération:</strong> ${recuperationData.adresse_recuperation}</div>
                     </div>
                 </div>
+                ${destinataireHtml}
                 ${codesHtml}
                 <div class="mt-3 text-muted small">
                     <i class="fas fa-info-circle me-1"></i>
@@ -718,7 +735,7 @@ function displayDetailsModal(recuperationData) {
                 </div>
             </div>
         `,
-        width: 800,
+        width: 900,
         confirmButtonColor: '#2196F3',
         confirmButtonText: 'Fermer'
     });

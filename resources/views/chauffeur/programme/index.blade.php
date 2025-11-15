@@ -567,30 +567,12 @@ async function downloadEtiquettes(type, id) {
     const typeLabel = type === 'depot' ? 'Dépôt' : 'Récupération';
     
     if (type === 'recuperation') {
-        const result = await Swal.fire({
-            title: 'Confirmation',
-            html: `
-                <div class="text-start">
-                    <p>Vous allez télécharger les étiquettes pour cette récupération.</p>
-                    <div class="alert alert-info mt-2">
-                        <i class="fas fa-info-circle me-2"></i>
-                        <strong>Note :</strong> Le statut passera automatiquement à "terminé" après le téléchargement.
-                    </div>
-                </div>
-            `,
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#FF9800',
-            cancelButtonColor: '#6c757d',
-            confirmButtonText: '<i class="fas fa-download me-2"></i>Télécharger',
-            cancelButtonText: 'Annuler'
-        });
-        
-        if (!result.isConfirmed) {
-            return;
-        }
+        // D'abord demander les informations du destinataire
+        await showDestinationForm(type, id);
+        return;
     }
     
+    // Pour les dépôts, continuer normalement
     Swal.fire({
         title: 'Préparation...',
         text: 'Génération du fichier PDF en cours',
@@ -601,36 +583,19 @@ async function downloadEtiquettes(type, id) {
     });
     
     try {
-        // Créer un lien temporaire pour le téléchargement
         const downloadUrl = `/driver/planing/${type}/${id}/download-etiquettes`;
         window.open(downloadUrl, '_blank');
         
         Swal.close();
         
-        if (type === 'recuperation') {
-            // Mettre à jour l'interface après un court délai
-            setTimeout(() => {
-                Swal.fire({
-                    title: 'Téléchargement terminé',
-                    text: 'Les étiquettes ont été téléchargées et le statut est passé à "terminé"',
-                    icon: 'success',
-                    confirmButtonColor: '#FF9800',
-                    timer: 3000,
-                    timerProgressBar: true
-                }).then(() => {
-                    location.reload();
-                });
-            }, 2000);
-        } else {
-            Swal.fire({
-                title: 'Téléchargement démarré',
-                text: 'Les étiquettes sont en cours de téléchargement',
-                icon: 'success',
-                confirmButtonColor: '#2196F3',
-                timer: 2000,
-                timerProgressBar: true
-            });
-        }
+        Swal.fire({
+            title: 'Téléchargement démarré',
+            text: 'Les étiquettes sont en cours de téléchargement',
+            icon: 'success',
+            confirmButtonColor: '#2196F3',
+            timer: 2000,
+            timerProgressBar: true
+        });
         
     } catch (error) {
         Swal.fire({
@@ -638,6 +603,152 @@ async function downloadEtiquettes(type, id) {
             text: 'Erreur lors du téléchargement: ' + error.message,
             icon: 'error',
             confirmButtonColor: '#2196F3'
+        });
+    }
+}
+
+// Fonction pour afficher le formulaire de destination
+async function showDestinationForm(type, id) {
+    const { value: formValues } = await Swal.fire({
+        title: '📋 Informations du Destinataire',
+        html: `
+            <div class="text-start">
+                <p class="mb-3">Veuillez renseigner les informations du destinataire pour cette récupération :</p>
+                
+                <div class="row g-2">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-semibold">Nom *</label>
+                        <input type="text" id="nom_destinataire" class="form-control" placeholder="Nom du destinataire" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-semibold">Prénom *</label>
+                        <input type="text" id="prenom_destinataire" class="form-control" placeholder="Prénom du destinataire" required>
+                    </div>
+                </div>
+                
+                <div class="row g-2 mt-2">
+                    <div class="col-md-4">
+                        <label class="form-label small fw-semibold">Indicatif *</label>
+                        <select id="indicatif_destinataire" class="form-select" required>
+                            <option value="">Choisir...</option>
+                            <option value="+225">+225 (Côte d'Ivoire)</option>
+                            <option value="+33">+33 (France)</option>
+                            <option value="+86">+86 (Chine)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-8">
+                        <label class="form-label small fw-semibold">Téléphone *</label>
+                        <input type="tel" id="contact_destinataire" class="form-control" placeholder="Numéro de téléphone" required>
+                    </div>
+                </div>
+                
+                <div class="mt-2">
+                    <label class="form-label small fw-semibold">Email</label>
+                    <input type="email" id="email_destinataire" class="form-control" placeholder="email@exemple.com">
+                </div>
+                
+                <div class="mt-2">
+                    <label class="form-label small fw-semibold">Adresse de destination *</label>
+                    <textarea id="adresse_destinataire" class="form-control" rows="3" placeholder="Adresse complète du destinataire" required></textarea>
+                </div>
+                
+                <div class="alert alert-info mt-3">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Note :</strong> Ces informations seront utilisées pour les étiquettes de récupération.
+                </div>
+            </div>
+        `,
+        focusConfirm: false,
+        showCancelButton: true,
+        confirmButtonText: 'Enregistrer & Télécharger',
+        cancelButtonText: 'Annuler',
+        confirmButtonColor: '#FF9800',
+        cancelButtonColor: '#6c757d',
+        preConfirm: () => {
+            return {
+                nom_destinataire: document.getElementById('nom_destinataire').value,
+                prenom_destinataire: document.getElementById('prenom_destinataire').value,
+                email_destinataire: document.getElementById('email_destinataire').value,
+                indicatif_destinataire: document.getElementById('indicatif_destinataire').value,
+                contact_destinataire: document.getElementById('contact_destinataire').value,
+                adresse_destinataire: document.getElementById('adresse_destinataire').value
+            }
+        },
+        validation: (values) => {
+            if (!values.nom_destinataire || !values.prenom_destinataire || 
+                !values.indicatif_destinataire || !values.contact_destinataire || 
+                !values.adresse_destinataire) {
+                Swal.showValidationMessage('Veuillez remplir tous les champs obligatoires');
+            }
+        },
+        width: 700
+    });
+
+    if (formValues) {
+        await saveDestinationInfoAndDownload(type, id, formValues);
+    }
+}
+
+// Fonction pour sauvegarder les infos et télécharger
+async function saveDestinationInfoAndDownload(type, id, destinationData) {
+    Swal.fire({
+        title: 'Enregistrement...',
+        text: 'Sauvegarde des informations du destinataire',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+    try {
+        // Sauvegarder les informations du destinataire
+        const saveResponse = await fetch(`/driver/planing/recuperation/${id}/save-destination`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(destinationData)
+        });
+
+        const saveResult = await saveResponse.json();
+
+        if (!saveResult.success) {
+            throw new Error(saveResult.message);
+        }
+
+        // Maintenant télécharger les étiquettes
+        const downloadUrl = `/driver/planing/${type}/${id}/download-etiquettes`;
+        window.open(downloadUrl, '_blank');
+
+        Swal.close();
+
+        // Afficher le message de succès
+        Swal.fire({
+            title: '✅ Téléchargement terminé !',
+            html: `
+                <div class="text-start">
+                    <p>Les étiquettes ont été téléchargées avec succès.</p>
+                    <div class="alert alert-success mt-2">
+                        <i class="fas fa-check-circle me-2"></i>
+                        <strong>Statut :</strong> La récupération est maintenant marquée comme "terminée".
+                    </div>
+                </div>
+            `,
+            icon: 'success',
+            confirmButtonColor: '#FF9800',
+            timer: 4000,
+            timerProgressBar: true
+        }).then(() => {
+            location.reload();
+        });
+
+    } catch (error) {
+        Swal.fire({
+            title: '❌ Erreur',
+            text: 'Erreur: ' + error.message,
+            icon: 'error',
+            confirmButtonColor: '#FF9800'
         });
     }
 }
