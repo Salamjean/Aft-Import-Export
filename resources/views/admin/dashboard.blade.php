@@ -40,6 +40,19 @@
             </div>
         </div>
 
+        <div class="stat-card demande-stat">
+            <div class="stat-icon">
+                <i class="fas fa-box"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-value">{{ $stats['demandes_recuperation_en_attente'] }}</h3>
+                <p class="stat-label">Demandes Récupération</p>
+                <div class="stat-badge pending">
+                    {{ $stats['demandes_recuperation_traitees'] }} traitées
+                </div>
+            </div>
+        </div>
+
         <!-- Carte Conteneurs -->
         <div class="stat-card conteneur-stat">
             <div class="stat-icon">
@@ -152,9 +165,9 @@
                     <i class="fas fa-file-invoice-dollar"></i>
                     <span>Devis</span>
                 </a>
-                <a href="{{ route('colis.history') }}" class="action-btn info">
-                    <i class="fas fa-history"></i>
-                    <span>Historique</span>
+                <a href="{{ route('admin.demande.recuperation') }}" class="action-btn secondary">
+                    <i class="fas fa-truck-pickup"></i>
+                    <span>Demandes Récup.</span>
                 </a>
             </div>
         </div>
@@ -314,6 +327,13 @@
     transition: width 0.3s ease;
 }
 
+.demande-stat { border-left-color: #8B5CF6; }
+.demande-stat .stat-icon { background: #8B5CF6; }
+
+.status-en_attente { background: #fff3cd; color: #856404; }
+.status-traite { background: #d1ecf1; color: #0c5460; }
+.status-annule { background: #f8d7da; color: #721c24; }
+
 .stat-badge {
     padding: 4px 12px;
     border-radius: 20px;
@@ -348,7 +368,7 @@
     align-items: center;
     margin-bottom: 20px;
 }
-
+.action-btn.secondary { background: #8B5CF6; }
 .card-header h3 {
     margin: 0;
     color: #1a202c;

@@ -252,9 +252,9 @@
                         </a>
                     </div>
                     <div class="col-6">
-                        <a href="{{ route('user.devis.attente') }}" class="quick-action-btn">
+                        <a href="{{ route('demande-recuperation.create') }}" class="quick-action-btn">
                             <i class="fas fa-list-alt fa-2x mb-2"></i>
-                            <div>Devis en Attente</div>
+                            <div>Demande Récup.</div>
                         </a>
                     </div>
                     <div class="col-6">

@@ -49,6 +49,19 @@
             </div> --}}
         </div>
     </div>
+    
+    <div class="stat-card demande-stat">
+            <div class="stat-icon">
+                <i class="fas fa-box"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-value">{{ $stats['demandes_recuperation_en_attente'] }}</h3>
+                <p class="stat-label">Demandes Récupération</p>
+                <div class="stat-badge pending">
+                    {{ $stats['demandes_recuperation_traitees'] }} traitées
+                </div>
+            </div>
+        </div>
 
     <!-- Carte Devis -->
     <div class="stat-card devis-stat">
@@ -249,6 +262,13 @@
     color: #1a202c;
     margin: 0;
 }
+
+.demande-stat { border-left-color: #8B5CF6; }
+.demande-stat .stat-icon { background: #8B5CF6; }
+
+.status-en_attente { background: #fff3cd; color: #856404; }
+.status-traite { background: #d1ecf1; color: #0c5460; }
+.status-annule { background: #f8d7da; color: #721c24; }
 
 .header-subtitle {
     color: #718096;

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Agence;
 use App\Models\Colis;
 use App\Models\Conteneur;
+use App\Models\DemandeRecuperation;
 use App\Models\Devis;
 use App\Models\User;
 use DateTime;
@@ -39,6 +40,10 @@ class AgentDashboard extends Controller
             
             'colis_payes' => Colis::where('agence_expedition_id', $agenceId)->where('statut_paiement', 'totalement_paye')->count(),
             'colis_en_attente_paiement' => Colis::where('agence_expedition_id', $agenceId)->where('statut_paiement', 'non_paye')->count(),
+            'demandes_recuperation_total' => DemandeRecuperation::where('agence_id', $agenceId)->count(),
+            'demandes_recuperation_en_attente' => DemandeRecuperation::where('agence_id', $agenceId)->where('statut', 'en_attente')->count(),
+            'demandes_recuperation_traitees' => DemandeRecuperation::where('agence_id', $agenceId)->where('statut', 'traite')->count(),
+            'demandes_recuperation_annulees' => DemandeRecuperation::where('agence_id', $agenceId)->where('statut', 'annule')->count(),
         ];
 
         // Derniers colis de l'agence
@@ -66,7 +71,7 @@ class AgentDashboard extends Controller
             'recentDevis',
             'monthlyStats',
             'agence',
-            'agent'
+            'agent',
         ));
     }
 

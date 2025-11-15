@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Agence;
 use App\Models\Colis;
 use App\Models\Conteneur;
+use App\Models\DemandeRecuperation;
 use App\Models\Devis;
 use App\Models\User;
 use DateTime;
@@ -28,6 +29,10 @@ class AdminDashboard extends Controller
             'conteneurs_fermes' => Conteneur::where('statut', 'fermer')->count(),
             'devis_en_attente' => Devis::where('statut', 'en_attente')->where('montant_devis', null)->count(),
             'devis_traites' => Devis::where('statut', 'traite')->where('montant_devis', '!=', null)->count(),
+            'demandes_recuperation_total' => DemandeRecuperation::count(),
+            'demandes_recuperation_en_attente' => DemandeRecuperation::where('statut', 'en_attente')->count(),
+            'demandes_recuperation_traitees' => DemandeRecuperation::where('statut', 'traite')->count(),
+            'demandes_recuperation_annulees' => DemandeRecuperation::where('statut', 'annule')->count(),
         ];
 
         // Derniers colis
@@ -41,6 +46,11 @@ class AdminDashboard extends Controller
         $recentUsers = User::orderBy('created_at', 'desc')
             ->limit(5)
             ->get();
+        
+        $recentDemandes = DemandeRecuperation::with('agence')
+        ->orderBy('created_at', 'desc')
+        ->limit(5)
+        ->get();
 
         // Statistiques mensuelles pour le graphique
         $monthlyStats = $this->getMonthlyStats();
@@ -53,7 +63,8 @@ class AdminDashboard extends Controller
             'recentColis', 
             'recentUsers',
             'monthlyStats',
-            'topAgences'
+            'topAgences',
+            'recentDemandes'
         ));
     }
 
