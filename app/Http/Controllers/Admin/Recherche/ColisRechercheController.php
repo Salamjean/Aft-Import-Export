@@ -13,7 +13,7 @@ public function search(Request $request)
 {
     $reference = $request->get('reference');
     
-    $recuperation = Recuperation::where('reference', $reference)->first();
+    $recuperation = Recuperation::where('statut','termine')->where('reference', $reference)->first();
     
     if ($recuperation) {
         return response()->json([
