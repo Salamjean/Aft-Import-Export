@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\Devis\AdminDevisController;
 use App\Http\Controllers\Admin\Programme\DepotController;
 use App\Http\Controllers\Admin\Programme\ProgrammeController;
 use App\Http\Controllers\Admin\Programme\RecuperationController;
+use App\Http\Controllers\Admin\Recherche\ColisRechercheController;
 use App\Http\Controllers\Admin\Scan\ChargerController;
 use App\Http\Controllers\Admin\Scan\DechargerController;
 use App\Http\Controllers\Admin\Scan\ScannerController;
@@ -191,7 +192,7 @@ Route::prefix('admin')->group(function () {
             Route::get('/{depot}/download-etiquettes', [DepotController::class, 'downloadEtiquettes'])->name('download-etiquettes');
             
              // Routes supplémentaires pour la gestion complète
-            Route::put('/{depot}', [DepotController::class, 'update'])->name('update');
+            Route::put('/{depot}', [DepotController::class, 'update'])->name('depot.update');
             Route::delete('/{depot}', [DepotController::class, 'destroy'])->name('destroy');
             Route::patch('/{depot}/statut', [DepotController::class, 'updateStatut'])->name('update-statut');
 
@@ -199,6 +200,8 @@ Route::prefix('admin')->group(function () {
             Route::get('/indexRecuperation', [RecuperationController::class, 'index'])->name('recuperation.index');
             Route::get('/recuperation', [RecuperationController::class, 'create'])->name('recuperation.create');
             Route::post('/recuperation', [RecuperationController::class, 'store'])->name('recuperation.store');
+            Route::get('/recuperation/{id}/edit', [RecuperationController::class, 'edit'])->name('recuperation.edit');
+            Route::put('/recuperation/{id}', [RecuperationController::class, 'update'])->name('recuperation.update');
             Route::get('/recuperation/{id}/details', [RecuperationController::class, 'details'])->name('recuperation.details');
             Route::get('/recuperation/{id}/download-etiquettes', [RecuperationController::class, 'downloadEtiquettes'])->name('recuperation.download-etiquettes');
             Route::delete('/recuperation/{id}', [RecuperationController::class, 'destroy'])->name('recuperation.destroy');
@@ -374,7 +377,7 @@ Route::middleware('agent')->prefix('agent')->group(function(){
             Route::get('/{depot}/download-etiquettes', [AgentDepotController::class, 'downloadEtiquettes'])->name('agent.download-etiquettes');
             
              // Routes supplémentaires pour la gestion complète
-            Route::put('/{depot}', [AgentDepotController::class, 'update'])->name('agent.update');
+            Route::put('/{depot}', [AgentDepotController::class, 'update'])->name('agent.depot.update');
             Route::delete('/{depot}', [AgentDepotController::class, 'destroy'])->name('agent.destroy');
             Route::patch('/{depot}/statut', [AgentDepotController::class, 'updateStatut'])->name('agent.update-statut');
 
@@ -382,6 +385,8 @@ Route::middleware('agent')->prefix('agent')->group(function(){
             Route::get('/indexRecuperation', [AgentRecuperationController::class, 'index'])->name('agent.recuperation.index');
             Route::get('/recuperation', [AgentRecuperationController::class, 'create'])->name('agent.recuperation.create');
             Route::post('/recuperation', [AgentRecuperationController::class, 'store'])->name('agent.recuperation.store');
+            Route::get('/recuperation/{id}/edit', [AgentRecuperationController::class, 'edit'])->name('agent.recuperation.edit');
+            Route::put('/recuperation/{id}', [AgentRecuperationController::class, 'update'])->name('agent.recuperation.update');
             Route::get('/recuperation/{id}/details', [AgentRecuperationController::class, 'details'])->name('agent.recuperation.details');
             Route::get('/recuperation/{id}/download-etiquettes', [AgentRecuperationController::class, 'downloadEtiquettes'])->name('agent.recuperation.download-etiquettes');
             Route::delete('/recuperation/{id}', [AgentRecuperationController::class, 'destroy'])->name('agent.recuperation.destroy');
@@ -474,4 +479,6 @@ Route::post('/admin/send-group-email', [EmailController::class, 'sendGroupEmail'
 Route::post('/admin/send-prospect-group-email', [EmailController::class, 'sendProspectGroupEmail'])->name('admin.send-prospect-group-email');
 Route::post('/admin/send-prospect-individual-email', [EmailController::class, 'sendProspectIndividualEmail'])->name('admin.send-prospect-individual-email');
 Route::get('/api/track-colis/{reference}', [TrackingController::class, 'trackColis'])->name('recherche.colis');
+Route::get('/admin/recuperation/search', [ColisRechercheController::class, 'search'])->name('recuperation.search');
+Route::get('/admin/recuperation/{id}/details', [ColisRechercheController::class, 'details'])->name('recuperation.details');
 

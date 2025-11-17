@@ -7,6 +7,7 @@ use App\Models\Chauffeur;
 use App\Models\Recuperation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Str;
@@ -229,6 +230,124 @@ class AgentRecuperationController extends Controller
             
         } catch (\Exception $e) {
             return back()->with('error', 'Erreur génération PDF: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($id)
+    {
+        $recuperation = Recuperation::findOrFail($id);
+        $chauffeurs = Chauffeur::all();
+        
+        return view('agent.recuperation.edit', compact('recuperation', 'chauffeurs'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
+    {
+        $recuperation = Recuperation::findOrFail($id);
+
+        $request->validate([
+            'chauffeur_id' => 'required|exists:chauffeurs,id',
+            'nature_objet' => 'required|string',
+            'quantite' => 'required|integer|min:1',
+            'nom_concerne' => 'required|string',
+            'prenom_concerne' => 'required|string',
+            'contact' => 'required|string',
+            'email' => 'nullable|email',
+            'adresse_recuperation' => 'required|string',
+            'date_recuperation' => 'nullable|date',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $oldQuantite = $recuperation->quantite;
+            $newQuantite = $request->quantite;
+
+            // Récupérer les codes et QR codes existants
+            $existingCodes = $recuperation->code_nature ? explode(',', $recuperation->code_nature) : [];
+            $existingQrPaths = $recuperation->path_qrcode ? explode(',', $recuperation->path_qrcode) : [];
+
+            if ($newQuantite != $oldQuantite) {
+                // Gestion de la modification de quantité
+                if ($newQuantite > $oldQuantite) {
+                    // Ajouter des codes
+                    $codesToAdd = [];
+                    $qrPathsToAdd = [];
+                    
+                    for ($i = count($existingCodes); $i < $newQuantite; $i++) {
+                        $codeNature = 'REC-' . date('Ymd') . '-' . strtoupper(Str::random(6));
+                        $qrCodePath = $this->generateQRCode($codeNature);
+                        
+                        $codesToAdd[] = $codeNature;
+                        $qrPathsToAdd[] = $qrCodePath;
+                    }
+                    
+                    // Fusionner avec les codes existants
+                    $allCodes = array_merge($existingCodes, $codesToAdd);
+                    $allQrPaths = array_merge($existingQrPaths, $qrPathsToAdd);
+                    
+                } else {
+                    // Supprimer des codes (garder seulement les premiers)
+                    $allCodes = array_slice($existingCodes, 0, $newQuantite);
+                    $allQrPaths = array_slice($existingQrPaths, 0, $newQuantite);
+                    
+                    // Supprimer les fichiers QR code des codes enlevés
+                    $codesToRemove = array_slice($existingCodes, $newQuantite);
+                    $qrPathsToRemove = array_slice($existingQrPaths, $newQuantite);
+                    
+                    foreach ($qrPathsToRemove as $qrPath) {
+                        if ($qrPath && file_exists(public_path($qrPath))) {
+                            unlink(public_path($qrPath));
+                        }
+                    }
+                }
+            } else {
+                // Quantité inchangée, garder les codes existants
+                $allCodes = $existingCodes;
+                $allQrPaths = $existingQrPaths;
+            }
+
+            // Mise à jour de la récupération
+            $recuperation->update([
+                'chauffeur_id' => $request->chauffeur_id,
+                'nature_objet' => $request->nature_objet,
+                'quantite' => $newQuantite,
+                'nom_concerne' => $request->nom_concerne,
+                'prenom_concerne' => $request->prenom_concerne,
+                'contact' => $request->contact,
+                'email' => $request->email,
+                'adresse_recuperation' => $request->adresse_recuperation,
+                'date_recuperation' => $request->date_recuperation,
+                'code_nature' => implode(',', $allCodes),
+                'path_qrcode' => implode(',', $allQrPaths),
+            ]);
+
+            DB::commit();
+
+            $message = 'Récupération modifiée avec succès.';
+            if ($newQuantite != $oldQuantite) {
+                $difference = abs($newQuantite - $oldQuantite);
+                $action = $newQuantite > $oldQuantite ? 'ajoutés' : 'supprimés';
+                $message .= " $difference code(s) $action.";
+            }
+
+            return redirect()->route('agent.recuperation.index')
+                ->with('success', $message);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            
+            Log::error('Erreur modification récupération: ' . $e->getMessage());
+            
+            return redirect()->back()
+                ->with('error', 'Erreur lors de la modification de la récupération: ' . $e->getMessage())
+                ->withInput();
         }
     }
 

@@ -68,6 +68,37 @@
                             </div>
                         </div>
 
+                        <!-- Ligne 2 : Recherche de récupération pour pré-remplir -->
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <i class="fas fa-search me-2"></i>Référence d'une récupération existante
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="text" class="border-start-0 modern-input" id="search-recuperation"
+                                            placeholder="Entrez la référence d'une récupération (ex: REC-20241201-XXXX) pour pré-remplir">
+                                    </div>
+                                    <small class="text-muted">La recherche pré-remplira automatiquement les informations de
+                                        l'expéditeur, du destinataire et des colis</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" style="opacity: 0;">Action</label>
+                                    <button type="button" class="btn btn-primary w-100" id="search-recuperation-btn"
+                                        style="background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%); height: 48px;">
+                                        <i class="fas fa-search me-2"></i>Rechercher
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Résultats de recherche -->
+                        <div id="search-recuperation-results" class="mt-3" style="display: none;">
+                            <!-- Les résultats apparaîtront ici -->
+                        </div>
+
                         <form action="{{ route('colis.store') }}" method="POST" class="modern-form" id="colisForm">
                             @csrf
 
@@ -117,7 +148,8 @@
                                                     style="background-color: #f8f9fa;">
                                             </div>
                                             <small class="text-muted mt-1">Agence en Côte d'Ivoire</small>
-                                            <input type="hidden" id="agence_destination_id" name="agence_destination_id">
+                                            <input type="hidden" id="agence_destination_id"
+                                                name="agence_destination_id">
                                         </div>
                                     </div>
 
@@ -1525,7 +1557,7 @@
             function updateAgencesInModals(agences) {
                 const selects = document.querySelectorAll(
                     '#addProduitModal select[name="agence_destination_id"], #addServiceModal select[name="agence_destination_id"]'
-                    );
+                );
 
                 selects.forEach(select => {
                     select.innerHTML = '<option value="">Sélectionnez une agence</option>';
@@ -1841,7 +1873,8 @@
                 const agenceDestinationId = document.getElementById('agence_destination_id').value;
 
                 fetch(
-                        `/produits/search?q=${encodeURIComponent(searchTerm)}&agence_destination_id=${agenceDestinationId}`)
+                        `/produits/search?q=${encodeURIComponent(searchTerm)}&agence_destination_id=${agenceDestinationId}`
+                        )
                     .then(response => response.json())
                     .then(produits => {
                         displayProduitResults(produits, currentIndex);
@@ -1874,7 +1907,7 @@
                     </div>
                 `;
                         produitElement.addEventListener('click', () => selectProduit(produit,
-                        currentIndex));
+                            currentIndex));
                         resultsContainer.appendChild(produitElement);
                     });
                 }
@@ -2189,7 +2222,7 @@
                     let totalColis = 0;
                     if (modeTransit === 'Aerien') {
                         totalColis =
-                        prixUnitaire; // En aérien, le prix unitaire est déjà le total pour le colis
+                            prixUnitaire; // En aérien, le prix unitaire est déjà le total pour le colis
                     } else {
                         totalColis = quantite * prixUnitaire; // En maritime, on multiplie par la quantité
                     }
@@ -2382,6 +2415,179 @@
                 toggleInfoCalculAuto();
             }, 500);
         });
+
+        // Recherche de récupération au step 1
+        document.getElementById('search-recuperation-btn').addEventListener('click', searchRecuperation);
+        document.getElementById('search-recuperation').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchRecuperation();
+            }
+        });
+
+        function searchRecuperation() {
+            const reference = document.getElementById('search-recuperation').value.trim();
+
+            if (!reference) {
+                Swal.fire({
+                    title: 'Champ vide',
+                    text: 'Veuillez entrer une référence de récupération',
+                    icon: 'warning',
+                    confirmButtonColor: '#0e914b'
+                });
+                return;
+            }
+
+            if (!reference.startsWith('REC-')) {
+                Swal.fire({
+                    title: 'Format invalide',
+                    text: 'La référence doit commencer par "REC-"',
+                    icon: 'warning',
+                    confirmButtonColor: '#0e914b'
+                });
+                return;
+            }
+
+            Swal.fire({
+                title: 'Recherche en cours...',
+                text: 'Recherche de la récupération ' + reference,
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            fetch(`/admin/recuperation/search?reference=${encodeURIComponent(reference)}`)
+                .then(response => response.json())
+                .then(data => {
+                    Swal.close();
+
+                    if (data.success && data.recuperation) {
+                        displayRecuperationResults(data.recuperation);
+                    } else {
+                        Swal.fire({
+                            title: 'Non trouvé',
+                            text: data.error || 'Aucune récupération trouvée avec cette référence',
+                            icon: 'error',
+                            confirmButtonColor: '#0e914b'
+                        });
+                    }
+                })
+                .catch(error => {
+                    Swal.fire({
+                        title: 'Erreur',
+                        text: 'Erreur lors de la recherche: ' + error.message,
+                        icon: 'error',
+                        confirmButtonColor: '#0e914b'
+                    });
+                });
+        }
+
+        function displayRecuperationResults(recuperation) {
+            const resultsDiv = document.getElementById('search-recuperation-results');
+
+            resultsDiv.innerHTML = `
+        <div class="alert alert-success">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h6 class="mb-1"><i class="fas fa-check-circle me-2"></i>Récupération trouvée</h6>
+                    <p class="mb-1"><strong>Référence:</strong> ${recuperation.reference}</p>
+                    <p class="mb-1"><strong>Nature:</strong> ${recuperation.nature_objet}</p>
+                    <p class="mb-1"><strong>Quantité:</strong> ${recuperation.quantite}</p>
+                    <p class="mb-1"><strong>Client:</strong> ${recuperation.nom_concerne} ${recuperation.prenom_concerne}</p>
+                    <p class="mb-1"><strong>Contact:</strong> ${recuperation.contact}</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <button type="button" class="btn btn-primary" onclick="fillAllFieldsFromRecuperation(${recuperation.id})">
+                        <i class="fas fa-magic me-2"></i>Pré-remplir tout
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+            resultsDiv.style.display = 'block';
+        }
+
+        function fillAllFieldsFromRecuperation(recuperationId) {
+            fetch(`/admin/recuperation/${recuperationId}/details`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.data) {
+                        const recuperation = data.data;
+
+                        // 1. Pré-remplir l'expéditeur (étape 2)
+                        document.getElementById('name_expediteur').value = recuperation.nom_concerne || '';
+                        document.getElementById('prenom_expediteur').value = recuperation.prenom_concerne || '';
+                        document.getElementById('email_expediteur').value = recuperation.email || '';
+                        document.getElementById('contact_expediteur').value = recuperation.contact || '';
+                        document.getElementById('adresse_expediteur').value = recuperation.adresse_recuperation || '';
+
+                        // 2. Pré-remplir le destinataire (étape 3)
+                        document.getElementById('name_destinataire').value = recuperation.nom_concerne || '';
+                        document.getElementById('prenom_destinataire').value = recuperation.prenom_concerne || '';
+                        document.getElementById('email_destinataire').value = recuperation.email || '';
+                        document.getElementById('contact_destinataire').value = recuperation.contact || '';
+                        document.getElementById('adresse_destinataire').value = recuperation.adresse_recuperation || '';
+                        document.getElementById('indicatif').value = '+225'; // Indicatif Côte d'Ivoire par défaut
+
+                        // 3. Pré-remplir les colis (étape 4)
+                        const firstColis = document.querySelector('.colis-item[data-index="0"]');
+                        if (firstColis) {
+                            const produitInput = firstColis.querySelector('input[name="colis[0][produit]"]');
+                            const quantiteInput = firstColis.querySelector('input[name="colis[0][quantite]"]');
+
+                            if (produitInput) {
+                                produitInput.value = recuperation.nature_objet || '';
+                            }
+
+                            if (quantiteInput) {
+                                quantiteInput.value = recuperation.quantite || 1;
+                            }
+
+                            // Déclencher les événements de mise à jour
+                            quantiteInput.dispatchEvent(new Event('input'));
+                        }
+
+                        Swal.fire({
+                            title: 'Formulaire pré-rempli !',
+                            html: `
+                        <div class="text-start">
+                            <p><strong>✓ Expéditeur:</strong> Rempli</p>
+                            <p><strong>✓ Destinataire:</strong> Rempli</p>
+                            <p><strong>✓ Colis:</strong> Nature: ${recuperation.nature_objet}, Quantité: ${recuperation.quantite}</p>
+                        </div>
+                    `,
+                            icon: 'success',
+                            confirmButtonColor: '#0e914b',
+                            timer: 3000
+                        });
+
+                        // Cacher les résultats
+                        document.getElementById('search-recuperation-results').style.display = 'none';
+                        document.getElementById('search-recuperation').value = '';
+                    }
+                })
+                .catch(error => {
+                    Swal.fire({
+                        title: 'Erreur',
+                        text: 'Erreur lors du chargement des détails: ' + error.message,
+                        icon: 'error',
+                        confirmButtonColor: '#0e914b'
+                    });
+                });
+        }
+
+        function clearRecuperationSearch() {
+            document.getElementById('search-recuperation').value = '';
+            document.getElementById('search-recuperation-results').style.display = 'none';
+
+            Swal.fire({
+                title: 'Champ effacé',
+                text: 'La recherche a été réinitialisée',
+                icon: 'info',
+                confirmButtonColor: '#0e914b',
+                timer: 1500
+            });
+        }
     </script>
 
     <style>

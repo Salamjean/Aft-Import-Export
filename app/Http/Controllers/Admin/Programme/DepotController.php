@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Chauffeur;
 use App\Models\Depot;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Str;
@@ -144,11 +145,13 @@ class DepotController extends Controller
             ], 404);
         }
     }
+
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Depot $depot)
+    public function edit($id)
     {
+        $depot = Depot::findOrFail($id);
         $chauffeurs = Chauffeur::all();
         return view('admin.depot.edit', compact('depot', 'chauffeurs'));
     }
@@ -156,11 +159,14 @@ class DepotController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Depot $depot)
+    public function update(Request $request, $id)
     {
+        $depot = Depot::findOrFail($id);
+
         $request->validate([
             'chauffeur_id' => 'required|exists:chauffeurs,id',
             'nature_objet' => 'required|string',
+            'quantite' => 'required|integer|min:1',
             'nom_concerne' => 'required|string',
             'prenom_concerne' => 'required|string',
             'contact' => 'required|string',
@@ -169,10 +175,92 @@ class DepotController extends Controller
             'date_depot' => 'nullable|date',
         ]);
 
-        $depot->update($request->all());
+        try {
+            DB::beginTransaction();
 
-        return redirect()->route('admin.depots.index')
-            ->with('success', 'Dépôt mis à jour avec succès.');
+            $oldQuantite = $depot->quantite;
+            $newQuantite = $request->quantite;
+
+            // Récupérer les codes et QR codes existants
+            $existingCodes = $depot->code_nature ? explode(',', $depot->code_nature) : [];
+            $existingQrPaths = $depot->path_qrcode ? explode(',', $depot->path_qrcode) : [];
+
+            if ($newQuantite != $oldQuantite) {
+                // Gestion de la modification de quantité
+                if ($newQuantite > $oldQuantite) {
+                    // Ajouter des codes
+                    $codesToAdd = [];
+                    $qrPathsToAdd = [];
+                    
+                    for ($i = count($existingCodes); $i < $newQuantite; $i++) {
+                        $codeNature = 'DEP-' . date('Ymd') . '-' . strtoupper(Str::random(6));
+                        $qrCodePath = $this->generateQRCode($codeNature);
+                        
+                        $codesToAdd[] = $codeNature;
+                        $qrPathsToAdd[] = $qrCodePath;
+                    }
+                    
+                    // Fusionner avec les codes existants
+                    $allCodes = array_merge($existingCodes, $codesToAdd);
+                    $allQrPaths = array_merge($existingQrPaths, $qrPathsToAdd);
+                    
+                } else {
+                    // Supprimer des codes (garder seulement les premiers)
+                    $allCodes = array_slice($existingCodes, 0, $newQuantite);
+                    $allQrPaths = array_slice($existingQrPaths, 0, $newQuantite);
+                    
+                    // Supprimer les fichiers QR code des codes enlevés
+                    $codesToRemove = array_slice($existingCodes, $newQuantite);
+                    $qrPathsToRemove = array_slice($existingQrPaths, $newQuantite);
+                    
+                    foreach ($qrPathsToRemove as $qrPath) {
+                        if ($qrPath && file_exists(public_path($qrPath))) {
+                            unlink(public_path($qrPath));
+                        }
+                    }
+                }
+            } else {
+                // Quantité inchangée, garder les codes existants
+                $allCodes = $existingCodes;
+                $allQrPaths = $existingQrPaths;
+            }
+
+            // Mise à jour du dépôt
+            $depot->update([
+                'chauffeur_id' => $request->chauffeur_id,
+                'nature_objet' => $request->nature_objet,
+                'quantite' => $newQuantite,
+                'nom_concerne' => $request->nom_concerne,
+                'prenom_concerne' => $request->prenom_concerne,
+                'contact' => $request->contact,
+                'email' => $request->email,
+                'adresse_depot' => $request->adresse_depot,
+                'date_depot' => $request->date_depot,
+                'code_nature' => implode(',', $allCodes),
+                'path_qrcode' => implode(',', $allQrPaths),
+            ]);
+
+            DB::commit();
+
+            $message = 'Dépôt modifié avec succès.';
+            if ($newQuantite != $oldQuantite) {
+                $difference = abs($newQuantite - $oldQuantite);
+                $action = $newQuantite > $oldQuantite ? 'ajoutés' : 'supprimés';
+                $message .= " $difference code(s) $action.";
+            }
+
+            return redirect()->route('depot.index')
+                ->with('success', $message);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            
+            Log::error('Erreur modification dépôt: ' . $e->getMessage());
+            
+            return redirect()->back()
+                ->with('error', 'Erreur lors de la modification du dépôt: ' . $e->getMessage())
+                ->withInput();
+        }
     }
 
     /**

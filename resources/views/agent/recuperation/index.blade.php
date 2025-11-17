@@ -223,11 +223,11 @@
                                                         title="Détails">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-outline-warning btn-action" 
-                                                        onclick="editRecuperation({{ $recuperation->id }})" 
-                                                        title="Modifier">
+                                                <a href="{{ route('agent.recuperation.edit', $recuperation->id) }}" 
+                                                    class="btn btn-sm btn-outline-warning btn-action" 
+                                                    title="Modifier">
                                                     <i class="fas fa-edit"></i>
-                                                </button>
+                                                </a>
                                                 <button class="btn btn-sm btn-outline-danger btn-action" 
                                                         onclick="confirmDelete({{ $recuperation->id }})" 
                                                         title="Supprimer">
