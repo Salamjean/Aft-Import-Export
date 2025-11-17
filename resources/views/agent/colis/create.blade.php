@@ -1392,7 +1392,7 @@
 
                 fetch(
                         `/produits/search?q=${encodeURIComponent(searchTerm)}&agence_destination_id=${agenceDestinationId}`
-                        )
+                    )
                     .then(response => response.json())
                     .then(produits => {
                         displayProduitResults(produits, currentIndex);
@@ -2644,6 +2644,9 @@
         function displayRecuperationResults(recuperation) {
             const resultsDiv = document.getElementById('search-recuperation-results');
 
+            // Vérifier si des informations spécifiques du destinataire existent
+            const hasSpecificDestinataire = recuperation.nom_destinataire || recuperation.prenom_destinataire;
+
             resultsDiv.innerHTML = `
         <div class="alert alert-success">
             <div class="row align-items-center">
@@ -2652,7 +2655,10 @@
                     <p class="mb-1"><strong>Référence:</strong> ${recuperation.reference}</p>
                     <p class="mb-1"><strong>Nature:</strong> ${recuperation.nature_objet}</p>
                     <p class="mb-1"><strong>Quantité:</strong> ${recuperation.quantite}</p>
-                    <p class="mb-1"><strong>Client:</strong> ${recuperation.nom_concerne} ${recuperation.prenom_concerne}</p>
+                    <p class="mb-1"><strong>Expéditeur:</strong> ${recuperation.nom_concerne} ${recuperation.prenom_concerne}</p>
+                    ${hasSpecificDestinataire ? 
+                        `<p class="mb-1"><strong>Destinataire spécifique:</strong> ${recuperation.nom_destinataire} ${recuperation.prenom_destinataire}</p>` : 
+                        ''}
                     <p class="mb-1"><strong>Contact:</strong> ${recuperation.contact}</p>
                 </div>
                 <div class="col-md-4 text-end">
@@ -2680,13 +2686,25 @@
                         document.getElementById('contact_expediteur').value = recuperation.contact || '';
                         document.getElementById('adresse_expediteur').value = recuperation.adresse_recuperation || '';
 
-                        // 2. Pré-remplir le destinataire (étape 3)
-                        document.getElementById('name_destinataire').value = recuperation.nom_concerne || '';
-                        document.getElementById('prenom_destinataire').value = recuperation.prenom_concerne || '';
-                        document.getElementById('email_destinataire').value = recuperation.email || '';
-                        document.getElementById('contact_destinataire').value = recuperation.contact || '';
-                        document.getElementById('adresse_destinataire').value = recuperation.adresse_recuperation || '';
-                        document.getElementById('indicatif').value = '+225'; // Indicatif Côte d'Ivoire par défaut
+                        // 2. Pré-remplir le destinataire (étape 3) - CORRECTION ICI
+                        // Utiliser les champs spécifiques du destinataire s'ils existent, sinon utiliser les champs de l'expéditeur
+                        document.getElementById('name_destinataire').value = recuperation.nom_destinataire ||
+                            recuperation.nom_concerne || '';
+                        document.getElementById('prenom_destinataire').value = recuperation.prenom_destinataire ||
+                            recuperation.prenom_concerne || '';
+                        document.getElementById('email_destinataire').value = recuperation.email_destinataire ||
+                            recuperation.email || '';
+                        document.getElementById('contact_destinataire').value = recuperation.contact_destinataire ||
+                            recuperation.contact || '';
+                        document.getElementById('adresse_destinataire').value = recuperation.adresse_destinataire ||
+                            recuperation.adresse_recuperation || '';
+
+                        // Gérer l'indicatif
+                        if (recuperation.indicatif_destinataire) {
+                            document.getElementById('indicatif').value = recuperation.indicatif_destinataire;
+                        } else {
+                            document.getElementById('indicatif').value = '+225'; // Indicatif Côte d'Ivoire par défaut
+                        }
 
                         // 3. Pré-remplir les colis (étape 4)
                         const firstColis = document.querySelector('.colis-item[data-index="0"]');
@@ -2709,12 +2727,13 @@
                         Swal.fire({
                             title: 'Formulaire pré-rempli !',
                             html: `
-                        <div class="text-start">
-                            <p><strong>✓ Expéditeur:</strong> Rempli</p>
-                            <p><strong>✓ Destinataire:</strong> Rempli</p>
-                            <p><strong>✓ Colis:</strong> Nature: ${recuperation.nature_objet}, Quantité: ${recuperation.quantite}</p>
-                        </div>
-                    `,
+                <div class="text-start">
+                    <p><strong>✓ Expéditeur:</strong> Rempli</p>
+                    <p><strong>✓ Destinataire:</strong> Rempli</p>
+                    <p><strong>✓ Colis:</strong> Nature: ${recuperation.nature_objet}, Quantité: ${recuperation.quantite}</p>
+                    ${recuperation.nom_destinataire ? '<p><strong>✓ Destinataire spécifique:</strong> Utilisé</p>' : ''}
+                </div>
+            `,
                             icon: 'success',
                             confirmButtonColor: '#0e914b',
                             timer: 3000
