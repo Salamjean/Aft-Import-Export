@@ -223,23 +223,25 @@
                                                         title="Détails">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-outline-warning btn-action" 
-                                                        onclick="editDepot({{ $depot->id }})" 
-                                                        title="Modifier">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <div class="dropdown">
-                                                        <button class="btn btn-sm btn-outline-success btn-action" 
-                                                                onclick="showEtiquettesOptions({{ $depot->id }})" 
-                                                                title="Étiquettes">
-                                                            <i class="fas fa-tag"></i>
-                                                        </button>
-                                                    </div>
-                                                <button class="btn btn-sm btn-outline-danger btn-action" 
-                                                        onclick="confirmDelete({{ $depot->id }})" 
-                                                        title="Supprimer">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
+                                                @if ($depot->statut !== 'termine')
+                                                    <button class="btn btn-sm btn-outline-warning btn-action" 
+                                                            onclick="editDepot({{ $depot->id }})" 
+                                                            title="Modifier">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <div class="dropdown">
+                                                            <button class="btn btn-sm btn-outline-success btn-action" 
+                                                                    onclick="showEtiquettesOptions({{ $depot->id }})" 
+                                                                    title="Étiquettes">
+                                                                <i class="fas fa-tag"></i>
+                                                            </button>
+                                                        </div>
+                                                    <button class="btn btn-sm btn-outline-danger btn-action" 
+                                                            onclick="confirmDelete({{ $depot->id }})" 
+                                                            title="Supprimer">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>

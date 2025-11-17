@@ -223,16 +223,18 @@
                                                         title="Détails">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
-                                                <a href="{{ route('agent.recuperation.edit', $recuperation->id) }}" 
-                                                    class="btn btn-sm btn-outline-warning btn-action" 
-                                                    title="Modifier">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <button class="btn btn-sm btn-outline-danger btn-action" 
-                                                        onclick="confirmDelete({{ $recuperation->id }})" 
-                                                        title="Supprimer">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
+                                                @if ($recuperation->statut !== 'termine')
+                                                    <a href="{{ route('agent.recuperation.edit', $recuperation->id) }}" 
+                                                        class="btn btn-sm btn-outline-warning btn-action" 
+                                                        title="Modifier">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <button class="btn btn-sm btn-outline-danger btn-action" 
+                                                            onclick="confirmDelete({{ $recuperation->id }})" 
+                                                            title="Supprimer">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>

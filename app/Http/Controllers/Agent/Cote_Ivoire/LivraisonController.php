@@ -192,6 +192,67 @@ class LivraisonController extends Controller
         }
     }
 
+    /**
+     * Afficher le formulaire de modification
+     */
+    public function edit($id)
+    {
+        $livraison = Livraison::findOrFail($id);
+        $chauffeurs = Chauffeur::all();
+        
+        return view('ivoire.livraison.edit', compact('livraison', 'chauffeurs'));
+    }
+
+    /**
+     * Mettre à jour la livraison
+     */
+    public function update(Request $request, $id)
+    {
+        $livraison = Livraison::findOrFail($id);
+
+        $request->validate([
+            'chauffeur_id' => 'required|exists:chauffeurs,id',
+            'nature_objet' => 'required|string|max:255',
+            'quantite' => 'required|integer|min:1',
+            'adresse_livraison' => 'required|string|max:500',
+            'nom_concerne' => 'required|string|max:255',
+            'prenom_concerne' => 'required|string|max:255',
+            'contact' => 'required|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'date_livraison' => 'nullable|date|after_or_equal:today',
+        ]);
+
+        try {
+            // Préparer la date de livraison
+            $dateLivraison = $request->date_livraison 
+                ? \Carbon\Carbon::parse($request->date_livraison)
+                : null;
+
+            // Mise à jour de la livraison
+            $livraison->update([
+                'chauffeur_id' => $request->chauffeur_id,
+                'nature_objet' => $request->nature_objet,
+                'quantite' => $request->quantite,
+                'adresse_livraison' => $request->adresse_livraison,
+                'nom_concerne' => $request->nom_concerne,
+                'prenom_concerne' => $request->prenom_concerne,
+                'contact' => $request->contact,
+                'email' => $request->email,
+                'date_livraison' => $dateLivraison,
+            ]);
+
+            return redirect()
+                ->route('livraison.index')
+                ->with('success', 'Livraison modifiée avec succès !');
+
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Une erreur est survenue lors de la modification de la livraison: ' . $e->getMessage());
+        }
+    }
+
      public function destroy($id)
     {
         try {

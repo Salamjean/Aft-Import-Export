@@ -280,6 +280,8 @@ Route::middleware('agent')->prefix('agent')->group(function(){
             Route::get('/createDelivery',[LivraisonController::class,'create'])->name('livraison.create');
             Route::get('/indexDelivery',[LivraisonController::class,'index'])->name('livraison.index');
             Route::post('/createDelivery',[LivraisonController::class,'store'])->name('livraison.store');
+            Route::get('/delivery/{id}/edit', [LivraisonController::class, 'edit'])->name('livraison.edit');
+            Route::put('/delivery/{id}', [LivraisonController::class, 'update'])->name('livraison.update');
             Route::get('/{id}/details', [LivraisonController::class, 'details'])->name('livraison.details');
             Route::delete('/{id}', [LivraisonController::class, 'destroy'])->name('livraison.destroy');
         });
