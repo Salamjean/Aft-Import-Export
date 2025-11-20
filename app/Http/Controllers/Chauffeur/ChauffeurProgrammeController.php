@@ -158,7 +158,9 @@ class ChauffeurProgrammeController extends Controller
                 'email_destinataire' => 'nullable|email',
                 'indicatif_destinataire' => 'required|string|max:10',
                 'contact_destinataire' => 'required|string|max:20',
-                'adresse_destinataire' => 'required|string'
+                'adresse_destinataire' => 'required|string',
+                'type_livraison' => 'required|in:livraison,enlevement',
+                'lieu_livraison' => 'required|string'
             ]);
 
             $recuperation = Recuperation::where('chauffeur_id', Auth::guard('chauffeur')->user()->id)->findOrFail($id);
@@ -169,7 +171,9 @@ class ChauffeurProgrammeController extends Controller
                 'email_destinataire' => $request->email_destinataire,
                 'indicatif_destinataire' => $request->indicatif_destinataire,
                 'contact_destinataire' => $request->contact_destinataire,
-                'adresse_destinataire' => $request->adresse_destinataire
+                'adresse_destinataire' => $request->adresse_destinataire,
+                'type_livraison' => $request->type_livraison,
+                'lieu_livraison' => $request->lieu_livraison
             ]);
 
             return response()->json([

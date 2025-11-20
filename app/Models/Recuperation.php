@@ -28,7 +28,9 @@ class Recuperation extends Model
         'email_destinataire',
         'indicatif_destinataire',
         'contact_destinataire',
-        'adresse_destinataire'
+        'adresse_destinataire',
+        'type_livraison',
+        'lieu_livraison',
     ];
 
     protected $casts = [

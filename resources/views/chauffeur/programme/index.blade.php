@@ -648,8 +648,24 @@ async function showDestinationForm(type, id) {
                 </div>
                 
                 <div class="mt-2">
-                    <label class="form-label small fw-semibold">Adresse de destination *</label>
-                    <textarea id="adresse_destinataire" class="form-control" rows="3" placeholder="Adresse complète du destinataire" required></textarea>
+                    <label class="form-label small fw-semibold">Adresse du destinataire *</label>
+                    <textarea id="adresse_destinataire" class="form-control" rows="2" placeholder="Adresse complète du destinataire" required></textarea>
+                </div>
+
+                <!-- NOUVEAUX CHAMPS -->
+                <div class="row g-2 mt-2">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-semibold">Type de livraison *</label>
+                        <select id="type_livraison" class="form-select" required onchange="toggleLieuLivraison()">
+                            <option value="">Choisir le type...</option>
+                            <option value="livraison">Livraison</option>
+                            <option value="enlevement">Enlèvement</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-semibold" id="label_lieu_livraison">Lieu de livraison *</label>
+                        <input type="text" id="lieu_livraison" class="form-control" placeholder="Entrez le lieu" required style="display: none;">
+                    </div>
                 </div>
                 
                 <div class="alert alert-info mt-3">
@@ -665,27 +681,57 @@ async function showDestinationForm(type, id) {
         confirmButtonColor: '#FF9800',
         cancelButtonColor: '#6c757d',
         preConfirm: () => {
+            const typeLivraison = document.getElementById('type_livraison').value;
+            const lieuLivraison = document.getElementById('lieu_livraison').value;
+            
             return {
                 nom_destinataire: document.getElementById('nom_destinataire').value,
                 prenom_destinataire: document.getElementById('prenom_destinataire').value,
                 email_destinataire: document.getElementById('email_destinataire').value,
                 indicatif_destinataire: document.getElementById('indicatif_destinataire').value,
                 contact_destinataire: document.getElementById('contact_destinataire').value,
-                adresse_destinataire: document.getElementById('adresse_destinataire').value
+                adresse_destinataire: document.getElementById('adresse_destinataire').value,
+                type_livraison: typeLivraison, // Nouveau
+                lieu_livraison: lieuLivraison // Nouveau
             }
         },
         validation: (values) => {
             if (!values.nom_destinataire || !values.prenom_destinataire || 
                 !values.indicatif_destinataire || !values.contact_destinataire || 
-                !values.adresse_destinataire) {
+                !values.adresse_destinataire || !values.type_livraison || !values.lieu_livraison) {
                 Swal.showValidationMessage('Veuillez remplir tous les champs obligatoires');
             }
         },
-        width: 700
+        width: 700,
+        didOpen: () => {
+            // Initialiser le champ lieu_livraison comme caché
+            document.getElementById('lieu_livraison').style.display = 'none';
+        }
     });
 
     if (formValues) {
         await saveDestinationInfoAndDownload(type, id, formValues);
+    }
+}
+
+// Fonction pour afficher/masquer le champ lieu de livraison
+function toggleLieuLivraison() {
+    const typeLivraison = document.getElementById('type_livraison').value;
+    const lieuLivraisonInput = document.getElementById('lieu_livraison');
+    const labelLieuLivraison = document.getElementById('label_lieu_livraison');
+    
+    if (typeLivraison) {
+        lieuLivraisonInput.style.display = 'block';
+        
+        if (typeLivraison === 'livraison') {
+            labelLieuLivraison.textContent = 'Lieu de livraison *';
+            lieuLivraisonInput.placeholder = 'Adresse de livraison (ex: Entrepôt principal...)';
+        } else if (typeLivraison === 'enlevement') {
+            labelLieuLivraison.textContent = 'Lieu d\'enlèvement *';
+            lieuLivraisonInput.placeholder = 'Lieu d\'enlèvement (ex: Point relais, Agence...)';
+        }
+    } else {
+        lieuLivraisonInput.style.display = 'none';
     }
 }
 
@@ -1107,5 +1153,6 @@ window.terminerDepot = terminerDepot;
 window.showDetails = showDetails;
 window.downloadEtiquettes = downloadEtiquettes;
 window.resetFilters = resetFilters;
+window.toggleLieuLivraison = toggleLieuLivraison;
 </script>
 @endsection

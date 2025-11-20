@@ -132,6 +132,8 @@ class RecuperationController extends Controller
                     'indicatif_destinataire' => $recuperation->indicatif_destinataire,
                     'contact_destinataire' => $recuperation->contact_destinataire,
                     'adresse_destinataire' => $recuperation->adresse_destinataire,
+                    'type_livraison' => $recuperation->type_livraison,
+                    'lieu_livraison' => $recuperation->lieu_livraison,
                     // Autres champs
                     'codes_qr' => $codesQr,
                     'code_nature' => $recuperation->code_nature,

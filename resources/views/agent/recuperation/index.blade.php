@@ -703,6 +703,39 @@ function displayDetailsModal(recuperationData) {
         `;
     }
     
+    // SECTION LIVRAISON - Affichage conditionnel
+    let livraisonHtml = '';
+    if (recuperationData.type_livraison && recuperationData.lieu_livraison) {
+        const typeLivraisonLabel = recuperationData.type_livraison === 'livraison' ? 'Livraison' : 'Enlèvement';
+        const typeLivraisonIcon = recuperationData.type_livraison === 'livraison' ? 'fa-truck' : 'fa-box';
+        const typeLivraisonColor = recuperationData.type_livraison === 'livraison' ? '#28a745' : '#ffc107';
+        
+        livraisonHtml = `
+            <div class="row mt-4">
+                <div class="col-12">
+                    <h6 class="mb-3" style="color: ${typeLivraisonColor}">
+                        <i class="fas ${typeLivraisonIcon} me-2"></i>Informations de ${typeLivraisonLabel}
+                    </h6>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-2">
+                                <strong>Type:</strong> 
+                                <span class="badge" style="background: ${typeLivraisonColor}; color: white">
+                                    ${typeLivraisonLabel}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-2">
+                                <strong>Lieu:</strong> ${recuperationData.lieu_livraison}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
     const statutClass = `status-${recuperationData.statut}`;
     
     Swal.fire({
@@ -730,6 +763,7 @@ function displayDetailsModal(recuperationData) {
                     </div>
                 </div>
                 ${destinataireHtml}
+                ${livraisonHtml}
                 ${codesHtml}
                 <div class="mt-3 text-muted small">
                     <i class="fas fa-info-circle me-1"></i>
