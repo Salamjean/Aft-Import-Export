@@ -34,7 +34,7 @@
                         <div class="row mb-4">
                             <div class="col-12">
                                 <h6 class="section-title mb-4">
-                                    <i class="fas fa-box me-2 text-orange"></i>Informations sur l'objet à récupérer
+                                    <i class="fas fa-box me-2 text-orange"></i>Informations sur l'objet à déposer/récupérer
                                 </h6>
                             </div>
                             
@@ -47,7 +47,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                                 <small class="form-text text-muted">
-                                    Décrivez la nature de l'objet à récupérer
+                                    Décrivez la nature de l'objet à déposer/récupérer
                                 </small>
                             </div>
 
@@ -74,7 +74,7 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                     <small class="form-text text-muted">
-                                        Choisissez l'agence vers laquelle l'objet sera envoyé après récupération
+                                        Choisissez l'agence vers laquelle l'objet sera envoyé après déposer/récupération
                                     </small>
                                 </div>
                                 <div class="col-md-3 mb-3">
@@ -147,7 +147,7 @@
                         <div class="row mb-4">
                             <div class="col-12">
                                 <h6 class="section-title mb-4">
-                                    <i class="fas fa-map-marker-alt me-2 text-orange"></i>Adresse de récupération
+                                    <i class="fas fa-map-marker-alt me-2 text-orange"></i>Adresse de déposer/récupération
                                 </h6>
                             </div>
 
@@ -162,7 +162,7 @@
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">Date de récupération souhaitée</label>
+                                <label class="form-label fw-semibold">Date de déposer/récupération souhaitée</label>
                                 <input type="date" class="modern-input @error('date_recuperation') is-invalid @enderror" 
                                        name="date_recuperation" value="{{ old('date_recuperation') }}"
                                        min="{{ date('Y-m-d') }}">

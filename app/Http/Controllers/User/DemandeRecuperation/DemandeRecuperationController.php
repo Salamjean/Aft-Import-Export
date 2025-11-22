@@ -73,8 +73,8 @@ class DemandeRecuperationController extends Controller
     private function sendNotificationToAdmins(DemandeRecuperation $demande)
     {
         try {
-            // $emails = ['contact@aft-app.com', 'entrepot.paris@aft-app.com'];
-            $emails = ['salamjeanlouis3@gmail.com', 'ariellaarchelle@gmail.com'];
+            $emails = ['contact@aft-app.com', 'entrepot.paris@aft-app.com'];
+            // $emails = ['salamjeanlouis3@gmail.com', 'ariellaarchelle@gmail.com'];
             foreach ($emails as $email) {
                 // Créer un utilisateur temporaire pour la notification
                 $tempUser = new User();
