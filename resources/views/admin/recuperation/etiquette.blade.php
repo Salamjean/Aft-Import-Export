@@ -100,7 +100,7 @@
     <div class="etiquette">
         <div class="header">
             <h1>AFT IMPORT EXPORT</h1>
-            <div style="font-size: 5pt;">DÉPÔT PROGRAMMÉ</div> <!-- Réduit de 6pt à 5pt -->
+            <div style="font-size: 5pt;">RÉCUPERATION PROGRAMMÉE</div> <!-- Réduit de 6pt à 5pt -->
         </div>
 
         <div class="qr-section">
