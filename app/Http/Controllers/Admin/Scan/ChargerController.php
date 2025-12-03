@@ -115,9 +115,7 @@ private function compterIndividuelsParStatut($statutsIndividuels, $statutRecherc
     
     return $compteur;
 }
-    /**
- * Scanner un QR code pour charger dans un conteneur
- */
+
 /**
  * Scanner un QR code pour charger dans un conteneur
  */
@@ -175,67 +173,199 @@ public function scanQRCodeCharge(Request $request)
         // Vérifier si le colis a déjà un conteneur assigné
         $ancienConteneurId = $colis->conteneur_id;
         
-        // Si un conteneur_id est fourni dans la requête, on l'utilise
-        // Sinon, on essaie de récupérer le conteneur actuellement ouvert
+        // Déterminer le type de conteneur requis pour ce colis
+        $typeConteneurRequis = $this->determinerTypeConteneur($colis->mode_transit);
+        $agenceColisId = $colis->agence_expedition_id;
+        
+        Log::info('Type de conteneur requis pour ce colis:', [
+            'mode_transit' => $colis->mode_transit,
+            'type_requis' => $typeConteneurRequis,
+            'agence_id' => $agenceColisId
+        ]);
+        
+        // LOGIQUE DE GESTION DES CONTENEURS AVEC AGENCES
         if (!$conteneurId) {
-            // Récupérer le conteneur actuellement ouvert
-            $conteneurOuvert = Conteneur::where('statut', 'ouvert')->first();
+            // Si aucun conteneur n'est spécifié dans la requête
             
-            if ($conteneurOuvert) {
-                $conteneurId = $conteneurOuvert->id;
-                Log::info('Conteneur ouvert trouvé automatiquement', [
-                    'conteneur_id' => $conteneurId,
-                    'conteneur_name' => $conteneurOuvert->name_conteneur
-                ]);
-            } else {
-                // Vérifier si le colis avait un ancien conteneur
-                if ($ancienConteneurId) {
-                    $ancienConteneur = Conteneur::find($ancienConteneurId);
-                    if ($ancienConteneur && $ancienConteneur->statut === 'fermer') {
-                        return response()->json([
-                            'success' => false,
-                            'message' => '❌ Le conteneur précédent (#'.$ancienConteneurId.') est fermé. Veuillez scanner un conteneur ouvert d\'abord.',
-                            'colis' => [
-                                'id' => $colis->id,
-                                'reference_colis' => $colis->reference_colis,
-                                'statut' => $colis->statut,
-                                'ancien_conteneur_id' => $ancienConteneurId
-                            ]
-                        ], 400);
-                    }
-                }
+            // 1. Vérifier si le colis a déjà un conteneur assigné
+            if ($ancienConteneurId) {
+                $ancienConteneur = Conteneur::find($ancienConteneurId);
                 
-                return response()->json([
-                    'success' => false,
-                    'message' => '❌ Aucun conteneur ouvert disponible. Veuillez ouvrir un conteneur d\'abord.'
-                ], 400);
+                if ($ancienConteneur) {
+                    Log::info('Ancien conteneur trouvé:', [
+                        'id' => $ancienConteneur->id,
+                        'type' => $ancienConteneur->type_conteneur,
+                        'statut' => $ancienConteneur->statut,
+                        'agence_id' => $ancienConteneur->agence_id,
+                        'name' => $ancienConteneur->name_conteneur
+                    ]);
+                    
+                    // Vérifier que l'ancien conteneur appartient à la même agence que le colis
+                    if ($ancienConteneur->agence_id !== $agenceColisId) {
+                        Log::warning('Ancien conteneur appartient à une autre agence', [
+                            'conteneur_agence_id' => $ancienConteneur->agence_id,
+                            'colis_agence_id' => $agenceColisId
+                        ]);
+                        
+                        // Chercher un conteneur de l'agence du colis
+                        $conteneurAgenceColis = $this->trouverOuCreerConteneurAgence($colis, $agenceColisId, $typeConteneurRequis);
+                        $conteneurId = $conteneurAgenceColis->id;
+                    }
+                    // Si le conteneur précédent est OUVERT, du bon type et de la bonne agence
+                    else if ($ancienConteneur->statut === 'ouvert' && 
+                            $ancienConteneur->type_conteneur === $typeConteneurRequis &&
+                            $ancienConteneur->agence_id === $agenceColisId) {
+                        $conteneurId = $ancienConteneurId;
+                        Log::info('Utilisation du conteneur précédent ouvert, bon type et bonne agence', [
+                            'conteneur_id' => $conteneurId,
+                            'type' => $ancienConteneur->type_conteneur,
+                            'statut' => $ancienConteneur->statut,
+                            'agence_id' => $ancienConteneur->agence_id
+                        ]);
+                    } 
+                    // Si le conteneur précédent est FERMÉ, mauvais type ou mauvaise agence
+                    else {
+                        Log::info('Ancien conteneur non utilisable, recherche d\'un conteneur ouvert du bon type et de la bonne agence', [
+                            'ancien_conteneur_id' => $ancienConteneurId,
+                            'ancien_type' => $ancienConteneur->type_conteneur,
+                            'ancien_statut' => $ancienConteneur->statut,
+                            'ancien_agence_id' => $ancienConteneur->agence_id,
+                            'type_requis' => $typeConteneurRequis,
+                            'agence_requise' => $agenceColisId
+                        ]);
+                        
+                        // Chercher un conteneur de l'agence du colis
+                        $conteneurAgenceColis = $this->trouverOuCreerConteneurAgence($colis, $agenceColisId, $typeConteneurRequis);
+                        $conteneurId = $conteneurAgenceColis->id;
+                    }
+                } else {
+                    // L'ancien conteneur n'existe plus, chercher un conteneur de l'agence du colis
+                    Log::info('Ancien conteneur non trouvé (id: ' . $ancienConteneurId . '), recherche d\'un conteneur de l\'agence du colis');
+                    
+                    $conteneurAgenceColis = $this->trouverOuCreerConteneurAgence($colis, $agenceColisId, $typeConteneurRequis);
+                    $conteneurId = $conteneurAgenceColis->id;
+                }
+            } else {
+                // Le colis n'a pas de conteneur assigné, chercher un conteneur de l'agence du colis
+                Log::info('Colis sans conteneur assigné, recherche conteneur pour agence et type:', [
+                    'agence_id' => $agenceColisId,
+                    'type_conteneur_requis' => $typeConteneurRequis
+                ]);
+                
+                $conteneurAgenceColis = $this->trouverOuCreerConteneurAgence($colis, $agenceColisId, $typeConteneurRequis);
+                $conteneurId = $conteneurAgenceColis->id;
             }
         }
 
-        // Vérifier que le conteneur est ouvert
+        // Vérifier que le conteneur est ouvert et appartient à la bonne agence
         $conteneur = Conteneur::find($conteneurId);
         if (!$conteneur) {
+            Log::error('Conteneur non trouvé', ['conteneur_id' => $conteneurId]);
             return response()->json([
                 'success' => false,
                 'message' => '❌ Conteneur non trouvé'
             ], 404);
         }
 
+        // Vérifier que le conteneur appartient à l'agence du colis
+        if ($conteneur->agence_id !== $agenceColisId) {
+            Log::warning('Tentative d\'utilisation d\'un conteneur d\'une autre agence', [
+                'conteneur_id' => $conteneurId,
+                'conteneur_agence_id' => $conteneur->agence_id,
+                'colis_agence_id' => $agenceColisId
+            ]);
+            
+            // Chercher un conteneur de l'agence du colis
+            $conteneurAgenceColis = $this->trouverOuCreerConteneurAgence($colis, $agenceColisId, $typeConteneurRequis);
+            $conteneurId = $conteneurAgenceColis->id;
+            $conteneur = $conteneurAgenceColis;
+        }
+
+        // Vérifier que le conteneur est ouvert
         if ($conteneur->statut !== 'ouvert') {
-            return response()->json([
-                'success' => false,
-                'message' => '❌ Le conteneur #'.$conteneurId.' est fermé. Veuillez utiliser un conteneur ouvert.'
-            ], 400);
+            Log::warning('Conteneur fermé tenté d\'être utilisé', [
+                'conteneur_id' => $conteneurId,
+                'statut' => $conteneur->statut,
+                'name' => $conteneur->name_conteneur,
+                'agence_id' => $conteneur->agence_id
+            ]);
+            
+            // Chercher un conteneur ouvert de la même agence et du même type
+            $conteneurOuvertAgence = Conteneur::where('statut', 'ouvert')
+                ->where('type_conteneur', $conteneur->type_conteneur)
+                ->where('agence_id', $agenceColisId)
+                ->first();
+            
+            if ($conteneurOuvertAgence) {
+                $conteneurId = $conteneurOuvertAgence->id;
+                $conteneur = $conteneurOuvertAgence;
+                Log::info('Conteneur remplacé par un ouvert de la même agence et type', [
+                    'nouveau_conteneur_id' => $conteneurId,
+                    'type' => $conteneur->type_conteneur,
+                    'agence_id' => $conteneur->agence_id
+                ]);
+            } else {
+                // Créer un nouveau conteneur pour l'agence
+                $nouveauConteneur = $this->creerNouveauConteneur($colis, $typeConteneurRequis, $agenceColisId);
+                $conteneurId = $nouveauConteneur->id;
+                $conteneur = $nouveauConteneur;
+                Log::info('Nouveau conteneur créé pour l\'agence (ancien fermé)', [
+                    'conteneur_id' => $conteneurId,
+                    'type' => $conteneur->type_conteneur,
+                    'agence_id' => $conteneur->agence_id
+                ]);
+            }
+        }
+
+        // Vérifier que le conteneur est du bon type
+        if ($conteneur->type_conteneur !== $typeConteneurRequis) {
+            Log::warning('Type de conteneur incorrect', [
+                'conteneur_type' => $conteneur->type_conteneur,
+                'type_requis' => $typeConteneurRequis
+            ]);
+            
+            // Chercher un conteneur ouvert du bon type et de la bonne agence
+            $conteneurCorrectType = Conteneur::where('statut', 'ouvert')
+                ->where('type_conteneur', $typeConteneurRequis)
+                ->where('agence_id', $agenceColisId)
+                ->first();
+            
+            if ($conteneurCorrectType) {
+                $conteneurId = $conteneurCorrectType->id;
+                $conteneur = $conteneurCorrectType;
+                Log::info('Conteneur corrigé vers le bon type (même agence)', [
+                    'nouveau_conteneur_id' => $conteneurId,
+                    'type' => $conteneur->type_conteneur,
+                    'name' => $conteneur->name_conteneur,
+                    'agence_id' => $conteneur->agence_id
+                ]);
+            } else {
+                // Créer un nouveau conteneur du bon type pour l'agence
+                $nouveauConteneur = $this->creerNouveauConteneur($colis, $typeConteneurRequis, $agenceColisId);
+                $conteneurId = $nouveauConteneur->id;
+                $conteneur = $nouveauConteneur;
+                Log::info('Nouveau conteneur créé pour type correct et agence', [
+                    'conteneur_id' => $conteneurId,
+                    'type' => $conteneur->type_conteneur,
+                    'agence_id' => $conteneur->agence_id
+                ]);
+            }
         }
 
         // Vérifier si l'unité était déjà dans un autre conteneur
         $conteneurPrecedent = null;
         if ($ancienConteneurId && $ancienConteneurId != $conteneurId) {
             $conteneurPrecedent = Conteneur::find($ancienConteneurId);
-            if ($conteneurPrecedent && $conteneurPrecedent->statut === 'fermer') {
-                Log::info('Colis transféré depuis un conteneur fermé', [
+            if ($conteneurPrecedent) {
+                Log::info('Colis transféré d\'un autre conteneur', [
                     'ancien_conteneur_id' => $ancienConteneurId,
-                    'nouveau_conteneur_id' => $conteneurId
+                    'ancien_type' => $conteneurPrecedent->type_conteneur,
+                    'ancien_statut' => $conteneurPrecedent->statut,
+                    'ancien_agence_id' => $conteneurPrecedent->agence_id,
+                    'nouveau_conteneur_id' => $conteneurId,
+                    'nouveau_type' => $conteneur->type_conteneur,
+                    'nouveau_statut' => $conteneur->statut,
+                    'nouveau_agence_id' => $conteneur->agence_id
                 ]);
             }
         }
@@ -251,7 +381,9 @@ public function scanQRCodeCharge(Request $request)
                         'id' => $colis->id,
                         'reference_colis' => $colis->reference_colis,
                         'statut' => $colis->statut,
-                        'conteneur_id' => $colis->conteneur_id
+                        'conteneur_id' => $colis->conteneur_id,
+                        'type_conteneur' => $conteneur->type_conteneur ?? null,
+                        'agence_id' => $colis->agence_expedition_id
                     ],
                     'unite' => [
                         'code_colis' => $qrCode,
@@ -266,17 +398,25 @@ public function scanQRCodeCharge(Request $request)
 
         // Mise à jour de l'unité individuelle
         $statutsIndividuels[$qrCode]['statut'] = 'charge';
-        $statutsIndividuels[$qrCode]['localisation_actuelle'] = 'Conteneur #' . $conteneurId;
+        $statutsIndividuels[$qrCode]['localisation_actuelle'] = 'Conteneur #' . $conteneurId . ' (' . $conteneur->type_conteneur . ' - Agence ' . $conteneur->agence_id . ')';
         $statutsIndividuels[$qrCode]['date_modification'] = now()->toDateTimeString();
-        $statutsIndividuels[$qrCode]['notes'] = 'Chargé dans le conteneur #' . $conteneurId . ' le ' . now()->format('d/m/Y H:i');
+        $statutsIndividuels[$qrCode]['notes'] = 'Chargé dans le conteneur #' . $conteneurId . ' (' . $conteneur->type_conteneur . ') de l\'agence ' . $conteneur->agence_id . ' le ' . now()->format('d/m/Y H:i');
         
-        $statutsIndividuels[$qrCode]['historique'][] = [
+        // Ajouter à l'historique
+        $historiqueEntry = [
             'statut' => 'charge',
             'date' => now()->toDateTimeString(),
             'localisation' => 'Conteneur #' . $conteneurId,
-            'agence_id' => null,
-            'notes' => 'Chargé dans le conteneur #' . $conteneurId
+            'conteneur_type' => $conteneur->type_conteneur,
+            'agence_id' => $conteneur->agence_id,
+            'notes' => 'Chargé dans le conteneur #' . $conteneurId . ' (' . $conteneur->type_conteneur . ') - Agence ' . $conteneur->agence_id
         ];
+        
+        if ($ancienConteneurId && $ancienConteneurId != $conteneurId && $conteneurPrecedent) {
+            $historiqueEntry['transfert'] = 'Transfert depuis conteneur #' . $ancienConteneurId . ' (' . $conteneurPrecedent->type_conteneur . ' - Agence ' . $conteneurPrecedent->agence_id . ')';
+        }
+        
+        $statutsIndividuels[$qrCode]['historique'][] = $historiqueEntry;
 
         // Mise à jour du colis avec le nouveau conteneur
         $colis->statuts_individuels = json_encode($statutsIndividuels);
@@ -293,12 +433,16 @@ public function scanQRCodeCharge(Request $request)
                 'colis_id' => $colis->id,
                 'ancien_statut_global' => $ancienStatutGlobal,
                 'nouveau_statut_global' => 'charge',
-                'conteneur_id' => $conteneurId
+                'conteneur_id' => $conteneurId,
+                'type_conteneur' => $conteneur->type_conteneur,
+                'agence_id' => $conteneur->agence_id
             ]);
         } else {
             Log::info('Progression du chargement', [
                 'colis_id' => $colis->id,
                 'conteneur_id' => $conteneurId,
+                'type_conteneur' => $conteneur->type_conteneur,
+                'agence_id' => $conteneur->agence_id,
                 'unites_chargees' => $this->compterIndividuelsCharges($statutsIndividuels),
                 'total_unites' => count($statutsIndividuels)
             ]);
@@ -314,6 +458,10 @@ public function scanQRCodeCharge(Request $request)
         Log::info('Scan charge réussi:', [
             'colis_id' => $colis->id,
             'conteneur_id' => $conteneurId,
+            'conteneur_name' => $conteneur->name_conteneur,
+            'type_conteneur' => $conteneur->type_conteneur,
+            'conteneur_statut' => $conteneur->statut,
+            'conteneur_agence_id' => $conteneur->agence_id,
             'unite' => $qrCode,
             'ancien_statut' => $ancienStatut,
             'nouveau_statut' => 'charge',
@@ -326,12 +474,14 @@ public function scanQRCodeCharge(Request $request)
             'success' => true,
             'message' => $tousCharges ? 
                 '🎉 FÉLICITATIONS ! Toutes les unités sont chargées !' : 
-                '✅ Unité chargée avec succès !',
+                '✅ Unité chargée avec succès dans ' . $conteneur->type_conteneur . ' "' . $conteneur->name_conteneur . '" de l\'agence ' . $conteneur->agence_id . '!',
             'colis' => [
                 'id' => $colis->id,
                 'reference_colis' => $colis->reference_colis,
                 'statut' => $colis->statut,
                 'conteneur_id' => $colis->conteneur_id,
+                'type_conteneur' => $conteneur->type_conteneur,
+                'agence_id' => $conteneur->agence_id,
                 'total_unites' => $totalUnites,
                 'unites_chargees' => $unitesChargees,
                 'progression' => $progression,
@@ -343,24 +493,113 @@ public function scanQRCodeCharge(Request $request)
                 'nouveau_statut' => 'charge',
                 'produit' => $produit,
                 'position' => "Colis {$colisNumero} - Unité {$uniteNumero}",
-                'localisation' => 'Conteneur #' . $conteneurId
+                'localisation' => 'Conteneur #' . $conteneurId . ' (' . $conteneur->type_conteneur . ') - Agence ' . $conteneur->agence_id
             ],
             'conteneur' => [
                 'id' => $conteneurId,
                 'name' => $conteneur->name_conteneur,
-                'numero' => $conteneur->numero_conteneur
+                'numero' => $conteneur->numero_conteneur,
+                'type' => $conteneur->type_conteneur,
+                'statut' => $conteneur->statut,
+                'agence_id' => $conteneur->agence_id
             ]
         ]);
 
     } catch (\Exception $e) {
         Log::error('❌ Erreur scan QR code charge: ' . $e->getMessage());
         Log::error('Stack trace: ' . $e->getTraceAsString());
+        Log::error('File: ' . $e->getFile() . ' Line: ' . $e->getLine());
         
         return response()->json([
             'success' => false,
             'message' => '❌ Erreur lors du traitement: ' . $e->getMessage()
         ], 500);
     }
+}
+
+/**
+ * Trouver ou créer un conteneur pour une agence spécifique
+ */
+private function trouverOuCreerConteneurAgence($colis, $agenceId, $typeConteneur)
+{
+    // Chercher d'abord un conteneur ouvert du bon type et de la bonne agence
+    $conteneurExistant = Conteneur::where('statut', 'ouvert')
+        ->where('type_conteneur', $typeConteneur)
+        ->where('agence_id', $agenceId)
+        ->first();
+    
+    if ($conteneurExistant) {
+        Log::info('Conteneur existant trouvé pour l\'agence', [
+            'conteneur_id' => $conteneurExistant->id,
+            'type' => $conteneurExistant->type_conteneur,
+            'agence_id' => $conteneurExistant->agence_id,
+            'statut' => $conteneurExistant->statut
+        ]);
+        return $conteneurExistant;
+    }
+    
+    // Si aucun conteneur ouvert n'existe, créer un nouveau pour cette agence
+    Log::info('Aucun conteneur ouvert trouvé pour l\'agence, création d\'un nouveau', [
+        'agence_id' => $agenceId,
+        'type_conteneur' => $typeConteneur
+    ]);
+    
+    return $this->creerNouveauConteneur($colis, $typeConteneur, $agenceId);
+}
+
+/**
+ * Créer un nouveau conteneur basé sur le type spécifié et l'agence
+ */
+private function creerNouveauConteneur($colis, $typeConteneur, $agenceId)
+{
+    // Récupérer le nom de l'agence d'expédition du colis
+    $agenceNom = $colis->agence_expedition;
+    
+    // Compter le nombre de conteneurs existants pour cette agence et ce type
+    $count = Conteneur::where('agence_id', $agenceId)
+        ->where('type_conteneur', $typeConteneur)
+        ->count();
+    
+    $numero = $count + 1;
+    
+    // Générer un nom de conteneur
+    $prefix = $typeConteneur === 'Ballon' ? 'BAL' : 'CTN';
+    $nameConteneur = $agenceNom . ' - ' . $typeConteneur . ' ' . $numero;
+    
+    $nouveauConteneur = Conteneur::create([
+        'name_conteneur' => $nameConteneur,
+        'type_conteneur' => $typeConteneur,
+        'statut' => 'ouvert',
+        'agence_id' => $agenceId,
+        'numero_conteneur' => $prefix . '-' . str_pad($agenceId, 3, '0', STR_PAD_LEFT) . '-' . str_pad($numero, 4, '0', STR_PAD_LEFT)
+    ]);
+    
+    Log::info('Nouveau conteneur créé pour agence', [
+        'id' => $nouveauConteneur->id,
+        'name' => $nouveauConteneur->name_conteneur,
+        'type' => $typeConteneur,
+        'statut' => $nouveauConteneur->statut,
+        'agence_id' => $agenceId,
+        'agence_nom' => $agenceNom
+    ]);
+    
+    return $nouveauConteneur;
+}
+
+/**
+ * Déterminer le type de conteneur basé sur le mode de transit
+ */
+private function determinerTypeConteneur($modeTransit)
+{
+    $modeTransit = strtolower(trim($modeTransit));
+    
+    // Logique pour déterminer le type de conteneur
+    if (in_array($modeTransit, ['express', 'rapide', 'urgence'])) {
+        return 'Ballon';
+    }
+    
+    // Par défaut, retourner "Conteneur"
+    return 'Conteneur';
 }
 
 /**
