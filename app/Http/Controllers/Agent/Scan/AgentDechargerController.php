@@ -162,16 +162,16 @@ class AgentDechargerController extends Controller
                 }
             }
 
-            if (!$colisTrouve) {
-                Log::warning('Aucun colis trouvé avec ce code QR dans l\'agence de l\'agent', [
-                    'qr_code' => $qrCode,
-                    'agence_agent' => $agent->agence_id
-                ]);
-                return response()->json([
-                    'success' => false,
-                    'message' => '❌ Aucun colis trouvé avec le code: ' . $qrCode . ' dans votre agence'
-                ], 404);
-            }
+            // if (!$colisTrouve) {
+            //     Log::warning('Aucun colis trouvé avec ce code QR dans l\'agence de l\'agent', [
+            //         'qr_code' => $qrCode,
+            //         'agence_agent' => $agent->agence_id
+            //     ]);
+            //     return response()->json([
+            //         'success' => false,
+            //         'message' => '❌ Aucun colis trouvé avec le code: ' . $qrCode . ' dans votre agence'
+            //     ], 404);
+            // }
 
             $colis = $colisTrouve;
             $statutsIndividuels = json_decode($colis->statuts_individuels, true) ?? [];

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminDashboard;
 use App\Http\Controllers\Admin\Agence\AgenceController;
 use App\Http\Controllers\Admin\AuthenticateAdmin;
+use App\Http\Controllers\Admin\BilanFinancierController;
 use App\Http\Controllers\Admin\Bateau\BateauController;
 use App\Http\Controllers\Admin\Chauffeur\ChauffeurController;
 use App\Http\Controllers\Admin\Client\ClientController;
@@ -80,6 +81,9 @@ Route::prefix('admin')->group(function () {
 Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminDashboard::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/logout', [AdminDashboard::class, 'logout'])->name('admin.logout');
+
+    // Route pour le bilan financier
+    Route::get('/bilan-financier', [BilanFinancierController::class, 'index'])->name('admin.bilan-financier');
 
     //les routes de gestion des agences par l'admin 
     Route::prefix('agence')->group(function () {
@@ -483,7 +487,7 @@ Route::get('/admin/recuperation/search', [ColisRechercheController::class, 'sear
 Route::get('/admin/recuperation/{id}/details', [ColisRechercheController::class, 'details'])->name('recuperation.details');
 
 // Route pour récupérer tous les conteneurs
-Route::get('/admin/conteneurs/tous', function() {
+Route::get('/admin/conteneurs/tous', function () {
     $conteneurs = \App\Models\Conteneur::all();
     return response()->json($conteneurs);
 })->name('admin.conteneurs.tous');

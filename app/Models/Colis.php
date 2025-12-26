@@ -18,14 +18,14 @@ class Colis extends Model
         'agence_destination',
         'agence_expedition',
         'devise',
-        
+
         // Informations expéditeur
         'name_expediteur',
         'prenom_expediteur',
         'email_expediteur',
         'contact_expediteur',
         'adresse_expediteur',
-        
+
         // Informations destinataire
         'name_destinataire',
         'prenom_destinataire',
@@ -33,19 +33,19 @@ class Colis extends Model
         'indicatif',
         'contact_destinataire',
         'adresse_destinataire',
-        
+
         // Colis
         'colis',
         'montant_colis',
         'montant_paye_colis',
         'user_id',
         'statut',
-        
+
         // Services
         'service_id',
         'prix_service',
         'montant_total',
-        
+
         // Paiement
         'methode_paiement',
         'nom_banque',
@@ -64,6 +64,10 @@ class Colis extends Model
         'qr_codes',
         'code_colis',
         'statuts_individuels',
+        'agent_encaisseur_id',
+        'agent_encaisseur_type',
+        'agent_encaisseur_name',
+        'date_paiement',
     ];
 
     protected $casts = [
@@ -107,6 +111,11 @@ class Colis extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function paiements()
+    {
+        return $this->hasMany(Paiement::class);
+    }
+
     // Méthodes pour le paiement
     public function getMontantPaiementAttribute()
     {
@@ -145,7 +154,7 @@ class Colis extends Model
     }
 
     public function scopeAvecStatutIndividuel($query, $statut)
-{
-    return $query->where('statuts_individuels', 'LIKE', '%"statut":"' . $statut . '"%');
-}
+    {
+        return $query->where('statuts_individuels', 'LIKE', '%"statut":"' . $statut . '"%');
+    }
 }

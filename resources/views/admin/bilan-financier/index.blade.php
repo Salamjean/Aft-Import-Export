@@ -1,0 +1,769 @@
+@extends('admin.layouts.template')
+
+@section('content')
+    <div class="bilan-financier-container">
+        <!-- Header -->
+        <div class="bilan-header">
+            <div class="header-content">
+                <h1 class="header-title">Bilan Financier</h1>
+                <p class="header-subtitle">Vue d'ensemble des paiements et recouvrements</p>
+            </div>
+            <div class="header-actions">
+                <div class="date-display">
+                    <i class="fas fa-calendar-alt"></i>
+                    {{ \Carbon\Carbon::now()->translatedFormat('l d F Y') }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistiques Globales -->
+        <div class="stats-globales-section">
+            <h2 class="section-title">
+                <i class="fas fa-globe"></i>
+                Bilan Global
+            </h2>
+            <div class="stats-grid">
+                <!-- Montant Total -->
+                <div class="stat-card total-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-value">{{ number_format($statsGlobales['montant_total'], 0, ',', ' ') }} FCFA</h3>
+                        <p class="stat-label">Montant Total</p>
+                        <div class="stat-detail">{{ $statsGlobales['total_colis'] }} colis</div>
+                    </div>
+                </div>
+
+                <!-- Montant Payé -->
+                <div class="stat-card paye-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-value">{{ number_format($statsGlobales['montant_paye'], 0, ',', ' ') }} FCFA</h3>
+                        <p class="stat-label">Montant Payé</p>
+                        <div class="stat-detail">{{ $statsGlobales['totalement_payes'] }} colis payés</div>
+                    </div>
+                </div>
+
+                <!-- Montant Impayé -->
+                <div class="stat-card impaye-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-value">{{ number_format($statsGlobales['montant_impaye'], 0, ',', ' ') }} FCFA</h3>
+                        <p class="stat-label">Montant Impayé</p>
+                        <div class="stat-detail">{{ $statsGlobales['non_payes'] + $statsGlobales['partiellement_payes'] }}
+                            colis</div>
+                    </div>
+                </div>
+
+                <!-- Taux de Recouvrement -->
+                <div class="stat-card taux-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-value">{{ $statsGlobales['taux_recouvrement'] }}%</h3>
+                        <p class="stat-label">Taux de Recouvrement</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: {{ $statsGlobales['taux_recouvrement'] }}%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Répartition par méthode de paiement -->
+        <div class="payment-methods-section">
+            <div class="analytics-grid">
+                <!-- Graphique Évolution -->
+                <div class="analytics-card main-chart">
+                    <div class="card-header">
+                        <h3><i class="fas fa-chart-line"></i> Évolution Mensuelle</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="evolutionChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Méthodes de Paiement -->
+                <div class="analytics-card payment-methods">
+                    <div class="card-header">
+                        <h3><i class="fas fa-money-bill-wave"></i> Méthodes de Paiement</h3>
+                    </div>
+                    <div class="payment-list">
+                        <div class="payment-method-item">
+                            <div class="method-info">
+                                <i class="fas fa-money-bill-alt"></i>
+                                <span>Espèces</span>
+                            </div>
+                            <div class="method-amount">{{ number_format($statsGlobales['montant_especes'], 0, ',', ' ') }}
+                                FCFA</div>
+                        </div>
+                        <div class="payment-method-item">
+                            <div class="method-info">
+                                <i class="fas fa-university"></i>
+                                <span>Virement</span>
+                            </div>
+                            <div class="method-amount">{{ number_format($statsGlobales['montant_virement'], 0, ',', ' ') }}
+                                FCFA</div>
+                        </div>
+                        <div class="payment-method-item">
+                            <div class="method-info">
+                                <i class="fas fa-file-invoice"></i>
+                                <span>Chèque</span>
+                            </div>
+                            <div class="method-amount">{{ number_format($statsGlobales['montant_cheque'], 0, ',', ' ') }}
+                                FCFA</div>
+                        </div>
+                        <div class="payment-method-item">
+                            <div class="method-info">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>Mobile Money</span>
+                            </div>
+                            <div class="method-amount">
+                                {{ number_format($statsGlobales['montant_mobile_money'], 0, ',', ' ') }} FCFA
+                            </div>
+                        </div>
+                        <div class="payment-method-item">
+                            <div class="method-info">
+                                <i class="fas fa-truck"></i>
+                                <span>À la livraison</span>
+                            </div>
+                            <div class="method-amount">{{ number_format($statsGlobales['montant_livraison'], 0, ',', ' ') }}
+                                FCFA</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Derniers Encaissements -->
+        <div class="recent-payments-section mb-4">
+            <div class="analytics-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-history"></i> Derniers Encaissements</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Référence Colis</th>
+                                <th>Agent / Admin</th>
+                                <th>Montant Payé</th>
+                                <th>Méthode</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($derniersPaiements as $paiement)
+                                <tr>
+                                    <td><strong>{{ $paiement->colis->reference_colis ?? 'N/A' }}</strong></td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <span
+                                                class="badge {{ $paiement->agent_type == 'admin' ? 'badge-primary' : 'badge-info' }} mr-2">
+                                                {{ ucfirst($paiement->agent_type) }}
+                                            </span>
+                                            {{ $paiement->agent_name ?? 'Inconnu' }}
+                                        </div>
+                                    </td>
+                                    <td><span
+                                            class="text-success font-weight-bold">{{ number_format($paiement->montant, 0, ',', ' ') }}
+                                            FCFA</span></td>
+                                    <td>{{ ucfirst(str_replace('_', ' ', $paiement->methode_paiement)) }}</td>
+                                    <td>{{ $paiement->created_at->format('d/m/Y H:i') }}</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="text-center">Aucun encaissement enregistré.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bilan par Agence -->
+        <div class="bilan-agences-section">
+            <h2 class="section-title">
+                <i class="fas fa-building"></i>
+                Bilan par Agence
+            </h2>
+            <div class="agences-grid">
+                @foreach($statsParAgence as $stat)
+                    <div class="agence-card">
+                        <div class="agence-header">
+                            <div class="agence-info">
+                                <h3 class="agence-name">{{ $stat['agence']->name }}</h3>
+                                <p class="agence-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    {{ $stat['agence']->pays }}
+                                </p>
+                            </div>
+                            <div class="agence-badge">
+                                <i class="fas fa-box"></i>
+                                {{ $stat['total_colis'] }} colis
+                            </div>
+                        </div>
+
+                        <div class="agence-stats">
+                            <div class="agence-stat-row">
+                                <span class="stat-label">Montant Total:</span>
+                                <span class="stat-value total">{{ number_format($stat['montant_total'], 0, ',', ' ') }}
+                                    FCFA</span>
+                            </div>
+                            <div class="agence-stat-row">
+                                <span class="stat-label">Montant Payé:</span>
+                                <span class="stat-value paye">{{ number_format($stat['montant_paye'], 0, ',', ' ') }}
+                                    FCFA</span>
+                            </div>
+                            <div class="agence-stat-row">
+                                <span class="stat-label">Montant Impayé:</span>
+                                <span class="stat-value impaye">{{ number_format($stat['montant_impaye'], 0, ',', ' ') }}
+                                    FCFA</span>
+                            </div>
+                        </div>
+
+                        <div class="agence-payment-status">
+                            <div class="payment-status-item">
+                                <span class="status-badge success">{{ $stat['totalement_payes'] }}</span>
+                                <span class="status-label">Payés</span>
+                            </div>
+                            <div class="payment-status-item">
+                                <span class="status-badge warning">{{ $stat['partiellement_payes'] }}</span>
+                                <span class="status-label">Partiels</span>
+                            </div>
+                            <div class="payment-status-item">
+                                <span class="status-badge danger">{{ $stat['non_payes'] }}</span>
+                                <span class="status-label">Non payés</span>
+                            </div>
+                        </div>
+
+                        <div class="agence-footer">
+                            <div class="taux-container">
+                                <span class="taux-label">Taux de recouvrement:</span>
+                                <span class="taux-value">{{ $stat['taux_recouvrement'] }}%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: {{ $stat['taux_recouvrement'] }}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+    <!-- Styles CSS -->
+    <style>
+        .bilan-financier-container {
+            padding: 20px;
+            background: #f8fafc;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .bilan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .header-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a202c;
+            margin: 0;
+        }
+
+        .header-subtitle {
+            color: #718096;
+            margin: 5px 0 0 0;
+            font-size: 16px;
+        }
+
+        .date-display {
+            background: #fea219;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: #fea219;
+        }
+
+        /* Stats Globales */
+        .stats-globales-section {
+            margin-bottom: 30px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 5px solid;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .total-card {
+            border-left-color: #fea219;
+        }
+
+        .paye-card {
+            border-left-color: #0d8644;
+        }
+
+        .impaye-card {
+            border-left-color: #e53e3e;
+        }
+
+        .taux-card {
+            border-left-color: #3b82f6;
+        }
+
+        .stat-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+        }
+
+        .total-card .stat-icon {
+            background: #fea219;
+        }
+
+        .paye-card .stat-icon {
+            background: #0d8644;
+        }
+
+        .impaye-card .stat-icon {
+            background: #e53e3e;
+        }
+
+        .taux-card .stat-icon {
+            background: #3b82f6;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 800;
+            color: #1a202c;
+            margin: 0;
+        }
+
+        .stat-label {
+            color: #718096;
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .stat-detail {
+            color: #a0aec0;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0d8644, #fea219);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        /* Analytics Grid */
+        .payment-methods-section {
+            margin-bottom: 30px;
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+
+        .analytics-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-header h3 {
+            margin: 0;
+            color: #1a202c;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-header i {
+            color: #fea219;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Payment Methods */
+        .payment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .payment-method-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #f7fafc;
+            border-radius: 12px;
+            transition: background 0.3s ease;
+        }
+
+        .payment-method-item:hover {
+            background: #edf2f7;
+        }
+
+        .method-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #4a5568;
+            font-weight: 600;
+        }
+
+        .method-info i {
+            width: 30px;
+            height: 30px;
+            background: #fff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fea219;
+        }
+
+        .method-amount {
+            font-weight: 700;
+            color: #0d8644;
+            font-size: 14px;
+        }
+
+        /* Bilan par Agence */
+        .bilan-agences-section {
+            margin-bottom: 30px;
+        }
+
+        .agences-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .agence-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 4px solid #fea219;
+        }
+
+        .agence-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .agence-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f7fafc;
+        }
+
+        .agence-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a202c;
+            margin: 0 0 5px 0;
+        }
+
+        .agence-location {
+            color: #718096;
+            font-size: 14px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .agence-badge {
+            background: #fea219;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .agence-stats {
+            margin-bottom: 20px;
+        }
+
+        .agence-stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f7fafc;
+        }
+
+        .agence-stat-row:last-child {
+            border-bottom: none;
+        }
+
+        .agence-stat-row .stat-label {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .agence-stat-row .stat-value {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .agence-stat-row .stat-value.total {
+            color: #fea219;
+        }
+
+        .agence-stat-row .stat-value.paye {
+            color: #0d8644;
+        }
+
+        .agence-stat-row .stat-value.impaye {
+            color: #e53e3e;
+        }
+
+        .agence-payment-status {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            padding: 15px 0;
+            background: #f7fafc;
+            border-radius: 12px;
+        }
+
+        .payment-status-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-badge {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            color: white;
+        }
+
+        .status-badge.success {
+            background: #0d8644;
+        }
+
+        .status-badge.warning {
+            background: #fea219;
+        }
+
+        .status-badge.danger {
+            background: #e53e3e;
+        }
+
+        .status-label {
+            font-size: 12px;
+            color: #718096;
+        }
+
+        .agence-footer {
+            padding-top: 15px;
+            border-top: 2px solid #f7fafc;
+        }
+
+        .taux-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .taux-label {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .taux-value {
+            font-weight: 700;
+            color: #3b82f6;
+            font-size: 16px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .agences-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .bilan-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+    </style>
+
+    <!-- Scripts pour les graphiques -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('evolutionChart').getContext('2d');
+
+            const evolutionChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: @json($statsGraphique['months']),
+                    datasets: [
+                        {
+                            label: 'Montant Total',
+                            data: @json($statsGraphique['montants_totaux']),
+                            borderColor: '#fea219',
+                            backgroundColor: 'rgba(254, 162, 25, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: 'Montant Payé',
+                            data: @json($statsGraphique['montants_payes']),
+                            borderColor: '#0d8644',
+                            backgroundColor: 'rgba(13, 134, 68, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: 'Montant Impayé',
+                            data: @json($statsGraphique['montants_impayes']),
+                            borderColor: '#e53e3e',
+                            backgroundColor: 'rgba(229, 62, 62, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0,0,0,0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+@endsection
