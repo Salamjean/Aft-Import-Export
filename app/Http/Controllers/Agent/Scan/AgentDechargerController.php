@@ -17,7 +17,7 @@ class AgentDechargerController extends Controller
     {
         // Récupérer l'agent connecté et son agence
         $agent = Auth::guard('agent')->user();
-        
+
         if (!$agent || !$agent->agence_id) {
             // Si l'agent n'a pas d'agence, retourner une collection vide
             $colis = new \Illuminate\Pagination\LengthAwarePaginator(collect(), 0, 10, 1);
@@ -26,28 +26,28 @@ class AgentDechargerController extends Controller
 
         // Récupérer tous les colis où l'agence de l'agent est soit expéditrice soit destinataire
         $allColis = Colis::with(['agenceExpedition', 'agenceDestination', 'conteneur'])
-                        ->where(function($query) use ($agent) {
-                            // Soit l'agence est l'expéditeur
-                            $query->where('agence_expedition_id', $agent->agence_id)
-                                // Soit l'agence est le destinataire
-                                ->orWhere('agence_destination_id', $agent->agence_id);
-                        })
-                        ->orderBy('created_at', 'desc')
-                        ->get();
+            ->where(function ($query) use ($agent) {
+                // Soit l'agence est l'expéditeur
+                $query->where('agence_expedition_id', $agent->agence_id)
+                    // Soit l'agence est le destinataire
+                    ->orWhere('agence_destination_id', $agent->agence_id);
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         // Filtrer les colis qui ont au moins une unité "decharge" (déjà déchargés)
         $colisFiltres = $allColis->filter(function ($colis) {
             $statutsIndividuels = json_decode($colis->statuts_individuels, true) ?? [];
-            
+
             $aDesUnitesDechargees = false;
-            
+
             foreach ($statutsIndividuels as $statut) {
                 if (isset($statut['statut']) && $statut['statut'] === 'decharge') {
                     $aDesUnitesDechargees = true;
                     break; // On sort dès qu'on trouve une unité déchargée
                 }
             }
-            
+
             // Inclure uniquement les colis qui ont au moins une unité déchargée
             return $aDesUnitesDechargees;
         });
@@ -57,11 +57,11 @@ class AgentDechargerController extends Controller
             $search = strtolower($request->search);
             $colisFiltres = $colisFiltres->filter(function ($colis) use ($search) {
                 return str_contains(strtolower($colis->reference_colis), $search) ||
-                       str_contains(strtolower($colis->name_expediteur), $search) ||
-                       str_contains(strtolower($colis->name_destinataire), $search) ||
-                       str_contains(strtolower($colis->email_expediteur), $search) ||
-                       str_contains(strtolower($colis->email_destinataire), $search) ||
-                       str_contains(strtolower($colis->code_colis), $search);
+                    str_contains(strtolower($colis->name_expediteur), $search) ||
+                    str_contains(strtolower($colis->name_destinataire), $search) ||
+                    str_contains(strtolower($colis->email_expediteur), $search) ||
+                    str_contains(strtolower($colis->email_destinataire), $search) ||
+                    str_contains(strtolower($colis->code_colis), $search);
             });
         }
 
@@ -76,7 +76,7 @@ class AgentDechargerController extends Controller
         // Pagination manuelle
         $page = $request->get('page', 1);
         $perPage = 10;
-        
+
         $colis = new \Illuminate\Pagination\LengthAwarePaginator(
             $colisFiltres->forPage($page, $perPage),
             $colisFiltres->count(),
@@ -89,10 +89,10 @@ class AgentDechargerController extends Controller
         $colis->getCollection()->transform(function ($item) {
             $colisData = json_decode($item->colis, true);
             $item->nombre_types_colis = is_array($colisData) ? count($colisData) : 0;
-            
+
             $statutsIndividuels = json_decode($item->statuts_individuels, true) ?? [];
             $item->total_individuels = count($statutsIndividuels);
-            
+
             // Compter les statuts individuels
             $item->individuels_valides = $this->compterIndividuelsParStatut($statutsIndividuels, 'valide');
             $item->individuels_charges = $this->compterIndividuelsParStatut($statutsIndividuels, 'charge');
@@ -100,7 +100,7 @@ class AgentDechargerController extends Controller
             $item->individuels_decharges = $this->compterIndividuelsParStatut($statutsIndividuels, 'decharge');
             $item->individuels_livres = $this->compterIndividuelsParStatut($statutsIndividuels, 'livre');
             $item->individuels_annules = $this->compterIndividuelsParStatut($statutsIndividuels, 'annule');
-            
+
             return $item;
         });
 
@@ -112,7 +112,7 @@ class AgentDechargerController extends Controller
             'colis_avec_decharge' => $colisFiltres->count(),
             'colis_pagines' => $colis->count()
         ]);
-        
+
         return view('agent.scan.decharge', compact('colis'));
     }
 
@@ -127,7 +127,7 @@ class AgentDechargerController extends Controller
 
             // Récupérer l'agent connecté
             $agent = Auth::guard('agent')->user();
-            
+
             if (!$agent || !$agent->agence_id) {
                 return response()->json([
                     'success' => false,
@@ -142,38 +142,60 @@ class AgentDechargerController extends Controller
 
             $qrCode = trim($request->qr_code);
             $agenceDestinationId = $request->agence_destination_id;
-            
+
             Log::info('Recherche du code QR pour déchargement:', [
                 'agent_id' => $agent->id,
                 'agence_agent' => $agent->agence_id,
-                'qr_code' => $qrCode, 
+                'qr_code' => $qrCode,
                 'agence_destination_id' => $agenceDestinationId
             ]);
 
-            // Rechercher le colis contenant le code QR dans l'agence de l'agent
-            $colisTrouve = null;
+            // Rechercher le colis contenant le code QR
+            $colis = null;
             $colisList = Colis::where('agence_expedition_id', $agent->agence_id)->get();
 
-            foreach ($colisList as $colis) {
-                $statutsIndividuels = json_decode($colis->statuts_individuels, true) ?? [];
+            foreach ($colisList as $colisItem) {
+                $statutsIndividuels = json_decode($colisItem->statuts_individuels, true) ?? [];
                 if (isset($statutsIndividuels[$qrCode])) {
-                    $colisTrouve = $colis;
+                    $colis = $colisItem;
                     break;
                 }
             }
 
-            // if (!$colisTrouve) {
-            //     Log::warning('Aucun colis trouvé avec ce code QR dans l\'agence de l\'agent', [
-            //         'qr_code' => $qrCode,
-            //         'agence_agent' => $agent->agence_id
-            //     ]);
-            //     return response()->json([
-            //         'success' => false,
-            //         'message' => '❌ Aucun colis trouvé avec le code: ' . $qrCode . ' dans votre agence'
-            //     ], 404);
-            // }
+            // SUPPRESSION DE LA VÉRIFICATION - Si aucun colis n'est trouvé, on continue
+            // mais on doit vérifier que le colis existe avant d'accéder à ses propriétés
 
-            $colis = $colisTrouve;
+            if (!$colis) {
+                // MODIFICATION : Au lieu de retourner une erreur 404, on cherche dans toutes les agences
+                Log::info('Code QR non trouvé dans l\'agence de l\'agent, recherche globale...', [
+                    'qr_code' => $qrCode,
+                    'agence_agent' => $agent->agence_id
+                ]);
+
+                // Recherche dans tous les colis
+                $colisListGlobal = Colis::all();
+                foreach ($colisListGlobal as $colisItem) {
+                    $statutsIndividuels = json_decode($colisItem->statuts_individuels, true) ?? [];
+                    if (isset($statutsIndividuels[$qrCode])) {
+                        $colis = $colisItem;
+                        Log::info('Code QR trouvé dans une autre agence', [
+                            'colis_id' => $colis->id,
+                            'agence_colis' => $colis->agence_expedition_id
+                        ]);
+                        break;
+                    }
+                }
+
+                // Si toujours pas trouvé, retourner une erreur
+                if (!$colis) {
+                    Log::warning('Code QR non trouvé dans aucun colis', ['qr_code' => $qrCode]);
+                    return response()->json([
+                        'success' => false,
+                        'message' => '❌ Code QR non reconnu dans le système'
+                    ], 404);
+                }
+            }
+
             $statutsIndividuels = json_decode($colis->statuts_individuels, true) ?? [];
 
             if (!isset($statutsIndividuels[$qrCode])) {
@@ -231,7 +253,7 @@ class AgentDechargerController extends Controller
             $statutsIndividuels[$qrCode]['agence_actuelle_id'] = $agenceDestinationId;
             $statutsIndividuels[$qrCode]['date_modification'] = now()->toDateTimeString();
             $statutsIndividuels[$qrCode]['notes'] = 'Déchargé du conteneur le ' . now()->format('d/m/Y H:i') . ' par agent #' . $agent->id;
-            
+
             $statutsIndividuels[$qrCode]['historique'][] = [
                 'statut' => 'decharge',
                 'date' => now()->toDateTimeString(),
@@ -243,11 +265,11 @@ class AgentDechargerController extends Controller
 
             // Mise à jour du colis
             $colis->statuts_individuels = json_encode($statutsIndividuels);
-            
+
             // ✅ LOGIQUE PRINCIPALE : Vérifier si TOUTES les unités sont déchargées
             $tousDecharges = $this->verifierTousDecharges($statutsIndividuels);
             $ancienStatutGlobal = $colis->statut;
-            
+
             if ($tousDecharges) {
                 // Si TOUTES les unités sont déchargées, mettre à jour le statut global
                 $colis->statut = 'decharge';
@@ -266,7 +288,7 @@ class AgentDechargerController extends Controller
                     'total_unites' => count($statutsIndividuels)
                 ]);
             }
-            
+
             $colis->save();
 
             // Statistiques
@@ -287,8 +309,8 @@ class AgentDechargerController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => $tousDecharges ? 
-                    '🎉 FÉLICITATIONS ! Toutes les unités sont déchargées !' : 
+                'message' => $tousDecharges ?
+                    '🎉 FÉLICITATIONS ! Toutes les unités sont déchargées !' :
                     '✅ Unité déchargée avec succès !',
                 'colis' => [
                     'id' => $colis->id,
@@ -312,7 +334,7 @@ class AgentDechargerController extends Controller
         } catch (\Exception $e) {
             Log::error('❌ Erreur scan QR code décharge: ' . $e->getMessage());
             Log::error('Stack trace: ' . $e->getTraceAsString());
-            
+
             return response()->json([
                 'success' => false,
                 'message' => '❌ Erreur lors du traitement: ' . $e->getMessage()
@@ -355,14 +377,14 @@ class AgentDechargerController extends Controller
         if (empty($statutsIndividuels)) {
             return 0;
         }
-        
+
         $compteur = 0;
         foreach ($statutsIndividuels as $statut) {
             if (isset($statut['statut']) && $statut['statut'] === $statutRecherche) {
                 $compteur++;
             }
         }
-        
+
         return $compteur;
     }
 
@@ -379,7 +401,7 @@ class AgentDechargerController extends Controller
             'livre' => 'Livré',
             'annule' => 'Annulé'
         ];
-        
+
         return $statuts[$statut] ?? $statut;
     }
 }

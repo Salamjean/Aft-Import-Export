@@ -213,17 +213,17 @@
 
                         <div class="agence-stats">
                             <div class="agence-stat-row">
-                                <span class="stat-label">Montant Total:</span>
+                                <span class="stat-label">Valeur Totale des Colis:</span>
                                 <span class="stat-value total">{{ number_format($stat['montant_total'], 0, ',', ' ') }}
                                     FCFA</span>
                             </div>
-                            <div class="agence-stat-row">
-                                <span class="stat-label">Montant Payé:</span>
-                                <span class="stat-value paye">{{ number_format($stat['montant_paye'], 0, ',', ' ') }}
+                            <div class="agence-stat-row encaisse-row">
+                                <span class="stat-label">Total Encaissé (Global):</span>
+                                <span class="stat-value text-success font-weight-bold">{{ number_format($stat['total_encaisse_agents'], 0, ',', ' ') }}
                                     FCFA</span>
                             </div>
                             <div class="agence-stat-row">
-                                <span class="stat-label">Montant Impayé:</span>
+                                <span class="stat-label">Reste à Recouvrer:</span>
                                 <span class="stat-value impaye">{{ number_format($stat['montant_impaye'], 0, ',', ' ') }}
                                     FCFA</span>
                             </div>
@@ -244,526 +244,534 @@
                             </div>
                         </div>
 
-                        <div class="agence-footer">
-                            <div class="taux-container">
-                                <span class="taux-label">Taux de recouvrement:</span>
-                                <span class="taux-value">{{ $stat['taux_recouvrement'] }}%</span>
+                                <div class="agence-footer">
+                                    <div class="taux-container">
+                                        <span class="taux-label">Taux de recouvrement:</span>
+                                        <span class="taux-value">{{ $stat['taux_recouvrement'] }}%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: {{ $stat['taux_recouvrement'] }}%"></div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: {{ $stat['taux_recouvrement'] }}%"></div>
-                            </div>
-                        </div>
-                    </div>
                 @endforeach
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Styles CSS -->
-    <style>
-        .bilan-financier-container {
-            padding: 20px;
-            background: #f8fafc;
-            min-height: 100vh;
-        }
-
-        /* Header */
-        .bilan-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            background: white;
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        .header-title {
-            font-size: 28px;
-            font-weight: 700;
-            color: #1a202c;
-            margin: 0;
-        }
-
-        .header-subtitle {
-            color: #718096;
-            margin: 5px 0 0 0;
-            font-size: 16px;
-        }
-
-        .date-display {
-            background: #fea219;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 12px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* Section Titles */
-        .section-title {
-            font-size: 22px;
-            font-weight: 700;
-            color: #1a202c;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .section-title i {
-            color: #fea219;
-        }
-
-        /* Stats Globales */
-        .stats-globales-section {
-            margin-bottom: 30px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border-left: 5px solid;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-        }
-
-        .total-card {
-            border-left-color: #fea219;
-        }
-
-        .paye-card {
-            border-left-color: #0d8644;
-        }
-
-        .impaye-card {
-            border-left-color: #e53e3e;
-        }
-
-        .taux-card {
-            border-left-color: #3b82f6;
-        }
-
-        .stat-icon {
-            width: 70px;
-            height: 70px;
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            color: white;
-        }
-
-        .total-card .stat-icon {
-            background: #fea219;
-        }
-
-        .paye-card .stat-icon {
-            background: #0d8644;
-        }
-
-        .impaye-card .stat-icon {
-            background: #e53e3e;
-        }
-
-        .taux-card .stat-icon {
-            background: #3b82f6;
-        }
-
-        .stat-value {
-            font-size: 24px;
-            font-weight: 800;
-            color: #1a202c;
-            margin: 0;
-        }
-
-        .stat-label {
-            color: #718096;
-            margin: 5px 0;
-            font-size: 14px;
-        }
-
-        .stat-detail {
-            color: #a0aec0;
-            font-size: 12px;
-            margin-top: 5px;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #e2e8f0;
-            border-radius: 4px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #0d8644, #fea219);
-            border-radius: 4px;
-            transition: width 0.3s ease;
-        }
-
-        /* Analytics Grid */
-        .payment-methods-section {
-            margin-bottom: 30px;
-        }
-
-        .analytics-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 25px;
-        }
-
-        .analytics-card {
-            background: white;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .card-header h3 {
-            margin: 0;
-            color: #1a202c;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .card-header i {
-            color: #fea219;
-        }
-
-        .chart-container {
-            position: relative;
-            height: 300px;
-            width: 100%;
-        }
-
-        /* Payment Methods */
-        .payment-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .payment-method-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background: #f7fafc;
-            border-radius: 12px;
-            transition: background 0.3s ease;
-        }
-
-        .payment-method-item:hover {
-            background: #edf2f7;
-        }
-
-        .method-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: #4a5568;
-            font-weight: 600;
-        }
-
-        .method-info i {
-            width: 30px;
-            height: 30px;
-            background: #fff;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fea219;
-        }
-
-        .method-amount {
-            font-weight: 700;
-            color: #0d8644;
-            font-size: 14px;
-        }
-
-        /* Bilan par Agence */
-        .bilan-agences-section {
-            margin-bottom: 30px;
-        }
-
-        .agences-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 25px;
-        }
-
-        .agence-card {
-            background: white;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border-top: 4px solid #fea219;
-        }
-
-        .agence-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-        }
-
-        .agence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #f7fafc;
-        }
-
-        .agence-name {
-            font-size: 20px;
-            font-weight: 700;
-            color: #1a202c;
-            margin: 0 0 5px 0;
-        }
-
-        .agence-location {
-            color: #718096;
-            font-size: 14px;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .agence-badge {
-            background: #fea219;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .agence-stats {
-            margin-bottom: 20px;
-        }
-
-        .agence-stat-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #f7fafc;
-        }
-
-        .agence-stat-row:last-child {
-            border-bottom: none;
-        }
-
-        .agence-stat-row .stat-label {
-            color: #718096;
-            font-size: 14px;
-        }
-
-        .agence-stat-row .stat-value {
-            font-weight: 700;
-            font-size: 14px;
-        }
-
-        .agence-stat-row .stat-value.total {
-            color: #fea219;
-        }
-
-        .agence-stat-row .stat-value.paye {
-            color: #0d8644;
-        }
-
-        .agence-stat-row .stat-value.impaye {
-            color: #e53e3e;
-        }
-
-        .agence-payment-status {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 20px;
-            padding: 15px 0;
-            background: #f7fafc;
-            border-radius: 12px;
-        }
-
-        .payment-status-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .status-badge {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 16px;
-            color: white;
-        }
-
-        .status-badge.success {
-            background: #0d8644;
-        }
-
-        .status-badge.warning {
-            background: #fea219;
-        }
-
-        .status-badge.danger {
-            background: #e53e3e;
-        }
-
-        .status-label {
-            font-size: 12px;
-            color: #718096;
-        }
-
-        .agence-footer {
-            padding-top: 15px;
-            border-top: 2px solid #f7fafc;
-        }
-
-        .taux-container {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-
-        .taux-label {
-            color: #718096;
-            font-size: 14px;
-        }
-
-        .taux-value {
-            font-weight: 700;
-            color: #3b82f6;
-            font-size: 16px;
-        }
-
-        /* Responsive */
-        @media (max-width: 1200px) {
-            .analytics-grid {
-                grid-template-columns: 1fr;
+        <!-- Styles CSS -->
+        <style>
+            .bilan-financier-container {
+                padding: 20px;
+                background: #f8fafc;
+                min-height: 100vh;
             }
-        }
 
-        @media (max-width: 768px) {
+            /* Header */
+            .bilan-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 30px;
+                background: white;
+                padding: 25px;
+                border-radius: 20px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            }
+
+            .header-title {
+                font-size: 28px;
+                font-weight: 700;
+                color: #1a202c;
+                margin: 0;
+            }
+
+            .header-subtitle {
+                color: #718096;
+                margin: 5px 0 0 0;
+                font-size: 16px;
+            }
+
+            .date-display {
+                background: #fea219;
+                color: white;
+                padding: 12px 20px;
+                border-radius: 12px;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            /* Section Titles */
+            .section-title {
+                font-size: 22px;
+                font-weight: 700;
+                color: #1a202c;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .section-title i {
+                color: #fea219;
+            }
+
+            /* Stats Globales */
+            .stats-globales-section {
+                margin-bottom: 30px;
+            }
+
             .stats-grid {
-                grid-template-columns: 1fr;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 25px;
+            }
+
+            .stat-card {
+                background: white;
+                padding: 25px;
+                border-radius: 20px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                border-left: 5px solid;
+            }
+
+            .stat-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            }
+
+            .total-card {
+                border-left-color: #fea219;
+            }
+
+            .paye-card {
+                border-left-color: #0d8644;
+            }
+
+            .impaye-card {
+                border-left-color: #e53e3e;
+            }
+
+            .taux-card {
+                border-left-color: #3b82f6;
+            }
+
+            .stat-icon {
+                width: 70px;
+                height: 70px;
+                border-radius: 18px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 28px;
+                color: white;
+            }
+
+            .total-card .stat-icon {
+                background: #fea219;
+            }
+
+            .paye-card .stat-icon {
+                background: #0d8644;
+            }
+
+            .impaye-card .stat-icon {
+                background: #e53e3e;
+            }
+
+            .taux-card .stat-icon {
+                background: #3b82f6;
+            }
+
+            .stat-value {
+                font-size: 24px;
+                font-weight: 800;
+                color: #1a202c;
+                margin: 0;
+            }
+
+            .stat-label {
+                color: #718096;
+                margin: 5px 0;
+                font-size: 14px;
+            }
+
+            .stat-detail {
+                color: #a0aec0;
+                font-size: 12px;
+                margin-top: 5px;
+            }
+
+            .progress-bar {
+                width: 100%;
+                height: 8px;
+                background: #e2e8f0;
+                border-radius: 4px;
+                margin-top: 10px;
+                overflow: hidden;
+            }
+
+            .progress-fill {
+                height: 100%;
+                background: linear-gradient(90deg, #0d8644, #fea219);
+                border-radius: 4px;
+                transition: width 0.3s ease;
+            }
+
+            /* Analytics Grid */
+            .payment-methods-section {
+                margin-bottom: 30px;
+            }
+
+            .analytics-grid {
+                display: grid;
+                grid-template-columns: 2fr 1fr;
+                gap: 25px;
+            }
+
+            .analytics-card {
+                background: white;
+                border-radius: 20px;
+                padding: 25px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            }
+
+            .card-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+
+            .card-header h3 {
+                margin: 0;
+                color: #1a202c;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .card-header i {
+                color: #fea219;
+            }
+
+            .chart-container {
+                position: relative;
+                height: 300px;
+                width: 100%;
+            }
+
+            /* Payment Methods */
+            .payment-list {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .payment-method-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 15px;
+                background: #f7fafc;
+                border-radius: 12px;
+                transition: background 0.3s ease;
+            }
+
+            .payment-method-item:hover {
+                background: #edf2f7;
+            }
+
+            .method-info {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                color: #4a5568;
+                font-weight: 600;
+            }
+
+            .method-info i {
+                width: 30px;
+                height: 30px;
+                background: #fff;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #fea219;
+            }
+
+            .method-amount {
+                font-weight: 700;
+                color: #0d8644;
+                font-size: 14px;
+            }
+
+            /* Bilan par Agence */
+            .bilan-agences-section {
+                margin-bottom: 30px;
             }
 
             .agences-grid {
-                grid-template-columns: 1fr;
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+                gap: 25px;
             }
 
-            .bilan-header {
+            .agence-card {
+                background: white;
+                border-radius: 20px;
+                padding: 25px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                border-top: 4px solid #fea219;
+            }
+
+            .agence-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            }
+
+            .agence-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 20px;
+                padding-bottom: 15px;
+                border-bottom: 2px solid #f7fafc;
+            }
+
+            .agence-name {
+                font-size: 20px;
+                font-weight: 700;
+                color: #1a202c;
+                margin: 0 0 5px 0;
+            }
+
+            .agence-location {
+                color: #718096;
+                font-size: 14px;
+                margin: 0;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+
+            .agence-badge {
+                background: #fea219;
+                color: white;
+                padding: 8px 15px;
+                border-radius: 20px;
+                font-size: 13px;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+
+            .agence-stats {
+                margin-bottom: 20px;
+            }
+
+            .agence-stat-row {
+                display: flex;
+                justify-content: space-between;
+                padding: 10px 0;
+                border-bottom: 1px solid #f7fafc;
+            }
+
+            .agence-stat-row:last-child {
+                border-bottom: none;
+            }
+
+            .agence-stat-row .stat-label {
+                color: #718096;
+                font-size: 14px;
+            }
+
+            .agence-stat-row .stat-value {
+                font-weight: 700;
+                font-size: 14px;
+            }
+
+            .agence-stat-row .stat-value.total {
+                color: #fea219;
+            }
+
+            .agence-stat-row .stat-value.paye {
+                color: #0d8644;
+            }
+
+            .agence-stat-row .stat-value.impaye {
+                color: #e53e3e;
+            }
+
+            .agence-payment-status {
+                display: flex;
+                justify-content: space-around;
+                margin-bottom: 20px;
+                padding: 15px 0;
+                background: #f7fafc;
+                border-radius: 12px;
+            }
+
+            .payment-status-item {
+                display: flex;
                 flex-direction: column;
-                gap: 15px;
-                text-align: center;
+                align-items: center;
+                gap: 5px;
             }
-        }
-    </style>
 
-    <!-- Scripts pour les graphiques -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const ctx = document.getElementById('evolutionChart').getContext('2d');
+            .status-badge {
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 700;
+                font-size: 16px;
+                color: white;
+            }
 
-            const evolutionChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: @json($statsGraphique['months']),
-                    datasets: [
-                        {
-                            label: 'Montant Total',
-                            data: @json($statsGraphique['montants_totaux']),
-                            borderColor: '#fea219',
-                            backgroundColor: 'rgba(254, 162, 25, 0.1)',
-                            tension: 0.4,
-                            fill: true
-                        },
-                        {
-                            label: 'Montant Payé',
-                            data: @json($statsGraphique['montants_payes']),
-                            borderColor: '#0d8644',
-                            backgroundColor: 'rgba(13, 134, 68, 0.1)',
-                            tension: 0.4,
-                            fill: true
-                        },
-                        {
-                            label: 'Montant Impayé',
-                            data: @json($statsGraphique['montants_impayes']),
-                            borderColor: '#e53e3e',
-                            backgroundColor: 'rgba(229, 62, 62, 0.1)',
-                            tension: 0.4,
-                            fill: true
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        }
+            .status-badge.success {
+                background: #0d8644;
+            }
+
+            .status-badge.warning {
+                background: #fea219;
+            }
+
+            .status-badge.danger {
+                background: #e53e3e;
+            }
+
+            .status-label {
+                font-size: 12px;
+                color: #718096;
+            }
+
+            .agence-footer {
+                padding-top: 15px;
+                border-top: 2px solid #f7fafc;
+            }
+
+            .taux-container {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 8px;
+            }
+
+            .taux-label {
+                color: #718096;
+                font-size: 14px;
+            }
+
+            .taux-value {
+                font-weight: 700;
+                color: #3b82f6;
+                font-size: 16px;
+            }
+
+            .encaisse-row {
+                background: #f0fff4;
+                padding: 12px 10px !important;
+                border-radius: 8px;
+                margin: 5px 0;
+                border-bottom: none !important;
+            }
+
+            /* Responsive */
+            @media (max-width: 1200px) {
+                .analytics-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            @media (max-width: 768px) {
+                .stats-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .agences-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .bilan-header {
+                    flex-direction: column;
+                    gap: 15px;
+                    text-align: center;
+                }
+            }
+        </style>
+
+        <!-- Scripts pour les graphiques -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const ctx = document.getElementById('evolutionChart').getContext('2d');
+
+                const evolutionChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: @json($statsGraphique['months']),
+                        datasets: [
+                            {
+                                label: 'Montant Total',
+                                data: @json($statsGraphique['montants_totaux']),
+                                borderColor: '#fea219',
+                                backgroundColor: 'rgba(254, 162, 25, 0.1)',
+                                tension: 0.4,
+                                fill: true
+                            },
+                            {
+                                label: 'Montant Payé',
+                                data: @json($statsGraphique['montants_payes']),
+                                borderColor: '#0d8644',
+                                backgroundColor: 'rgba(13, 134, 68, 0.1)',
+                                tension: 0.4,
+                                fill: true
+                            },
+                            {
+                                label: 'Montant Impayé',
+                                data: @json($statsGraphique['montants_impayes']),
+                                borderColor: '#e53e3e',
+                                backgroundColor: 'rgba(229, 62, 62, 0.1)',
+                                tension: 0.4,
+                                fill: true
+                            }
+                        ]
                     },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(0,0,0,0.05)'
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
                             }
                         },
-                        x: {
-                            grid: {
-                                display: false
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(0,0,0,0.05)'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                }
                             }
                         }
                     }
-                }
+                });
             });
-        });
-    </script>
+        </script>
 @endsection

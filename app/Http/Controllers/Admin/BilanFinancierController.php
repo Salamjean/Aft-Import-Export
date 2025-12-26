@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Agence;
 use App\Models\Colis;
 use App\Models\Paiement;
+use App\Models\Agent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -84,13 +85,47 @@ class BilanFinancierController extends Controller
         $stats = [];
 
         foreach ($agences as $agence) {
-            // Colis pour l'expédition
-            $colisExpedition = Colis::where('agence_expedition_id', $agence->id);
+            // Colis pour l'expédition (statistiques globales de l'agence)
+            $colisExpedition = Colis::with('paiements')->where('agence_expedition_id', $agence->id);
 
-            // Montants
+            // Montants globaux basés sur les colis
             $montantTotal = $colisExpedition->sum('montant_total') ?? 0;
             $montantPaye = $colisExpedition->sum('montant_paye') ?? 0;
             $montantImpaye = $colisExpedition->sum('reste_a_payer') ?? 0;
+
+            // Statistiques par agent de CETTE agence
+            $agents = Agent::where('agence_id', $agence->id)->get();
+            $statsAgents = [];
+            $totalEncaisseAgents = 0;
+
+            foreach ($agents as $agent) {
+                $encaisse = Paiement::where('agent_id', $agent->id)
+                    ->where('agent_type', 'agent')
+                    ->sum('montant') ?? 0;
+
+                if ($encaisse > 0) {
+                    $statsAgents[] = [
+                        'nom' => $agent->name . ' ' . $agent->prenom,
+                        'montant' => $encaisse
+                    ];
+                    $totalEncaisseAgents += $encaisse;
+                }
+            }
+
+            // Ajouter aussi les encaissements faits par les admins pour les colis de cette agence
+            $encaisseAdmins = Paiement::whereHas('colis', function ($q) use ($agence) {
+                $q->where('agence_expedition_id', $agence->id);
+            })
+                ->where('agent_type', 'admin')
+                ->sum('montant') ?? 0;
+
+            if ($encaisseAdmins > 0) {
+                $statsAgents[] = [
+                    'nom' => 'Administrateurs (Siège)',
+                    'montant' => $encaisseAdmins
+                ];
+                $totalEncaisseAgents += $encaisseAdmins;
+            }
 
             // Nombre de colis
             $totalColis = $colisExpedition->count();
@@ -105,12 +140,14 @@ class BilanFinancierController extends Controller
                 'agence' => $agence,
                 'total_colis' => $totalColis,
                 'montant_total' => $montantTotal,
-                'montant_paye' => $montantPaye,
+                'montant_paye' => $montantPaye, // Total payé sur les colis de l'agence
                 'montant_impaye' => $montantImpaye,
                 'totalement_payes' => $totalementPayes,
                 'partiellement_payes' => $partiellementPayes,
                 'non_payes' => $nonPayes,
                 'taux_recouvrement' => round($tauxRecouvrement, 2),
+                'stats_agents' => $statsAgents,
+                'total_encaisse_agents' => $totalEncaisseAgents
             ];
         }
 
