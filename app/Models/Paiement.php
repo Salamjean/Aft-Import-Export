@@ -24,4 +24,9 @@ class Paiement extends Model
     {
         return $this->belongsTo(Colis::class);
     }
+
+    public function agent()
+    {
+        return $this->belongsTo(Agent::class, 'agent_id');
+    }
 }

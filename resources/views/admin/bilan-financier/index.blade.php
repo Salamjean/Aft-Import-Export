@@ -6,9 +6,13 @@
         <div class="bilan-header">
             <div class="header-content">
                 <h1 class="header-title">Bilan Financier</h1>
-                <p class="header-subtitle">Vue d'ensemble des paiements et recouvrements</p>
+                <p class="header-subtitle">Vue d'ensemble des encaissements par agence</p>
             </div>
             <div class="header-actions">
+                <a href="{{ route('admin.bilan_financier.historique') }}" class="btn-historique">
+                    <i class="fas fa-history"></i>
+                    Historique des Paiements
+                </a>
                 <div class="date-display">
                     <i class="fas fa-calendar-alt"></i>
                     {{ \Carbon\Carbon::now()->translatedFormat('l d F Y') }}
@@ -16,245 +20,140 @@
             </div>
         </div>
 
-        <!-- Statistiques Globales -->
-        <div class="stats-globales-section">
-            <h2 class="section-title">
-                <i class="fas fa-globe"></i>
-                Bilan Global
-            </h2>
-            <div class="stats-grid">
-                <!-- Montant Total -->
-                <div class="stat-card total-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-coins"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3 class="stat-value">{{ number_format($statsGlobales['montant_total'], 0, ',', ' ') }} FCFA</h3>
-                        <p class="stat-label">Montant Total</p>
-                        <div class="stat-detail">{{ $statsGlobales['total_colis'] }} colis</div>
-                    </div>
-                </div>
+        <!-- Statistiques Globales par Devise -->
+            @foreach($statsGlobales as $devise => $stats)
+                <div class="stats-globales-section mb-5">
+                    <h2 class="section-title">
+                        <i class="fas fa-globe"></i>
+                        Bilan Global ({{ $devise }})
+                    </h2>
+                    <div class="stats-grid">
+                        <!-- Montant Total -->
+                        <div class="stat-card total-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-value">{{ number_format($stats['montant_total'], 0, ',', ' ') }} {{ $devise }}</h3>
+                                <p class="stat-label">Valeur Totale</p>
+                                <div class="stat-detail">{{ $stats['total_colis'] }} colis</div>
+                            </div>
+                        </div>
 
-                <!-- Montant Payé -->
-                <div class="stat-card paye-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3 class="stat-value">{{ number_format($statsGlobales['montant_paye'], 0, ',', ' ') }} FCFA</h3>
-                        <p class="stat-label">Montant Payé</p>
-                        <div class="stat-detail">{{ $statsGlobales['totalement_payes'] }} colis payés</div>
-                    </div>
-                </div>
+                        <!-- Montant Payé -->
+                        <div class="stat-card paye-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-value">{{ number_format($stats['montant_paye'], 0, ',', ' ') }} {{ $devise }}</h3>
+                                <p class="stat-label">Montant Encaissé</p>
+                                <div class="stat-detail">{{ $stats['totalement_payes'] }} payés entièrement</div>
+                            </div>
+                        </div>
 
-                <!-- Montant Impayé -->
-                <div class="stat-card impaye-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-exclamation-circle"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3 class="stat-value">{{ number_format($statsGlobales['montant_impaye'], 0, ',', ' ') }} FCFA</h3>
-                        <p class="stat-label">Montant Impayé</p>
-                        <div class="stat-detail">{{ $statsGlobales['non_payes'] + $statsGlobales['partiellement_payes'] }}
-                            colis</div>
-                    </div>
-                </div>
+                        <!-- Montant Impayé -->
+                        <div class="stat-card impaye-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-value">{{ number_format($stats['montant_impaye'], 0, ',', ' ') }} {{ $devise }}</h3>
+                                <p class="stat-label">Reste à Recouvrer</p>
+                                <div class="stat-detail">{{ $stats['non_payes'] + $stats['partiellement_payes'] }} à suivre</div>
+                            </div>
+                        </div>
 
-                <!-- Taux de Recouvrement -->
-                <div class="stat-card taux-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-percentage"></i>
+                        <!-- Taux de Recouvrement -->
+                        <div class="stat-card taux-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-percentage"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-value">{{ $stats['taux_recouvrement'] }}%</h3>
+                                <p class="stat-label">Taux Recouvrement</p>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: {{ $stats['taux_recouvrement'] }}%"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="stat-content">
-                        <h3 class="stat-value">{{ $statsGlobales['taux_recouvrement'] }}%</h3>
-                        <p class="stat-label">Taux de Recouvrement</p>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: {{ $statsGlobales['taux_recouvrement'] }}%"></div>
+
+                    <!-- Répartition par méthode pour cette devise -->
+                    <div class="payment-methods-mini-grid mt-4">
+                        <div class="analytics-card">
+                            <div class="method-mini-list">
+                                <div class="method-mini-item">
+                                    <span class="label">Espèces:</span>
+                                    <span class="value">{{ number_format($stats['montant_especes'], 0, ',', ' ') }} {{ $devise }}</span>
+                                </div>
+                                <div class="method-mini-item">
+                                    <span class="label">Virement:</span>
+                                    <span class="value">{{ number_format($stats['montant_virement'], 0, ',', ' ') }} {{ $devise }}</span>
+                                </div>
+                                <div class="method-mini-item">
+                                    <span class="label">Chèque:</span>
+                                    <span class="value">{{ number_format($stats['montant_cheque'], 0, ',', ' ') }} {{ $devise }}</span>
+                                </div>
+                                <div class="method-mini-item">
+                                    <span class="label">Mobile:</span>
+                                    <span class="value">{{ number_format($stats['montant_mobile_money'], 0, ',', ' ') }} {{ $devise }}</span>
+                                </div>
+                                <div class="method-mini-item">
+                                    <span class="label">Livraison:</span>
+                                    <span class="value">{{ number_format($stats['montant_livraison'], 0, ',', ' ') }} {{ $devise }}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            @endforeach
 
-        <!-- Répartition par méthode de paiement -->
-        <div class="payment-methods-section">
-            <div class="analytics-grid">
-                <!-- Graphique Évolution -->
+            <!-- Évolution Mensuelle -->
+            <div class="analytics-grid mb-5 col-12">
                 <div class="analytics-card main-chart">
                     <div class="card-header">
-                        <h3><i class="fas fa-chart-line"></i> Évolution Mensuelle</h3>
+                        <h3><i class="fas fa-chart-line"></i> Évolution Mensuelle (Global)</h3>
                     </div>
                     <div class="chart-container">
                         <canvas id="evolutionChart"></canvas>
                     </div>
                 </div>
-
-                <!-- Méthodes de Paiement -->
-                <div class="analytics-card payment-methods">
-                    <div class="card-header">
-                        <h3><i class="fas fa-money-bill-wave"></i> Méthodes de Paiement</h3>
-                    </div>
-                    <div class="payment-list">
-                        <div class="payment-method-item">
-                            <div class="method-info">
-                                <i class="fas fa-money-bill-alt"></i>
-                                <span>Espèces</span>
-                            </div>
-                            <div class="method-amount">{{ number_format($statsGlobales['montant_especes'], 0, ',', ' ') }}
-                                FCFA</div>
-                        </div>
-                        <div class="payment-method-item">
-                            <div class="method-info">
-                                <i class="fas fa-university"></i>
-                                <span>Virement</span>
-                            </div>
-                            <div class="method-amount">{{ number_format($statsGlobales['montant_virement'], 0, ',', ' ') }}
-                                FCFA</div>
-                        </div>
-                        <div class="payment-method-item">
-                            <div class="method-info">
-                                <i class="fas fa-file-invoice"></i>
-                                <span>Chèque</span>
-                            </div>
-                            <div class="method-amount">{{ number_format($statsGlobales['montant_cheque'], 0, ',', ' ') }}
-                                FCFA</div>
-                        </div>
-                        <div class="payment-method-item">
-                            <div class="method-info">
-                                <i class="fas fa-mobile-alt"></i>
-                                <span>Mobile Money</span>
-                            </div>
-                            <div class="method-amount">
-                                {{ number_format($statsGlobales['montant_mobile_money'], 0, ',', ' ') }} FCFA
-                            </div>
-                        </div>
-                        <div class="payment-method-item">
-                            <div class="method-info">
-                                <i class="fas fa-truck"></i>
-                                <span>À la livraison</span>
-                            </div>
-                            <div class="method-amount">{{ number_format($statsGlobales['montant_livraison'], 0, ',', ' ') }}
-                                FCFA</div>
-                        </div>
-                    </div>
-                </div>
             </div>
-        </div>
 
-        <!-- Derniers Encaissements -->
-        <div class="recent-payments-section mb-4">
-            <div class="analytics-card">
-                <div class="card-header">
-                    <h3><i class="fas fa-history"></i> Derniers Encaissements</h3>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Référence Colis</th>
-                                <th>Agent / Admin</th>
-                                <th>Montant Payé</th>
-                                <th>Méthode</th>
-                                <th>Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($derniersPaiements as $paiement)
-                                <tr>
-                                    <td><strong>{{ $paiement->colis->reference_colis ?? 'N/A' }}</strong></td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <span
-                                                class="badge {{ $paiement->agent_type == 'admin' ? 'badge-primary' : 'badge-info' }} mr-2">
-                                                {{ ucfirst($paiement->agent_type) }}
-                                            </span>
-                                            {{ $paiement->agent_name ?? 'Inconnu' }}
-                                        </div>
-                                    </td>
-                                    <td><span
-                                            class="text-success font-weight-bold">{{ number_format($paiement->montant, 0, ',', ' ') }}
-                                            FCFA</span></td>
-                                    <td>{{ ucfirst(str_replace('_', ' ', $paiement->methode_paiement)) }}</td>
-                                    <td>{{ $paiement->created_at->format('d/m/Y H:i') }}</td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="5" class="text-center">Aucun encaissement enregistré.</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Bilan par Agence -->
-        <div class="bilan-agences-section">
-            <h2 class="section-title">
-                <i class="fas fa-building"></i>
-                Bilan par Agence
-            </h2>
-            <div class="agences-grid">
-                @foreach($statsParAgence as $stat)
-                    <div class="agence-card">
-                        <div class="agence-header">
-                            <div class="agence-info">
-                                <h3 class="agence-name">{{ $stat['agence']->name }}</h3>
-                                <p class="agence-location">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    {{ $stat['agence']->pays }}
-                                </p>
-                            </div>
-                            <div class="agence-badge">
-                                <i class="fas fa-box"></i>
-                                {{ $stat['total_colis'] }} colis
-                            </div>
-                        </div>
-
-                        <div class="agence-stats">
-                            <div class="agence-stat-row">
-                                <span class="stat-label">Valeur Totale des Colis:</span>
-                                <span class="stat-value total">{{ number_format($stat['montant_total'], 0, ',', ' ') }}
-                                    FCFA</span>
-                            </div>
-                            <div class="agence-stat-row encaisse-row">
-                                <span class="stat-label">Total Encaissé (Global):</span>
-                                <span class="stat-value text-success font-weight-bold">{{ number_format($stat['total_encaisse_agents'], 0, ',', ' ') }}
-                                    FCFA</span>
-                            </div>
-                            <div class="agence-stat-row">
-                                <span class="stat-label">Reste à Recouvrer:</span>
-                                <span class="stat-value impaye">{{ number_format($stat['montant_impaye'], 0, ',', ' ') }}
-                                    FCFA</span>
-                            </div>
-                        </div>
-
-                        <div class="agence-payment-status">
-                            <div class="payment-status-item">
-                                <span class="status-badge success">{{ $stat['totalement_payes'] }}</span>
-                                <span class="status-label">Payés</span>
-                            </div>
-                            <div class="payment-status-item">
-                                <span class="status-badge warning">{{ $stat['partiellement_payes'] }}</span>
-                                <span class="status-label">Partiels</span>
-                            </div>
-                            <div class="payment-status-item">
-                                <span class="status-badge danger">{{ $stat['non_payes'] }}</span>
-                                <span class="status-label">Non payés</span>
-                            </div>
-                        </div>
-
-                                <div class="agence-footer">
-                                    <div class="taux-container">
-                                        <span class="taux-label">Taux de recouvrement:</span>
-                                        <span class="taux-value">{{ $stat['taux_recouvrement'] }}%</span>
-                                    </div>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" style="width: {{ $stat['taux_recouvrement'] }}%"></div>
-                                    </div>
+            <!-- Bilan par Agence -->
+            <div class="bilan-agences-section">
+                <h2 class="section-title">
+                    <i class="fas fa-building"></i>
+                    Encaissements par Agence (Agents uniquement)
+                </h2>
+                <div class="agences-grid">
+                    @foreach($statsParAgence as $stat)
+                        <div class="agence-card">
+                            <div class="agence-header">
+                                <div class="agence-info">
+                                    <h3 class="agence-name">{{ $stat['agence']->name }}</h3>
+                                    <p class="agence-location">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        {{ $stat['agence']->pays }}
+                                    </p>
+                                </div>
+                                <div class="agence-badge">
+                                    <i class="fas fa-box"></i>
+                                    {{ $stat['total_colis'] }} colis
                                 </div>
                             </div>
-                @endforeach
+
+                            <div class="agence-stats-simple">
+                                <div class="encaisse-agents-box">
+                                    <span class="label">Total Encaissé par les Agents:</span>
+                                    <h4 class="amount text-success">
+                                        {{ number_format($stat['total_encaisse_agents'], 0, ',', ' ') }} {{ $stat['agence']->devise ?? 'FCFA' }}
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -293,17 +192,67 @@
             }
 
             .date-display {
-                background: #fea219;
-                color: white;
-                padding: 12px 20px;
-                border-radius: 12px;
-                font-weight: 600;
-                display: flex;
-                align-items: center;
-                gap: 8px;
-            }
+            background: #fea219;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-            /* Section Titles */
+        .btn-historique {
+            background: white;
+            color: #1a202c;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .btn-historique:hover {
+            background: #f7fafc;
+            border-color: #fea219;
+            color: #fea219;
+            text-decoration: none;
+        }
+
+        /* Agence Stats Simple */
+        .agence-stats-simple {
+            padding: 20px 0;
+        }
+
+        .encaisse-agents-box {
+            background: #f0fff4;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid #c6f6d5;
+        }
+
+        .encaisse-agents-box .label {
+            display: block;
+            color: #2f855a;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .encaisse-agents-box .amount {
+            font-size: 24px;
+            font-weight: 800;
+            margin: 0;
+        }
+
+        /* Section Titles */
             .section-title {
                 font-size: 22px;
                 font-weight: 700;
@@ -431,7 +380,7 @@
 
             .analytics-grid {
                 display: grid;
-                grid-template-columns: 2fr 1fr;
+                grid-template-columns: 12fr 1fr;
                 gap: 25px;
             }
 
@@ -512,6 +461,36 @@
                 font-weight: 700;
                 color: #0d8644;
                 font-size: 14px;
+            }
+
+            /* Mini Methods Grid */
+            .method-mini-list {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 15px;
+            }
+
+            .method-mini-item {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                padding: 10px;
+                background: #f8fafc;
+                border-radius: 8px;
+                border-bottom: 3px solid #fea219;
+            }
+
+            .method-mini-item .label {
+                font-size: 12px;
+                color: #718096;
+                font-weight: 600;
+                text-transform: uppercase;
+            }
+
+            .method-mini-item .value {
+                font-size: 14px;
+                font-weight: 700;
+                color: #0d8644;
             }
 
             /* Bilan par Agence */

@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\AdminDashboard;
 use App\Http\Controllers\Admin\Agence\AgenceController;
 use App\Http\Controllers\Admin\AuthenticateAdmin;
+use App\Http\Controllers\Agent\AgentBilanController;
+use App\Http\Controllers\Agent\Cote_Ivoire\AgentCoteBilanController;
 use App\Http\Controllers\Admin\BilanFinancierController;
 use App\Http\Controllers\Admin\Bateau\BateauController;
 use App\Http\Controllers\Admin\Chauffeur\ChauffeurController;
@@ -83,7 +85,8 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('/logout', [AdminDashboard::class, 'logout'])->name('admin.logout');
 
     // Route pour le bilan financier
-    Route::get('/bilan-financier', [BilanFinancierController::class, 'index'])->name('admin.bilan-financier');
+    Route::get('/bilan-financier', [BilanFinancierController::class, 'index'])->name('admin.bilan_financier.index');
+    Route::get('/bilan-financier/historique', [BilanFinancierController::class, 'historiquePaiements'])->name('admin.bilan_financier.historique');
 
     //les routes de gestion des agences par l'admin 
     Route::prefix('agence')->group(function () {
@@ -289,6 +292,10 @@ Route::middleware('agent')->prefix('agent')->group(function () {
             Route::get('/{id}/details', [LivraisonController::class, 'details'])->name('livraison.details');
             Route::delete('/{id}', [LivraisonController::class, 'destroy'])->name('livraison.destroy');
         });
+
+        // Bilan Financier Ivory
+        Route::get('/bilan-financier', [AgentCoteBilanController::class, 'index'])->name('agent.cote.bilan_financier.index');
+        Route::get('/bilan-financier/historique', [AgentCoteBilanController::class, 'historique'])->name('agent.cote.bilan_financier.historique');
     });
 
     //Les routes de gestion des devis 
@@ -411,6 +418,10 @@ Route::middleware('agent')->prefix('agent')->group(function () {
         Route::post('/{id}/traiter', [AgentDemandeRecuperation::class, 'traiter'])->name('agent.demandes-recuperation.traiter');
         Route::post('/{id}/annuler', [AgentDemandeRecuperation::class, 'annuler'])->name('agent.demandes-recuperation.annuler');
     });
+
+    // Bilan Financier Agent
+    Route::get('/bilan-financier', [AgentBilanController::class, 'index'])->name('agent.bilan_financier.index');
+    Route::get('/bilan-financier/historique', [AgentBilanController::class, 'historique'])->name('agent.bilan_financier.historique');
 });
 
 //Les routes de gestion des @chauffeur

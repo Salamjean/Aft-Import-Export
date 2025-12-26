@@ -14,68 +14,115 @@ class BilanFinancierController extends Controller
 {
     public function index()
     {
-        // Statistiques globales
+        // Statistiques globales par devise
         $statsGlobales = $this->getStatsGlobales();
 
-        // Statistiques par agence
+        // Statistiques simplifiées par agence (Encaissements Agents uniquement)
         $statsParAgence = $this->getStatsParAgence();
 
         // Statistiques mensuelles pour le graphique
         $statsGraphique = $this->getStatsGraphique();
 
-        // Historique des paiements (les 15 derniers)
-        $derniersPaiements = Paiement::with('colis')
-            ->orderBy('created_at', 'desc')
-            ->limit(15)
-            ->get();
-
         return view('admin.bilan-financier.index', compact(
             'statsGlobales',
             'statsParAgence',
-            'statsGraphique',
-            'derniersPaiements'
+            'statsGraphique'
         ));
+    }
+
+    public function historiquePaiements()
+    {
+        $paiements = Paiement::with(['colis.agenceExpedition', 'agent'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(50);
+
+        return view('admin.bilan-financier.historique', compact('paiements'));
     }
 
     private function getStatsGlobales()
     {
-        // Tous les colis
-        $totalColis = Colis::count();
+        $tauxEURversXOF = 655.957;
 
-        // Montants totaux
-        $montantTotal = Colis::sum('montant_total') ?? 0;
-        $montantPaye = Colis::sum('montant_paye') ?? 0;
-        $montantImpaye = Colis::sum('reste_a_payer') ?? 0;
+        // On récupère TOUS les colis avec leur agence pour connaître la devise
+        $colis = Colis::with('agenceExpedition')->get();
 
-        // Statistiques par statut de paiement
-        $totalementPayes = Colis::where('statut_paiement', 'totalement_paye')->count();
-        $partiellementPayes = Colis::where('statut_paiement', 'partiellement_paye')->count();
-        $nonPayes = Colis::where('statut_paiement', 'non_paye')->count();
+        $totalXof_MontantTotal = 0;
+        $totalXof_MontantPaye = 0;
+        $totalXof_MontantImpaye = 0;
 
-        // Montants par méthode de paiement
-        $montantEspeces = Colis::sum('montant_espece') ?? 0;
-        $montantVirement = Colis::sum('montant_virement') ?? 0;
-        $montantCheque = Colis::sum('montant_cheque') ?? 0;
-        $montantMobileMoney = Colis::sum('montant_mobile_money') ?? 0;
-        $montantLivraison = Colis::sum('montant_livraison') ?? 0;
+        $totalXof_Especes = 0;
+        $totalXof_Virement = 0;
+        $totalXof_Cheque = 0;
+        $totalXof_MobileMoney = 0;
+        $totalXof_Livraison = 0;
 
-        // Taux de recouvrement
-        $tauxRecouvrement = $montantTotal > 0 ? ($montantPaye / $montantTotal) * 100 : 0;
+        $totalColis = $colis->count();
+        $totalementPayes = 0;
+        $partiellementPayes = 0;
+        $nonPayes = 0;
 
-        return [
+        foreach ($colis as $c) {
+            $devise = $c->agenceExpedition->devise ?? 'XOF';
+            $coefficient = (strtoupper($devise) === 'EUR' || strtoupper($devise) === 'EURO') ? $tauxEURversXOF : 1;
+
+            $totalXof_MontantTotal += $c->montant_total * $coefficient;
+            $totalXof_MontantPaye += $c->montant_paye * $coefficient;
+            $totalXof_MontantImpaye += $c->reste_a_payer * $coefficient;
+
+            $totalXof_Especes += ($c->montant_espece ?? 0) * $coefficient;
+            $totalXof_Virement += ($c->montant_virement ?? 0) * $coefficient;
+            $totalXof_Cheque += ($c->montant_cheque ?? 0) * $coefficient;
+            $totalXof_MobileMoney += ($c->montant_mobile_money ?? 0) * $coefficient;
+            $totalXof_Livraison += ($c->montant_livraison ?? 0) * $coefficient;
+
+            if ($c->statut_paiement === 'totalement_paye')
+                $totalementPayes++;
+            elseif ($c->statut_paiement === 'partiellement_paye')
+                $partiellementPayes++;
+            else
+                $nonPayes++;
+        }
+
+        $tauxRecouvrement = $totalXof_MontantTotal > 0 ? round(($totalXof_MontantPaye / $totalXof_MontantTotal) * 100, 2) : 0;
+
+        // Préparation des deux blocs
+        $statsXof = [
+            'devise' => 'XOF',
             'total_colis' => $totalColis,
-            'montant_total' => $montantTotal,
-            'montant_paye' => $montantPaye,
-            'montant_impaye' => $montantImpaye,
+            'montant_total' => $totalXof_MontantTotal,
+            'montant_paye' => $totalXof_MontantPaye,
+            'montant_impaye' => $totalXof_MontantImpaye,
             'totalement_payes' => $totalementPayes,
             'partiellement_payes' => $partiellementPayes,
             'non_payes' => $nonPayes,
-            'montant_especes' => $montantEspeces,
-            'montant_virement' => $montantVirement,
-            'montant_cheque' => $montantCheque,
-            'montant_mobile_money' => $montantMobileMoney,
-            'montant_livraison' => $montantLivraison,
-            'taux_recouvrement' => round($tauxRecouvrement, 2),
+            'taux_recouvrement' => $tauxRecouvrement,
+            'montant_especes' => $totalXof_Especes,
+            'montant_virement' => $totalXof_Virement,
+            'montant_cheque' => $totalXof_Cheque,
+            'montant_mobile_money' => $totalXof_MobileMoney,
+            'montant_livraison' => $totalXof_Livraison,
+        ];
+
+        $statsEur = [
+            'devise' => 'EUR',
+            'total_colis' => $totalColis,
+            'montant_total' => $totalXof_MontantTotal / $tauxEURversXOF,
+            'montant_paye' => $totalXof_MontantPaye / $tauxEURversXOF,
+            'montant_impaye' => $totalXof_MontantImpaye / $tauxEURversXOF,
+            'totalement_payes' => $totalementPayes,
+            'partiellement_payes' => $partiellementPayes,
+            'non_payes' => $nonPayes,
+            'taux_recouvrement' => $tauxRecouvrement,
+            'montant_especes' => $totalXof_Especes / $tauxEURversXOF,
+            'montant_virement' => $totalXof_Virement / $tauxEURversXOF,
+            'montant_cheque' => $totalXof_Cheque / $tauxEURversXOF,
+            'montant_mobile_money' => $totalXof_MobileMoney / $tauxEURversXOF,
+            'montant_livraison' => $totalXof_Livraison / $tauxEURversXOF,
+        ];
+
+        return [
+            'EUR' => $statsEur,
+            'XOF' => $statsXof
         ];
     }
 
@@ -85,75 +132,26 @@ class BilanFinancierController extends Controller
         $stats = [];
 
         foreach ($agences as $agence) {
-            // Colis pour l'expédition (statistiques globales de l'agence)
-            $colisExpedition = Colis::with('paiements')->where('agence_expedition_id', $agence->id);
+            // Nombre de colis de l'agence
+            $totalColis = Colis::where('agence_expedition_id', $agence->id)->count();
 
-            // Montants globaux basés sur les colis
-            $montantTotal = $colisExpedition->sum('montant_total') ?? 0;
-            $montantPaye = $colisExpedition->sum('montant_paye') ?? 0;
-            $montantImpaye = $colisExpedition->sum('reste_a_payer') ?? 0;
-
-            // Statistiques par agent de CETTE agence
-            $agents = Agent::where('agence_id', $agence->id)->get();
-            $statsAgents = [];
-            $totalEncaisseAgents = 0;
-
-            foreach ($agents as $agent) {
-                $encaisse = Paiement::where('agent_id', $agent->id)
-                    ->where('agent_type', 'agent')
-                    ->sum('montant') ?? 0;
-
-                if ($encaisse > 0) {
-                    $statsAgents[] = [
-                        'nom' => $agent->name . ' ' . $agent->prenom,
-                        'montant' => $encaisse
-                    ];
-                    $totalEncaisseAgents += $encaisse;
-                }
-            }
-
-            // Ajouter aussi les encaissements faits par les admins pour les colis de cette agence
-            $encaisseAdmins = Paiement::whereHas('colis', function ($q) use ($agence) {
-                $q->where('agence_expedition_id', $agence->id);
-            })
-                ->where('agent_type', 'admin')
+            // Total encaissé uniquement par les AGENTS de cette agence
+            $totalEncaisseAgents = Paiement::where('agent_type', 'agent')
+                ->whereHas('agent', function ($q) use ($agence) {
+                    $q->where('agence_id', $agence->id);
+                })
                 ->sum('montant') ?? 0;
-
-            if ($encaisseAdmins > 0) {
-                $statsAgents[] = [
-                    'nom' => 'Administrateurs (Siège)',
-                    'montant' => $encaisseAdmins
-                ];
-                $totalEncaisseAgents += $encaisseAdmins;
-            }
-
-            // Nombre de colis
-            $totalColis = $colisExpedition->count();
-            $totalementPayes = (clone $colisExpedition)->where('statut_paiement', 'totalement_paye')->count();
-            $partiellementPayes = (clone $colisExpedition)->where('statut_paiement', 'partiellement_paye')->count();
-            $nonPayes = (clone $colisExpedition)->where('statut_paiement', 'non_paye')->count();
-
-            // Taux de recouvrement
-            $tauxRecouvrement = $montantTotal > 0 ? ($montantPaye / $montantTotal) * 100 : 0;
 
             $stats[] = [
                 'agence' => $agence,
                 'total_colis' => $totalColis,
-                'montant_total' => $montantTotal,
-                'montant_paye' => $montantPaye, // Total payé sur les colis de l'agence
-                'montant_impaye' => $montantImpaye,
-                'totalement_payes' => $totalementPayes,
-                'partiellement_payes' => $partiellementPayes,
-                'non_payes' => $nonPayes,
-                'taux_recouvrement' => round($tauxRecouvrement, 2),
-                'stats_agents' => $statsAgents,
                 'total_encaisse_agents' => $totalEncaisseAgents
             ];
         }
 
-        // Trier par montant total décroissant
+        // Trier par montant encaissé décroissant
         usort($stats, function ($a, $b) {
-            return $b['montant_total'] <=> $a['montant_total'];
+            return $b['total_encaisse_agents'] <=> $a['total_encaisse_agents'];
         });
 
         return $stats;

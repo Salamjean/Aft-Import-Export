@@ -221,10 +221,25 @@
           </div>
         </div>
         <div class="mdc-list-item mdc-drawer-item">
-          <a class="mdc-drawer-link" href="{{route('admin.bilan-financier')}}">
+          <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-finance">
             <i class="fas fa-chart-line mdc-list-item__start-detail mdc-drawer-item-icon"></i>
             Bilan Financier
+            <i class="mdc-drawer-arrow material-icons">chevron_right</i>
           </a>
+          <div class="mdc-expansion-panel" id="ui-sub-finance">
+            <nav class="mdc-list mdc-drawer-submenu">
+              <div class="mdc-list-item mdc-drawer-item">
+                <a class="mdc-drawer-link" href="{{route('admin.bilan_financier.index')}}">
+                  Vue d'ensemble
+                </a>
+              </div>
+              <div class="mdc-list-item mdc-drawer-item">
+                <a class="mdc-drawer-link" href="{{route('admin.bilan_financier.historique')}}">
+                  Historique 
+                </a>
+              </div>
+            </nav>
+          </div>
         </div>
         <div class="mdc-list-item mdc-drawer-item">
           <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-client">
