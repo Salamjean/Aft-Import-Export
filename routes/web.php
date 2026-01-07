@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\Colis\ProduitController;
 use App\Http\Controllers\Admin\Colis\ServiceController;
 use App\Http\Controllers\Admin\Conteneur\ConteneurController;
 use App\Http\Controllers\Admin\DemandeRecuperation\AdminDeamndeRecuperation;
+use App\Http\Controllers\Admin\ExcelExportController;
 use App\Http\Controllers\Admin\Devis\AdminDevisController;
 use App\Http\Controllers\Admin\Programme\DepotController;
 use App\Http\Controllers\Admin\Programme\ProgrammeController;
@@ -70,6 +71,9 @@ Route::prefix('/')->group(function () {
     Route::get('/agency', [HomeController::class, 'agence'])->name('page.agence');
     Route::get('/contact', [HomeController::class, 'contact'])->name('page.contact');
     Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+    Route::get('/policy', [HomeController::class, 'politique'])->name('page.politique');
+    Route::get('/condition', [HomeController::class, 'condition'])->name('page.condition');
+    Route::get('/legal', [HomeController::class, 'legal'])->name('page.legal');
 });
 
 
@@ -87,6 +91,8 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     // Route pour le bilan financier
     Route::get('/bilan-financier', [BilanFinancierController::class, 'index'])->name('admin.bilan_financier.index');
     Route::get('/bilan-financier/historique', [BilanFinancierController::class, 'historiquePaiements'])->name('admin.bilan_financier.historique');
+    Route::get('/bilan-financier/export-bilan', [BilanFinancierController::class, 'exportBilanExcel'])->name('admin.bilan_financier.export');
+    Route::get('/bilan-financier/export-historique', [BilanFinancierController::class, 'exportHistoriqueExcel'])->name('admin.bilan_financier.export_historique');
 
     //les routes de gestion des agences par l'admin 
     Route::prefix('agence')->group(function () {
@@ -133,6 +139,8 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     //Les routes de gestion des colis 
     Route::prefix('parcel')->group(function () {
         Route::get('/parcelindex', [ColisController::class, 'index'])->name('colis.index');
+        Route::get('/parcel/export', [ExcelExportController::class, 'exportColis'])->name('colis.export');
+        Route::post('/parcel/import', [ExcelExportController::class, 'importColis'])->name('colis.import');
         Route::get('/parcelhistory', [ColisController::class, 'history'])->name('colis.history');
         Route::get('/parceladd', [ColisController::class, 'create'])->name('colis.create');
         Route::post('/create', [ColisController::class, 'store'])->name('colis.store');
@@ -450,6 +458,11 @@ Route::prefix('user')->group(function () {
     Route::post('/login', [UserAuthenticate::class, 'handleLogin'])->name('user.handleLogin');
     Route::get('/register', [UserAuthenticate::class, 'register'])->name('user.register');
     Route::post('/register', [UserAuthenticate::class, 'handleRegister'])->name('user.handleRegister');
+
+    Route::get('/forgot-password', [UserAuthenticate::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('/forgot-password', [UserAuthenticate::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('/reset-password', [UserAuthenticate::class, 'showResetForm'])->name('password.reset');
+    Route::post('/reset-password', [UserAuthenticate::class, 'resetPassword'])->name('password.update');
 });
 Route::post('/scan/livrer', [ChauffeurScanLivraison::class, 'scanLivraison'])->name('chauffeur.scan.livrer');
 Route::middleware('auth')->prefix('user')->group(function () {

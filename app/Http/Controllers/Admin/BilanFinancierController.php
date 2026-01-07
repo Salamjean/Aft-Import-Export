@@ -9,6 +9,9 @@ use App\Models\Paiement;
 use App\Models\Agent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\BilanExport;
+use App\Exports\HistoriquePaiementExport;
 
 class BilanFinancierController extends Controller
 {
@@ -191,5 +194,20 @@ class BilanFinancierController extends Controller
             'montants_payes' => $montantsPayes,
             'montants_impayes' => $montantsImpayes,
         ];
+    }
+
+    public function exportBilanExcel()
+    {
+        $statsGlobales = $this->getStatsGlobales();
+        $statsParAgence = $this->getStatsParAgence();
+
+        $filename = "bilan_financier_" . date('d_m_Y') . ".xlsx";
+        return Excel::download(new BilanExport($statsGlobales, $statsParAgence), $filename);
+    }
+
+    public function exportHistoriqueExcel()
+    {
+        $filename = "historique_paiements_" . date('d_m_Y') . ".xlsx";
+        return Excel::download(new HistoriquePaiementExport(), $filename);
     }
 }

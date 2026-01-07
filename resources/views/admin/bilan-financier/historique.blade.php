@@ -16,6 +16,11 @@
                 </div>
             </div>
             <div class="header-actions">
+                <a href="{{ route('admin.bilan_financier.export_historique') }}" class="btn modern-btn text-white"
+                    style="background-color:#198754; margin-right: 10px;">
+                    <i class="fas fa-file-excel"></i>
+                    Exporter Excel
+                </a>
                 <div class="date-display">
                     <i class="fas fa-calendar-alt"></i>
                     {{ \Carbon\Carbon::now()->translatedFormat('l d F Y') }}
@@ -76,7 +81,9 @@
                                             {{ ucfirst(str_replace('_', ' ', $paiement->methode_paiement)) }}
                                         </span>
                                     </td>
-                                    <td class="text-center"><small class="text-muted">{{ Str::limit($paiement->notes, 30) }}</small></td>
+                                    <td class="text-center"><small
+                                            class="text-muted">{{ Str::limit($paiement->notes, 30) }}</small>
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>

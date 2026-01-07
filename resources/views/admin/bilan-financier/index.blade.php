@@ -9,6 +9,10 @@
                 <p class="header-subtitle">Vue d'ensemble des encaissements par agence</p>
             </div>
             <div class="header-actions">
+                <a href="{{ route('admin.bilan_financier.export') }}" class="btn modern-btn text-white" style="background-color:#198754; margin-right: 10px;">
+                    <i class="fas fa-file-excel"></i>
+                    Exporter Excel
+                </a>
                 <a href="{{ route('admin.bilan_financier.historique') }}" class="btn-historique">
                     <i class="fas fa-history"></i>
                     Historique des Paiements

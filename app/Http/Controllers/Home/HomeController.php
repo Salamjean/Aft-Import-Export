@@ -22,4 +22,16 @@ class HomeController extends Controller
     public function contact(){
         return view('pages.contact');
     }
+
+    public function politique(){
+        return view('pages.politique');
+    }
+
+    public function condition(){
+        return view('pages.condition');
+    }
+
+    public function legal(){
+        return view('pages.legal');
+    }
 }

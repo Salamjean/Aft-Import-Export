@@ -25,6 +25,10 @@ class User extends Authenticatable
         'adresse',
         'pays',
         'contact',
+        'terms_accepted',
+        'terms_accepted_at',
+        'reset_code',
+        'reset_code_expires_at',
     ];
 
     /**
@@ -47,6 +51,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'reset_code_expires_at' => 'datetime',
         ];
     }
 
