@@ -222,9 +222,9 @@
                         </div>
 
                         <!-- Pagination -->
-                        @if($colis->hasPages())
+                       @if($colis->hasPages())
                             <div class="pagination-container">
-                                {{ $colis->appends(request()->query())->links() }}
+                                {{ $colis->links('pagination.modern') }}
                             </div>
                         @endif
                     </div>
