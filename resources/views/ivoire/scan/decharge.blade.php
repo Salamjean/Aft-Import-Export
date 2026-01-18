@@ -71,7 +71,8 @@
                                     <th class="text-center" style="font-size:12px">Expéditeur</th>
                                     <th class="text-center" style="font-size:12px">Destinataire</th>
                                     <th class="text-center" style="font-size:12px">Mode Transit</th>
-                                    <th class="text-center" style="font-size:12px">Agences</th>
+                                     <th class="text-center" style="font-size:12px">Agences</th>
+                                    <th class="text-center" style="font-size:12px">Conteneur</th>
                                     <th class="text-center" style="font-size:12px">Montant Total</th>
                                     <th class="text-center" style="font-size:12px">St. Colis</th>
                                     <th class="text-center" style="font-size:12px">Progression</th>
@@ -111,9 +112,18 @@
                                             {{ $item->mode_transit }}
                                         </span>
                                     </td>
-                                    <td class="text-center">
+                                     <td class="text-center">
                                         <div><strong>Exp:</strong> {{ $item->agence_expedition }}</div>
                                         <div><strong>Dest:</strong> {{ $item->agence_destination }}</div>
+                                    </td>
+                                    <td class="text-center">
+                                        @if($item->conteneur)
+                                            <span class="badge bg-dark text-white">
+                                                <i class="fas fa-box"></i> {{ $item->conteneur->name_conteneur }}
+                                            </span>
+                                        @else
+                                            <span class="text-muted small">Non assigné</span>
+                                        @endif
                                     </td>
                                     <td class="text-center">
                                         <strong>{{ number_format($item->montant_total, 0) }}</strong> {{ $item->devise }}

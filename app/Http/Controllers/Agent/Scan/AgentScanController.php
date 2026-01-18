@@ -11,88 +11,88 @@ use Illuminate\Support\Facades\Log;
 class AgentScanController extends Controller
 {
     public function entrepot(Request $request)
-{
-    // Récupérer l'agent connecté et son agence
-    $agent = Auth::guard('agent')->user();
-    
-    if (!$agent || !$agent->agence_id) {
-        // Si l'agent n'a pas d'agence, retourner une collection vide
-        $colis = new \Illuminate\Pagination\LengthAwarePaginator(collect(), 0, 10, 1);
+    {
+        // Récupérer l'agent connecté et son agence
+        $agent = Auth::guard('agent')->user();
+
+        if (!$agent || !$agent->agence_id) {
+            // Si l'agent n'a pas d'agence, retourner une collection vide
+            $colis = new \Illuminate\Pagination\LengthAwarePaginator(collect(), 0, 10, 1);
+            return view('agent.scan.entrepot', compact('colis'));
+        }
+
+        // Récupérer tous les colis de l'agence de l'agent connecté
+        $allColis = Colis::with(['agenceExpedition', 'agenceDestination', 'conteneur'])
+            ->where('agence_expedition_id', $agent->agence_id) // FILTRE PAR AGENCE
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // Filtrer manuellement les colis qui ont au moins une unité "entrepot"
+        $colisFiltres = $allColis->filter(function ($colis) {
+            $statutsIndividuels = json_decode($colis->statuts_individuels, true) ?? [];
+
+            foreach ($statutsIndividuels as $statut) {
+                if (isset($statut['statut']) && $statut['statut'] === 'entrepot') {
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        // Appliquer les filtres supplémentaires
+        if ($request->has('search') && !empty($request->search)) {
+            $search = strtolower($request->search);
+            $colisFiltres = $colisFiltres->filter(function ($colis) use ($search) {
+                return str_contains(strtolower($colis->reference_colis), $search) ||
+                    str_contains(strtolower($colis->name_expediteur), $search) ||
+                    str_contains(strtolower($colis->name_destinataire), $search) ||
+                    str_contains(strtolower($colis->email_expediteur), $search) ||
+                    str_contains(strtolower($colis->email_destinataire), $search) ||
+                    str_contains(strtolower($colis->code_colis), $search);
+            });
+        }
+
+        if ($request->has('mode_transit') && !empty($request->mode_transit)) {
+            $colisFiltres = $colisFiltres->where('mode_transit', $request->mode_transit);
+        }
+
+        if ($request->has('paiement') && !empty($request->paiement)) {
+            $colisFiltres = $colisFiltres->where('statut_paiement', $request->paiement);
+        }
+
+        // Pagination manuelle
+        $page = $request->get('page', 1);
+        $perPage = 10;
+
+        $colis = new \Illuminate\Pagination\LengthAwarePaginator(
+            $colisFiltres->forPage($page, $perPage),
+            $colisFiltres->count(),
+            $perPage,
+            $page,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
+
+        // Ajouter les métriques
+        $colis->getCollection()->transform(function ($item) {
+            $colisData = $item->colis;
+            $item->nombre_types_colis = is_array($colisData) ? count($colisData) : 0;
+
+            $statutsIndividuels = is_array($item->statuts_individuels) ? $item->statuts_individuels : (json_decode($item->statuts_individuels, true) ?? []);
+            $item->total_individuels = count($statutsIndividuels);
+
+            // Compter les statuts individuels
+            $item->individuels_valides = $this->compterIndividuelsParStatut($statutsIndividuels, 'valide');
+            $item->individuels_charges = $this->compterIndividuelsParStatut($statutsIndividuels, 'charge');
+            $item->individuels_entrepot = $this->compterIndividuelsParStatut($statutsIndividuels, 'entrepot');
+            $item->individuels_decharges = $this->compterIndividuelsParStatut($statutsIndividuels, 'decharge');
+            $item->individuels_livres = $this->compterIndividuelsParStatut($statutsIndividuels, 'livre');
+            $item->individuels_annules = $this->compterIndividuelsParStatut($statutsIndividuels, 'annule');
+
+            return $item;
+        });
+
         return view('agent.scan.entrepot', compact('colis'));
     }
-
-    // Récupérer tous les colis de l'agence de l'agent connecté
-    $allColis = Colis::with(['agenceExpedition', 'agenceDestination', 'conteneur'])
-                    ->where('agence_expedition_id', $agent->agence_id) // FILTRE PAR AGENCE
-                    ->orderBy('created_at', 'desc')
-                    ->get();
-
-    // Filtrer manuellement les colis qui ont au moins une unité "entrepot"
-    $colisFiltres = $allColis->filter(function ($colis) {
-        $statutsIndividuels = json_decode($colis->statuts_individuels, true) ?? [];
-        
-        foreach ($statutsIndividuels as $statut) {
-            if (isset($statut['statut']) && $statut['statut'] === 'entrepot') {
-                return true;
-            }
-        }
-        return false;
-    });
-
-    // Appliquer les filtres supplémentaires
-    if ($request->has('search') && !empty($request->search)) {
-        $search = strtolower($request->search);
-        $colisFiltres = $colisFiltres->filter(function ($colis) use ($search) {
-            return str_contains(strtolower($colis->reference_colis), $search) ||
-                   str_contains(strtolower($colis->name_expediteur), $search) ||
-                   str_contains(strtolower($colis->name_destinataire), $search) ||
-                   str_contains(strtolower($colis->email_expediteur), $search) ||
-                   str_contains(strtolower($colis->email_destinataire), $search) ||
-                   str_contains(strtolower($colis->code_colis), $search);
-        });
-    }
-
-    if ($request->has('mode_transit') && !empty($request->mode_transit)) {
-        $colisFiltres = $colisFiltres->where('mode_transit', $request->mode_transit);
-    }
-
-    if ($request->has('paiement') && !empty($request->paiement)) {
-        $colisFiltres = $colisFiltres->where('statut_paiement', $request->paiement);
-    }
-
-    // Pagination manuelle
-    $page = $request->get('page', 1);
-    $perPage = 10;
-    
-    $colis = new \Illuminate\Pagination\LengthAwarePaginator(
-        $colisFiltres->forPage($page, $perPage),
-        $colisFiltres->count(),
-        $perPage,
-        $page,
-        ['path' => $request->url(), 'query' => $request->query()]
-    );
-
-    // Ajouter les métriques
-    $colis->getCollection()->transform(function ($item) {
-        $colisData = json_decode($item->colis, true);
-        $item->nombre_types_colis = is_array($colisData) ? count($colisData) : 0;
-        
-        $statutsIndividuels = json_decode($item->statuts_individuels, true) ?? [];
-        $item->total_individuels = count($statutsIndividuels);
-        
-        // Compter les statuts individuels
-        $item->individuels_valides = $this->compterIndividuelsParStatut($statutsIndividuels, 'valide');
-        $item->individuels_charges = $this->compterIndividuelsParStatut($statutsIndividuels, 'charge');
-        $item->individuels_entrepot = $this->compterIndividuelsParStatut($statutsIndividuels, 'entrepot');
-        $item->individuels_decharges = $this->compterIndividuelsParStatut($statutsIndividuels, 'decharge');
-        $item->individuels_livres = $this->compterIndividuelsParStatut($statutsIndividuels, 'livre');
-        $item->individuels_annules = $this->compterIndividuelsParStatut($statutsIndividuels, 'annule');
-        
-        return $item;
-    });
-    
-    return view('agent.scan.entrepot', compact('colis'));
-}
 
     /**
      * Compter le nombre d'unités individuelles par statut
@@ -102,14 +102,14 @@ class AgentScanController extends Controller
         if (empty($statutsIndividuels)) {
             return 0;
         }
-        
+
         $compteur = 0;
         foreach ($statutsIndividuels as $statut) {
             if (isset($statut['statut']) && $statut['statut'] === $statutRecherche) {
                 $compteur++;
             }
         }
-        
+
         return $compteur;
     }
 
@@ -135,7 +135,7 @@ class AgentScanController extends Controller
 
             foreach ($colisList as $colis) {
                 $statutsIndividuels = json_decode($colis->statuts_individuels, true) ?? [];
-                
+
                 if (isset($statutsIndividuels[$qrCode])) {
                     $colisTrouve = $colis;
                     Log::info('Colis trouvé avec le code QR:', [
@@ -217,7 +217,7 @@ class AgentScanController extends Controller
             $statutsIndividuels[$qrCode]['localisation_actuelle'] = 'Entrepôt Principal';
             $statutsIndividuels[$qrCode]['date_modification'] = now()->toDateTimeString();
             $statutsIndividuels[$qrCode]['notes'] = 'Scanné et mis en entrepôt le ' . now()->format('d/m/Y H:i');
-            
+
             // Ajouter à l'historique
             $statutsIndividuels[$qrCode]['historique'][] = [
                 'statut' => 'entrepot',
@@ -229,15 +229,15 @@ class AgentScanController extends Controller
 
             // Mettre à jour le colis
             $colis->statuts_individuels = json_encode($statutsIndividuels);
-            
+
             // Vérifier si tous les statuts individuels sont "entrepot" OU "chargé" pour mettre à jour le statut global
             $tousEnEntrepotOuCharge = $this->verifierTousEnEntrepotOuCharge($statutsIndividuels);
-            
+
             if ($tousEnEntrepotOuCharge && $colis->statut !== 'entrepot') {
                 $colis->statut = 'entrepot';
                 Log::info('Tous les colis sont en entrepôt ou chargés - Statut global mis à jour à "entrepot"');
             }
-            
+
             $colis->save();
 
             // Compter les unités scannées (uniquement celles en entrepôt)
@@ -277,7 +277,7 @@ class AgentScanController extends Controller
         } catch (\Exception $e) {
             Log::error('❌ Erreur scan QR code: ' . $e->getMessage());
             Log::error('Stack trace: ' . $e->getTraceAsString());
-            
+
             return response()->json([
                 'success' => false,
                 'message' => '❌ Erreur lors du traitement: ' . $e->getMessage()
@@ -346,12 +346,12 @@ class AgentScanController extends Controller
     {
         try {
             $colis = Colis::with(['agenceExpedition', 'agenceDestination', 'conteneur'])
-                        ->findOrFail($id);
+                ->findOrFail($id);
 
             // Décoder les données
-            $colisDetails = json_decode($colis->colis, true);
-            $statutsIndividuels = json_decode($colis->statuts_individuels, true) ?? [];
-            $codesColis = json_decode($colis->code_colis, true) ?? [];
+            $colisDetails = $colis->colis;
+            $statutsIndividuels = is_array($colis->statuts_individuels) ? $colis->statuts_individuels : (json_decode($colis->statuts_individuels, true) ?? []);
+            $codesColis = is_array($colis->code_colis) ? $colis->code_colis : (json_decode($colis->code_colis, true) ?? []);
 
             // Compter les statuts
             $compteurStatuts = [
@@ -363,9 +363,34 @@ class AgentScanController extends Controller
                 'annule' => 0
             ];
 
+            // Récupérer tous les IDs de conteneurs uniques dans les statuts individuels
+            $conteneurIds = [];
             foreach ($statutsIndividuels as $statut) {
-                if (isset($compteurStatuts[$statut['statut']])) {
-                    $compteurStatuts[$statut['statut']]++;
+                if (isset($statut['localisation_actuelle']) && preg_match('/Conteneur #(\d+)/', $statut['localisation_actuelle'], $matches)) {
+                    $conteneurIds[] = $matches[1];
+                }
+            }
+
+            if (!empty($conteneurIds)) {
+                $conteneursMap = \App\Models\Conteneur::whereIn('id', array_unique($conteneurIds))->pluck('name_conteneur', 'id');
+                foreach ($statutsIndividuels as &$statutIndiv) {
+                    if (isset($statutIndiv['localisation_actuelle']) && preg_match('/Conteneur #(\d+)/', $statutIndiv['localisation_actuelle'], $matches)) {
+                        $id = $matches[1];
+                        if (isset($conteneursMap[$id])) {
+                            $statutIndiv['localisation_actuelle'] = str_replace('Conteneur #' . $id, $conteneursMap[$id], $statutIndiv['localisation_actuelle']);
+                        }
+                    }
+
+                    if (isset($compteurStatuts[$statutIndiv['statut']])) {
+                        $compteurStatuts[$statutIndiv['statut']]++;
+                    }
+                }
+                unset($statutIndiv);
+            } else {
+                foreach ($statutsIndividuels as $statut) {
+                    if (isset($compteurStatuts[$statut['statut']])) {
+                        $compteurStatuts[$statut['statut']]++;
+                    }
                 }
             }
 

@@ -217,8 +217,8 @@ class AgentColisController extends Controller
                 $colis->agence_expedition_id
             );
 
-            // Décoder les détails des colis
-            $colisDetails = json_decode($colis->colis, true) ?? [];
+            // Décoder les détails des colis (déjà casté en array)
+            $colisDetails = $colis->colis ?? [];
 
             return view('agent.colis.edit', compact(
                 'colis',
@@ -1484,8 +1484,8 @@ class AgentColisController extends Controller
             $colis = Colis::with(['agenceExpedition', 'agenceDestination', 'conteneur', 'service'])
                 ->findOrFail($id);
 
-            // Décoder les données des colis
-            $colisDetails = json_decode($colis->colis, true);
+            // Décoder les données des colis (déjà casté en array)
+            $colisDetails = $colis->colis;
             $nombreTypesColis = is_array($colisDetails) ? count($colisDetails) : 0;
 
             // Décoder les statuts individuels
@@ -1502,9 +1502,34 @@ class AgentColisController extends Controller
                 'annule' => 0
             ];
 
+            // Récupérer tous les IDs de conteneurs uniques dans les statuts individuels
+            $conteneurIds = [];
             foreach ($statutsIndividuels as $statut) {
-                if (isset($compteurStatuts[$statut['statut']])) {
-                    $compteurStatuts[$statut['statut']]++;
+                if (isset($statut['localisation_actuelle']) && preg_match('/Conteneur #(\d+)/', $statut['localisation_actuelle'], $matches)) {
+                    $conteneurIds[] = $matches[1];
+                }
+            }
+
+            if (!empty($conteneurIds)) {
+                $conteneursMap = Conteneur::whereIn('id', array_unique($conteneurIds))->pluck('name_conteneur', 'id');
+                foreach ($statutsIndividuels as &$statutIndiv) {
+                    if (isset($statutIndiv['localisation_actuelle']) && preg_match('/Conteneur #(\d+)/', $statutIndiv['localisation_actuelle'], $matches)) {
+                        $id = $matches[1];
+                        if (isset($conteneursMap[$id])) {
+                            $statutIndiv['localisation_actuelle'] = str_replace('Conteneur #' . $id, $conteneursMap[$id], $statutIndiv['localisation_actuelle']);
+                        }
+                    }
+
+                    if (isset($compteurStatuts[$statutIndiv['statut']])) {
+                        $compteurStatuts[$statutIndiv['statut']]++;
+                    }
+                }
+                unset($statutIndiv);
+            } else {
+                foreach ($statutsIndividuels as $statut) {
+                    if (isset($compteurStatuts[$statut['statut']])) {
+                        $compteurStatuts[$statut['statut']]++;
+                    }
                 }
             }
 
