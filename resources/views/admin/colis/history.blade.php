@@ -222,7 +222,7 @@
                         </div>
 
                         <!-- Pagination -->
-                       @if($colis->hasPages())
+                        @if($colis->hasPages())
                             <div class="pagination-container">
                                 {{ $colis->links('pagination.modern') }}
                             </div>
@@ -619,131 +619,131 @@
                     Swal.fire({
                         title: `Détails du Colis - ${data.reference_colis}`,
                         html: `
-                        <div class="text-start">
-                            <div class="row mb-3">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header bg-light">
-                    <strong>Expéditeur</strong>
+                            <div class="text-start">
+                                <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-light">
+                        <strong>Expéditeur</strong>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-1"><strong>Nom:</strong> ${data.name_expediteur} ${data.prenom_expediteur || ''}</p>
+                        <p class="mb-1"><strong>Email:</strong> ${data.email_expediteur}</p>
+                        <p class="mb-1"><strong>Contact:</strong> ${data.contact_expediteur}</p>
+                        <p class="mb-0"><strong>Adresse:</strong> ${data.adresse_expediteur}</p>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <p class="mb-1"><strong>Nom:</strong> ${data.name_expediteur} ${data.prenom_expediteur || ''}</p>
-                    <p class="mb-1"><strong>Email:</strong> ${data.email_expediteur}</p>
-                    <p class="mb-1"><strong>Contact:</strong> ${data.contact_expediteur}</p>
-                    <p class="mb-0"><strong>Adresse:</strong> ${data.adresse_expediteur}</p>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-light">
+                        <strong>Destinataire</strong>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-1"><strong>Nom:</strong> ${data.name_destinataire} ${data.prenom_destinataire}</p>
+                        <p class="mb-1"><strong>Email:</strong> ${data.email_destinataire}</p>
+                        <p class="mb-1"><strong>Contact:</strong> ${data.indicatif} ${data.contact_destinataire}</p>
+                        <p class="mb-0"><strong>Adresse:</strong> ${data.adresse_destinataire}</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header bg-light">
-                    <strong>Destinataire</strong>
-                </div>
-                <div class="card-body">
-                    <p class="mb-1"><strong>Nom:</strong> ${data.name_destinataire} ${data.prenom_destinataire}</p>
-                    <p class="mb-1"><strong>Email:</strong> ${data.email_destinataire}</p>
-                    <p class="mb-1"><strong>Contact:</strong> ${data.indicatif} ${data.contact_destinataire}</p>
-                    <p class="mb-0"><strong>Adresse:</strong> ${data.adresse_destinataire}</p>
-                </div>
-            </div>
-        </div>
-    </div>
 
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <div class="card">
-                                        <div class="card-header bg-light">
-                                            <strong>Agences</strong>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-header bg-light">
+                                                <strong>Agences</strong>
+                                            </div>
+                                            <div class="card-body">
+                                                <p class="mb-1"><strong>Expédition:</strong> ${data.agence_expedition}</p>
+                                                <p class="mb-0"><strong>Destination:</strong> ${data.agence_destination}</p>
+                                            </div>
                                         </div>
-                                        <div class="card-body">
-                                            <p class="mb-1"><strong>Expédition:</strong> ${data.agence_expedition}</p>
-                                            <p class="mb-0"><strong>Destination:</strong> ${data.agence_destination}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-header bg-light">
+                                                <strong>Statuts</strong>
+                                            </div>
+                                            <div class="card-body">
+                                                <p class="mb-1">
+                                                    <strong>Colis:</strong> 
+                                                    <span class="badge ${getStatusBadgeClass(data.statut)}">
+                                                        ${getStatusText(data.statut)}
+                                                    </span>
+                                                </p>
+                                                <p class="mb-0">
+                                                    <strong>Paiement:</strong> 
+                                                    <span class="badge ${getPaiementBadgeClass(data.statut_paiement)}">
+                                                        ${getPaiementText(data.statut_paiement)}
+                                                    </span>
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="card">
-                                        <div class="card-header bg-light">
-                                            <strong>Statuts</strong>
-                                        </div>
-                                        <div class="card-body">
-                                            <p class="mb-1">
-                                                <strong>Colis:</strong> 
-                                                <span class="badge ${getStatusBadgeClass(data.statut)}">
-                                                    ${getStatusText(data.statut)}
-                                                </span>
-                                            </p>
-                                            <p class="mb-0">
-                                                <strong>Paiement:</strong> 
-                                                <span class="badge ${getPaiementBadgeClass(data.statut_paiement)}">
-                                                    ${getPaiementText(data.statut_paiement)}
-                                                </span>
-                                            </p>
-                                        </div>
+
+                                <div class="card">
+                                    <div class="card-header bg-light">
+                                        <strong>Informations Financières</strong>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-1"><strong>Montant Total:</strong> ${parseFloat(data.montant_total).toFixed(0)} ${data.devise}</p>
+                                        <p class="mb-1"><strong>Montant Payé:</strong> ${parseFloat(data.montant_paye).toFixed(0)} ${data.devise}</p>
+                                        <p class="mb-1"><strong>Reste à Payer:</strong> ${parseFloat(data.reste_a_payer || 0).toFixed(0)} ${data.devise}</p>
+                                        <p class="mb-0"><strong>Méthode Paiement:</strong> ${getMethodePaiementText(data.methode_paiement)}</p>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="card">
+                            <div class="card mt-3">
                                 <div class="card-header bg-light">
-                                    <strong>Informations Financières</strong>
+                                    <strong>Détails des Types de Colis (${data.nombre_types_colis} type(s))</strong>
                                 </div>
                                 <div class="card-body">
-                                    <p class="mb-1"><strong>Montant Total:</strong> ${parseFloat(data.montant_total).toFixed(0)} ${data.devise}</p>
-                                    <p class="mb-1"><strong>Montant Payé:</strong> ${parseFloat(data.montant_paye).toFixed(0)} ${data.devise}</p>
-                                    <p class="mb-1"><strong>Reste à Payer:</strong> ${parseFloat(data.reste_a_payer || 0).toFixed(0)} ${data.devise}</p>
-                                    <p class="mb-0"><strong>Méthode Paiement:</strong> ${getMethodePaiementText(data.methode_paiement)}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card mt-3">
-                            <div class="card-header bg-light">
-                                <strong>Détails des Types de Colis (${data.nombre_types_colis} type(s))</strong>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-sm table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-center">#</th>
-                                                <th class="text-center">Produit</th>
-                                                <th class="text-center">Quantité</th>
-                                                <th class="text-center">Prix Unitaire</th>
-                                                <th class="text-center">Total</th>
-                                                <th class="text-center">Dimensions</th>
-                                                <th class="text-center">Poids</th>
-                                                <th class="text-center">Description</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            ${data.colis_details.map((colis, index) => `
+                                    <div class="table-responsive">
+                                        <table class="table table-sm table-striped">
+                                            <thead>
                                                 <tr>
-                                                    <td class="text-center"><strong>${index + 1}</strong></td>
-                                                    <td class="text-center">${colis.produit}</td>
-                                                    <td class="text-center">${colis.quantite}</td>
-                                                    <td class="text-center">${parseFloat(colis.prix_unitaire).toFixed(0)} ${data.devise}</td>
-                                                    <td class="text-center">${parseFloat(colis.quantite * colis.prix_unitaire).toFixed(0)} ${data.devise}</td>
-                                                    <td class="text-center">
-                                                        ${colis.longueur && colis.largeur && colis.hauteur ?
+                                                    <th class="text-center">#</th>
+                                                    <th class="text-center">Produit</th>
+                                                    <th class="text-center">Quantité</th>
+                                                    <th class="text-center">Prix Unitaire</th>
+                                                    <th class="text-center">Total</th>
+                                                    <th class="text-center">Dimensions</th>
+                                                    <th class="text-center">Poids</th>
+                                                    <th class="text-center">Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                ${(data.colis_details || []).map((colis, index) => `
+                                                    <tr>
+                                                        <td class="text-center"><strong>${index + 1}</strong></td>
+                                                        <td class="text-center">${colis.produit || '--'}</td>
+                                                        <td class="text-center">${colis.quantite || 0}</td>
+                                                        <td class="text-center">${parseFloat(colis.prix_unitaire || 0).toFixed(0)} ${data.devise}</td>
+                                                        <td class="text-center">${parseFloat((colis.quantite || 0) * (colis.prix_unitaire || 0)).toFixed(0)} ${data.devise}</td>
+                                                        <td class="text-center">
+                                                            ${colis.longueur && colis.largeur && colis.hauteur ?
                                 `${colis.longueur}x${colis.largeur}x${colis.hauteur} cm` :
                                 'Non spécifié'}
-                                                    </td>
-                                                    <td class="text-center">${colis.poids ? colis.poids + ' kg' : '--'}</td>
-                                                    <td class="text-center">${colis.description || '--'}</td>
+                                                        </td>
+                                                        <td class="text-center">${colis.poids ? colis.poids + ' kg' : '--'}</td>
+                                                        <td class="text-center">${colis.description || '--'}</td>
+                                                    </tr>
+                                                `).join('')}
+                                            </tbody>
+                                            <tfoot>
+                                                <tr class="table-active">
+                                                    <td colspan="4" class="text-end"><strong>Total Colis:</strong></td>
+                                                    <td colspan="4"><strong>${parseFloat(data.montant_colis || data.montant_total).toFixed(0)} ${data.devise}</strong></td>
                                                 </tr>
-                                            `).join('')}
-                                        </tbody>
-                                        <tfoot>
-                                            <tr class="table-active">
-                                                <td colspan="4" class="text-end"><strong>Total Colis:</strong></td>
-                                                <td colspan="4"><strong>${parseFloat(data.montant_colis || data.montant_total).toFixed(0)} ${data.devise}</strong></td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
+                                            </tfoot>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    `,
+                        `,
                         width: 800,
                         showCloseButton: true,
                         showConfirmButton: true,
@@ -767,13 +767,13 @@
             Swal.fire({
                 title: 'Êtes-vous sûr ?',
                 html: `
-                <div class="text-center">
-                    <i class="fas fa-exclamation-triangle text-warning" style="font-size: 4rem; margin-bottom: 1rem;"></i>
-                    <p>Vous êtes sur le point de supprimer le colis :</p>
-                    <p><strong>"${reference}"</strong></p>
-                    <p class="text-danger">Cette action est irréversible !</p>
-                </div>
-            `,
+                    <div class="text-center">
+                        <i class="fas fa-exclamation-triangle text-warning" style="font-size: 4rem; margin-bottom: 1rem;"></i>
+                        <p>Vous êtes sur le point de supprimer le colis :</p>
+                        <p><strong>"${reference}"</strong></p>
+                        <p class="text-danger">Cette action est irréversible !</p>
+                    </div>
+                `,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Oui, supprimer !',
@@ -895,73 +895,73 @@
             Swal.fire({
                 title: `Enregistrer un Paiement`,
                 html: `
-                <div class="text-start">
-                    <div class="alert alert-info">
-                        <strong>Référence:</strong> ${reference}<br>
-                        <strong>Montant Total:</strong> ${parseFloat(montantTotal).toFixed(0)} ${devise}<br>
-                        <strong>Déjà Payé:</strong> ${parseFloat(montantPaye).toFixed(0)} ${devise}<br>
-                        <strong>Reste à Payer:</strong> <span class="text-success fw-bold">${montantRestant.toFixed(0)} ${devise}</span>
+                    <div class="text-start">
+                        <div class="alert alert-info">
+                            <strong>Référence:</strong> ${reference}<br>
+                            <strong>Montant Total:</strong> ${parseFloat(montantTotal).toFixed(0)} ${devise}<br>
+                            <strong>Déjà Payé:</strong> ${parseFloat(montantPaye).toFixed(0)} ${devise}<br>
+                            <strong>Reste à Payer:</strong> <span class="text-success fw-bold">${montantRestant.toFixed(0)} ${devise}</span>
+                        </div>
+
+                        <form id="paymentForm">
+                            <div class="mb-3">
+                                <label for="montant" class="form-label"><strong>Montant du Paiement *</strong></label>
+                                <input type="number" class="form-control" id="montant" 
+                                       min="0.01" max="${montantRestant}" step="0.01"
+                                       placeholder="Entrez le montant payé" required>
+                                <div class="form-text">Maximum: ${montantRestant.toFixed(0)} ${devise}</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="methode_paiement" class="form-label"><strong>Méthode de Paiement *</strong></label>
+                                <select class="form-control" id="methode_paiement" required>
+                                    <option value="">Sélectionnez une méthode</option>
+                                    <option value="espece">Espèce</option>
+                                    <option value="virement_bancaire">Virement Bancaire</option>
+                                    <option value="cheque">Chèque</option>
+                                    <option value="mobile_money">Mobile Money</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3" id="banque_fields" style="display: none;">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="nom_banque" class="form-label">Nom de la Banque</label>
+                                        <input type="text" class="form-control" id="nom_banque" placeholder="Nom de la banque">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="numero_compte" class="form-label">Numéro de Compte</label>
+                                        <input type="text" class="form-control" id="numero_compte" placeholder="Numéro de compte">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3" id="mobile_fields" style="display: none;">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="operateur" class="form-label">Opérateur</label>
+                                        <select class="form-control" id="operateur">
+                                            <option value="">Sélectionnez un opérateur</option>
+                                            <option value="WAVE">WAVE</option>
+                                            <option value="ORANGE">ORANGE</option>
+                                            <option value="MOOV">MOOV</option>
+                                            <option value="MTN">MTN</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="numero_mobile" class="form-label">Numéro</label>
+                                        <input type="text" class="form-control" id="numero_mobile" placeholder="Numéro de téléphone">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="notes" class="form-label">Notes (Optionnel)</label>
+                                <textarea class="form-control" id="notes" rows="2" placeholder="Notes supplémentaires..."></textarea>
+                            </div>
+                        </form>
                     </div>
-
-                    <form id="paymentForm">
-                        <div class="mb-3">
-                            <label for="montant" class="form-label"><strong>Montant du Paiement *</strong></label>
-                            <input type="number" class="form-control" id="montant" 
-                                   min="0.01" max="${montantRestant}" step="0.01"
-                                   placeholder="Entrez le montant payé" required>
-                            <div class="form-text">Maximum: ${montantRestant.toFixed(0)} ${devise}</div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="methode_paiement" class="form-label"><strong>Méthode de Paiement *</strong></label>
-                            <select class="form-control" id="methode_paiement" required>
-                                <option value="">Sélectionnez une méthode</option>
-                                <option value="espece">Espèce</option>
-                                <option value="virement_bancaire">Virement Bancaire</option>
-                                <option value="cheque">Chèque</option>
-                                <option value="mobile_money">Mobile Money</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3" id="banque_fields" style="display: none;">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="nom_banque" class="form-label">Nom de la Banque</label>
-                                    <input type="text" class="form-control" id="nom_banque" placeholder="Nom de la banque">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="numero_compte" class="form-label">Numéro de Compte</label>
-                                    <input type="text" class="form-control" id="numero_compte" placeholder="Numéro de compte">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mb-3" id="mobile_fields" style="display: none;">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="operateur" class="form-label">Opérateur</label>
-                                    <select class="form-control" id="operateur">
-                                        <option value="">Sélectionnez un opérateur</option>
-                                        <option value="WAVE">WAVE</option>
-                                        <option value="ORANGE">ORANGE</option>
-                                        <option value="MOOV">MOOV</option>
-                                        <option value="MTN">MTN</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="numero_mobile" class="form-label">Numéro</label>
-                                    <input type="text" class="form-control" id="numero_mobile" placeholder="Numéro de téléphone">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="notes" class="form-label">Notes (Optionnel)</label>
-                            <textarea class="form-control" id="notes" rows="2" placeholder="Notes supplémentaires..."></textarea>
-                        </div>
-                    </form>
-                </div>
-            `,
+                `,
                 showCancelButton: true,
                 confirmButtonText: 'Enregistrer le Paiement',
                 cancelButtonText: 'Annuler',
@@ -1080,32 +1080,32 @@
             Swal.fire({
                 title: 'Options de Documents',
                 html: `
-                <div class="text-center">
-                    <i class="fas fa-file-alt text-primary" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-                    <p class="mb-4">Choisissez un document à générer</p>
+                    <div class="text-center">
+                        <i class="fas fa-file-alt text-primary" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <p class="mb-4">Choisissez un document à générer</p>
 
-                    <div class="row g-3">
-                        <div class="col-12">
-                            <button class="btn btn-primary w-100 py-3" onclick="previewDocument(${colisId}, 'etiquette')">
-                                <i class="fas fa-tags me-2"></i>
-                                Télécharger Étiquette
-                            </button>
-                        </div>
-                        <div class="col-12">
-                            <button class="btn btn-success w-100 py-3" onclick="previewDocument(${colisId}, 'facture')">
-                                <i class="fas fa-file-invoice me-2"></i>
-                                Télécharger Facture
-                            </button>
-                        </div>
-                        <div class="col-12">
-                            <button class="btn btn-info w-100 py-3" onclick="previewDocument(${colisId}, 'bon_livraison')">
-                                <i class="fas fa-truck me-2"></i>
-                                Télécharger Bon de Livraison
-                            </button>
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <button class="btn btn-primary w-100 py-3" onclick="previewDocument(${colisId}, 'etiquette')">
+                                    <i class="fas fa-tags me-2"></i>
+                                    Télécharger Étiquette
+                                </button>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-success w-100 py-3" onclick="previewDocument(${colisId}, 'facture')">
+                                    <i class="fas fa-file-invoice me-2"></i>
+                                    Télécharger Facture
+                                </button>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-info w-100 py-3" onclick="previewDocument(${colisId}, 'bon_livraison')">
+                                    <i class="fas fa-truck me-2"></i>
+                                    Télécharger Bon de Livraison
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            `,
+                `,
                 showConfirmButton: false,
                 showCloseButton: true,
                 width: 500
@@ -1135,25 +1135,25 @@
             Swal.fire({
                 title: `Aperçu - ${title}`,
                 html: `
-                <div class="text-center">
-                    <i class="${icon} text-primary" style="font-size: 4rem; margin-bottom: 1rem;"></i>
-                    <p class="mb-3">Voulez-vous voir l'aperçu avant de télécharger ?</p>
-                    <div class="row g-2">
-                        <div class="col-6">
-                            <button class="btn btn-outline-primary w-100" onclick="generateDocument(${colisId}, '${type}', 'preview')">
-                                <i class="fas fa-eye me-2"></i>
-                                Aperçu
-                            </button>
-                        </div>
-                        <div class="col-6">
-                            <button class="btn btn-primary w-100" onclick="generateDocument(${colisId}, '${type}', 'download')">
-                                <i class="fas fa-download me-2"></i>
-                                Télécharger
-                            </button>
+                    <div class="text-center">
+                        <i class="${icon} text-primary" style="font-size: 4rem; margin-bottom: 1rem;"></i>
+                        <p class="mb-3">Voulez-vous voir l'aperçu avant de télécharger ?</p>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <button class="btn btn-outline-primary w-100" onclick="generateDocument(${colisId}, '${type}', 'preview')">
+                                    <i class="fas fa-eye me-2"></i>
+                                    Aperçu
+                                </button>
+                            </div>
+                            <div class="col-6">
+                                <button class="btn btn-primary w-100" onclick="generateDocument(${colisId}, '${type}', 'download')">
+                                    <i class="fas fa-download me-2"></i>
+                                    Télécharger
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            `,
+                `,
                 showConfirmButton: false,
                 showCloseButton: true,
                 width: 500
@@ -1225,6 +1225,6 @@
                     confirmButtonColor: '#fea219'
                 });
             @endif
-    });
+        });
     </script>
 @endsection

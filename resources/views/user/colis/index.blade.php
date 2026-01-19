@@ -780,13 +780,13 @@ function showColisDetails(colisId) {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            ${data.colis_details.map((colis, index) => `
+                                            ${(data.colis_details || []).map((colis, index) => `
                                                 <tr>
                                                     <td class="text-center"><strong>${index + 1}</strong></td>
-                                                    <td class="text-center">${colis.produit}</td>
-                                                    <td class="text-center">${colis.quantite}</td>
-                                                    <td class="text-center">${parseFloat(colis.prix_unitaire).toFixed(0)} ${data.devise}</td>
-                                                    <td class="text-center">${parseFloat(colis.quantite * colis.prix_unitaire).toFixed(0)} ${data.devise}</td>
+                                                    <td class="text-center">${colis.produit || '--'}</td>
+                                                    <td class="text-center">${colis.quantite || 0}</td>
+                                                    <td class="text-center">${parseFloat(colis.prix_unitaire || 0).toFixed(0)} ${data.devise}</td>
+                                                    <td class="text-center">${parseFloat((colis.quantite || 0) * (colis.prix_unitaire || 0)).toFixed(0)} ${data.devise}</td>
                                                     <td class="text-center">
                                                         ${colis.longueur && colis.largeur && colis.hauteur ? 
                                                             `${colis.longueur}x${colis.largeur}x${colis.hauteur} cm` : 

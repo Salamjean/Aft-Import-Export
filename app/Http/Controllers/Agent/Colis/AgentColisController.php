@@ -1514,9 +1514,9 @@ class AgentColisController extends Controller
                 $conteneursMap = Conteneur::whereIn('id', array_unique($conteneurIds))->pluck('name_conteneur', 'id');
                 foreach ($statutsIndividuels as &$statutIndiv) {
                     if (isset($statutIndiv['localisation_actuelle']) && preg_match('/Conteneur #(\d+)/', $statutIndiv['localisation_actuelle'], $matches)) {
-                        $id = $matches[1];
-                        if (isset($conteneursMap[$id])) {
-                            $statutIndiv['localisation_actuelle'] = str_replace('Conteneur #' . $id, $conteneursMap[$id], $statutIndiv['localisation_actuelle']);
+                        $conteneur_id_match = $matches[1];
+                        if (isset($conteneursMap[$conteneur_id_match])) {
+                            $statutIndiv['localisation_actuelle'] = str_replace('Conteneur #' . $conteneur_id_match, $conteneursMap[$conteneur_id_match], $statutIndiv['localisation_actuelle']);
                         }
                     }
 
@@ -1562,7 +1562,7 @@ class AgentColisController extends Controller
                 'montant_colis' => $colis->montant_colis,
                 'created_at' => $colis->created_at->format('d/m/Y H:i'),
                 'nombre_types_colis' => $nombreTypesColis,
-                'colis_details' => $colisDetails,
+                'colis_details' => is_array($colisDetails) ? $colisDetails : [],
                 'statuts_individuels' => $statutsIndividuels,
                 'compteur_statuts' => $compteurStatuts,
                 'total_individuels' => count($statutsIndividuels)
@@ -1571,9 +1571,11 @@ class AgentColisController extends Controller
             return response()->json($colisData);
 
         } catch (\Exception $e) {
+            Log::error('Erreur lors du chargement des détails du colis (ID: ' . $id . '): ' . $e->getMessage());
+            Log::error($e->getTraceAsString());
             return response()->json([
-                'error' => 'Colis non trouvé'
-            ], 404);
+                'error' => 'Erreur: ' . $e->getMessage()
+            ], 500);
         }
     }
 
