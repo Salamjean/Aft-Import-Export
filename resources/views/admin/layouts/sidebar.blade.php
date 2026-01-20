@@ -17,6 +17,12 @@
             Tableau de bord
           </a>
         </div>
+        <div class="mdc-list-item mdc-drawer-item">
+          <a class="mdc-drawer-link" href="{{route('admin.global.search.page')}}">
+            <i class="fas fa-search mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true"></i>
+            Recherche Globale
+          </a>
+        </div>
         {{-- <div class="mdc-list-item mdc-drawer-item">
           <a class="mdc-drawer-link" href="#">
             <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">save</i>
@@ -235,7 +241,7 @@
               </div>
               <div class="mdc-list-item mdc-drawer-item">
                 <a class="mdc-drawer-link" href="{{route('admin.bilan_financier.historique')}}">
-                  Historique 
+                  Historique
                 </a>
               </div>
             </nav>

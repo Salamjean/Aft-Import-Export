@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,8 +10,8 @@
   <!-- plugins:css -->
   <link rel="stylesheet" href="{{asset('assetsPoster/assets/vendors/mdi/css/materialdesignicons.min.css')}}">
   <link rel="stylesheet" href="{{asset('assetsPoster/assets/vendors/css/vendor.bundle.base.css')}}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- endinject -->
   <!-- Plugin css for this page -->
@@ -21,10 +21,11 @@
   <!-- Layout styles -->
   <link rel="stylesheet" href="{{asset('assetsPoster/assets/css/demo/style.css')}}">
   <!-- End layout styles -->
-   <link rel="shortcut icon" href="{{asset('assets/img/aft.jpg')}}" />
+  <link rel="shortcut icon" href="{{asset('assets/img/aft.jpg')}}" />
 </head>
+
 <body>
-<script src="{{asset('assetsPoster/assets/js/preloader.js')}}"></script>
+  <script src="{{asset('assetsPoster/assets/js/preloader.js')}}"></script>
   <div class="body-wrapper">
     <!-- partial:partials/_sidebar.html -->
     @include('agent.layouts.sidebar')
@@ -53,5 +54,7 @@
   <!-- Custom js for this page-->
   <script src="{{asset('assetsPoster/assets/js/dashboard.js')}}"></script>
   <!-- End custom js for this page-->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
-</html> 
+
+</html>

@@ -19,6 +19,12 @@
             Tableau de bord
           </a>
         </div>
+        <div class="mdc-list-item mdc-drawer-item">
+          <a class="mdc-drawer-link" href="{{route('ivoire.global.search.page')}}">
+            <i class="fas fa-search mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true"></i>
+            Recherche Globale
+          </a>
+        </div>
 
         <!-- Bilan Financier Ivory -->
         <div class="mdc-list-item mdc-drawer-item">

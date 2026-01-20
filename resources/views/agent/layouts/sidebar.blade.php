@@ -7,7 +7,8 @@
   <div class="mdc-drawer__content">
     <div class="user-info">
       <p class="name text-center text-black"> {{Auth::guard('agent')->user()->name}}
-        {{Auth::guard('agent')->user()->prenom}} </p>
+        {{Auth::guard('agent')->user()->prenom}}
+      </p>
       <p class="email text-center text-black">{{Auth::guard('agent')->user()->email}}</p>
     </div>
     <div class="mdc-list-group">
@@ -16,6 +17,12 @@
           <a class="mdc-drawer-link" href="{{route('agent.dashboard')}}">
             <i class="fas fa-home mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true"></i>
             Tableau de bord
+          </a>
+        </div>
+        <div class="mdc-list-item mdc-drawer-item">
+          <a class="mdc-drawer-link" href="{{route('agent.global.search.page')}}">
+            <i class="fas fa-search mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true"></i>
+            Recherche Globale
           </a>
         </div>
 

@@ -235,6 +235,10 @@ Route::middleware('admin')->prefix('admin')->group(function () {
         Route::post('/{id}/traiter', [AdminDeamndeRecuperation::class, 'traiter'])->name('admin.demandes-recuperation.traiter');
         Route::post('/{id}/annuler', [AdminDeamndeRecuperation::class, 'annuler'])->name('admin.demandes-recuperation.annuler');
     });
+
+    // Global Search
+    Route::get('/global-search', [\App\Http\Controllers\GlobalSearchController::class, 'indexAdmin'])->name('admin.global.search.page');
+    Route::get('/global-search/results', [\App\Http\Controllers\GlobalSearchController::class, 'search'])->name('admin.global.search');
 });
 
 Route::get('/colis/get-conteneur-reference', [ColisController::class, 'getConteneurAndReference'])->name('colis.get-conteneur-reference');
@@ -304,6 +308,10 @@ Route::middleware('agent')->prefix('agent')->group(function () {
         // Bilan Financier Ivory
         Route::get('/bilan-financier', [AgentCoteBilanController::class, 'index'])->name('agent.cote.bilan_financier.index');
         Route::get('/bilan-financier/historique', [AgentCoteBilanController::class, 'historique'])->name('agent.cote.bilan_financier.historique');
+
+        // Global Search Ivory
+        Route::get('/global-search', [\App\Http\Controllers\GlobalSearchController::class, 'indexIvoire'])->name('ivoire.global.search.page');
+        Route::get('/global-search/results', [\App\Http\Controllers\GlobalSearchController::class, 'search'])->name('ivoire.global.search');
     });
 
     //Les routes de gestion des devis 
@@ -430,6 +438,10 @@ Route::middleware('agent')->prefix('agent')->group(function () {
     // Bilan Financier Agent
     Route::get('/bilan-financier', [AgentBilanController::class, 'index'])->name('agent.bilan_financier.index');
     Route::get('/bilan-financier/historique', [AgentBilanController::class, 'historique'])->name('agent.bilan_financier.historique');
+
+    // Global Search
+    Route::get('/global-search', [\App\Http\Controllers\GlobalSearchController::class, 'indexAgent'])->name('agent.global.search.page');
+    Route::get('/global-search/results', [\App\Http\Controllers\GlobalSearchController::class, 'search'])->name('agent.global.search');
 });
 
 //Les routes de gestion des @chauffeur
