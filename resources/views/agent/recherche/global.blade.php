@@ -99,30 +99,30 @@
 
         function displayResults(results) {
             let html = `
-                            <div class="search-results-container" style="max-height: 500px; overflow-y: auto; text-align: left; padding: 5px;">
-                                <p class="mb-3 text-muted">${results.length} résultat(s) trouvé(s)</p>
-                        `;
+                                    <div class="search-results-container" style="max-height: 500px; overflow-y: auto; text-align: left; padding: 5px;">
+                                        <p class="mb-3 text-muted">${results.length} résultat(s) trouvé(s)</p>
+                                `;
 
             results.forEach(colis => {
                 html += `
-                                <div class="result-item" style="background: white; border-radius: 10px; border-left: 5px solid #fea219; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); cursor: pointer;" 
-                                     onclick="showFullDetails(${JSON.stringify(colis).replace(/"/g, '&quot;')})">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <h5 style="color: #fea219; margin: 0;">${colis.reference_colis}</h5>
-                                        <span class="badge" style="background: #e9ecef; color: #495057; border: 1px solid #ced4da;">${colis.statut}</span>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <small class="text-muted">EXPÉDITEUR</small>
-                                            <p class="mb-0"><strong>${colis.name_expediteur} ${colis.prenom_expediteur || ''}</strong></p>
+                                        <div class="result-item" style="background: white; border-radius: 10px; border-left: 5px solid #fea219; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); cursor: pointer;" 
+                                             onclick="showFullDetails(${JSON.stringify(colis).replace(/"/g, '&quot;')})">
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <h5 style="color: #fea219; margin: 0;">${colis.reference_colis}</h5>
+                                                <span class="badge" style="background: #e9ecef; color: #495057; border: 1px solid #ced4da;">${colis.statut}</span>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <small class="text-muted">EXPÉDITEUR</small>
+                                                    <p class="mb-0"><strong>${colis.name_expediteur} ${colis.prenom_expediteur || ''}</strong></p>
+                                                </div>
+                                                <div class="col-6 text-right">
+                                                    <small class="text-muted">DESTINATAIRE</small>
+                                                    <p class="mb-0"><strong>${colis.name_destinataire} ${colis.prenom_destinataire || ''}</strong></p>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-6 text-right">
-                                            <small class="text-muted">DESTINATAIRE</small>
-                                            <p class="mb-0"><strong>${colis.name_destinataire} ${colis.prenom_destinataire || ''}</strong></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            `;
+                                    `;
             });
 
             html += '</div>';
@@ -163,27 +163,27 @@
             let itemsHtml = '<p class="text-muted text-center">Aucun article listé</p>';
             if (itemsArray.length > 0) {
                 itemsHtml = `
-                        <table class="table table-sm table-bordered" style="font-size: 0.8rem;">
-                            <thead style="background: #f8f9fa;">
-                                <tr>
-                                    <th>Désignation</th>
-                                    <th>Quantité</th>
-                                    <th>Poids/Vol</th>
-                                    <th>Valeur</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${itemsArray.map(item => `
-                                    <tr>
-                                        <td>${item.produit || item.description || item.nature || 'N/A'}</td>
-                                        <td>${item.quantite || '1'}</td>
-                                        <td>${item.poids || item.volume || '0'}</td>
-                                        <td>${item.valeur || item.prix_unitaire || '0'}</td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
-                    `;
+                                <table class="table table-sm table-bordered" style="font-size: 0.8rem;">
+                                    <thead style="background: #f8f9fa;">
+                                        <tr>
+                                            <th>Désignation</th>
+                                            <th>Quantité</th>
+                                            <th>Poids/Vol</th>
+                                            <th>Valeur</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${itemsArray.map(item => `
+                                            <tr>
+                                                <td>${item.produit || item.description || item.nature || 'N/A'}</td>
+                                                <td>${item.quantite || '1'}</td>
+                                                <td>${item.poids || item.volume || '0'}</td>
+                                                <td>${item.valeur || item.prix_unitaire || '0'}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            `;
             }
 
             // Détails du paiement
@@ -200,95 +200,112 @@
             const serviceNom = colis.service?.nom_service || colis.service_id || 'N/A';
 
             let html = `
-                            <div class="full-details text-left" style="font-size: 0.9rem; max-height: 70vh; overflow-y: auto; padding-right: 10px;">
-                                <div class="section-title" style="background: #fea219; color: white; padding: 8px 15px; border-radius: 5px; margin-bottom: 15px; font-weight: bold;">
-                                    <i class="fas fa-info-circle"></i> INFORMATIONS GÉNÉRALES
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-6">
-                                        <strong>Référence:</strong> <span class="text-primary">${colis.reference_colis}</span><br>
-                                        <strong>Nature:</strong> <span class="text-dark">${natureColis}</span><br>
-                                        <strong>Date Enreg.:</strong> ${date}<br>
-                                        <strong>Devise:</strong> ${colis.devise || 'N/A'}
-                                    </div>
-                                    <div class="col-6">
-                                        <strong>Statut:</strong> <span class="badge badge-warning">${colis.statut}</span><br>
-                                        <strong>Mode Transit:</strong> ${colis.mode_transit || 'N/A'}<br>
-                                    </div>
-                                </div>
+                                    <div class="full-details text-left" style="font-size: 0.9rem; max-height: 70vh; overflow-y: auto; padding-right: 10px;">
+                                        <div class="section-title" style="background: #fea219; color: white; padding: 8px 15px; border-radius: 5px; margin-bottom: 15px; font-weight: bold;">
+                                            <i class="fas fa-info-circle"></i> INFORMATIONS GÉNÉRALES
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-6">
+                                                <strong>Référence:</strong> <span class="text-primary">${colis.reference_colis}</span><br>
+                                                <strong>Nature:</strong> <span class="text-dark">${natureColis}</span><br>
+                                                <strong>Date Enreg.:</strong> ${date}<br>
+                                                <strong>Devise:</strong> ${colis.devise || 'N/A'}
+                                            </div>
+                                            <div class="col-6">
+                                                <strong>Statut:</strong> <span class="badge badge-warning">${colis.statut}</span><br>
+                                                <strong>Mode Transit:</strong> ${colis.mode_transit || 'N/A'}<br>
+                                            </div>
+                                        </div>
 
-                                <div class="section-title" style="background: #34495e; color: white; padding: 8px 15px; border-radius: 5px; margin-bottom: 15px; font-weight: bold;">
-                                    <i class="fas fa-list"></i> LISTE DES ARTICLES (CONTENU)
-                                </div>
-                                <div class="mb-3">
-                                    ${itemsHtml}
-                                </div>
+                                        <div class="section-title" style="background: #34495e; color: white; padding: 8px 15px; border-radius: 5px; margin-bottom: 15px; font-weight: bold;">
+                                            <i class="fas fa-list"></i> LISTE DES ARTICLES (CONTENU)
+                                        </div>
+                                        <div class="mb-3">
+                                            ${itemsHtml}
+                                        </div>
 
-                                <div class="section-title" style="background: #34495e; color: white; padding: 8px 15px; border-radius: 5px; margin-bottom: 15px; font-weight: bold;">
-                                    <i class="fas fa-user-friends"></i> ACTEURS
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-6" style="border-right: 1px solid #eee;">
-                                        <p class="mb-1 text-primary"><strong>EXPÉDITEUR</strong></p>
-                                        <strong>Nom:</strong> ${colis.name_expediteur} ${colis.prenom_expediteur || ''}<br>
-                                        <strong>Contact:</strong> ${colis.contact_expediteur || 'N/A'}<br>
-                                        <strong>Email:</strong> ${colis.email_expediteur || 'N/A'}<br>
-                                        <strong>Adresse:</strong> ${colis.adresse_expediteur || 'N/A'}
-                                    </div>
-                                    <div class="col-6">
-                                        <p class="mb-1 text-primary"><strong>DESTINATAIRE</strong></p>
-                                        <strong>Nom:</strong> ${colis.name_destinataire} ${colis.prenom_destinataire || ''}<br>
-                                        <strong>Contact:</strong> ${colis.contact_destinataire || 'N/A'}<br>
-                                        <strong>Email:</strong> ${colis.email_destinataire || 'N/A'}<br>
-                                        <strong>Adresse:</strong> ${colis.adresse_destinataire || 'N/A'}
-                                    </div>
-                                </div>
+                                        <div class="section-title" style="background: #34495e; color: white; padding: 8px 15px; border-radius: 5px; margin-bottom: 15px; font-weight: bold;">
+                                            <i class="fas fa-user-friends"></i> ACTEURS
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-6" style="border-right: 1px solid #eee;">
+                                                <p class="mb-1 text-primary"><strong>EXPÉDITEUR</strong></p>
+                                                <strong>Nom:</strong> ${colis.name_expediteur} ${colis.prenom_expediteur || ''}<br>
+                                                <strong>Contact:</strong> ${colis.contact_expediteur || 'N/A'}<br>
+                                                <strong>Email:</strong> ${colis.email_expediteur || 'N/A'}<br>
+                                                <strong>Adresse:</strong> ${colis.adresse_expediteur || 'N/A'}
+                                            </div>
+                                            <div class="col-6">
+                                                <p class="mb-1 text-primary"><strong>DESTINATAIRE</strong></p>
+                                                <strong>Nom:</strong> ${colis.name_destinataire} ${colis.prenom_destinataire || ''}<br>
+                                                <strong>Contact:</strong> ${colis.contact_destinataire || 'N/A'}<br>
+                                                <strong>Email:</strong> ${colis.email_destinataire || 'N/A'}<br>
+                                                <strong>Adresse:</strong> ${colis.adresse_destinataire || 'N/A'}
+                                            </div>
+                                        </div>
 
-                                <div class="section-title" style="background: #34495e; color: white; padding: 8px 15px; border-radius: 5px; margin-bottom: 15px; font-weight: bold;">
-                                    <i class="fas fa-map-marked-alt"></i> LOGISTIQUE
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-6">
-                                        <strong>Agence Exp.:</strong> ${agenceExp}<br>
-                                        <strong>Conteneur:</strong> ${colis.conteneur?.name_conteneur || 'Non assigné'}
-                                    </div>
-                                    <div class="col-6">
-                                        <strong>Agence Dest.:</strong> ${agenceDest}<br>
-                                    </div>
-                                </div>
+                                        <div class="section-title" style="background: #34495e; color: white; padding: 8px 15px; border-radius: 5px; margin-bottom: 15px; font-weight: bold;">
+                                            <i class="fas fa-map-marked-alt"></i> LOGISTIQUE
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-6">
+                                                <strong>Agence Exp.:</strong> ${agenceExp}<br>
+                                                <strong>Conteneur:</strong> ${colis.conteneur?.name_conteneur || 'Non assigné'}
+                                            </div>
+                                            <div class="col-6">
+                                                <strong>Agence Dest.:</strong> ${agenceDest}<br>
+                                            </div>
+                                        </div>
 
-                                <div class="section-title" style="background: #27ae60; color: white; padding: 8px 15px; border-radius: 5px; margin-bottom: 15px; font-weight: bold;">
-                                    <i class="fas fa-file-invoice-dollar"></i> FINANCES & PAIEMENT
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-6">
-                                        <strong>Montant Total:</strong> ${new Intl.NumberFormat().format(colis.montant_total || 0)} ${colis.devise}<br>
-                                        <strong>Montant Payé:</strong> ${new Intl.NumberFormat().format(colis.montant_paye || 0)} ${colis.devise}<br>
-                                        <strong>Reste à Payer:</strong> <span class="text-danger">${new Intl.NumberFormat().format(colis.reste_a_payer || 0)} ${colis.devise}</span>
-                                    </div>
-                                    <div class="col-6">
-                                        <strong>Méthode:</strong> ${colis.methode_paiement || 'N/A'}<br>
-                                        ${payDetails}
-                                        <strong>Statut Paiement:</strong> ${colis.statut_paiement || 'N/A'}
-                                    </div>
-                                </div>
-                                <div class="row mb-3 mt-2">
-                                    <div class="col-6">
-                                        <strong>Agent Encaisseur:</strong> ${colis.agent_encaisseur_name || 'N/A'}<br>
-                                    </div>
-                                    <div class="col-6">
-                                        <strong>Date Paiement:</strong> ${datePaiement}
-                                    </div>
-                                </div>
-                                ${colis.notes_paiement ? `<div class="p-2 bg-light border rounded"><strong>Notes:</strong> ${colis.notes_paiement}</div>` : ''}
+                                        <div class="section-title" style="background: #27ae60; color: white; padding: 8px 15px; border-radius: 5px; margin-bottom: 15px; font-weight: bold;">
+                                            <i class="fas fa-file-invoice-dollar"></i> FINANCES & PAIEMENT
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-6">
+                                                <strong>Montant Total:</strong> ${new Intl.NumberFormat().format(colis.montant_total || 0)} ${colis.devise}<br>
+                                                <strong>Montant Payé:</strong> ${new Intl.NumberFormat().format(colis.montant_paye || 0)} ${colis.devise}<br>
+                                                <strong>Reste à Payer:</strong> <span class="text-danger">${new Intl.NumberFormat().format(colis.reste_a_payer || 0)} ${colis.devise}</span>
+                                            </div>
+                                            <div class="col-6">
+                                                <strong>Méthode:</strong> ${colis.methode_paiement || 'N/A'}<br>
+                                                ${payDetails}
+                                                <strong>Statut Paiement:</strong> ${colis.statut_paiement || 'N/A'}
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3 mt-2">
+                                            <div class="col-6">
+                                                <strong>Agent Encaisseur:</strong> ${colis.agent_encaisseur_name || 'N/A'}<br>
+                                            </div>
+                                            <div class="col-6">
+                                                <strong>Date Paiement:</strong> ${datePaiement}
+                                            </div>
+                                        </div>
+                                        ${colis.notes_paiement ? `<div class="p-2 bg-light border rounded"><strong>Notes:</strong> ${colis.notes_paiement}</div>` : ''}
 
-                                <div class="mt-4 d-flex justify-content-center">
-                                    <button onclick="Swal.close()" class="btn btn-secondary">
-                                        <i class="fas fa-times"></i> FERMER
-                                    </button>
+                            <div class="section-title" style="background: #e67e22; color: white; padding: 8px 15px; border-radius: 5px; margin-bottom: 15px; font-weight: bold;">
+                                <i class="fas fa-file-pdf"></i> DOCUMENTS
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12 d-flex justify-content-around">
+                                    <a href="/agent/parcel/${colis.id}/etiquettes?action=download" target="_blank" class="btn btn-outline-danger btn-sm">
+                                        <i class="fas fa-tags"></i> Étiquettes
+                                    </a>
+                                    <a href="/agent/parcel/${colis.id}/facture?action=download" target="_blank" class="btn btn-outline-danger btn-sm">
+                                        <i class="fas fa-file-invoice"></i> Facture
+                                    </a>
+                                    <a href="/agent/parcel/${colis.id}/bon-livraison?action=download" target="_blank" class="btn btn-outline-danger btn-sm">
+                                        <i class="fas fa-truck-loading"></i> Bon de Livraison
+                                    </a>
                                 </div>
                             </div>
-                            `;
+
+                            <div class="mt-4 d-flex justify-content-center">
+                                <button onclick="Swal.close()" class="btn btn-secondary">
+                                    <i class="fas fa-times"></i> FERMER
+                                </button>
+                            </div>
+                                    </div>
+                                    `;
 
             Swal.fire({
                 title: `DÉTAILS DU COLIS - ${colis.reference_colis}`,
