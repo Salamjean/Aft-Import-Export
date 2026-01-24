@@ -743,7 +743,6 @@ class ColisController extends Controller
                 'colis' => json_encode($request->colis),
                 'montant_colis' => $montantColis,
                 'montant_paye_colis' => $request->montant_paye,
-                'statut' => 'valide',
 
                 // Services
                 'service_id' => $request->service_id,
