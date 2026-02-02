@@ -506,7 +506,6 @@ class ChargerController extends Controller
                     'agence_id' => $conteneur->agence_id
                 ]
             ]);
-
         } catch (\Exception $e) {
             Log::error('❌ Erreur scan QR code charge: ' . $e->getMessage());
             Log::error('Stack trace: ' . $e->getTraceAsString());
@@ -593,15 +592,36 @@ class ChargerController extends Controller
      */
     private function determinerTypeConteneur($modeTransit)
     {
+        // Convertir en minuscules pour la comparaison
         $modeTransit = strtolower(trim($modeTransit));
 
-        // Logique pour déterminer le type de conteneur
-        if (in_array($modeTransit, ['express', 'rapide', 'Aerien'])) {
+        // Tableau des modes qui vont dans les Ballons
+        $modesBallon = ['aerien'];  // "Aerien" en minuscules
+
+        // Tableau des modes qui vont dans les Conteneurs
+        $modesConteneur = ['maritime'];  // "Maritime" en minuscules
+
+        Log::info('Détermination type conteneur pour mode:', [
+            'mode_transit_original' => $modeTransit,
+            'mode_transit_lowercase' => $modeTransit
+        ]);
+
+        // Vérifier pour Ballon
+        if (in_array($modeTransit, $modesBallon)) {
+            Log::info('Mode ' . $modeTransit . ' → Ballon');
             return 'Ballon';
         }
 
-        // Par défaut, retourner "Conteneur"
-        return 'Conteneur';
+        // Vérifier pour Conteneur
+        if (in_array($modeTransit, $modesConteneur)) {
+            Log::info('Mode ' . $modeTransit . ' → Conteneur');
+            return 'Conteneur';
+        }
+
+        // Mode non reconnu - log d'erreur et valeur par défaut
+        Log::warning('Mode transit non reconnu: "' . $modeTransit . '", utilisation par défaut: Conteneur');
+
+        return 'Conteneur'; // Valeur par défaut
     }
 
     /**
