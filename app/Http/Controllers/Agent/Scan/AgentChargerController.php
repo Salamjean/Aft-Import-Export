@@ -609,7 +609,7 @@ class AgentChargerController extends Controller
         $modeTransit = strtolower(trim($modeTransit));
 
         // Logique pour déterminer le type de conteneur
-        if (in_array($modeTransit, ['express', 'rapide', 'urgence'])) {
+        if (in_array($modeTransit,'Aerien')) {
             return 'Ballon';
         }
 
