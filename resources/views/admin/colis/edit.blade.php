@@ -1352,16 +1352,10 @@
             const TAUX_CONVERSION_EURO_XOF = 655;
 
             // Données des agences de destination en Côte d'Ivoire
-            const agencesDestination = {
-                'Maritime': {
-                    name: 'DS Translog Carrefour Angré',
-                    id: 4
-                },
-                'Aerien': {
-                    name: 'DS Translog Angré 8ème Tranche',
-                    id: 2
-                }
-            };
+            const agencesDestinationData = @json($agencesDestination);
+
+            // Initialiser les agences dans les modals
+            updateAgencesInModals(agencesDestinationData);
 
             const paiementTemplates = {
                 espece: `
@@ -2052,7 +2046,7 @@
 
                 fetch(
                         `/produits/search?q=${encodeURIComponent(searchTerm)}&agence_destination_id=${agenceDestinationId}`
-                        )
+                    )
                     .then(response => response.json())
                     .then(produits => {
                         displayProduitResults(produits, currentIndex);

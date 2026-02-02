@@ -117,6 +117,14 @@ class ColisController extends Controller
                 'service'
             ])->findOrFail($id);
 
+            // Assurer que les champs de nom d'agence sont remplis
+            if (!$colis->agence_destination && $colis->agenceDestination) {
+                $colis->agence_destination = $colis->agenceDestination->name;
+            }
+            if (!$colis->agence_expedition && $colis->agenceExpedition) {
+                $colis->agence_expedition = $colis->agenceExpedition->name;
+            }
+
             // Récupérer le conteneur du colis
             $conteneur = $colis->conteneur;
 
@@ -160,6 +168,9 @@ class ColisController extends Controller
                 $colis->agence_expedition_id
             );
 
+            // Récupérer les agences de destination (Côte d'Ivoire)
+            $agencesDestination = Agence::where('pays', 'Côte d\'Ivoire')->get();
+
             // Décoder les détails des colis (déjà casté en array)
             $colisDetails = $colis->colis ?? [];
 
@@ -167,13 +178,13 @@ class ColisController extends Controller
                 'colis',
                 'conteneur',
                 'agencesExpedition',
+                'agencesDestination',
                 'reference',
                 'services',
                 'produits',
                 'modeTransit',
                 'colisDetails'
             ));
-
         } catch (\Exception $e) {
             Log::error('Erreur lors de la récupération du colis pour édition: ' . $e->getMessage());
 
@@ -414,7 +425,6 @@ class ColisController extends Controller
 
             return redirect()->route('colis.index')
                 ->with('success', $messageSucces);
-
         } catch (\Exception $e) {
             Log::error('Erreur création colis: ' . $e->getMessage());
             Log::error('Trace: ' . $e->getTraceAsString());
@@ -780,7 +790,6 @@ class ColisController extends Controller
 
             return redirect()->route('colis.index')
                 ->with('success', $messageSucces);
-
         } catch (\Exception $e) {
             Log::error('Erreur modification colis: ' . $e->getMessage());
             Log::error('Trace: ' . $e->getTraceAsString());
@@ -986,7 +995,6 @@ class ColisController extends Controller
                 'message' => 'Statut individuel mis à jour avec succès',
                 'statut' => $validated['statut']
             ]);
-
         } catch (\Exception $e) {
             Log::error('Erreur mise à jour statut individuel: ' . $e->getMessage());
 
@@ -1011,7 +1019,6 @@ class ColisController extends Controller
                 'statuts_individuels' => $statutsIndividuels,
                 'total_individuels' => count($statutsIndividuels)
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -1195,7 +1202,6 @@ class ColisController extends Controller
             Log::info('QR code généré avec succès: ' . $cheminComplet . ' - Code: ' . $codeColis);
 
             return $cheminComplet;
-
         } catch (\Exception $e) {
             Log::error('Erreur génération QR code: ' . $e->getMessage());
             throw new \Exception('Impossible de générer le QR code: ' . $e->getMessage());
@@ -1225,7 +1231,6 @@ class ColisController extends Controller
             $tempUser->notify(new ColisExpediteurNotification($emailData));
 
             Log::info('Notification de colis envoyée à l\'expéditeur: ' . $colis->email_expediteur . ' - Code: ' . $colis->code_colis);
-
         } catch (\Exception $e) {
             Log::error('Erreur envoi notification expéditeur colis: ' . $e->getMessage());
         }
@@ -1251,7 +1256,6 @@ class ColisController extends Controller
                 ->get();
 
             return response()->json($users);
-
         } catch (\Exception $e) {
             Log::error('Erreur recherche utilisateurs: ' . $e->getMessage());
             return response()->json([], 500);
@@ -1327,7 +1331,6 @@ class ColisController extends Controller
                 'agencesDestination' => $agencesDestination,
                 'agenceExpedition' => $agenceExpedition
             ]);
-
         } catch (\Exception $e) {
             Log::error('Erreur dans getConteneurAndReference: ' . $e->getMessage());
 
@@ -1508,7 +1511,6 @@ class ColisController extends Controller
             ];
 
             return response()->json($colisData);
-
         } catch (\Exception $e) {
             return response()->json([
                 'error' => 'Colis non trouvé'
@@ -1586,7 +1588,6 @@ class ColisController extends Controller
                 'reste_a_payer' => $resteAPayer,
                 'statut_paiement' => $statutPaiement
             ]);
-
         } catch (\Exception $e) {
             Log::error('Erreur enregistrement paiement colis: ' . $e->getMessage());
 
@@ -1655,7 +1656,6 @@ class ColisController extends Controller
                 'success' => true,
                 'message' => 'Colis supprimé avec succès'
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,

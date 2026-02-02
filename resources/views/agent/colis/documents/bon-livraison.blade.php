@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html >
 <head>
     <meta charset="utf-8">
     <title>Bon de Livraison - {{ $colis->reference_colis }}</title>
@@ -326,19 +326,19 @@
             </thead>
             <tbody>
                 @foreach($colisDetails as $detail)
-                <tr>
-                    <td>{{ $detail['produit'] ?? 'COLIS DIVERS' }}</td>
-                    <td>{{ $detail['quantite'] ?? 1 }}</td>
-                    <td>{{ $detail['poids'] ?? '--' }}</td>
-                    <td>
-                        @if(isset($detail['longueur']) && isset($detail['largeur']) && isset($detail['hauteur']))
-                            {{ $detail['longueur'] }}x{{ $detail['largeur'] }}x{{ $detail['hauteur'] }}
-                        @else
-                            --
-                        @endif
-                    </td>
-                    <td>{{ $detail['description'] ?? '--' }}</td>
-                </tr>
+                    <tr>
+                        <td>{{ $detail['produit'] ?? 'COLIS DIVERS' }}</td>
+                        <td>{{ $detail['quantite'] ?? 1 }}</td>
+                        <td>{{ $detail['poids'] ?? '--' }}</td>
+                        <td>
+                            @if(isset($detail['longueur']) && isset($detail['largeur']) && isset($detail['hauteur']))
+                                {{ $detail['longueur'] }}x{{ $detail['largeur'] }}x{{ $detail['hauteur'] }}
+                            @else
+                                --
+                            @endif
+                        </td>
+                        <td>{{ $detail['description'] ?? '--' }}</td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>

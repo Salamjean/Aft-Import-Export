@@ -43,14 +43,22 @@
                                     <div class="filter-group">
                                         <select class="form-control modern-select" name="mode_transit">
                                             <option value="">Tous les modes</option>
-                                            <option value="Maritime" {{ request('mode_transit') == 'Maritime' ? 'selected' : '' }}>Maritime</option>
-                                            <option value="Aerien" {{ request('mode_transit') == 'Aerien' ? 'selected' : '' }}>Aérien</option>
+                                            <option value="Maritime"
+                                                {{ request('mode_transit') == 'Maritime' ? 'selected' : '' }}>Maritime
+                                            </option>
+                                            <option value="Aerien"
+                                                {{ request('mode_transit') == 'Aerien' ? 'selected' : '' }}>Aérien</option>
                                         </select>
                                         <select class="form-control modern-select" name="paiement">
                                             <option value="">Tous les paiements</option>
-                                            <option value="non_paye" {{ request('paiement') == 'non_paye' ? 'selected' : '' }}>Non payé</option>
-                                            <option value="partiellement_paye" {{ request('paiement') == 'partiellement_paye' ? 'selected' : '' }}>Partiellement payé</option>
-                                            <option value="totalement_paye" {{ request('paiement') == 'totalement_paye' ? 'selected' : '' }}>Totalement payé</option>
+                                            <option value="non_paye"
+                                                {{ request('paiement') == 'non_paye' ? 'selected' : '' }}>Non payé</option>
+                                            <option value="partiellement_paye"
+                                                {{ request('paiement') == 'partiellement_paye' ? 'selected' : '' }}>
+                                                Partiellement payé</option>
+                                            <option value="totalement_paye"
+                                                {{ request('paiement') == 'totalement_paye' ? 'selected' : '' }}>Totalement
+                                                payé</option>
                                         </select>
                                         <button type="submit" class="btn btn-primary">
                                             <i class="fas fa-filter"></i> Filtrer
@@ -86,12 +94,12 @@
                                     @forelse($colis as $item)
                                         <tr>
                                             <td class="text-center">
-                                                @if($item->statut_paiement == 'non_paye')
+                                                @if ($item->statut_paiement == 'non_paye')
                                                     <i class="fas fa-times-circle text-danger" title="Non payé"
                                                         style="font-size: 18px;"></i>
                                                 @elseif($item->statut_paiement == 'partiellement_paye')
-                                                    <i class="fas fa-exclamation-circle text-warning" title="Partiellement payé"
-                                                        style="font-size: 18px;"></i>
+                                                    <i class="fas fa-exclamation-circle text-warning"
+                                                        title="Partiellement payé" style="font-size: 18px;"></i>
                                                 @else
                                                     <i class="fas fa-check-circle text-success" title="Totalement payé"
                                                         style="font-size: 18px;"></i>
@@ -105,7 +113,8 @@
                                                 </span>
                                             </td>
                                             <td class="text-center">
-                                                <div>{{ $item->name_expediteur }} {{ $item->prenom_expediteur ?? '' }}</div>
+                                                <div>{{ $item->name_expediteur }} {{ $item->prenom_expediteur ?? '' }}
+                                                </div>
                                                 <small class="text-muted">{{ $item->contact_expediteur }}</small>
                                             </td>
                                             <td class="text-center">
@@ -122,7 +131,7 @@
                                                 <div><strong>Dest:</strong> {{ $item->agence_destination }}</div>
                                             </td>
                                             <td class="text-center">
-                                                @if($item->conteneur)
+                                                @if ($item->conteneur)
                                                     <span class="badge bg-dark text-white">
                                                         <i class="fas fa-box"></i> {{ $item->conteneur->name_conteneur }}
                                                     </span>
@@ -138,7 +147,7 @@
                                             </td>
                                             <td class="text-center">
                                                 <span class="status-badge status-{{ $item->statut }}">
-                                                    @if($item->statut == 'valide')
+                                                    @if ($item->statut == 'valide')
                                                         Validé
                                                     @elseif($item->statut == 'charge')
                                                         Chargé
@@ -155,43 +164,60 @@
                                                 <br>
 
                                                 <!-- Barre de progression multi-couleurs -->
-                                                @if($item->total_individuels > 0)
+                                                @if ($item->total_individuels > 0)
                                                     <div class="progress-multi mt-1">
                                                         @php
-                                                            $pourcentageValide = ($item->individuels_valides / $item->total_individuels) * 100;
-                                                            $pourcentageCharge = ($item->individuels_charges / $item->total_individuels) * 100;
-                                                            $pourcentageEntrepot = ($item->individuels_entrepot / $item->total_individuels) * 100;
-                                                            $pourcentageDecharge = ($item->individuels_decharges / $item->total_individuels) * 100;
-                                                            $pourcentageLivre = ($item->individuels_livres / $item->total_individuels) * 100;
-                                                            $pourcentageAnnule = ($item->individuels_annules / $item->total_individuels) * 100;
+                                                            $pourcentageValide =
+                                                                ($item->individuels_valides /
+                                                                    $item->total_individuels) *
+                                                                100;
+                                                            $pourcentageCharge =
+                                                                ($item->individuels_charges /
+                                                                    $item->total_individuels) *
+                                                                100;
+                                                            $pourcentageEntrepot =
+                                                                ($item->individuels_entrepot /
+                                                                    $item->total_individuels) *
+                                                                100;
+                                                            $pourcentageDecharge =
+                                                                ($item->individuels_decharges /
+                                                                    $item->total_individuels) *
+                                                                100;
+                                                            $pourcentageLivre =
+                                                                ($item->individuels_livres / $item->total_individuels) *
+                                                                100;
+                                                            $pourcentageAnnule =
+                                                                ($item->individuels_annules /
+                                                                    $item->total_individuels) *
+                                                                100;
                                                         @endphp
 
-                                                        @if($item->individuels_valides > 0)
+                                                        @if ($item->individuels_valides > 0)
                                                             <div class="progress-segment progress-valide"
                                                                 style="width: {{ $pourcentageValide }}%"></div>
                                                         @endif
 
-                                                        @if($item->individuels_charges > 0)
+                                                        @if ($item->individuels_charges > 0)
                                                             <div class="progress-segment progress-charge"
                                                                 style="width: {{ $pourcentageCharge }}%"></div>
                                                         @endif
 
-                                                        @if($item->individuels_entrepot > 0)
+                                                        @if ($item->individuels_entrepot > 0)
                                                             <div class="progress-segment progress-entrepot"
                                                                 style="width: {{ $pourcentageEntrepot }}%"></div>
                                                         @endif
 
-                                                        @if($item->individuels_decharges > 0)
+                                                        @if ($item->individuels_decharges > 0)
                                                             <div class="progress-segment progress-decharge"
                                                                 style="width: {{ $pourcentageDecharge }}%"></div>
                                                         @endif
 
-                                                        @if($item->individuels_livres > 0)
+                                                        @if ($item->individuels_livres > 0)
                                                             <div class="progress-segment progress-livre"
                                                                 style="width: {{ $pourcentageLivre }}%"></div>
                                                         @endif
 
-                                                        @if($item->individuels_annules > 0)
+                                                        @if ($item->individuels_annules > 0)
                                                             <div class="progress-segment progress-annule"
                                                                 style="width: {{ $pourcentageAnnule }}%"></div>
                                                         @endif
@@ -199,37 +225,37 @@
 
                                                     <!-- Légende -->
                                                     <div class="statut-legend">
-                                                        @if($item->individuels_valides > 0)
+                                                        @if ($item->individuels_valides > 0)
                                                             <span class="statut-legend-item">
                                                                 <span class="statut-color"
                                                                     style="background-color: #6c757d;"></span>V:{{ $item->individuels_valides }}
                                                             </span>
                                                         @endif
-                                                        @if($item->individuels_charges > 0)
+                                                        @if ($item->individuels_charges > 0)
                                                             <span class="statut-legend-item">
                                                                 <span class="statut-color"
                                                                     style="background-color: #ffc107;"></span>C:{{ $item->individuels_charges }}
                                                             </span>
                                                         @endif
-                                                        @if($item->individuels_entrepot > 0)
+                                                        @if ($item->individuels_entrepot > 0)
                                                             <span class="statut-legend-item">
                                                                 <span class="statut-color"
                                                                     style="background-color: #17a2b8;"></span>E:{{ $item->individuels_entrepot }}
                                                             </span>
                                                         @endif
-                                                        @if($item->individuels_decharges > 0)
+                                                        @if ($item->individuels_decharges > 0)
                                                             <span class="statut-legend-item">
                                                                 <span class="statut-color"
                                                                     style="background-color: #007bff;"></span>D:{{ $item->individuels_decharges }}
                                                             </span>
                                                         @endif
-                                                        @if($item->individuels_livres > 0)
+                                                        @if ($item->individuels_livres > 0)
                                                             <span class="statut-legend-item">
                                                                 <span class="statut-color"
                                                                     style="background-color: #28a745;"></span>L:{{ $item->individuels_livres }}
                                                             </span>
                                                         @endif
-                                                        @if($item->individuels_annules > 0)
+                                                        @if ($item->individuels_annules > 0)
                                                             <span class="statut-legend-item">
                                                                 <span class="statut-color"
                                                                     style="background-color: #dc3545;"></span>A:{{ $item->individuels_annules }}
@@ -240,9 +266,11 @@
                                             </td>
                                             <td class="text-center">
                                                 <!-- Barre de progression pour le chargement -->
-                                                @if($item->total_individuels > 0)
+                                                @if ($item->total_individuels > 0)
                                                     @php
-                                                        $pourcentageCharge = ($item->individuels_charges / $item->total_individuels) * 100;
+                                                        $pourcentageCharge =
+                                                            ($item->individuels_charges / $item->total_individuels) *
+                                                            100;
                                                     @endphp
                                                     <div class="progress mt-2" style="height: 20px;">
                                                         <div class="progress-bar bg-warning" role="progressbar"
@@ -267,15 +295,15 @@
                                             <td class="text-center">
                                                 <div class="action-buttons">
                                                     <button class="btn-action btn-view"
-                                                        onclick="showColisDetails({{ $item->id }})" title="Voir détails">
+                                                        onclick="showColisDetails({{ $item->id }})"
+                                                        title="Voir détails">
                                                         <i class="fas fa-eye"></i>
                                                     </button>
 
                                                     <!-- Bouton de paiement - grisé si totalement payé -->
                                                     <button
                                                         class="btn-action {{ $item->statut_paiement == 'totalement_paye' ? 'btn-payment-disabled' : 'btn-payment' }}"
-                                                        @if($item->statut_paiement != 'totalement_paye')
-                                                            onclick="showPaymentForm({{ $item->id }}, '{{ $item->reference_colis }}', {{ $item->montant_total }}, {{ $item->montant_paye }}, {{ $item->reste_a_payer ?? 0 }}, '{{ $item->devise }}')"
+                                                        @if ($item->statut_paiement != 'totalement_paye') onclick="showPaymentForm({{ $item->id }}, '{{ $item->reference_colis }}', {{ $item->montant_total }}, {{ $item->montant_paye }}, {{ $item->reste_a_payer ?? 0 }}, '{{ $item->devise }}')"
                                                         @else disabled @endif
                                                         title="{{ $item->statut_paiement == 'totalement_paye' ? 'Paiement complet' : 'Enregistrer un paiement' }}">
                                                         <i class="fas fa-money-bill-wave"></i>
@@ -294,10 +322,10 @@
                                                         <i class="fas fa-file-alt"></i>
                                                     </button>
 
-                                                    {{-- <a href="{{ route('colis.edit', $item->id) }}"
+                                                    <a href="{{ route('agent.colis.edit', $item->id) }}"
                                                         class="btn-action btn-edit" title="Modifier">
                                                         <i class="fas fa-edit"></i>
-                                                    </a> --}}
+                                                    </a>
                                                     {{-- <button class="btn-action btn-delete"
                                                         onclick="confirmDelete({{ $item->id }}, '{{ $item->reference_colis }}')"
                                                         title="Supprimer">
@@ -322,7 +350,7 @@
                         </div>
 
                         <!-- Pagination -->
-                        @if($colis->hasPages())
+                        @if ($colis->hasPages())
                             <div class="pagination-container">
                                 {{ $colis->links('pagination.modern') }}
                             </div>
@@ -830,7 +858,7 @@
                     const manualInput = document.getElementById('manualCodeInput');
                     if (manualInput) {
                         manualInput.focus();
-                        manualInput.addEventListener('keypress', function (e) {
+                        manualInput.addEventListener('keypress', function(e) {
                             if (e.key === 'Enter') {
                                 validateManualCodeCharge();
                             }
@@ -885,8 +913,9 @@
                 updateScanStatus('🔍 Recherche des caméras...');
 
                 // Démarrer le scanner
-                html5QrCode.start(
-                    { facingMode: "environment" },
+                html5QrCode.start({
+                        facingMode: "environment"
+                    },
                     config,
                     onScanSuccessCharge,
                     onScanFailure
@@ -988,17 +1017,17 @@
             console.log("📍 URL utilisée:", url);
 
             fetch(url, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    qr_code: qrCode,
-                    conteneur_id: conteneurId
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        qr_code: qrCode,
+                        conteneur_id: conteneurId
+                    })
                 })
-            })
                 .then(response => {
                     console.log("📨 Réponse HTTP:", response.status, response.statusText);
 
@@ -1032,37 +1061,37 @@
                     <p class="mt-3"><strong>${data.message}</strong></p>
 
                     ${data.unite ? `
-                    <div class="alert alert-success">
-                        <h6>📦 Informations de l'unité</h6>
-                        <p class="mb-1"><strong>Code:</strong> ${data.unite.code_colis}</p>
-                        <p class="mb-1"><strong>Produit:</strong> ${data.unite.produit}</p>
-                        <p class="mb-1"><strong>Position:</strong> ${data.unite.position}</p>
-                        <p class="mb-1"><strong>Statut:</strong> 
-                            <span class="badge bg-warning">${data.unite.nouveau_statut}</span>
-                        </p>
-                        <p class="mb-1"><strong>Localisation:</strong> ${data.unite.localisation}</p>
-                    </div>
-                    ` : ''}
+                        <div class="alert alert-success">
+                            <h6>📦 Informations de l'unité</h6>
+                            <p class="mb-1"><strong>Code:</strong> ${data.unite.code_colis}</p>
+                            <p class="mb-1"><strong>Produit:</strong> ${data.unite.produit}</p>
+                            <p class="mb-1"><strong>Position:</strong> ${data.unite.position}</p>
+                            <p class="mb-1"><strong>Statut:</strong> 
+                                <span class="badge bg-warning">${data.unite.nouveau_statut}</span>
+                            </p>
+                            <p class="mb-1"><strong>Localisation:</strong> ${data.unite.localisation}</p>
+                        </div>
+                        ` : ''}
 
                     ${data.colis ? `
-                    <div class="alert alert-info">
-                        <h6>📊 Progression du chargement</h6>
-                        <p class="mb-1"><strong>Référence:</strong> ${data.colis.reference_colis}</p>
-                        <p class="mb-1"><strong>Progression:</strong> 
-                            ${data.colis.unites_chargees}/${data.colis.total_unites} unités chargées
-                        </p>
-                        <div class="progress mt-2">
-                            <div class="progress-bar bg-warning" 
-                                 role="progressbar" 
-                                 style="width: ${data.colis.progression}%"
-                                 aria-valuenow="${data.colis.progression}" 
-                                 aria-valuemin="0" 
-                                 aria-valuemax="100">
-                                ${data.colis.progression}%
+                        <div class="alert alert-info">
+                            <h6>📊 Progression du chargement</h6>
+                            <p class="mb-1"><strong>Référence:</strong> ${data.colis.reference_colis}</p>
+                            <p class="mb-1"><strong>Progression:</strong> 
+                                ${data.colis.unites_chargees}/${data.colis.total_unites} unités chargées
+                            </p>
+                            <div class="progress mt-2">
+                                <div class="progress-bar bg-warning" 
+                                     role="progressbar" 
+                                     style="width: ${data.colis.progression}%"
+                                     aria-valuenow="${data.colis.progression}" 
+                                     aria-valuemin="0" 
+                                     aria-valuemax="100">
+                                    ${data.colis.progression}%
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    ` : ''}
+                        ` : ''}
                 </div>
             `,
                 icon: 'success',
@@ -1088,12 +1117,12 @@
                     <i class="fas fa-info-circle text-warning" style="font-size: 3rem;"></i>
                     <p class="mt-3"><strong>${data.message}</strong></p>
                     ${data.unite ? `
-                    <div class="alert alert-warning mt-3">
-                        <p><strong>Code:</strong> ${data.unite.code_colis}</p>
-                        <p><strong>Statut actuel:</strong> <span class="badge bg-warning">${data.unite.statut}</span></p>
-                        <p><strong>Produit:</strong> ${data.unite.produit}</p>
-                    </div>
-                    ` : ''}
+                        <div class="alert alert-warning mt-3">
+                            <p><strong>Code:</strong> ${data.unite.code_colis}</p>
+                            <p><strong>Statut actuel:</strong> <span class="badge bg-warning">${data.unite.statut}</span></p>
+                            <p><strong>Produit:</strong> ${data.unite.produit}</p>
+                        </div>
+                        ` : ''}
                 </div>
             `,
                 icon: 'info',
@@ -1300,43 +1329,43 @@
                                 <div class="card-body">
                                     <div class="row text-center">
                                         ${data.compteur_statuts ? `
-                                            <div class="col">
-                                                <div class="statut-counter ${data.compteur_statuts.valide > 0 ? 'text-success' : 'text-muted'}">
-                                                    <h4>${data.compteur_statuts.valide || 0}</h4>
-                                                    <small>Validé</small>
+                                                <div class="col">
+                                                    <div class="statut-counter ${data.compteur_statuts.valide > 0 ? 'text-success' : 'text-muted'}">
+                                                        <h4>${data.compteur_statuts.valide || 0}</h4>
+                                                        <small>Validé</small>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="statut-counter ${data.compteur_statuts.charge > 0 ? 'text-warning' : 'text-muted'}">
-                                                    <h4>${data.compteur_statuts.charge || 0}</h4>
-                                                    <small>Chargé</small>
+                                                <div class="col">
+                                                    <div class="statut-counter ${data.compteur_statuts.charge > 0 ? 'text-warning' : 'text-muted'}">
+                                                        <h4>${data.compteur_statuts.charge || 0}</h4>
+                                                        <small>Chargé</small>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="statut-counter ${data.compteur_statuts.entrepot > 0 ? 'text-info' : 'text-muted'}">
-                                                    <h4>${data.compteur_statuts.entrepot || 0}</h4>
-                                                    <small>Entrepôt</small>
+                                                <div class="col">
+                                                    <div class="statut-counter ${data.compteur_statuts.entrepot > 0 ? 'text-info' : 'text-muted'}">
+                                                        <h4>${data.compteur_statuts.entrepot || 0}</h4>
+                                                        <small>Entrepôt</small>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="statut-counter ${data.compteur_statuts.decharge > 0 ? 'text-primary' : 'text-muted'}">
-                                                    <h4>${data.compteur_statuts.decharge || 0}</h4>
-                                                    <small>Déchargé</small>
+                                                <div class="col">
+                                                    <div class="statut-counter ${data.compteur_statuts.decharge > 0 ? 'text-primary' : 'text-muted'}">
+                                                        <h4>${data.compteur_statuts.decharge || 0}</h4>
+                                                        <small>Déchargé</small>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="statut-counter ${data.compteur_statuts.livre > 0 ? 'text-success' : 'text-muted'}">
-                                                    <h4>${data.compteur_statuts.livre || 0}</h4>
-                                                    <small>Livré</small>
+                                                <div class="col">
+                                                    <div class="statut-counter ${data.compteur_statuts.livre > 0 ? 'text-success' : 'text-muted'}">
+                                                        <h4>${data.compteur_statuts.livre || 0}</h4>
+                                                        <small>Livré</small>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="statut-counter ${data.compteur_statuts.annule > 0 ? 'text-danger' : 'text-muted'}">
-                                                    <h4>${data.compteur_statuts.annule || 0}</h4>
-                                                    <small>Annulé</small>
+                                                <div class="col">
+                                                    <div class="statut-counter ${data.compteur_statuts.annule > 0 ? 'text-danger' : 'text-muted'}">
+                                                        <h4>${data.compteur_statuts.annule || 0}</h4>
+                                                        <small>Annulé</small>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        ` : '<div class="col-12 text-muted">Aucune donnée disponible</div>'}
+                                            ` : '<div class="col-12 text-muted">Aucune donnée disponible</div>'}
                                     </div>
                                 </div>
                             </div>
@@ -1386,21 +1415,21 @@
                                             </thead>
                                             <tbody>
                                                 ${data.colis_details.map((colis, index) => `
-                                                    <tr>
-                                                        <td class="text-center"><strong>${index + 1}</strong></td>
-                                                        <td class="text-center">${colis.produit}</td>
-                                                        <td class="text-center">${colis.quantite}</td>
-                                                        <td class="text-center">${parseFloat(colis.prix_unitaire).toFixed(0)} ${data.devise}</td>
-                                                        <td class="text-center">${parseFloat(colis.quantite * colis.prix_unitaire).toFixed(0)} ${data.devise}</td>
-                                                        <td class="text-center">
-                                                            ${colis.longueur && colis.largeur && colis.hauteur ?
-                                `${colis.longueur}x${colis.largeur}x${colis.hauteur} cm` :
-                                'Non spécifié'}
-                                                        </td>
-                                                        <td class="text-center">${colis.poids ? colis.poids + ' kg' : '--'}</td>
-                                                        <td class="text-center">${colis.description || '--'}</td>
-                                                    </tr>
-                                                `).join('')}
+                                                        <tr>
+                                                            <td class="text-center"><strong>${index + 1}</strong></td>
+                                                            <td class="text-center">${colis.produit}</td>
+                                                            <td class="text-center">${colis.quantite}</td>
+                                                            <td class="text-center">${parseFloat(colis.prix_unitaire).toFixed(0)} ${data.devise}</td>
+                                                            <td class="text-center">${parseFloat(colis.quantite * colis.prix_unitaire).toFixed(0)} ${data.devise}</td>
+                                                            <td class="text-center">
+                                                                ${colis.longueur && colis.largeur && colis.hauteur ?
+                                    `${colis.longueur}x${colis.largeur}x${colis.hauteur} cm` :
+                                    'Non spécifié'}
+                                                            </td>
+                                                            <td class="text-center">${colis.poids ? colis.poids + ' kg' : '--'}</td>
+                                                            <td class="text-center">${colis.description || '--'}</td>
+                                                        </tr>
+                                                    `).join('')}
                                             </tbody>
                                             <tfoot>
                                                 <tr class="table-active">
@@ -1520,7 +1549,10 @@
         function formatDate(dateString) {
             if (!dateString) return '--';
             const date = new Date(dateString);
-            return date.toLocaleDateString('fr-FR') + ' ' + date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+            return date.toLocaleDateString('fr-FR') + ' ' + date.toLocaleTimeString('fr-FR', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
         }
 
         // Fonction de confirmation de suppression avec SweetAlert2
@@ -1559,12 +1591,12 @@
 
                     // Envoyer la requête de suppression
                     fetch(`/agent/colis/${colisId}`, {
-                        method: 'DELETE',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Content-Type': 'application/json'
-                        }
-                    })
+                            method: 'DELETE',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Content-Type': 'application/json'
+                            }
+                        })
                         .then(response => {
                             if (!response.ok) {
                                 throw new Error('Erreur lors de la suppression');
@@ -1734,7 +1766,7 @@
                     const banqueFields = document.getElementById('banque_fields');
                     const mobileFields = document.getElementById('mobile_fields');
 
-                    methodeSelect.addEventListener('change', function () {
+                    methodeSelect.addEventListener('change', function() {
                         if (this.value === 'virement_bancaire') {
                             banqueFields.style.display = 'block';
                             mobileFields.style.display = 'none';
@@ -1757,7 +1789,8 @@
                     }
 
                     if (montant > montantRestant) {
-                        Swal.showValidationMessage(`Le montant ne peut pas dépasser ${montantRestant.toFixed(0)} ${devise}`);
+                        Swal.showValidationMessage(
+                            `Le montant ne peut pas dépasser ${montantRestant.toFixed(0)} ${devise}`);
                         return false;
                     }
 
@@ -1796,13 +1829,13 @@
             });
 
             fetch(`/agent/parcel/${colisId}/paiement`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(paymentData)
-            })
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(paymentData)
+                })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Erreur lors de l\'enregistrement du paiement');
@@ -2083,14 +2116,14 @@
         }
 
         // Nettoyage
-        window.addEventListener('beforeunload', function () {
+        window.addEventListener('beforeunload', function() {
             stopQRScanner();
         });
 
         // Afficher les messages flash Laravel avec SweetAlert2
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             // Message de succès
-            @if(session('success'))
+            @if (session('success'))
                 Swal.fire({
                     title: 'Succès !',
                     text: '{{ session('success') }}',
@@ -2102,7 +2135,7 @@
             @endif
 
             // Message d'erreur
-            @if(session('error'))
+            @if (session('error'))
                 Swal.fire({
                     title: 'Erreur !',
                     text: '{{ session('error') }}',
@@ -2110,7 +2143,7 @@
                     confirmButtonColor: '#fea219'
                 });
             @endif
-    });
+        });
 
         console.log("✅ Page de chargement des colis chargée avec toutes les fonctionnalités");
     </script>
