@@ -129,7 +129,7 @@ class AgentEtiquetteController extends Controller
                 'montantPaye' => $montantPaye,
                 'resteAPayer' => $resteAPayer,
                 'devise' => $devise,
-                'dateFacture' => $dateFacture->format('d/m/Y'),
+                'dateFacture' => $dateFacture,
                 'numeroFacture' => 'FACT-' . $colis->reference_colis . '-' . $dateFacture->format('Ymd'),
                 'entreprise' => [
                     'nom' => 'AFT IMPORT EXPORT',
