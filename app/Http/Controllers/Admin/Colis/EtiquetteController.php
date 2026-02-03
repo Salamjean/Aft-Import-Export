@@ -16,7 +16,10 @@ class EtiquetteController extends Controller
             $colis = Colis::with(['agenceExpedition', 'agenceDestination'])->findOrFail($id);
 
             // Décoder les données des colis
-            $colisDetails = json_decode($colis->colis, true);
+            $colisDetails = $colis->colis;
+            if (is_string($colisDetails)) {
+                $colisDetails = json_decode($colisDetails, true);
+            }
             $quantiteTotale = collect($colisDetails)->sum('quantite');
 
             // Récupérer les QR codes
@@ -103,8 +106,16 @@ class EtiquetteController extends Controller
             $colis = Colis::with(['conteneur', 'agenceExpedition', 'agenceDestination', 'service'])
                 ->findOrFail($id);
             $dateFacture = $colis->first_invoice_printed_at;
+            // Formatage de la date pour l'affichage et le numéro de facture
+            $dateFactureFormatted = $dateFacture ? $dateFacture->format('d/m/Y') : now()->format('d/m/Y');
+            $dateForNumber = $dateFacture ? $dateFacture->format('Ymd') : now()->format('Ymd');
+
             // Décoder les données JSON des colis
-            $colisDetails = json_decode($colis->colis, true);
+            // Fix: Handle array cast
+            $colisDetails = $colis->colis;
+            if (is_string($colisDetails)) {
+                $colisDetails = json_decode($colisDetails, true);
+            }
             $codesColis = json_decode($colis->code_colis, true);
 
             // Calculer les totaux
@@ -121,8 +132,8 @@ class EtiquetteController extends Controller
                 'montantPaye' => $montantPaye,
                 'resteAPayer' => $resteAPayer,
                 'devise' => $devise,
-                'dateFacture' => $dateFacture,
-                'numeroFacture' => 'FACT-' . $colis->reference_colis . '-' . $dateFacture,
+                'dateFacture' => $dateFactureFormatted,
+                'numeroFacture' => 'FACT-' . $colis->reference_colis . '-' . $dateForNumber,
                 'entreprise' => [
                     'nom' => 'AFT IMPORT EXPORT',
                     'adresse' => '7 AVENUE LOUIS BLERIOT LA COURNEUVE 93120 France',
@@ -162,7 +173,10 @@ class EtiquetteController extends Controller
                 ->findOrFail($id);
 
             // Décoder les données JSON des colis
-            $colisDetails = json_decode($colis->colis, true);
+            $colisDetails = $colis->colis;
+            if (is_string($colisDetails)) {
+                $colisDetails = json_decode($colisDetails, true);
+            }
 
             $data = [
                 'colis' => $colis,

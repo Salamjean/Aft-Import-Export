@@ -15,8 +15,11 @@ class AgentEtiquetteController extends Controller
         try {
             $colis = Colis::with(['agenceExpedition', 'agenceDestination'])->findOrFail($id);
 
-            // Décoder les données des colis
-            $colisDetails = json_decode($colis->colis, true);
+            // Décoder les données des colis (déjà casté par le modèle)
+            $colisDetails = $colis->colis;
+            if (is_string($colisDetails)) {
+                $colisDetails = json_decode($colisDetails, true);
+            }
             $quantiteTotale = collect($colisDetails)->sum('quantite');
 
             // Récupérer les QR codes
@@ -104,7 +107,11 @@ class AgentEtiquetteController extends Controller
                 ->findOrFail($id);
 
             // Décoder les données JSON des colis
-            $colisDetails = json_decode($colis->colis, true);
+            // Décoder les données JSON des colis
+            $colisDetails = $colis->colis;
+            if (is_string($colisDetails)) {
+                $colisDetails = json_decode($colisDetails, true);
+            }
             $codesColis = json_decode($colis->code_colis, true);
 
             // Calculer les totaux
@@ -121,6 +128,10 @@ class AgentEtiquetteController extends Controller
 
             $dateFacture = $colis->first_invoice_printed_at;
 
+            // Formatage de la date pour l'affichage et le numéro de facture
+            $dateFactureFormatted = $dateFacture ? $dateFacture->format('d/m/Y') : now()->format('d/m/Y');
+            $dateForNumber = $dateFacture ? $dateFacture->format('Ymd') : now()->format('Ymd');
+
             $data = [
                 'colis' => $colis,
                 'colisDetails' => $colisDetails,
@@ -129,8 +140,8 @@ class AgentEtiquetteController extends Controller
                 'montantPaye' => $montantPaye,
                 'resteAPayer' => $resteAPayer,
                 'devise' => $devise,
-                'dateFacture' => $dateFacture,
-                'numeroFacture' => 'FACT-' . $colis->reference_colis . '-' . $dateFacture,
+                'dateFacture' => $dateFactureFormatted,
+                'numeroFacture' => 'FACT-' . $colis->reference_colis . '-' . $dateForNumber,
                 'entreprise' => [
                     'nom' => 'AFT IMPORT EXPORT',
                     'adresse' => '7 AVENUE LOUIS BLERIOT LA COURNEUVE 93120 France',
@@ -170,7 +181,11 @@ class AgentEtiquetteController extends Controller
                 ->findOrFail($id);
 
             // Décoder les données JSON des colis
-            $colisDetails = json_decode($colis->colis, true);
+            // Décoder les données JSON des colis
+            $colisDetails = $colis->colis;
+            if (is_string($colisDetails)) {
+                $colisDetails = json_decode($colisDetails, true);
+            }
 
             $data = [
                 'colis' => $colis,
