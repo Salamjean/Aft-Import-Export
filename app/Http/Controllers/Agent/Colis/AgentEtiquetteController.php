@@ -103,7 +103,7 @@ class AgentEtiquetteController extends Controller
     {
         try {
             // Récupérer le colis avec toutes les relations nécessaires
-            $colis = Colis::with(['conteneur', 'agenceExpedition', 'agenceDestination', 'service'])
+            $colis = Colis::with(['conteneur', 'agenceExpedition', 'agenceDestination', 'service', 'paiements'])
                 ->findOrFail($id);
 
             // Décoder les données JSON des colis
@@ -140,8 +140,8 @@ class AgentEtiquetteController extends Controller
                 'montantPaye' => $montantPaye,
                 'resteAPayer' => $resteAPayer,
                 'devise' => $devise,
-                'dateFacture' => $dateFactureFormatted,
-                'numeroFacture' => 'FACT-' . $colis->reference_colis . '-' . $dateForNumber,
+                'dateFacture' => $colis->created_at->format('d/m/Y'),
+                'numeroFacture' => 'FACT-' . $colis->reference_colis . '-' . $colis->created_at->format('Ymd'),
                 'entreprise' => [
                     'nom' => 'AFT IMPORT EXPORT',
                     'adresse' => '7 AVENUE LOUIS BLERIOT LA COURNEUVE 93120 France',

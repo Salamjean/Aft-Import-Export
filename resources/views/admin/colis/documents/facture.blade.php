@@ -443,23 +443,35 @@
             <div class="left-footer">
                 <div class="payment-terms-bar">
                    <img src="assets/img/barre_code.png" style="height: 35px; margin-bottom: 10px;" alt="">
-                   
-                   <table class="payment-terms-table">
-                       <thead>
-                           <tr>
-                               <th>Terme de paiement</th>
-                               <th>Mode de paiement</th> <!-- Added as requested -->
-                               <th>Paiement dû le</th>
-                           </tr>
-                       </thead>
-                       <tbody>
-                           <tr>
-                               <td>NET AU JOUR</td>
-                               <td>{{ strtoupper(str_replace('_', ' ', $colis->methode_paiement ?? 'NON DÉFINI')) }}</td>
-                               <td>{{ $dateFacture }}</td>
-                           </tr>
-                       </tbody>
-                   </table>
+
+                   <!-- Historique des paiements (Requested) -->
+                   @if($colis->paiements && count($colis->paiements) > 0)
+                   <div style="margin-top: 20px;">
+                       <strong style="display:block; margin-bottom:5px; font-size:12px; color: black;">Historique des paiements</strong>
+                       <table style="width: 100%; border-collapse: collapse; font-size: 11px; border: 1px solid #ddd;">
+                           <thead style="background-color: #f5f5f5;">
+                               <tr>
+                                   <th style="border: 1px solid #ddd; padding: 5px; text-align: center;">Date</th>
+                                   <th style="border: 1px solid #ddd; padding: 5px; text-align: center;">Encaissement No.</th>
+                                   <th style="border: 1px solid #ddd; padding: 5px; text-align: center;">Montant payé ({{ $colis->devise ?? 'F.CFA' }})</th>
+                                   <th style="border: 1px solid #ddd; padding: 5px; text-align: center;">Mode de paiement</th>
+                                   <th style="border: 1px solid #ddd; padding: 5px; text-align: center;">Référence</th>
+                               </tr>
+                           </thead>
+                           <tbody>
+                               @foreach($colis->paiements as $paiement)
+                               <tr>
+                                   <td style="border: 1px solid #ddd; padding: 5px; text-align: center;">{{ $paiement->created_at ? $paiement->created_at->format('d-m-Y') : '-' }}</td>
+                                   <td style="border: 1px solid #ddd; padding: 5px; text-align: center;">EN-{{ str_pad($paiement->id, 5, '0', STR_PAD_LEFT) }}</td>
+                                   <td style="border: 1px solid #ddd; padding: 5px; text-align: center;">{{ number_format($paiement->montant, 0, ',', ' ') }}</td>
+                                   <td style="border: 1px solid #ddd; padding: 5px; text-align: center;">{{ $paiement->methode_paiement }}</td>
+                                   <td style="border: 1px solid #ddd; padding: 5px; text-align: center;">{{ $paiement->notes ?? '' }}</td>
+                               </tr>
+                               @endforeach
+                           </tbody>
+                       </table>
+                   </div>
+                   @endif
                 </div>
                 
                 <div class="notes-section">
