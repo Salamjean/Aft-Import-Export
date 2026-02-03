@@ -1346,31 +1346,19 @@ class ColisController extends Controller
         // Déterminer le type de conteneur selon le mode de transit
         $typeConteneur = ($modeTransit === 'Aerien') ? 'Ballon' : 'Conteneur';
 
-        // Déterminer le suffixe selon le type de conteneur et l'agence
         if ($typeConteneur === 'Ballon') {
-            // Pour les ballons (Aérien)
-
-            // Si une agence est spécifiée, compter les conteneurs utilisés par cette agence
+            // NOUVELLE LOGIQUE : Trouver le prochain suffixe disponible
             if ($agenceExpeditionId) {
-                $nombreConteneursAgence = Colis::where('agence_expedition_id', $agenceExpeditionId)
-                    ->where('mode_transit', 'Aerien')
-                    ->join('conteneurs', 'colis.conteneur_id', '=', 'conteneurs.id')
-                    ->where('conteneurs.statut', 'fermer')
-                    ->distinct('conteneurs.id')
-                    ->count('conteneurs.id');
-
-                $suffixe = 'A' . ($nombreConteneursAgence + 1);
+                $suffixe = $this->trouverProchainSuffixeBallon($agenceExpeditionId);
             } else {
-                // Pas d'agence spécifiée, utiliser la logique globale
+                // Pour le mode sans agence spécifique
                 $nombreConteneursFermes = Conteneur::where('statut', 'fermer')
                     ->where('type_conteneur', 'Ballon')
-                    ->count() + 1;
-                $suffixe = 'A' . $nombreConteneursFermes;
+                    ->count();
+                $suffixe = 'A' . ($nombreConteneursFermes + 1);
             }
         } else {
-            // Pour les conteneurs (Maritime)
-
-            // Si une agence est spécifiée, compter les conteneurs utilisés par cette agence
+            // Logique pour les conteneurs maritimes (inchangée)
             if ($agenceExpeditionId) {
                 $nombreConteneursAgence = Colis::where('agence_expedition_id', $agenceExpeditionId)
                     ->where('mode_transit', 'Maritime')
@@ -1378,10 +1366,8 @@ class ColisController extends Controller
                     ->where('conteneurs.statut', 'fermer')
                     ->distinct('conteneurs.id')
                     ->count('conteneurs.id');
-
                 $suffixe = 'TC' . ($nombreConteneursAgence + 1);
             } else {
-                // Pas d'agence spécifiée, utiliser la logique globale
                 $nombreConteneursFermes = Conteneur::where('statut', 'fermer')
                     ->where('type_conteneur', 'Conteneur')
                     ->count() + 1;
@@ -1391,7 +1377,6 @@ class ColisController extends Controller
 
         // Trouver le prochain incrément disponible pour ce suffixe
         $prochainIncrement = $this->trouverProchainIncrementDisponible($suffixe, $modeTransit, $agenceExpeditionId);
-
         $incrementColis = str_pad($prochainIncrement, 4, '0', STR_PAD_LEFT);
 
         return $initiales . '-' . $incrementColis . '-' . $suffixe;
@@ -1516,6 +1501,45 @@ class ColisController extends Controller
                 'error' => 'Colis non trouvé'
             ], 404);
         }
+    }
+
+    // Dans votre ColisController, ajoutez cette méthode
+    private function trouverProchainSuffixeBallon($agenceExpeditionId)
+    {
+        // 1. Récupérer TOUTES les références de colis aériens pour cette agence
+        $references = Colis::where('mode_transit', 'Aerien')
+            ->where('agence_expedition_id', $agenceExpeditionId)
+            ->pluck('reference_colis')
+            ->toArray();
+
+        // 2. Extraire tous les suffixes (A1, A2, A3, etc.)
+        $suffixes = [];
+        foreach ($references as $reference) {
+            // Exemple: "JM-0001-A10" -> "A10"
+            if (preg_match('/-([A-Z]\d+)$/', $reference, $matches)) {
+                $suffix = $matches[1];
+                if (preg_match('/^A(\d+)$/', $suffix, $numMatches)) {
+                    $suffixes[] = (int) $numMatches[1];
+                }
+            }
+        }
+
+        // 3. Trouver le prochain numéro disponible
+        if (empty($suffixes)) {
+            return 'A1'; // Premier conteneur
+        }
+
+        $max = max($suffixes);
+
+        // Vérifier s'il y a des trous dans la séquence (ex: A1, A3 manque A2)
+        for ($i = 1; $i <= $max; $i++) {
+            if (!in_array($i, $suffixes)) {
+                return 'A' . $i;
+            }
+        }
+
+        // Sinon, retourner le suivant
+        return 'A' . ($max + 1);
     }
 
     public function enregistrerPaiement(Request $request, $id)
