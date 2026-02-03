@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Étiquettes Colis AFT</title>
@@ -9,11 +10,14 @@
             margin: 0;
             padding: 0;
         }
-        html, body {
+
+        html,
+        body {
             font-family: Arial, Helvetica, sans-serif;
             font-size: 9pt;
             line-height: 1.2;
         }
+
         @page {
             size: A6 landscape;
             margin: 0mm 5mm;
@@ -25,6 +29,7 @@
             justify-content: space-between;
             height: 100%;
         }
+
         .etiquette-header {
             background-color: #000;
             color: #fff;
@@ -45,6 +50,7 @@
             margin-bottom: 4mm;
             flex-shrink: 0;
         }
+
         .reference-table {
             margin-bottom: 0;
             min-height: 20mm;
@@ -55,13 +61,26 @@
             border: none;
             min-height: 20mm;
         }
+
         .info-header-table td {
             vertical-align: middle;
             border: none;
         }
-        .logo-cell { width: 33%; text-align: left; }
-        .address-cell { width: 34%; text-align: center; }
-        .qr-cell   { width: 33%; text-align: right; }
+
+        .logo-cell {
+            width: 33%;
+            text-align: left;
+        }
+
+        .address-cell {
+            width: 34%;
+            text-align: center;
+        }
+
+        .qr-cell {
+            width: 33%;
+            text-align: right;
+        }
 
         .custom-logo {
             max-width: 100%;
@@ -69,22 +88,26 @@
             display: block;
             margin-right: auto;
         }
+
         .address-details {
             font-size: 8pt;
             font-weight: bold;
             line-height: 1.3;
         }
+
         .address-details strong {
             font-size: 9pt;
             display: block;
             margin-bottom: 1mm;
         }
+
         .qr-code-img-header {
             max-width: 100%;
             max-height: 22mm;
             display: block;
             margin-left: auto;
         }
+
         .qr-placeholder {
             font-size: 8pt;
             color: #666;
@@ -96,6 +119,7 @@
         .details-table {
             border: 1.5pt solid #000;
         }
+
         .details-table th {
             background-color: #E0E0E0;
             font-weight: bold;
@@ -104,6 +128,7 @@
             text-align: center;
             padding: 1mm 1.5mm;
         }
+
         .details-table td {
             border: 0.5pt solid #000;
             vertical-align: top;
@@ -112,9 +137,20 @@
             line-height: 1.1;
             padding: 1mm 1.5mm;
         }
-        .date-cell { width: 22%; text-align: center; font-size: 11pt; }
-        .dest-cell { width: 48%; }
-        .exp-cell  { width: 30%; }
+
+        .date-cell {
+            width: 22%;
+            text-align: center;
+            font-size: 11pt;
+        }
+
+        .dest-cell {
+            width: 48%;
+        }
+
+        .exp-cell {
+            width: 30%;
+        }
 
         .sub-info {
             font-size: 10pt;
@@ -128,6 +164,7 @@
             display: table;
             table-layout: fixed;
         }
+
         .reference-table td {
             vertical-align: middle;
             font-size: 12pt;
@@ -135,8 +172,17 @@
             border: 0.5pt solid #000;
             padding: 1mm 2mm;
         }
-        .ref-cell { width: 70%; border-right: 1pt solid #000; text-align: left; }
-        .count-cell { width: 30%; text-align: center; }
+
+        .ref-cell {
+            width: 70%;
+            border-right: 1pt solid #000;
+            text-align: left;
+        }
+
+        .count-cell {
+            width: 30%;
+            text-align: center;
+        }
 
         .qr-code-img-ref {
             max-width: 12mm;
@@ -145,6 +191,7 @@
             vertical-align: middle;
             margin-right: 2mm;
         }
+
         .reference-number {
             font-size: 26pt;
             font-weight: bold;
@@ -152,18 +199,21 @@
             max-width: calc(100% - 14mm - 2mm);
             word-wrap: break-word;
         }
+
         .type-colis-info {
             font-size: 8pt;
             margin-top: 1mm;
             text-align: center;
             word-wrap: break-word;
         }
+
         .counter-text {
             font-size: 26pt;
             font-weight: bold;
             line-height: 1;
             margin-bottom: 1mm;
         }
+
         .destination-text {
             font-size: 9pt;
             font-weight: bold;
@@ -179,13 +229,14 @@
         }
     </style>
 </head>
+
 <body>
     @if($colis_collection->isNotEmpty())
         @foreach($colis_collection as $colisItem)
             <div class="etiquette-page {{ $loop->last ? 'last-page' : '' }}">
                 <div class="etiquette-content">
                     <div class="etiquette-header">
-                        A F T   I M P O R T   E X P O R T
+                        A F T I M P O R T E X P O R T
                     </div>
 
                     {{-- Section Logo / Adresse / QR --}}
@@ -235,7 +286,7 @@
                                     <span style="font-size:8pt;">{{ $colisItem->created_at->format('H:i') }}</span>
                                 </td>
                                 <td class="dest-cell" style="text-align: center">
-                                    <span >{{ $colisItem->name_destinataire }} {{ $colisItem->prenom_destinataire }}</span><br>
+                                    <span>{{ $colisItem->name_destinataire }} {{ $colisItem->prenom_destinataire }}</span><br>
                                     <span>{{ $colisItem->contact_destinataire }}</span><br>
                                     <span class="sub-info">{{ $colisItem->agence_destination }}</span>
                                 </td>
@@ -252,8 +303,9 @@
                         <tr>
                             <td class="ref-cell">
                                 <div style="text-align:center;margin-bottom:1mm;">
-                                     @if(!empty($colisItem->qr_code_absolute_path) && file_exists($colisItem->qr_code_absolute_path))
-                                        <img src="{{ $colisItem->qr_code_absolute_path }}" class="qr-code-img-header" alt="QR Code" style="width: 80px; margin-top:30px">
+                                    @if(!empty($colisItem->qr_code_absolute_path) && file_exists($colisItem->qr_code_absolute_path))
+                                        <img src="{{ $colisItem->qr_code_absolute_path }}" class="qr-code-img-header" alt="QR Code"
+                                            style="width: 80px; margin-top:30px">
                                     @else
                                         <div class="qr-placeholder">
                                             QR Code<br>Non trouvé<br>
@@ -263,10 +315,11 @@
                                     <span class="reference-number">{{ $colisItem->reference_colis }}</span>
                                 </div>
                                 <div class="type-colis-info">Colis {{ $colisItem->type_colis ?? 'Standard' }}</div>
-                                
+                                <div class="type-colis-info">{{ $colisItem->produit ?? 'Standard' }}</div>
                             </td>
                             <td class="count-cell">
-                                <span class="counter-text">{{ $colisItem->numero_etiquette }} / {{ $colisItem->quantite_totale }}</span>
+                                <span class="counter-text">{{ $colisItem->numero_etiquette }} /
+                                    {{ $colisItem->quantite_totale }}</span>
                                 <span class="destination-text">{{ $colisItem->agence_destination }}</span>
                             </td>
                         </tr>
@@ -282,4 +335,5 @@
         </div>
     @endif
 </body>
+
 </html>

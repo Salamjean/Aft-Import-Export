@@ -11,29 +11,29 @@ use PDF;
 class AgentEtiquetteController extends Controller
 {
     public function genererEtiquettes($id)
-        {
+    {
         try {
             $colis = Colis::with(['agenceExpedition', 'agenceDestination'])->findOrFail($id);
-            
+
             // Décoder les données des colis
             $colisDetails = json_decode($colis->colis, true);
             $quantiteTotale = collect($colisDetails)->sum('quantite');
-            
+
             // Récupérer les QR codes
             $qrCodesData = json_decode($colis->qr_codes, true);
             $qrCodes = $qrCodesData['qr_individuels'] ?? [];
 
             // Créer une collection d'étiquettes (une par unité)
             $etiquettesCollection = collect();
-            
+
             // Parcourir chaque unité pour assigner le bon type de colis
             $uniteCounter = 0;
             foreach ($colisDetails as $item) {
                 for ($i = 1; $i <= $item['quantite']; $i++) {
                     $uniteCounter++;
-                    
+
                     $qrCode = $qrCodes[$uniteCounter - 1] ?? null;
-                    
+
                     $qrCodeAbsolutePath = null;
                     if ($qrCode && !empty($qrCode['qr_code_path'])) {
                         $qrCodeAbsolutePath = storage_path('app/public/' . $qrCode['qr_code_path']);
@@ -42,7 +42,7 @@ class AgentEtiquetteController extends Controller
                     // ✅ CORRECTION : Ajouter une valeur par défaut pour type_colis
                     $typeColis = $item['type_colis'] ?? 'Standard'; // Valeur par défaut
 
-                    $etiquettesCollection->push((object)[
+                    $etiquettesCollection->push((object) [
                         'reference_colis' => $colis->reference_colis,
                         'name_destinataire' => $colis->name_destinataire,
                         'prenom_destinataire' => $colis->prenom_destinataire,
@@ -52,6 +52,7 @@ class AgentEtiquetteController extends Controller
                         'prenom_expediteur' => $colis->prenom_expediteur,
                         'contact_expediteur' => $colis->contact_expediteur,
                         'created_at' => $colis->created_at,
+                        'produit' => $item['produit'] ?? '',
                         'qr_code_absolute_path' => $qrCodeAbsolutePath,
                         'qr_code_path' => $qrCode['qr_code_path'] ?? null,
                         'quantite_totale' => $quantiteTotale,
@@ -69,13 +70,13 @@ class AgentEtiquetteController extends Controller
             // Pour le PDF (download et print)
             if (in_array($action, ['download', 'print'])) {
                 $pdf = PDF::loadView('admin.colis.documents.etiquettes', $data)
-                        ->setPaper('a6', 'landscape')
-                        ->setOption('isRemoteEnabled', true);
+                    ->setPaper('a6', 'landscape')
+                    ->setOption('isRemoteEnabled', true);
 
                 if ($action === 'download') {
                     return $pdf->download('etiquettes-' . $colis->reference_colis . '.pdf');
                 }
-                
+
                 return $pdf->stream('etiquettes-' . $colis->reference_colis . '.pdf');
             }
 
@@ -92,7 +93,7 @@ class AgentEtiquetteController extends Controller
         }
     }
 
-/**
+    /**
      * Générer la facture
      */
     public function generateFacture($id)
@@ -100,7 +101,7 @@ class AgentEtiquetteController extends Controller
         try {
             // Récupérer le colis avec toutes les relations nécessaires
             $colis = Colis::with(['conteneur', 'agenceExpedition', 'agenceDestination', 'service'])
-                          ->findOrFail($id);
+                ->findOrFail($id);
 
             // Décoder les données JSON des colis
             $colisDetails = json_decode($colis->colis, true);
@@ -112,6 +113,14 @@ class AgentEtiquetteController extends Controller
             $devise = $colis->devise;
             $resteAPayer = $colis->reste_a_payer ?? ($montantTotal - $montantPaye);
 
+            // Gérer la date de première impression
+            if (!$colis->first_invoice_printed_at) {
+                $colis->first_invoice_printed_at = now();
+                $colis->save();
+            }
+
+            $dateFacture = $colis->first_invoice_printed_at;
+
             $data = [
                 'colis' => $colis,
                 'colisDetails' => $colisDetails,
@@ -120,8 +129,8 @@ class AgentEtiquetteController extends Controller
                 'montantPaye' => $montantPaye,
                 'resteAPayer' => $resteAPayer,
                 'devise' => $devise,
-                'dateFacture' => now()->format('d/m/Y'),
-                'numeroFacture' => 'FACT-' . $colis->reference_colis . '-' . now()->format('Ymd'),
+                'dateFacture' => $dateFacture->format('d/m/Y'),
+                'numeroFacture' => 'FACT-' . $colis->reference_colis . '-' . $dateFacture->format('Ymd'),
                 'entreprise' => [
                     'nom' => 'AFT IMPORT EXPORT',
                     'adresse' => '7 AVENUE LOUIS BLERIOT LA COURNEUVE 93120 France',
@@ -158,7 +167,7 @@ class AgentEtiquetteController extends Controller
         try {
             // Récupérer le colis avec toutes les relations nécessaires
             $colis = Colis::with(['conteneur', 'agenceExpedition', 'agenceDestination', 'service'])
-                          ->findOrFail($id);
+                ->findOrFail($id);
 
             // Décoder les données JSON des colis
             $colisDetails = json_decode($colis->colis, true);
@@ -195,73 +204,73 @@ class AgentEtiquetteController extends Controller
         }
     }
 
-public function exportPDF(Request $request)
-{
-    try {
-        // Utiliser la même logique de requête que dans index()
-        $query = Colis::query();
-        
-        // Appliquer les filtres de recherche
-        if ($request->has('search') && $request->search != '') {
-            $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('reference_colis', 'LIKE', '%'.$search.'%')
-                  ->orWhere('name_expediteur', 'LIKE', '%'.$search.'%')
-                  ->orWhere('name_destinataire', 'LIKE', '%'.$search.'%')
-                  ->orWhere('contact_expediteur', 'LIKE', '%'.$search.'%')
-                  ->orWhere('contact_destinataire', 'LIKE', '%'.$search.'%');
-            });
+    public function exportPDF(Request $request)
+    {
+        try {
+            // Utiliser la même logique de requête que dans index()
+            $query = Colis::query();
+
+            // Appliquer les filtres de recherche
+            if ($request->has('search') && $request->search != '') {
+                $search = $request->search;
+                $query->where(function ($q) use ($search) {
+                    $q->where('reference_colis', 'LIKE', '%' . $search . '%')
+                        ->orWhere('name_expediteur', 'LIKE', '%' . $search . '%')
+                        ->orWhere('name_destinataire', 'LIKE', '%' . $search . '%')
+                        ->orWhere('contact_expediteur', 'LIKE', '%' . $search . '%')
+                        ->orWhere('contact_destinataire', 'LIKE', '%' . $search . '%');
+                });
+            }
+
+            // Filtre par statut
+            if ($request->has('status') && $request->status != '') {
+                $query->where('statut', $request->status);
+            }
+
+            // Filtre par mode de transit
+            if ($request->has('mode_transit') && $request->mode_transit != '') {
+                $query->where('mode_transit', $request->mode_transit);
+            }
+
+            // Filtre par statut de paiement
+            if ($request->has('paiement') && $request->paiement != '') {
+                $query->where('statut_paiement', $request->paiement);
+            }
+
+            $colis = $query->orderBy('created_at', 'desc')->get();
+
+            // Préparer les données pour la vue PDF
+            $data = [
+                'colis' => $colis,
+                'filters' => [
+                    'search' => $request->search,
+                    'status' => $request->status,
+                    'mode_transit' => $request->mode_transit,
+                    'paiement' => $request->paiement,
+                ],
+                'dateExport' => now()->format('d/m/Y H:i'),
+                'totalColis' => $colis->count(),
+                'totalMontant' => $colis->sum('montant_total'),
+                'entreprise' => [
+                    'nom' => 'AFT IMPORT EXPORT',
+                    'adresse' => '7 AVENUE LOUIS BLERIOT LA COURNEUVE 93120 France',
+                    'telephone' => '+33171894551'
+                ]
+            ];
+
+            // Générer le PDF
+            $pdf = PDF::loadView('agent.colis.documents.export-pdf', $data)
+                ->setPaper('a4', 'landscape')
+                ->setOption('isRemoteEnabled', true);
+
+            $filename = 'liste-colis-' . now()->format('Y-m-d-H-i') . '.pdf';
+
+            return $pdf->download($filename);
+
+        } catch (\Exception $e) {
+            Log::error('Erreur export PDF colis: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Erreur lors de la génération du PDF: ' . $e->getMessage());
         }
-        
-        // Filtre par statut
-        if ($request->has('status') && $request->status != '') {
-            $query->where('statut', $request->status);
-        }
-        
-        // Filtre par mode de transit
-        if ($request->has('mode_transit') && $request->mode_transit != '') {
-            $query->where('mode_transit', $request->mode_transit);
-        }
-        
-        // Filtre par statut de paiement
-        if ($request->has('paiement') && $request->paiement != '') {
-            $query->where('statut_paiement', $request->paiement);
-        }
-        
-        $colis = $query->orderBy('created_at', 'desc')->get();
-        
-        // Préparer les données pour la vue PDF
-        $data = [
-            'colis' => $colis,
-            'filters' => [
-                'search' => $request->search,
-                'status' => $request->status,
-                'mode_transit' => $request->mode_transit,
-                'paiement' => $request->paiement,
-            ],
-            'dateExport' => now()->format('d/m/Y H:i'),
-            'totalColis' => $colis->count(),
-            'totalMontant' => $colis->sum('montant_total'),
-            'entreprise' => [
-                'nom' => 'AFT IMPORT EXPORT',
-                'adresse' => '7 AVENUE LOUIS BLERIOT LA COURNEUVE 93120 France',
-                'telephone' => '+33171894551'
-            ]
-        ];
-        
-        // Générer le PDF
-        $pdf = PDF::loadView('agent.colis.documents.export-pdf', $data)
-                 ->setPaper('a4', 'landscape')
-                 ->setOption('isRemoteEnabled', true);
-        
-        $filename = 'liste-colis-' . now()->format('Y-m-d-H-i') . '.pdf';
-        
-        return $pdf->download($filename);
-        
-    } catch (\Exception $e) {
-        Log::error('Erreur export PDF colis: ' . $e->getMessage());
-        return redirect()->back()->with('error', 'Erreur lors de la génération du PDF: ' . $e->getMessage());
     }
-}
-    
+
 }

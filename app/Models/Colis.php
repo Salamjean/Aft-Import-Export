@@ -68,6 +68,7 @@ class Colis extends Model
         'agent_encaisseur_type',
         'agent_encaisseur_name',
         'date_paiement',
+        'first_invoice_printed_at',
     ];
 
     protected $casts = [
@@ -83,6 +84,7 @@ class Colis extends Model
         'montant_livraison' => 'decimal:2',
         'montant_paye' => 'decimal:2',
         'reste_a_payer' => 'decimal:2',
+        'first_invoice_printed_at' => 'datetime',
     ];
 
     // Relations
