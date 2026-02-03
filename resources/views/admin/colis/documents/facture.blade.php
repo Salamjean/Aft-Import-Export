@@ -456,7 +456,7 @@
                            <tr>
                                <td>NET AU JOUR</td>
                                <td>{{ strtoupper(str_replace('_', ' ', $colis->methode_paiement ?? 'NON DÉFINI')) }}</td>
-                               <td>{{ date('d-m-Y') }}</td>
+                               <td>{{ $dateFacture }}</td>
                            </tr>
                        </tbody>
                    </table>
