@@ -130,7 +130,7 @@ class AgentEtiquetteController extends Controller
                 'resteAPayer' => $resteAPayer,
                 'devise' => $devise,
                 'dateFacture' => $dateFacture,
-                'numeroFacture' => 'FACT-' . $colis->reference_colis . '-' . $dateFacture->format('Ymd'),
+                'numeroFacture' => 'FACT-' . $colis->reference_colis . '-' . $dateFacture,
                 'entreprise' => [
                     'nom' => 'AFT IMPORT EXPORT',
                     'adresse' => '7 AVENUE LOUIS BLERIOT LA COURNEUVE 93120 France',
