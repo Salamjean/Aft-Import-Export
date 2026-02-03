@@ -1400,45 +1400,45 @@ class AgentColisController extends Controller
     }
 
     private function genererReference($initiales, $modeTransit, $agenceExpeditionId = null)
-{
-    // Déterminer le type de conteneur selon le mode de transit
-    $typeConteneur = ($modeTransit === 'Aerien') ? 'Ballon' : 'Conteneur';
-    
-    if ($typeConteneur === 'Ballon') {
-        // NOUVELLE LOGIQUE : Trouver le prochain suffixe disponible
-        if ($agenceExpeditionId) {
-            $suffixe = $this->trouverProchainSuffixeBallon($agenceExpeditionId);
+    {
+        // Déterminer le type de conteneur selon le mode de transit
+        $typeConteneur = ($modeTransit === 'Aerien') ? 'Ballon' : 'Conteneur';
+
+        if ($typeConteneur === 'Ballon') {
+            // NOUVELLE LOGIQUE : Trouver le prochain suffixe disponible
+            if ($agenceExpeditionId) {
+                $suffixe = $this->trouverProchainSuffixeBallon($agenceExpeditionId);
+            } else {
+                // Pour le mode sans agence spécifique
+                $nombreConteneursFermes = Conteneur::where('statut', 'fermer')
+                    ->where('type_conteneur', 'Ballon')
+                    ->count();
+                $suffixe = 'A' . ($nombreConteneursFermes + 1);
+            }
         } else {
-            // Pour le mode sans agence spécifique
-            $nombreConteneursFermes = Conteneur::where('statut', 'fermer')
-                ->where('type_conteneur', 'Ballon')
-                ->count();
-            $suffixe = 'A' . ($nombreConteneursFermes + 1);
+            // Logique pour les conteneurs maritimes (inchangée)
+            if ($agenceExpeditionId) {
+                $nombreConteneursAgence = Colis::where('agence_expedition_id', $agenceExpeditionId)
+                    ->where('mode_transit', 'Maritime')
+                    ->join('conteneurs', 'colis.conteneur_id', '=', 'conteneurs.id')
+                    ->where('conteneurs.statut', 'fermer')
+                    ->distinct('conteneurs.id')
+                    ->count('conteneurs.id');
+                $suffixe = 'TC' . ($nombreConteneursAgence + 1);
+            } else {
+                $nombreConteneursFermes = Conteneur::where('statut', 'fermer')
+                    ->where('type_conteneur', 'Conteneur')
+                    ->count() + 1;
+                $suffixe = 'TC' . $nombreConteneursFermes;
+            }
         }
-    } else {
-        // Logique pour les conteneurs maritimes (inchangée)
-        if ($agenceExpeditionId) {
-            $nombreConteneursAgence = Colis::where('agence_expedition_id', $agenceExpeditionId)
-                ->where('mode_transit', 'Maritime')
-                ->join('conteneurs', 'colis.conteneur_id', '=', 'conteneurs.id')
-                ->where('conteneurs.statut', 'fermer')
-                ->distinct('conteneurs.id')
-                ->count('conteneurs.id');
-            $suffixe = 'TC' . ($nombreConteneursAgence + 1);
-        } else {
-            $nombreConteneursFermes = Conteneur::where('statut', 'fermer')
-                ->where('type_conteneur', 'Conteneur')
-                ->count() + 1;
-            $suffixe = 'TC' . $nombreConteneursFermes;
-        }
+
+        // Trouver le prochain incrément disponible pour ce suffixe
+        $prochainIncrement = $this->trouverProchainIncrementDisponible($suffixe, $modeTransit, $agenceExpeditionId);
+        $incrementColis = str_pad($prochainIncrement, 4, '0', STR_PAD_LEFT);
+
+        return $initiales . '-' . $incrementColis . '-' . $suffixe;
     }
-    
-    // Trouver le prochain incrément disponible pour ce suffixe
-    $prochainIncrement = $this->trouverProchainIncrementDisponible($suffixe, $modeTransit, $agenceExpeditionId);
-    $incrementColis = str_pad($prochainIncrement, 4, '0', STR_PAD_LEFT);
-    
-    return $initiales . '-' . $incrementColis . '-' . $suffixe;
-}
 
     // Méthode pour afficher un QR code
     public function showQRCode($colisId, $numero)
@@ -1464,43 +1464,21 @@ class AgentColisController extends Controller
     }
 
     // Dans votre ColisController, ajoutez cette méthode
-private function trouverProchainSuffixeBallon($agenceExpeditionId)
-{
-    // 1. Récupérer TOUTES les références de colis aériens pour cette agence
-    $references = Colis::where('mode_transit', 'Aerien')
-        ->where('agence_expedition_id', $agenceExpeditionId)
-        ->pluck('reference_colis')
-        ->toArray();
-    
-    // 2. Extraire tous les suffixes (A1, A2, A3, etc.)
-    $suffixes = [];
-    foreach ($references as $reference) {
-        // Exemple: "JM-0001-A10" -> "A10"
-        if (preg_match('/-([A-Z]\d+)$/', $reference, $matches)) {
-            $suffix = $matches[1];
-            if (preg_match('/^A(\d+)$/', $suffix, $numMatches)) {
-                $suffixes[] = (int)$numMatches[1];
-            }
-        }
+    private function trouverProchainSuffixeBallon($agenceExpeditionId)
+    {
+        // Compter le nombre de conteneurs "Ballon" FERMÉS associés à cette agence via les colis
+        $nombreConteneursFermes = Colis::where('agence_expedition_id', $agenceExpeditionId)
+            ->where('mode_transit', 'Aerien')
+            ->join('conteneurs', 'colis.conteneur_id', '=', 'conteneurs.id')
+            ->where('conteneurs.statut', 'fermer')
+            ->distinct('conteneurs.id')
+            ->count('conteneurs.id');
+
+        // Le suffixe est A + (nombre de fermés + 1)
+        // Ex: 0 fermé -> A1
+        // Ex: 1 fermé -> A2
+        return 'A' . ($nombreConteneursFermes + 1);
     }
-    
-    // 3. Trouver le prochain numéro disponible
-    if (empty($suffixes)) {
-        return 'A1'; // Premier conteneur
-    }
-    
-    $max = max($suffixes);
-    
-    // Vérifier s'il y a des trous dans la séquence (ex: A1, A3 manque A2)
-    for ($i = 1; $i <= $max; $i++) {
-        if (!in_array($i, $suffixes)) {
-            return 'A' . $i;
-        }
-    }
-    
-    // Sinon, retourner le suivant
-    return 'A' . ($max + 1);
-}
 
     public function show($id)
     {
@@ -1759,6 +1737,56 @@ private function trouverProchainSuffixeBallon($agenceExpeditionId)
                 'message' => 'Erreur lors de la suppression du colis'
             ], 500);
         }
+    }
+    /**
+     * Rechercher un client (expéditeur ou destinataire) dans l'historique des colis
+     */
+    public function searchClient(Request $request)
+    {
+        $search = $request->query('q');
+        $type = $request->query('type', 'expediteur'); // 'expediteur' ou 'destinataire'
+
+        if (!$search || strlen($search) < 2) {
+            return response()->json([]);
+        }
+
+        $query = Colis::query();
+
+        // Sélectionner les champs pertinents selon le type
+        if ($type === 'expediteur') {
+            $query->selectRaw('
+                DISTINCT
+                name_expediteur as name,
+                prenom_expediteur as prenom,
+                email_expediteur as email,
+                contact_expediteur as contact,
+                adresse_expediteur as adresse
+            ')
+                ->where(function ($q) use ($search) {
+                    $q->where('name_expediteur', 'LIKE', "%{$search}%")
+                        ->orWhere('prenom_expediteur', 'LIKE', "%{$search}%")
+                        ->orWhere('contact_expediteur', 'LIKE', "%{$search}%");
+                });
+        } else {
+            $query->selectRaw('
+                DISTINCT
+                name_destinataire as name,
+                prenom_destinataire as prenom,
+                email_destinataire as email,
+                contact_destinataire as contact,
+                adresse_destinataire as adresse,
+                indicatif
+            ')
+                ->where(function ($q) use ($search) {
+                    $q->where('name_destinataire', 'LIKE', "%{$search}%")
+                        ->orWhere('prenom_destinataire', 'LIKE', "%{$search}%")
+                        ->orWhere('contact_destinataire', 'LIKE', "%{$search}%");
+                });
+        }
+
+        $clients = $query->limit(10)->get();
+
+        return response()->json($clients);
     }
 }
 

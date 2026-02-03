@@ -105,8 +105,7 @@
                             <!-- Champs cachés -->
                             <input type="hidden" name="conteneur_id" value="{{ $conteneur->id ?? ' ' }}"
                                 id="conteneur_id_input">
-                            <input type="hidden" name="reference_colis" value="{{ $reference }}"
-                                id="reference_colis_input">
+                            <input type="hidden" name="reference_colis" value="{{ $reference }}" id="reference_colis_input">
 
                             <!-- Étape 1: Transport -->
                             <div class="step-content" id="step-1">
@@ -148,8 +147,7 @@
                                                     style="background-color: #f8f9fa;">
                                             </div>
                                             <small class="text-muted mt-1">Agence en Côte d'Ivoire</small>
-                                            <input type="hidden" id="agence_destination_id"
-                                                name="agence_destination_id">
+                                            <input type="hidden" id="agence_destination_id" name="agence_destination_id">
                                         </div>
                                     </div>
 
@@ -167,8 +165,7 @@
                                                     name="agence_expedition_id" required>
                                                     <option value="">Sélectionnez une agence</option>
                                                     @foreach ($agencesExpedition as $agence)
-                                                        <option value="{{ $agence->id }}"
-                                                            data-devise="{{ $agence->devise }}">
+                                                        <option value="{{ $agence->id }}" data-devise="{{ $agence->devise }}">
                                                             {{ $agence->name }} ({{ $agence->pays }} -
                                                             {{ $agence->devise }})
                                                         </option>
@@ -196,16 +193,15 @@
 
                                 <div class="d-flex justify-content-between mt-5 pt-3">
                                     <div></div>
-                                    <button type="button" class="btn next-step" data-next="2"
-                                        style="
-                                            background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
-                                            border: none;
-                                            border-radius: 25px;
-                                            padding: 12px 30px;
-                                            font-weight: 600;
-                                            color: white;
-                                            transition: all 0.3s ease;
-                                        ">
+                                    <button type="button" class="btn next-step" data-next="2" style="
+                                                background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                border: none;
+                                                border-radius: 25px;
+                                                padding: 12px 30px;
+                                                font-weight: 600;
+                                                color: white;
+                                                transition: all 0.3s ease;
+                                            ">
                                         Suivant <i class="fas fa-arrow-right ms-2"></i>
                                     </button>
                                 </div>
@@ -246,8 +242,7 @@
                                                     <span class="input-group-text bg-light border-end-0">
                                                         <i class="fas fa-search" style="color: #fea219;"></i>
                                                     </span>
-                                                    <input type="text" class="border-start-0 modern-input"
-                                                        id="userSearch"
+                                                    <input type="text" class="border-start-0 modern-input" id="userSearch"
                                                         placeholder="Tapez le nom, email ou contact d'un utilisateur...">
                                                 </div>
                                                 <div class="search-results dropdown-menu w-100" id="userSearchResults"
@@ -299,34 +294,33 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="adresse_expediteur" class="form-label required">Adresse</label>
-                                            <textarea class="modern-input" id="adresse_expediteur" name="adresse_expediteur" rows="3" required></textarea>
+                                            <textarea class="modern-input" id="adresse_expediteur" name="adresse_expediteur"
+                                                rows="3" required></textarea>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="d-flex justify-content-between mt-5 pt-3">
-                                    <button type="button" class="btn prev-step" data-prev="1"
-                                        style="
-                                            background: white;
-                                            border: 2px solid #0e914b;
-                                            border-radius: 25px;
-                                            padding: 12px 30px;
-                                            font-weight: 600;
-                                            color: #0e914b;
-                                            transition: all 0.3s ease;
-                                        ">
+                                    <button type="button" class="btn prev-step" data-prev="1" style="
+                                                background: white;
+                                                border: 2px solid #0e914b;
+                                                border-radius: 25px;
+                                                padding: 12px 30px;
+                                                font-weight: 600;
+                                                color: #0e914b;
+                                                transition: all 0.3s ease;
+                                            ">
                                         <i class="fas fa-arrow-left me-2"></i>Précédent
                                     </button>
-                                    <button type="button" class="btn next-step" data-next="3"
-                                        style="
-                                            background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
-                                            border: none;
-                                            border-radius: 25px;
-                                            padding: 12px 30px;
-                                            font-weight: 600;
-                                            color: white;
-                                            transition: all 0.3s ease;
-                                        ">
+                                    <button type="button" class="btn next-step" data-next="3" style="
+                                                background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                border: none;
+                                                border-radius: 25px;
+                                                padding: 12px 30px;
+                                                font-weight: 600;
+                                                color: white;
+                                                transition: all 0.3s ease;
+                                            ">
                                         Suivant <i class="fas fa-arrow-right ms-2"></i>
                                     </button>
                                 </div>
@@ -406,34 +400,33 @@
                                         <div class="form-group">
                                             <label for="adresse_destinataire" class="form-label required">Adresse en Côte
                                                 d'Ivoire</label>
-                                            <textarea class="modern-input" id="adresse_destinataire" name="adresse_destinataire" rows="3" required></textarea>
+                                            <textarea class="modern-input" id="adresse_destinataire"
+                                                name="adresse_destinataire" rows="3" required></textarea>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="d-flex justify-content-between mt-5 pt-3">
-                                    <button type="button" class="btn prev-step" data-prev="2"
-                                        style="
-                                            background: white;
-                                            border: 2px solid #0e914b;
-                                            border-radius: 25px;
-                                            padding: 12px 30px;
-                                            font-weight: 600;
-                                            color: #0e914b;
-                                            transition: all 0.3s ease;
-                                        ">
+                                    <button type="button" class="btn prev-step" data-prev="2" style="
+                                                background: white;
+                                                border: 2px solid #0e914b;
+                                                border-radius: 25px;
+                                                padding: 12px 30px;
+                                                font-weight: 600;
+                                                color: #0e914b;
+                                                transition: all 0.3s ease;
+                                            ">
                                         <i class="fas fa-arrow-left me-2"></i>Précédent
                                     </button>
-                                    <button type="button" class="btn next-step" data-next="4"
-                                        style="
-                                            background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
-                                            border: none;
-                                            border-radius: 25px;
-                                            padding: 12px 30px;
-                                            font-weight: 600;
-                                            color: white;
-                                            transition: all 0.3s ease;
-                                        ">
+                                    <button type="button" class="btn next-step" data-next="4" style="
+                                                background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                border: none;
+                                                border-radius: 25px;
+                                                padding: 12px 30px;
+                                                font-weight: 600;
+                                                color: white;
+                                                transition: all 0.3s ease;
+                                            ">
                                         Suivant <i class="fas fa-arrow-right ms-2"></i>
                                     </button>
                                 </div>
@@ -501,8 +494,7 @@
                                                 <div class="col-md-3">
                                                     <label class="form-label fw-bold required">Prix Unitaire</label>
                                                     <input type="number" class="form-control prix-unitaire-input"
-                                                        name="colis[0][prix_unitaire]" step="0.01" min="0"
-                                                        required>
+                                                        name="colis[0][prix_unitaire]" step="0.01" min="0" required>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label class="form-label fw-bold required">Type de Colis</label>
@@ -540,42 +532,16 @@
 
                                             <div class="mt-3">
                                                 <label class="form-label fw-bold">Description</label>
-                                                <textarea class="form-control" name="colis[0][description]" rows="2" placeholder="Description du produit..."></textarea>
+                                                <textarea class="form-control" name="colis[0][description]" rows="2"
+                                                    placeholder="Description du produit..."></textarea>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center mt-4 pt-3">
-                                    <button type="button" class="btn" id="add-colis"
-                                        style="
-                                            background: linear-gradient(135deg, #fea219 0%, #e69100 100%);
-                                            border: none;
-                                            border-radius: 25px;
-                                            padding: 10px 25px;
-                                            font-weight: 600;
-                                            color: white;
-                                            transition: all 0.3s ease;
-                                        ">
-                                        <i class="fas fa-plus me-2"></i>Ajouter un autre colis
-                                    </button>
-
-                                    <div>
-                                        <button type="button" class="btn prev-step me-2" data-prev="3"
-                                            style="
-                                                background: white;
-                                                border: 2px solid #0e914b;
-                                                border-radius: 25px;
-                                                padding: 10px 25px;
-                                                font-weight: 600;
-                                                color: #0e914b;
-                                                transition: all 0.3s ease;
-                                            ">
-                                            <i class="fas fa-arrow-left me-2"></i>Précédent
-                                        </button>
-                                        <button type="button" class="btn next-step" data-next="5"
-                                            style="
-                                                background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                    <button type="button" class="btn" id="add-colis" style="
+                                                background: linear-gradient(135deg, #fea219 0%, #e69100 100%);
                                                 border: none;
                                                 border-radius: 25px;
                                                 padding: 10px 25px;
@@ -583,6 +549,30 @@
                                                 color: white;
                                                 transition: all 0.3s ease;
                                             ">
+                                        <i class="fas fa-plus me-2"></i>Ajouter un autre colis
+                                    </button>
+
+                                    <div>
+                                        <button type="button" class="btn prev-step me-2" data-prev="3" style="
+                                                    background: white;
+                                                    border: 2px solid #0e914b;
+                                                    border-radius: 25px;
+                                                    padding: 10px 25px;
+                                                    font-weight: 600;
+                                                    color: #0e914b;
+                                                    transition: all 0.3s ease;
+                                                ">
+                                            <i class="fas fa-arrow-left me-2"></i>Précédent
+                                        </button>
+                                        <button type="button" class="btn next-step" data-next="5" style="
+                                                    background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                    border: none;
+                                                    border-radius: 25px;
+                                                    padding: 10px 25px;
+                                                    font-weight: 600;
+                                                    color: white;
+                                                    transition: all 0.3s ease;
+                                                ">
                                             Suivant <i class="fas fa-arrow-right ms-2"></i>
                                         </button>
                                     </div>
@@ -619,9 +609,8 @@
 
                                         <div class="form-group mt-3">
                                             <label for="prix_service" class="form-label">Prix du Service</label>
-                                            <input type="number" class=" modern-input" id="prix_service"
-                                                name="prix_service" readonly step="0.01" min="0"
-                                                placeholder="Sélectionnez un service">
+                                            <input type="number" class=" modern-input" id="prix_service" name="prix_service"
+                                                readonly step="0.01" min="0" placeholder="Sélectionnez un service">
                                         </div>
 
                                         <div class="mt-4 p-3 bg-light rounded">
@@ -730,7 +719,8 @@
 
                                         <div class="form-group">
                                             <label for="notes_paiement" class="form-label">Notes de Paiement</label>
-                                            <textarea class="modern-input" id="notes_paiement" name="notes_paiement" rows="3"
+                                            <textarea class="modern-input" id="notes_paiement" name="notes_paiement"
+                                                rows="3"
                                                 placeholder="Notes supplémentaires concernant le paiement..."></textarea>
                                         </div>
                                     </div>
@@ -976,28 +966,26 @@
                                 </div>
 
                                 <div class="d-flex justify-content-between mt-5 pt-3">
-                                    <button type="button" class="btn prev-step" data-prev="6"
-                                        style="
-                                            background: white;
-                                            border: 2px solid #0e914b;
-                                            border-radius: 25px;
-                                            padding: 12px 30px;
-                                            font-weight: 600;
-                                            color: #0e914b;
-                                            transition: all 0.3s ease;
-                                        ">
+                                    <button type="button" class="btn prev-step" data-prev="6" style="
+                                                background: white;
+                                                border: 2px solid #0e914b;
+                                                border-radius: 25px;
+                                                padding: 12px 30px;
+                                                font-weight: 600;
+                                                color: #0e914b;
+                                                transition: all 0.3s ease;
+                                            ">
                                         <i class="fas fa-arrow-left me-2"></i>Précédent
                                     </button>
-                                    <button type="submit" class="btn btn-success" id="submit-btn"
-                                        style="
-                                            background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
-                                            border: none;
-                                            border-radius: 25px;
-                                            padding: 12px 30px;
-                                            font-weight: 600;
-                                            color: white;
-                                            transition: all 0.3s ease;
-                                        ">
+                                    <button type="submit" class="btn btn-success" id="submit-btn" style="
+                                                background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                border: none;
+                                                border-radius: 25px;
+                                                padding: 12px 30px;
+                                                font-weight: 600;
+                                                color: white;
+                                                transition: all 0.3s ease;
+                                            ">
                                         <i class="fas fa-save me-2"></i>Enregistrer le Colis
                                     </button>
                                 </div>
@@ -1029,8 +1017,7 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label required">Prix Unitaire</label>
-                            <input type="number" class="form-control" name="prix_unitaire" step="0.01"
-                                min="0" required>
+                            <input type="number" class="form-control" name="prix_unitaire" step="0.01" min="0" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label required">Agence de Destination</label>
@@ -1066,8 +1053,7 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label required">Prix Unitaire</label>
-                            <input type="number" class="form-control" name="prix_unitaire" step="0.01"
-                                min="0" required>
+                            <input type="number" class="form-control" name="prix_unitaire" step="0.01" min="0" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label required">Agence de Destination</label>
@@ -1078,7 +1064,8 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label">Description</label>
-                            <textarea class="form-control" name="description" rows="3" placeholder="Description du service..."></textarea>
+                            <textarea class="form-control" name="description" rows="3"
+                                placeholder="Description du service..."></textarea>
                         </div>
                         <div class="form-group">
                             <label class="form-label required">Type de Service</label>
@@ -1103,7 +1090,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             let currentStep = 1;
             let colisCount = 1;
             let searchTimeout;
@@ -1128,76 +1115,76 @@
 
             const paiementTemplates = {
                 espece: `
-        <div class="paiement-method-fields">
-            <div class="alert alert-info">
-                <i class="fas fa-info-circle me-2"></i>
-                Le montant payé sera enregistré dans le champ "Montant Payé" ci-dessous.
+            <div class="paiement-method-fields">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Le montant payé sera enregistré dans le champ "Montant Payé" ci-dessous.
+                </div>
             </div>
-        </div>
-    `,
+        `,
 
                 virement_bancaire: `
-        <div class="paiement-method-fields">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="form-label required">Nom de la Banque</label>
-                        <input type="text" class="modern-input" name="nom_banque" required>
+            <div class="paiement-method-fields">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label required">Nom de la Banque</label>
+                            <input type="text" class="modern-input" name="nom_banque" required>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="form-label required">Numéro de Compte</label>
-                        <input type="text" class="modern-input" name="numero_compte" required>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label required">Numéro de Compte</label>
+                            <input type="text" class="modern-input" name="numero_compte" required>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    `,
+        `,
 
                 cheque: `
-        <div class="paiement-method-fields">
-            <div class="alert alert-info">
-                <i class="fas fa-info-circle me-2"></i>
-                Le montant du chèque sera enregistré dans le champ "Montant Payé" ci-dessous.
+            <div class="paiement-method-fields">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Le montant du chèque sera enregistré dans le champ "Montant Payé" ci-dessous.
+                </div>
             </div>
-        </div>
-    `,
+        `,
 
                 mobile_money: `
-        <div class="paiement-method-fields">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="form-label required">Opérateur</label>
-                        <select class="modern-select" name="operateur_mobile_money" required>
-                            <option value="">Sélectionnez un opérateur</option>
-                            <option value="WAVE">WAVE</option>
-                            <option value="ORANGE">ORANGE</option>
-                            <option value="MOOV">MOOV</option>
-                            <option value="MTN">MTN</option>
-                        </select>
+            <div class="paiement-method-fields">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label required">Opérateur</label>
+                            <select class="modern-select" name="operateur_mobile_money" required>
+                                <option value="">Sélectionnez un opérateur</option>
+                                <option value="WAVE">WAVE</option>
+                                <option value="ORANGE">ORANGE</option>
+                                <option value="MOOV">MOOV</option>
+                                <option value="MTN">MTN</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="form-label required">Numéro de Téléphone</label>
-                        <input type="text" class="modern-input" name="numero_mobile_money" required>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label required">Numéro de Téléphone</label>
+                            <input type="text" class="modern-input" name="numero_mobile_money" required>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    `,
+        `,
 
                 livraison: `
-        <div class="paiement-method-fields">
-            <div class="alert alert-info">
-                <i class="fas fa-info-circle me-2"></i>
-                Le paiement sera effectué à la livraison du colis. Le montant payé sera de 0.
+            <div class="paiement-method-fields">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Le paiement sera effectué à la livraison du colis. Le montant payé sera de 0.
+                </div>
+                <input type="hidden" name="montant_livraison" value="0">
             </div>
-            <input type="hidden" name="montant_livraison" value="0">
-        </div>
-    `
+        `
             };
 
             // Gestion des étapes
@@ -1232,7 +1219,7 @@
 
             // Navigation entre les étapes
             document.querySelectorAll('.next-step').forEach(button => {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function () {
                     const nextStep = parseInt(this.dataset.next);
                     if (validateStep(currentStep)) {
                         showStep(nextStep);
@@ -1241,14 +1228,14 @@
             });
 
             document.querySelectorAll('.prev-step').forEach(button => {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function () {
                     const prevStep = parseInt(this.dataset.prev);
                     showStep(prevStep);
                 });
             });
 
             // Gestion du mode de transit
-            document.getElementById('mode_transit').addEventListener('change', function() {
+            document.getElementById('mode_transit').addEventListener('change', function () {
                 updateAgenceDestination();
                 updateConteneurEtReference();
                 updateTypeCalcul();
@@ -1256,7 +1243,7 @@
             });
 
             // Gestion de l'agence d'expédition (devise)
-            document.getElementById('agence_expedition_id').addEventListener('change', function() {
+            document.getElementById('agence_expedition_id').addEventListener('change', function () {
                 updateDeviseExpedition();
                 updateAgenceDestination();
                 updateConteneurEtReference();
@@ -1276,12 +1263,12 @@
             });
 
             // Gestion du type d'expéditeur
-            document.getElementById('type_expediteur').addEventListener('change', function() {
+            document.getElementById('type_expediteur').addEventListener('change', function () {
                 updateExpediteurFields();
             });
 
             // Gestion de la méthode de paiement
-            document.getElementById('methode_paiement').addEventListener('change', function() {
+            document.getElementById('methode_paiement').addEventListener('change', function () {
                 const method = this.value;
                 const fieldsContainer = document.getElementById('paiement-fields');
 
@@ -1304,12 +1291,12 @@
             });
 
             // Gestion du montant payé
-            document.getElementById('montant_paye').addEventListener('input', function() {
+            document.getElementById('montant_paye').addEventListener('input', function () {
                 updateResteAPayer();
             });
 
             // Gestion du service
-            document.getElementById('service_id').addEventListener('change', function() {
+            document.getElementById('service_id').addEventListener('change', function () {
                 const selectedOption = this.options[this.selectedIndex];
                 const prix = selectedOption.getAttribute('data-prix') || 0;
 
@@ -1318,27 +1305,27 @@
             });
 
             // Écouteur pour le bouton d'ajout de service
-            document.getElementById('add-service-btn').addEventListener('click', function() {
+            document.getElementById('add-service-btn').addEventListener('click', function () {
                 $('#addServiceModal').modal('show');
             });
 
             // Sauvegarde d'un nouveau produit
-            document.getElementById('saveProduitBtn').addEventListener('click', function() {
+            document.getElementById('saveProduitBtn').addEventListener('click', function () {
                 saveProduit();
             });
 
             // Sauvegarde d'un nouveau service
-            document.getElementById('saveServiceBtn').addEventListener('click', function() {
+            document.getElementById('saveServiceBtn').addEventListener('click', function () {
                 saveService();
             });
 
             // Ajout de colis
-            document.getElementById('add-colis').addEventListener('click', function() {
+            document.getElementById('add-colis').addEventListener('click', function () {
                 addColis();
             });
 
             // Recherche d'utilisateurs
-            document.getElementById('userSearch').addEventListener('input', function(e) {
+            document.getElementById('userSearch').addEventListener('input', function (e) {
                 clearTimeout(searchTimeout);
                 const searchTerm = e.target.value.trim();
 
@@ -1353,7 +1340,7 @@
             });
 
             // Recherche de produits
-            document.addEventListener('input', function(e) {
+            document.addEventListener('input', function (e) {
                 if (e.target.classList.contains('produit-input')) {
                     clearTimeout(produitSearchTimeout);
                     const searchTerm = e.target.value.trim();
@@ -1372,7 +1359,7 @@
             });
 
             // Gestion des boutons d'ajout de produit
-            document.addEventListener('click', function(e) {
+            document.addEventListener('click', function (e) {
                 if (e.target.closest('.add-produit-btn')) {
                     currentProduitIndex = e.target.closest('.add-produit-btn').getAttribute('data-index');
                     $('#addProduitModal').modal('show');
@@ -1380,7 +1367,7 @@
             });
 
             // Suppression de colis
-            document.addEventListener('click', function(e) {
+            document.addEventListener('click', function (e) {
                 if (e.target.closest('.remove-colis')) {
                     const colisItem = e.target.closest('.colis-item');
                     if (document.querySelectorAll('.colis-item').length > 1) {
@@ -1397,7 +1384,7 @@
             });
 
             // Cacher les résultats quand on clique ailleurs
-            document.addEventListener('click', function(e) {
+            document.addEventListener('click', function (e) {
                 if (!e.target.closest('.search-container')) {
                     hideSearchResults();
                     hideProduitResults();
@@ -1405,7 +1392,7 @@
             });
 
             // CORRECTION PRINCIPALE : Gestion de la soumission du formulaire
-            document.getElementById('colisForm').addEventListener('submit', function(e) {
+            document.getElementById('colisForm').addEventListener('submit', function (e) {
                 console.log('=== DÉBUT SOUMISSION FORMULAIRE ===');
 
                 // Valider toutes les étapes
@@ -1517,11 +1504,11 @@
 
                     document.getElementById('conteneur_info_section').style.display = 'none';
                     document.getElementById('conteneur_info_message').innerHTML = `
-                <div class="alert alert-danger">
-                    <i class="fas fa-exclamation-triangle me-2"></i>
-                    Erreur lors de la création du conteneur: ${error.message}
-                </div>
-            `;
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Erreur lors de la création du conteneur: ${error.message}
+                    </div>
+                `;
                     document.getElementById('conteneur_info_message').style.display = 'block';
                 }
             }
@@ -1530,18 +1517,18 @@
                 const conteneurDetails = document.getElementById('conteneur_details');
 
                 conteneurDetails.innerHTML = `
-            <p class="mb-0 text-black">
-                <strong>Nom:</strong> ${conteneur.name_conteneur} | 
-                <strong>Type:</strong> ${conteneur.type_conteneur} | 
-                <strong>Statut:</strong> 
-                <span class="badge bg-success text-white">${conteneur.statut}</span>
-                ${conteneur.agence ? `| <strong>Agence:</strong> ${conteneur.agence.name}` : ''}
-            </p>
-            <small class="text-muted">
-                <i class="fas fa-info-circle me-1"></i>
-                Conteneur créé automatiquement pour l'agence sélectionnée
-            </small>
-        `;
+                <p class="mb-0 text-black">
+                    <strong>Nom:</strong> ${conteneur.name_conteneur} | 
+                    <strong>Type:</strong> ${conteneur.type_conteneur} | 
+                    <strong>Statut:</strong> 
+                    <span class="badge bg-success text-white">${conteneur.statut}</span>
+                    ${conteneur.agence ? `| <strong>Agence:</strong> ${conteneur.agence.name}` : ''}
+                </p>
+                <small class="text-muted">
+                    <i class="fas fa-info-circle me-1"></i>
+                    Conteneur créé automatiquement pour l'agence sélectionnée
+                </small>
+            `;
 
                 document.getElementById('conteneur_id_input').value = conteneur.id;
             }
@@ -1736,7 +1723,7 @@
                     }
                 }
             }
-            document.getElementById('mode_transit').addEventListener('change', function() {
+            document.getElementById('mode_transit').addEventListener('change', function () {
                 // Recalculer tous les montants quand le mode change
                 updateMontants();
                 if (currentStep === 7) {
@@ -1798,12 +1785,12 @@
                 const url = '{{ url('users/search') }}?q=' + encodeURIComponent(searchTerm);
 
                 fetch(url, {
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest',
-                            'Accept': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        }
-                    })
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Erreur réseau: ' + response.status);
@@ -1830,11 +1817,11 @@
                         const userElement = document.createElement('div');
                         userElement.className = 'user-result-item';
                         userElement.innerHTML = `
-                    <div class="user-name">${user.name} ${user.prenom || ''}</div>
-                    <div class="user-details">
-                        ${user.email} • ${user.contact || 'Non renseigné'}
-                    </div>
-                `;
+                        <div class="user-name">${user.name} ${user.prenom || ''}</div>
+                        <div class="user-details">
+                            ${user.email} • ${user.contact || 'Non renseigné'}
+                        </div>
+                    `;
                         userElement.addEventListener('click', () => selectUser(user));
                         resultsContainer.appendChild(userElement);
                     });
@@ -1873,8 +1860,8 @@
                 const agenceDestinationId = document.getElementById('agence_destination_id').value;
 
                 fetch(
-                        `/produits/search?q=${encodeURIComponent(searchTerm)}&agence_destination_id=${agenceDestinationId}`
-                    )
+                    `/produits/search?q=${encodeURIComponent(searchTerm)}&agence_destination_id=${agenceDestinationId}`
+                )
                     .then(response => response.json())
                     .then(produits => {
                         displayProduitResults(produits, currentIndex);
@@ -1901,11 +1888,11 @@
                         const produitElement = document.createElement('div');
                         produitElement.className = 'user-result-item';
                         produitElement.innerHTML = `
-                    <div class="user-name">${produit.designation}</div>
-                    <div class="user-details">
-                        ${produit.prix_unitaire} • ${produit.agence_destination?.name || 'Agence non spécifiée'}
-                    </div>
-                `;
+                        <div class="user-name">${produit.designation}</div>
+                        <div class="user-details">
+                            ${produit.prix_unitaire} • ${produit.agence_destination?.name || 'Agence non spécifiée'}
+                        </div>
+                    `;
                         produitElement.addEventListener('click', () => selectProduit(produit,
                             currentIndex));
                         resultsContainer.appendChild(produitElement);
@@ -1963,13 +1950,13 @@
 
                 const url = "{{ route('admin.produits.store') }}";
                 fetch(url, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Accept': 'application/json'
-                        }
-                    })
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json'
+                    }
+                })
                     .then(response => {
                         if (!response.ok) {
                             throw new Error(`Erreur HTTP: ${response.status}`);
@@ -2019,13 +2006,13 @@
 
                 const url = "{{ route('admin.services.store') }}";
                 fetch(url, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Accept': 'application/json'
-                        }
-                    })
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json'
+                    }
+                })
                     .then(response => {
                         if (!response.ok) {
                             throw new Error(`Erreur HTTP: ${response.status}`);
@@ -2239,26 +2226,26 @@
                     // MODIFICATION : Affichage différent selon le mode de transit
                     if (modeTransit === 'Aerien') {
                         row.innerHTML = `
-                    <td class="fw-bold">${index + 1}</td>
-                    <td>${produit}</td>
-                    <td>${quantite}</td>
-                    <td>${prixUnitaire.toFixed(2)}</td>
-                    <td class="fw-bold">${totalColis.toFixed(2)}</td>
-                    <td>${typeColis}</td>
-                    <td>${dimensions}</td>
-                    <td>${poids !== '-' ? poids + ' kg' : '-'}</td>
-                `;
+                        <td class="fw-bold">${index + 1}</td>
+                        <td>${produit}</td>
+                        <td>${quantite}</td>
+                        <td>${prixUnitaire.toFixed(2)}</td>
+                        <td class="fw-bold">${totalColis.toFixed(2)}</td>
+                        <td>${typeColis}</td>
+                        <td>${dimensions}</td>
+                        <td>${poids !== '-' ? poids + ' kg' : '-'}</td>
+                    `;
                     } else {
                         row.innerHTML = `
-                    <td class="fw-bold">${index + 1}</td>
-                    <td>${produit}</td>
-                    <td>${quantite}</td>
-                    <td>${prixUnitaire.toFixed(2)}</td>
-                    <td class="fw-bold">${totalColis.toFixed(2)}</td>
-                    <td>${typeColis}</td>
-                    <td>${dimensions}</td>
-                    <td>${poids !== '-' ? poids + ' kg' : '-'}</td>
-                `;
+                        <td class="fw-bold">${index + 1}</td>
+                        <td>${produit}</td>
+                        <td>${quantite}</td>
+                        <td>${prixUnitaire.toFixed(2)}</td>
+                        <td class="fw-bold">${totalColis.toFixed(2)}</td>
+                        <td>${typeColis}</td>
+                        <td>${dimensions}</td>
+                        <td>${poids !== '-' ? poids + ' kg' : '-'}</td>
+                    `;
                     }
 
                     tbody.appendChild(row);
@@ -2390,7 +2377,7 @@
             }
 
             // Écouteur pour les changements de poids (mode aérien)
-            document.addEventListener('input', function(e) {
+            document.addEventListener('input', function (e) {
                 if (e.target.name && e.target.name.includes('[poids]')) {
                     const modeTransit = document.getElementById('mode_transit').value;
                     if (modeTransit === 'Aerien') {
@@ -2399,7 +2386,7 @@
                 }
 
                 if (e.target.name && (e.target.name.includes('[quantite]') || e.target.name.includes(
-                        '[prix_unitaire]'))) {
+                    '[prix_unitaire]'))) {
                     updateMontants();
                 }
             });
@@ -2418,7 +2405,7 @@
 
         // Recherche de récupération au step 1
         document.getElementById('search-recuperation-btn').addEventListener('click', searchRecuperation);
-        document.getElementById('search-recuperation').addEventListener('keypress', function(e) {
+        document.getElementById('search-recuperation').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 searchRecuperation();
             }
@@ -2489,27 +2476,27 @@
             const hasSpecificDestinataire = recuperation.nom_destinataire || recuperation.prenom_destinataire;
 
             resultsDiv.innerHTML = `
-        <div class="alert alert-success">
-            <div class="row align-items-center">
-                <div class="col-md-8">
-                    <h6 class="mb-1"><i class="fas fa-check-circle me-2"></i>Récupération trouvée</h6>
-                    <p class="mb-1"><strong>Référence:</strong> ${recuperation.reference}</p>
-                    <p class="mb-1"><strong>Nature:</strong> ${recuperation.nature_objet}</p>
-                    <p class="mb-1"><strong>Quantité:</strong> ${recuperation.quantite}</p>
-                    <p class="mb-1"><strong>Expéditeur:</strong> ${recuperation.nom_concerne} ${recuperation.prenom_concerne}</p>
-                    ${hasSpecificDestinataire ? 
-                        `<p class="mb-1"><strong>Destinataire spécifique:</strong> ${recuperation.nom_destinataire} ${recuperation.prenom_destinataire}</p>` : 
-                        ''}
-                    <p class="mb-1"><strong>Contact:</strong> ${recuperation.contact}</p>
-                </div>
-                <div class="col-md-4 text-end">
-                    <button type="button" class="btn btn-primary" onclick="fillAllFieldsFromRecuperation(${recuperation.id})">
-                        <i class="fas fa-magic me-2"></i>Pré-remplir tout
-                    </button>
+            <div class="alert alert-success">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h6 class="mb-1"><i class="fas fa-check-circle me-2"></i>Récupération trouvée</h6>
+                        <p class="mb-1"><strong>Référence:</strong> ${recuperation.reference}</p>
+                        <p class="mb-1"><strong>Nature:</strong> ${recuperation.nature_objet}</p>
+                        <p class="mb-1"><strong>Quantité:</strong> ${recuperation.quantite}</p>
+                        <p class="mb-1"><strong>Expéditeur:</strong> ${recuperation.nom_concerne} ${recuperation.prenom_concerne}</p>
+                        ${hasSpecificDestinataire ?
+                    `<p class="mb-1"><strong>Destinataire spécifique:</strong> ${recuperation.nom_destinataire} ${recuperation.prenom_destinataire}</p>` :
+                    ''}
+                        <p class="mb-1"><strong>Contact:</strong> ${recuperation.contact}</p>
+                    </div>
+                    <div class="col-md-4 text-end">
+                        <button type="button" class="btn btn-primary" onclick="fillAllFieldsFromRecuperation(${recuperation.id})">
+                            <i class="fas fa-magic me-2"></i>Pré-remplir tout
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-    `;
+        `;
             resultsDiv.style.display = 'block';
         }
 
@@ -2568,13 +2555,13 @@
                         Swal.fire({
                             title: 'Formulaire pré-rempli !',
                             html: `
-                <div class="text-start">
-                    <p><strong>✓ Expéditeur:</strong> Rempli</p>
-                    <p><strong>✓ Destinataire:</strong> Rempli</p>
-                    <p><strong>✓ Colis:</strong> Nature: ${recuperation.nature_objet}, Quantité: ${recuperation.quantite}</p>
-                    ${recuperation.nom_destinataire ? '<p><strong>✓ Destinataire spécifique:</strong> Utilisé</p>' : ''}
-                </div>
-            `,
+                    <div class="text-start">
+                        <p><strong>✓ Expéditeur:</strong> Rempli</p>
+                        <p><strong>✓ Destinataire:</strong> Rempli</p>
+                        <p><strong>✓ Colis:</strong> Nature: ${recuperation.nature_objet}, Quantité: ${recuperation.quantite}</p>
+                        ${recuperation.nom_destinataire ? '<p><strong>✓ Destinataire spécifique:</strong> Utilisé</p>' : ''}
+                    </div>
+                `,
                             icon: 'success',
                             confirmButtonColor: '#0e914b',
                             timer: 3000
@@ -2607,6 +2594,120 @@
                 timer: 1500
             });
         }
+
+        // --- DÉBUT LOGIQUE AUTOCOMPLÉTION CLIENT (Expéditeur / Destinataire) ---
+        function setupClientAutocomplete(inputIds, type) {
+            const inputs = inputIds.map(id => document.getElementById(id)).filter(input => input);
+            let timeout = null;
+
+            inputs.forEach(input => {
+                // Créer le conteneur de résultats s'il n'existe pas
+                let resultsDiv = input.parentNode.querySelector('.client-search-results');
+                if (!resultsDiv) {
+                    resultsDiv = document.createElement('div');
+                    resultsDiv.className = 'search-results client-search-results';
+                    resultsDiv.style.display = 'none';
+                    resultsDiv.style.width = '100%';
+                    resultsDiv.style.zIndex = '1000';
+                    // Le parent doit être relative pour que le positionnement absolute fonctionne
+                    if (getComputedStyle(input.parentNode).position === 'static') {
+                        input.parentNode.style.position = 'relative';
+                    }
+                    input.parentNode.appendChild(resultsDiv);
+                }
+
+                input.addEventListener('input', function () {
+                    const query = this.value.trim();
+
+                    // Cacher les autres résultats pour éviter la pollution visuelle
+                    document.querySelectorAll('.client-search-results').forEach(el => el.style.display = 'none');
+
+                    if (query.length < 2) {
+                        return;
+                    }
+
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => {
+                        const url = `{{ route('colis.search-client') }}?type=${type}&q=${encodeURIComponent(query)}`;
+
+                        fetch(url)
+                            .then(response => response.json())
+                            .then(data => {
+                                resultsDiv.innerHTML = '';
+                                if (data.length > 0) {
+                                    data.forEach(client => {
+                                        const div = document.createElement('div');
+                                        div.className = 'user-result-item';
+                                        div.innerHTML = `
+                                                <div class="user-name">${client.name} ${client.prenom || ''}</div>
+                                                <div class="user-details">${client.contact} ${client.email ? '- ' + client.email : ''}</div>
+                                            `;
+                                        div.addEventListener('click', () => {
+                                            fillClientFields(client, type);
+                                            resultsDiv.style.display = 'none';
+                                        });
+                                        resultsDiv.appendChild(div);
+                                    });
+                                    resultsDiv.style.display = 'block';
+                                } else {
+                                    resultsDiv.style.display = 'none';
+                                }
+                            })
+                            .catch(err => console.error('Erreur recherche client:', err));
+                    }, 300);
+                });
+            });
+
+            // Cacher les résultats au clic ailleurs
+            document.addEventListener('click', function (e) {
+                if (!e.target.closest('.form-group')) {
+                    document.querySelectorAll('.client-search-results').forEach(el => el.style.display = 'none');
+                }
+            });
+        }
+
+        function fillClientFields(client, type) {
+            if (type === 'expediteur') {
+                document.getElementById('name_expediteur').value = client.name || '';
+                document.getElementById('prenom_expediteur').value = client.prenom || '';
+                document.getElementById('email_expediteur').value = client.email || '';
+                document.getElementById('contact_expediteur').value = client.contact || '';
+                document.getElementById('adresse_expediteur').value = client.adresse || '';
+
+            } else {
+                document.getElementById('name_destinataire').value = client.name || '';
+                document.getElementById('prenom_destinataire').value = client.prenom || '';
+                document.getElementById('email_destinataire').value = client.email || '';
+                document.getElementById('contact_destinataire').value = client.contact || '';
+                document.getElementById('adresse_destinataire').value = client.adresse || '';
+                if (client.indicatif) {
+                    document.getElementById('indicatif').value = client.indicatif;
+                }
+            }
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Informations chargées',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1500
+            });
+
+            // Mettre à jour le récapitulatif si on est à l'étape 7
+            if (typeof updateRecap === 'function' && typeof currentStep !== 'undefined' && currentStep === 7) {
+                updateRecap();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialiser l'autocomplétion pour l'expéditeur
+            setupClientAutocomplete(['name_expediteur', 'prenom_expediteur', 'contact_expediteur'], 'expediteur');
+
+            // Initialiser l'autocomplétion pour le destinataire
+            setupClientAutocomplete(['name_destinataire', 'prenom_destinataire', 'contact_destinataire'], 'destinataire');
+        });
+        // --- FIN LOGIQUE AUTOCOMPLÉTION CLIENT ---
     </script>
 
     <style>

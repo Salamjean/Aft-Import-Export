@@ -142,6 +142,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
         Route::get('/parcel/export', [ExcelExportController::class, 'exportColis'])->name('colis.export');
         Route::post('/parcel/import', [ExcelExportController::class, 'importColis'])->name('colis.import');
         Route::get('/parcelhistory', [ColisController::class, 'history'])->name('colis.history');
+        Route::get('/search-client', [ColisController::class, 'searchClient'])->name('colis.search-client');
         Route::get('/parceladd', [ColisController::class, 'create'])->name('colis.create');
         Route::post('/create', [ColisController::class, 'store'])->name('colis.store');
         Route::get('/{id}/edit', [ColisController::class, 'edit'])->name('colis.edit');
@@ -345,6 +346,7 @@ Route::middleware('agent')->prefix('agent')->group(function () {
         Route::get('/parcelindex', [AgentColisController::class, 'index'])->name('agent.colis.index');
         Route::get('/parcelhistory', [AgentColisController::class, 'history'])->name('agent.colis.history');
         Route::get('/parceladd', [AgentColisController::class, 'create'])->name('agent.colis.create');
+        Route::get('/search-client', [AgentColisController::class, 'searchClient'])->name('agent.colis.search-client');
         Route::post('/create', [AgentColisController::class, 'store'])->name('agent.colis.store');
         Route::get('/{id}/edit', [AgentColisController::class, 'edit'])->name('agent.colis.edit');
         Route::put('/{id}', [AgentColisController::class, 'update'])->name('agent.colis.update');
