@@ -1400,60 +1400,45 @@ class AgentColisController extends Controller
     }
 
     private function genererReference($initiales, $modeTransit, $agenceExpeditionId = null)
-    {
-        // Déterminer le type de conteneur selon le mode de transit
-        $typeConteneur = ($modeTransit === 'Aerien') ? 'Ballon' : 'Conteneur';
-
-        // Déterminer le suffixe selon le type de conteneur et l'agence
-        if ($typeConteneur === 'Ballon') {
-            // Pour les ballons (Aérien)
-
-            // Si une agence est spécifiée, compter les conteneurs utilisés par cette agence
-            if ($agenceExpeditionId) {
-                $nombreConteneursAgence = Colis::where('agence_expedition_id', $agenceExpeditionId)
-                    ->where('mode_transit', 'Aerien')
-                    ->join('conteneurs', 'colis.conteneur_id', '=', 'conteneurs.id')
-                    ->where('conteneurs.statut', 'fermer')
-                    ->distinct('conteneurs.id')
-                    ->count('conteneurs.id');
-
-                $suffixe = 'A' . ($nombreConteneursAgence + 1);
-            } else {
-                // Pas d'agence spécifiée, utiliser la logique globale
-                $nombreConteneursFermes = Conteneur::where('statut', 'fermer')
-                    ->where('type_conteneur', 'Ballon')
-                    ->count() + 1;
-                $suffixe = 'A' . $nombreConteneursFermes;
-            }
+{
+    // Déterminer le type de conteneur selon le mode de transit
+    $typeConteneur = ($modeTransit === 'Aerien') ? 'Ballon' : 'Conteneur';
+    
+    if ($typeConteneur === 'Ballon') {
+        // NOUVELLE LOGIQUE : Trouver le prochain suffixe disponible
+        if ($agenceExpeditionId) {
+            $suffixe = $this->trouverProchainSuffixeBallon($agenceExpeditionId);
         } else {
-            // Pour les conteneurs (Maritime)
-
-            // Si une agence est spécifiée, compter les conteneurs utilisés par cette agence
-            if ($agenceExpeditionId) {
-                $nombreConteneursAgence = Colis::where('agence_expedition_id', $agenceExpeditionId)
-                    ->where('mode_transit', 'Maritime')
-                    ->join('conteneurs', 'colis.conteneur_id', '=', 'conteneurs.id')
-                    ->where('conteneurs.statut', 'fermer')
-                    ->distinct('conteneurs.id')
-                    ->count('conteneurs.id');
-
-                $suffixe = 'TC' . ($nombreConteneursAgence + 1);
-            } else {
-                // Pas d'agence spécifiée, utiliser la logique globale
-                $nombreConteneursFermes = Conteneur::where('statut', 'fermer')
-                    ->where('type_conteneur', 'Conteneur')
-                    ->count() + 1;
-                $suffixe = 'TC' . $nombreConteneursFermes;
-            }
+            // Pour le mode sans agence spécifique
+            $nombreConteneursFermes = Conteneur::where('statut', 'fermer')
+                ->where('type_conteneur', 'Ballon')
+                ->count();
+            $suffixe = 'A' . ($nombreConteneursFermes + 1);
         }
-
-        // Trouver le prochain incrément disponible pour ce suffixe
-        $prochainIncrement = $this->trouverProchainIncrementDisponible($suffixe, $modeTransit, $agenceExpeditionId);
-
-        $incrementColis = str_pad($prochainIncrement, 4, '0', STR_PAD_LEFT);
-
-        return $initiales . '-' . $incrementColis . '-' . $suffixe;
+    } else {
+        // Logique pour les conteneurs maritimes (inchangée)
+        if ($agenceExpeditionId) {
+            $nombreConteneursAgence = Colis::where('agence_expedition_id', $agenceExpeditionId)
+                ->where('mode_transit', 'Maritime')
+                ->join('conteneurs', 'colis.conteneur_id', '=', 'conteneurs.id')
+                ->where('conteneurs.statut', 'fermer')
+                ->distinct('conteneurs.id')
+                ->count('conteneurs.id');
+            $suffixe = 'TC' . ($nombreConteneursAgence + 1);
+        } else {
+            $nombreConteneursFermes = Conteneur::where('statut', 'fermer')
+                ->where('type_conteneur', 'Conteneur')
+                ->count() + 1;
+            $suffixe = 'TC' . $nombreConteneursFermes;
+        }
     }
+    
+    // Trouver le prochain incrément disponible pour ce suffixe
+    $prochainIncrement = $this->trouverProchainIncrementDisponible($suffixe, $modeTransit, $agenceExpeditionId);
+    $incrementColis = str_pad($prochainIncrement, 4, '0', STR_PAD_LEFT);
+    
+    return $initiales . '-' . $incrementColis . '-' . $suffixe;
+}
 
     // Méthode pour afficher un QR code
     public function showQRCode($colisId, $numero)
@@ -1477,6 +1462,45 @@ class AgentColisController extends Controller
 
         abort(404, 'QR code non trouvé');
     }
+
+    // Dans votre ColisController, ajoutez cette méthode
+private function trouverProchainSuffixeBallon($agenceExpeditionId)
+{
+    // 1. Récupérer TOUTES les références de colis aériens pour cette agence
+    $references = Colis::where('mode_transit', 'Aerien')
+        ->where('agence_expedition_id', $agenceExpeditionId)
+        ->pluck('reference_colis')
+        ->toArray();
+    
+    // 2. Extraire tous les suffixes (A1, A2, A3, etc.)
+    $suffixes = [];
+    foreach ($references as $reference) {
+        // Exemple: "JM-0001-A10" -> "A10"
+        if (preg_match('/-([A-Z]\d+)$/', $reference, $matches)) {
+            $suffix = $matches[1];
+            if (preg_match('/^A(\d+)$/', $suffix, $numMatches)) {
+                $suffixes[] = (int)$numMatches[1];
+            }
+        }
+    }
+    
+    // 3. Trouver le prochain numéro disponible
+    if (empty($suffixes)) {
+        return 'A1'; // Premier conteneur
+    }
+    
+    $max = max($suffixes);
+    
+    // Vérifier s'il y a des trous dans la séquence (ex: A1, A3 manque A2)
+    for ($i = 1; $i <= $max; $i++) {
+        if (!in_array($i, $suffixes)) {
+            return 'A' . $i;
+        }
+    }
+    
+    // Sinon, retourner le suivant
+    return 'A' . ($max + 1);
+}
 
     public function show($id)
     {
