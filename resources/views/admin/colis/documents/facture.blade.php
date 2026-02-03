@@ -445,7 +445,17 @@
                    <img src="assets/img/barre_code.png" style="height: 35px; margin-bottom: 10px;" alt="">
 
                    <!-- Historique des paiements (Requested) -->
-                   @if($colis->paiements && count($colis->paiements) > 0)
+                   @php
+                       $totalPaiements = $colis->paiements ? $colis->paiements->sum('montant') : 0;
+                       $montantPayeTotal = $colis->montant_paye ?? 0;
+                       // Calculate initial payment (stored on colis table) as difference
+                       $paiementInitial = $montantPayeTotal - $totalPaiements;
+                       
+                       $hasInvestments = $colis->paiements && count($colis->paiements) > 0;
+                       $hasInitial = $paiementInitial > 0;
+                   @endphp
+
+                   @if($hasInvestments || $hasInitial)
                    <div style="margin-top: 20px;">
                        <strong style="display:block; margin-bottom:5px; font-size:12px; color: black;">Historique des paiements</strong>
                        <table style="width: 100%; border-collapse: collapse; font-size: 11px; border: 1px solid #ddd;">
@@ -459,15 +469,29 @@
                                </tr>
                            </thead>
                            <tbody>
-                               @foreach($colis->paiements as $paiement)
+                               <!-- Row for Initial/Colis Payment -->
+                               @if($hasInitial)
                                <tr>
-                                   <td style="border: 1px solid #ddd; padding: 5px; text-align: center;">{{ $paiement->created_at ? $paiement->created_at->format('d-m-Y') : '-' }}</td>
-                                   <td style="border: 1px solid #ddd; padding: 5px; text-align: center;">EN-{{ str_pad($paiement->id, 5, '0', STR_PAD_LEFT) }}</td>
-                                   <td style="border: 1px solid #ddd; padding: 5px; text-align: center;">{{ number_format($paiement->montant, 0, ',', ' ') }}</td>
-                                   <td style="border: 1px solid #ddd; padding: 5px; text-align: center;">{{ $paiement->methode_paiement }}</td>
-                                   <td style="border: 1px solid #ddd; padding: 5px; text-align: center;">{{ $paiement->notes ?? '' }}</td>
+                                   <td style="border: 1px solid #ddd; padding: 5px; text-align: center;">{{ $colis->created_at ? $colis->created_at->format('d-m-Y') : '-' }}</td>
+                                   <td style="border: 1px solid #ddd; padding: 5px; text-align: center;">EN-{{ str_pad($colis->id, 5, '0', STR_PAD_LEFT) }}</td>
+                                   <td style="border: 1px solid #ddd; padding: 5px; text-align: center;">{{ number_format($paiementInitial, 0, ',', ' ') }}</td>
+                                   <td style="border: 1px solid #ddd; padding: 5px; text-align: center;">{{ $colis->methode_paiement ?? 'Espèce' }}</td>
+                                   <td style="border: 1px solid #ddd; padding: 5px; text-align: center;">Paiement Initial</td>
                                </tr>
-                               @endforeach
+                               @endif
+
+                               <!-- Rows for Subsequent Payments -->
+                               @if($hasInvestments)
+                                   @foreach($colis->paiements as $paiement)
+                                   <tr>
+                                       <td style="border: 1px solid #ddd; padding: 5px; text-align: center;">{{ $paiement->created_at ? $paiement->created_at->format('d-m-Y') : '-' }}</td>
+                                       <td style="border: 1px solid #ddd; padding: 5px; text-align: center;">EN-{{ str_pad($paiement->id, 5, '0', STR_PAD_LEFT) }}</td>
+                                       <td style="border: 1px solid #ddd; padding: 5px; text-align: center;">{{ number_format($paiement->montant, 0, ',', ' ') }}</td>
+                                       <td style="border: 1px solid #ddd; padding: 5px; text-align: center;">{{ $paiement->methode_paiement }}</td>
+                                       <td style="border: 1px solid #ddd; padding: 5px; text-align: center;">{{ $paiement->notes ?? '' }}</td>
+                                   </tr>
+                                   @endforeach
+                               @endif
                            </tbody>
                        </table>
                    </div>
