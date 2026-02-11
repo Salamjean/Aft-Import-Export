@@ -128,7 +128,7 @@ class AgentColisController extends Controller
         $initiales = $this->genererInitiales($agent->name, $agent->prenom);
 
         // Référence par défaut pour l'affichage initial
-        $reference = $this->genererReference($initiales, $modeTransit, $agenceExpedition->id);
+        $reference = $this->genererReference($initiales, $modeTransit, $agenceExpedition->id, $conteneur->id);
 
         return view('agent.colis.create', compact(
             'conteneur',
@@ -214,7 +214,8 @@ class AgentColisController extends Controller
             $reference = $this->genererReference(
                 $initiales,
                 $modeTransit,
-                $colis->agence_expedition_id
+                $colis->agence_expedition_id,
+                $conteneur->id
             );
 
             // Décoder les détails des colis (déjà casté en array)
@@ -1376,7 +1377,7 @@ class AgentColisController extends Controller
 
             // Générer la référence avec l'agence de l'agent
             $initiales = $this->genererInitiales($agent->name, $agent->prenom);
-            $reference = $this->genererReference($initiales, $modeTransit, $agenceExpedition->id);
+            $reference = $this->genererReference($initiales, $modeTransit, $agenceExpedition->id, $conteneur->id);
 
             // Récupérer les agences de destination
             $agencesDestination = Agence::where('pays', 'Côte d\'Ivoire')->get();
@@ -1399,7 +1400,7 @@ class AgentColisController extends Controller
         }
     }
 
-    private function genererReference($initiales, $modeTransit, $agenceExpeditionId = null)
+    private function genererReference($initiales, $modeTransit, $agenceExpeditionId = null, $conteneurId = null)
     {
         // Déterminer le type de conteneur selon le mode de transit
         $typeConteneur = ($modeTransit === 'Aerien') ? 'Ballon' : 'Conteneur';
@@ -1407,7 +1408,7 @@ class AgentColisController extends Controller
         if ($typeConteneur === 'Ballon') {
             // NOUVELLE LOGIQUE : Trouver le prochain suffixe disponible
             if ($agenceExpeditionId) {
-                $suffixe = $this->trouverProchainSuffixeBallon($agenceExpeditionId);
+                $suffixe = $this->trouverProchainSuffixeBallon($agenceExpeditionId, $conteneurId);
             } else {
                 // Pour le mode sans agence spécifique
                 $nombreConteneursFermes = Conteneur::where('statut', 'fermer')
@@ -1464,20 +1465,27 @@ class AgentColisController extends Controller
     }
 
     // Dans votre ColisController, ajoutez cette méthode
-    private function trouverProchainSuffixeBallon($agenceExpeditionId)
+    private function trouverProchainSuffixeBallon($agenceExpeditionId, $conteneurId = null)
     {
-        // Compter le nombre de conteneurs "Ballon" FERMÉS associés à cette agence via les colis
-        $nombreConteneursFermes = Colis::where('agence_expedition_id', $agenceExpeditionId)
-            ->where('mode_transit', 'Aerien')
-            ->join('conteneurs', 'colis.conteneur_id', '=', 'conteneurs.id')
-            ->where('conteneurs.statut', 'fermer')
-            ->distinct('conteneurs.id')
-            ->count('conteneurs.id');
+        // Compter le nombre de conteneurs "Ballon" CRÉÉS AVANT CE CONTENEUR associés à cette agence
+        // Si on a un ID de conteneur, on compte ceux avec ID <= $conteneurId
+        // Sinon (cas fallback), on compte tous les conteneurs (ce qui donnera le prochain numéro)
 
-        // Le suffixe est A + (nombre de fermés + 1)
-        // Ex: 0 fermé -> A1
-        // Ex: 1 fermé -> A2
-        return 'A' . ($nombreConteneursFermes + 1);
+        $query = Conteneur::where('type_conteneur', 'Ballon')
+            ->where('agence_id', $agenceExpeditionId);
+
+        if ($conteneurId) {
+            // On compte le rang de CE conteneur spécifique parmi tous les conteneurs de l'agence
+            $nombreConteneursPrecedents = $query->where('id', '<=', $conteneurId)->count();
+            // Si c'est le 1er, count sera 1 -> A1
+            // Si c'est le 5eme, count sera 5 -> A5
+            return 'A' . $nombreConteneursPrecedents;
+        } else {
+            // Fallback: Si pas d'ID (ne devrait pas arriver souvent avec la nouvelle logique), 
+            // on prend le total existant + 1
+            $nombreTotal = $query->count();
+            return 'A' . ($nombreTotal + 1);
+        }
     }
 
     public function show($id)
