@@ -1421,10 +1421,9 @@ class AgentColisController extends Controller
             if ($agenceExpeditionId) {
                 $suffixe = $this->trouverProchainSuffixeConteneur($agenceExpeditionId, $conteneurId);
             } else {
-                $nombreConteneursFermes = Conteneur::where('statut', 'fermer')
-                    ->where('type_conteneur', 'Conteneur')
-                    ->count() + 1;
-                $suffixe = 'TC' . $nombreConteneursFermes;
+                // Fallback (rare) : basé sur le nombre de conteneurs de ce type
+                $nombreTotal = Conteneur::where('type_conteneur', 'Conteneur')->count();
+                $suffixe = 'TC' . ($nombreTotal + 1);
             }
         }
 
@@ -1494,6 +1493,7 @@ class AgentColisController extends Controller
             // Si c'est le 1er → TC1, le 5ème → TC5
             return 'TC' . $nombreConteneursPrecedents;
         } else {
+            // Si pas d'ID, on prend le prochain numéro disponible
             $nombreTotal = $query->count();
             return 'TC' . ($nombreTotal + 1);
         }
