@@ -1359,15 +1359,9 @@ class ColisController extends Controller
                 $suffixe = 'A' . ($nombreConteneursFermes + 1);
             }
         } else {
-            // Logique pour les conteneurs maritimes (inchangée)
+            // Même logique que Aérien : basée sur le rang du Conteneur actuel
             if ($agenceExpeditionId) {
-                $nombreConteneursAgence = Colis::where('agence_expedition_id', $agenceExpeditionId)
-                    ->where('mode_transit', 'Maritime')
-                    ->join('conteneurs', 'colis.conteneur_id', '=', 'conteneurs.id')
-                    ->where('conteneurs.statut', 'fermer')
-                    ->distinct('conteneurs.id')
-                    ->count('conteneurs.id');
-                $suffixe = 'TC' . ($nombreConteneursAgence + 1);
+                $suffixe = $this->trouverProchainSuffixeConteneur($agenceExpeditionId, $conteneurId);
             } else {
                 $nombreConteneursFermes = Conteneur::where('statut', 'fermer')
                     ->where('type_conteneur', 'Conteneur')
@@ -1504,28 +1498,35 @@ class ColisController extends Controller
         }
     }
 
-    // Dans votre ColisController, ajoutez cette méthode
-    // Dans votre ColisController, ajoutez cette méthode
+    // Trouver le suffixe pour un Ballon (Aérien) basé sur son rang
     private function trouverProchainSuffixeBallon($agenceExpeditionId, $conteneurId = null)
     {
-        // Compter le nombre de conteneurs "Ballon" CRÉÉS AVANT CE CONTENEUR associés à cette agence
-        // Si on a un ID de conteneur, on compte ceux avec ID <= $conteneurId
-        // Sinon (cas fallback), on compte tous les conteneurs (ce qui donnera le prochain numéro)
-
         $query = Conteneur::where('type_conteneur', 'Ballon')
             ->where('agence_id', $agenceExpeditionId);
 
         if ($conteneurId) {
-            // On compte le rang de CE conteneur spécifique parmi tous les conteneurs de l'agence
             $nombreConteneursPrecedents = $query->where('id', '<=', $conteneurId)->count();
-            // Si c'est le 1er, count sera 1 -> A1
-            // Si c'est le 5eme, count sera 5 -> A5
             return 'A' . $nombreConteneursPrecedents;
         } else {
-            // Fallback: Si pas d'ID (ne devrait pas arriver souvent avec la nouvelle logique), 
-            // on prend le total existant + 1
             $nombreTotal = $query->count();
             return 'A' . ($nombreTotal + 1);
+        }
+    }
+
+    // Trouver le suffixe pour un Conteneur (Maritime) basé sur son rang (même logique que Ballon)
+    private function trouverProchainSuffixeConteneur($agenceExpeditionId, $conteneurId = null)
+    {
+        $query = Conteneur::where('type_conteneur', 'Conteneur')
+            ->where('agence_id', $agenceExpeditionId);
+
+        if ($conteneurId) {
+            // On compte le rang de CE conteneur parmi tous les conteneurs de l'agence
+            $nombreConteneursPrecedents = $query->where('id', '<=', $conteneurId)->count();
+            // Si c'est le 1er → TC1, le 5ème → TC5
+            return 'TC' . $nombreConteneursPrecedents;
+        } else {
+            $nombreTotal = $query->count();
+            return 'TC' . ($nombreTotal + 1);
         }
     }
 
