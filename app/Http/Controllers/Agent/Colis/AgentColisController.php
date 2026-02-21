@@ -1417,15 +1417,9 @@ class AgentColisController extends Controller
                 $suffixe = 'A' . ($nombreConteneursFermes + 1);
             }
         } else {
-            // Logique pour les conteneurs maritimes (inchangée)
+            // Même logique que Aérien : basée sur le rang du Conteneur actuel
             if ($agenceExpeditionId) {
-                $nombreConteneursAgence = Colis::where('agence_expedition_id', $agenceExpeditionId)
-                    ->where('mode_transit', 'Maritime')
-                    ->join('conteneurs', 'colis.conteneur_id', '=', 'conteneurs.id')
-                    ->where('conteneurs.statut', 'fermer')
-                    ->distinct('conteneurs.id')
-                    ->count('conteneurs.id');
-                $suffixe = 'TC' . ($nombreConteneursAgence + 1);
+                $suffixe = $this->trouverProchainSuffixeConteneur($agenceExpeditionId, $conteneurId);
             } else {
                 $nombreConteneursFermes = Conteneur::where('statut', 'fermer')
                     ->where('type_conteneur', 'Conteneur')
@@ -1485,6 +1479,23 @@ class AgentColisController extends Controller
             // on prend le total existant + 1
             $nombreTotal = $query->count();
             return 'A' . ($nombreTotal + 1);
+        }
+    }
+
+    // Trouver le suffixe pour un Conteneur (Maritime) basé sur son rang (même logique que Ballon)
+    private function trouverProchainSuffixeConteneur($agenceExpeditionId, $conteneurId = null)
+    {
+        $query = Conteneur::where('type_conteneur', 'Conteneur')
+            ->where('agence_id', $agenceExpeditionId);
+
+        if ($conteneurId) {
+            // On compte le rang de CE conteneur parmi tous les conteneurs de l'agence
+            $nombreConteneursPrecedents = $query->where('id', '<=', $conteneurId)->count();
+            // Si c'est le 1er → TC1, le 5ème → TC5
+            return 'TC' . $nombreConteneursPrecedents;
+        } else {
+            $nombreTotal = $query->count();
+            return 'TC' . ($nombreTotal + 1);
         }
     }
 
