@@ -715,7 +715,6 @@ class AgentColisController extends Controller
                             'colis_numero' => $index + 1,
                             'unite_numero' => $unite,
                             'produit' => $item['produit'],
-                            'statut' => 'valide',
                             'date_creation' => now()->toDateTimeString(),
                             'date_modification' => now()->toDateTimeString(),
                             'localisation_actuelle' => $agenceExpedition->name,
@@ -723,7 +722,6 @@ class AgentColisController extends Controller
                             'notes' => 'Nouveau colis ajouté lors de la modification',
                             'historique' => [
                                 [
-                                    'statut' => 'valide',
                                     'date' => now()->toDateTimeString(),
                                     'localisation' => $agenceExpedition->name,
                                     'agence_id' => $agenceExpedition->id,
