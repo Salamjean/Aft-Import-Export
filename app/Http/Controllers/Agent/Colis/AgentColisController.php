@@ -1524,7 +1524,7 @@ class AgentColisController extends Controller
             // Récupérer tous les IDs de conteneurs uniques dans les statuts individuels
             $conteneurIds = [];
             foreach ($statutsIndividuels as $statut) {
-                if (isset($statut['localisation_actuelle']) && preg_match('/Conteneur #(\d+)/', $statut['localisation_actuelle'], $matches)) {
+                if (is_array($statut) && isset($statut['localisation_actuelle']) && preg_match('/Conteneur #(\d+)/', $statut['localisation_actuelle'], $matches)) {
                     $conteneurIds[] = $matches[1];
                 }
             }
@@ -1532,21 +1532,21 @@ class AgentColisController extends Controller
             if (!empty($conteneurIds)) {
                 $conteneursMap = Conteneur::whereIn('id', array_unique($conteneurIds))->pluck('name_conteneur', 'id');
                 foreach ($statutsIndividuels as &$statutIndiv) {
-                    if (isset($statutIndiv['localisation_actuelle']) && preg_match('/Conteneur #(\d+)/', $statutIndiv['localisation_actuelle'], $matches)) {
+                    if (is_array($statutIndiv) && isset($statutIndiv['localisation_actuelle']) && preg_match('/Conteneur #(\d+)/', $statutIndiv['localisation_actuelle'], $matches)) {
                         $conteneur_id_match = $matches[1];
                         if (isset($conteneursMap[$conteneur_id_match])) {
                             $statutIndiv['localisation_actuelle'] = str_replace('Conteneur #' . $conteneur_id_match, $conteneursMap[$conteneur_id_match], $statutIndiv['localisation_actuelle']);
                         }
                     }
 
-                    if (isset($compteurStatuts[$statutIndiv['statut']])) {
+                    if (is_array($statutIndiv) && isset($statutIndiv['statut']) && isset($compteurStatuts[$statutIndiv['statut']])) {
                         $compteurStatuts[$statutIndiv['statut']]++;
                     }
                 }
                 unset($statutIndiv);
             } else {
                 foreach ($statutsIndividuels as $statut) {
-                    if (isset($compteurStatuts[$statut['statut']])) {
+                    if (is_array($statut) && isset($statut['statut']) && isset($compteurStatuts[$statut['statut']])) {
                         $compteurStatuts[$statut['statut']]++;
                     }
                 }
