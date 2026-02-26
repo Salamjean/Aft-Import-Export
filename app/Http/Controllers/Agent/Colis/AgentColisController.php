@@ -699,7 +699,7 @@ class AgentColisController extends Controller
 
                         // Ajouter une entrée dans l'historique
                         $statutsIndividuels[$codeColisIndividuel]['historique'][] = [
-                            'statut' => $statutsIndividuels[$codeColisIndividuel]['statut'],
+                            'statut' => $statutsIndividuels[$codeColisIndividuel]['statut'] ?? 'valide',
                             'date' => now()->toDateTimeString(),
                             'localisation' => $agenceExpedition->name,
                             'agence_id' => $agenceExpedition->id,
