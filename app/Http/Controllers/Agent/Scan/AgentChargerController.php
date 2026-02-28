@@ -454,8 +454,12 @@ class AgentChargerController extends Controller
                     'agence_id' => $conteneur->agence_id
                 ]);
             } else {
-                Log::info('Progression du chargement', [
+                // Si pas toutes les unités sont chargées, rester en entrepôt
+                $colis->statut = 'entrepot';
+                Log::info('Progression du chargement - colis en entrepôt', [
                     'colis_id' => $colis->id,
+                    'ancien_statut_global' => $ancienStatutGlobal,
+                    'nouveau_statut_global' => 'entrepot',
                     'conteneur_id' => $conteneurId,
                     'type_conteneur' => $conteneur->type_conteneur,
                     'agence_id' => $conteneur->agence_id,
