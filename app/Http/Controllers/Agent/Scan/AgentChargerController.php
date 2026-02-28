@@ -665,12 +665,19 @@ class AgentChargerController extends Controller
      */
     private function compterIndividuelsCharges($statutsIndividuels)
     {
+        $statutsIndividuels = is_array($statutsIndividuels)
+            ? $statutsIndividuels
+            : (json_decode($statutsIndividuels, true) ?? []);
+
         $count = 0;
+
         foreach ($statutsIndividuels as $statut) {
-            if ($statut['statut'] === 'charge') {
+
+            if (($statut['statut'] ?? null) === 'charge') {
                 $count++;
             }
         }
+
         return $count;
     }
 
