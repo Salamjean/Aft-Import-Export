@@ -165,7 +165,7 @@ class ChargerController extends Controller
                 ], 404);
             }
 
-            $ancienStatut = $statutsIndividuels[$qrCode]['statut'];
+            $ancienStatut = $statutsIndividuels[$qrCode]['statut'] ?? null;
             $produit = $statutsIndividuels[$qrCode]['produit'] ?? 'Non spécifié';
             $colisNumero = $statutsIndividuels[$qrCode]['colis_numero'] ?? '?';
             $uniteNumero = $statutsIndividuels[$qrCode]['unite_numero'] ?? '?';
