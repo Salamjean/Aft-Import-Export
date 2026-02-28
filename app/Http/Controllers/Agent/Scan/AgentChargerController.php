@@ -642,11 +642,21 @@ class AgentChargerController extends Controller
      */
     private function verifierTousCharges($statutsIndividuels)
     {
+        $statutsIndividuels = is_array($statutsIndividuels)
+            ? $statutsIndividuels
+            : json_decode($statutsIndividuels, true);
+
+        if (empty($statutsIndividuels)) {
+            return false;
+        }
+
         foreach ($statutsIndividuels as $statut) {
-            if ($statut['statut'] !== 'charge') {
+
+            if (($statut['statut'] ?? null) !== 'charge') {
                 return false;
             }
         }
+
         return true;
     }
 
