@@ -282,7 +282,7 @@
             </tr>
             <tr>
                 <td class="header-left">
-                     <img src="assets/img/barre_code.png" class="barcode-img" alt="Code Barre Reference Colis">
+                    <img src="assets/img/barre_code.png" class="barcode-img" alt="Code Barre Reference Colis">
                 </td>
                 <td class="header-right" style="vertical-align: bottom;">
                     <div class="document-title">BON DE LIVRAISON</div>
@@ -295,10 +295,10 @@
             <div class="address-column">
                 <span class="address-label">Adresse de livraison</span>
                 <div class="address-content">
-                   Nom & Prenoms : {{ $colis->name_destinataire }} {{ $colis->prenom_destinataire }}<br>
-                   Adresse : {{ $colis->adresse_destinataire }}<br>
-                   Email : {{ $colis->email_destinataire }}<br>
-                   Contact : {{ $colis->contact_destinataire }}
+                    Nom & Prenoms : {{ $colis->name_destinataire }} {{ $colis->prenom_destinataire }}<br>
+                    Adresse : {{ $colis->adresse_destinataire }}<br>
+                    Email : {{ $colis->email_destinataire }}<br>
+                    Contact : {{ $colis->contact_destinataire }}
                 </div>
             </div>
 
@@ -319,7 +319,7 @@
                     <tr>
                         <td class="meta-label">Créé par:</td>
                         <td class="meta-value">
-                            {{ Auth::guard('agent')->user()->name . ' ' . Auth::guard('agent')->user()->prenom ?? 'ADAMA SYLLA' }}
+                            {{ Auth::guard('agent')->check() ? Auth::guard('agent')->user()->name . ' ' . Auth::guard('agent')->user()->prenom : 'ADAMA SYLLA' }}
                         </td>
                     </tr>
                 </table>

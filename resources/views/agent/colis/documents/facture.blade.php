@@ -377,7 +377,7 @@
                     </tr>
                     <tr>
                         <td class="meta-label">Code et Nom du vendeur:</td>
-                        <td class="meta-value">{{ Auth::guard('agent')->user()->name. ' '. Auth::guard('agent')->user()->prenom ?? 'ADAMA SYLLA' }}</td>
+                        <td class="meta-value">{{ Auth::guard('agent')->check() ? Auth::guard('agent')->user()->name . ' ' . Auth::guard('agent')->user()->prenom : 'ADAMA SYLLA' }}</td>
                     </tr>
                 </table>
             </div>

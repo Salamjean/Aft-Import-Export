@@ -113,11 +113,9 @@
                                                 <select class=" border-start-0 modern-select" id="mode_transit"
                                                     name="mode_transit" required>
                                                     <option value="">Sélectionnez un mode</option>
-                                                    <option value="Maritime"
-                                                        {{ $colis->mode_transit == 'Maritime' ? 'selected' : '' }}>Maritime
+                                                    <option value="Maritime" {{ $colis->mode_transit == 'Maritime' ? 'selected' : '' }}>Maritime
                                                     </option>
-                                                    <option value="Aerien"
-                                                        {{ $colis->mode_transit == 'Aerien' ? 'selected' : '' }}>Aérien
+                                                    <option value="Aerien" {{ $colis->mode_transit == 'Aerien' ? 'selected' : '' }}>Aérien
                                                     </option>
                                                 </select>
                                             </div>
@@ -159,9 +157,7 @@
                                                     style="background-color: #f8f9fa; cursor: not-allowed;">
                                                     <option value="">Sélectionnez une agence</option>
                                                     @foreach ($agencesExpedition as $agence)
-                                                        <option value="{{ $agence->id }}"
-                                                            data-devise="{{ $agence->devise }}"
-                                                            {{ $colis->agence_expedition_id == $agence->id ? 'selected' : '' }}>
+                                                        <option value="{{ $agence->id }}" data-devise="{{ $agence->devise }}" {{ $colis->agence_expedition_id == $agence->id ? 'selected' : '' }}>
                                                             {{ $agence->name }} ({{ $agence->pays }} -
                                                             {{ $agence->devise }})
                                                         </option>
@@ -188,24 +184,22 @@
                                                 <small class="text-muted mt-1" id="devise_expedition_info">Devise de
                                                     l'agence sélectionnée</small>
                                             </div>
-                                            <input type="hidden" id="devise" name="devise"
-                                                value="{{ $colis->devise }}">
+                                            <input type="hidden" id="devise" name="devise" value="{{ $colis->devise }}">
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="d-flex justify-content-between mt-5 pt-3">
                                     <div></div>
-                                    <button type="button" class="btn next-step" data-next="2"
-                                        style="
-                                            background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
-                                            border: none;
-                                            border-radius: 25px;
-                                            padding: 12px 30px;
-                                            font-weight: 600;
-                                            color: white;
-                                            transition: all 0.3s ease;
-                                        ">
+                                    <button type="button" class="btn next-step" data-next="2" style="
+                                                background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                border: none;
+                                                border-radius: 25px;
+                                                padding: 12px 30px;
+                                                font-weight: 600;
+                                                color: white;
+                                                transition: all 0.3s ease;
+                                            ">
                                         Suivant <i class="fas fa-arrow-right ms-2"></i>
                                     </button>
                                 </div>
@@ -231,11 +225,9 @@
                                                 </span>
                                                 <select class="border-start-0 modern-select" id="type_expediteur"
                                                     name="type_expediteur" required>
-                                                    <option value="particulier"
-                                                        {{ $colis->type_expediteur == 'particulier' ? 'selected' : '' }}>
+                                                    <option value="particulier" {{ $colis->type_expediteur == 'particulier' ? 'selected' : '' }}>
                                                         Particulier</option>
-                                                    <option value="societe"
-                                                        {{ $colis->type_expediteur == 'societe' ? 'selected' : '' }}>
+                                                    <option value="societe" {{ $colis->type_expediteur == 'societe' ? 'selected' : '' }}>
                                                         Société</option>
                                                 </select>
                                             </div>
@@ -250,8 +242,7 @@
                                                     <span class="input-group-text bg-light border-end-0">
                                                         <i class="fas fa-search" style="color: #fea219;"></i>
                                                     </span>
-                                                    <input type="text" class="border-start-0 modern-input"
-                                                        id="userSearch"
+                                                    <input type="text" class="border-start-0 modern-input" id="userSearch"
                                                         placeholder="Tapez le nom, email ou contact d'un utilisateur...">
                                                 </div>
                                                 <div class="search-results dropdown-menu w-100" id="userSearchResults"
@@ -295,8 +286,7 @@
                                         <div class="form-group">
                                             <label for="contact_expediteur" class="form-label required">Contact</label>
                                             <input type="text" class="modern-input" id="contact_expediteur"
-                                                name="contact_expediteur" value="{{ $colis->contact_expediteur }}"
-                                                required>
+                                                name="contact_expediteur" value="{{ $colis->contact_expediteur }}" required>
                                         </div>
                                     </div>
 
@@ -304,34 +294,33 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="adresse_expediteur" class="form-label required">Adresse</label>
-                                            <textarea class="modern-input" id="adresse_expediteur" name="adresse_expediteur" rows="3" required>{{ $colis->adresse_expediteur }}</textarea>
+                                            <textarea class="modern-input" id="adresse_expediteur" name="adresse_expediteur"
+                                                rows="3" required>{{ $colis->adresse_expediteur }}</textarea>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="d-flex justify-content-between mt-5 pt-3">
-                                    <button type="button" class="btn prev-step" data-prev="1"
-                                        style="
-                                            background: white;
-                                            border: 2px solid #0e914b;
-                                            border-radius: 25px;
-                                            padding: 12px 30px;
-                                            font-weight: 600;
-                                            color: #0e914b;
-                                            transition: all 0.3s ease;
-                                        ">
+                                    <button type="button" class="btn prev-step" data-prev="1" style="
+                                                background: white;
+                                                border: 2px solid #0e914b;
+                                                border-radius: 25px;
+                                                padding: 12px 30px;
+                                                font-weight: 600;
+                                                color: #0e914b;
+                                                transition: all 0.3s ease;
+                                            ">
                                         <i class="fas fa-arrow-left me-2"></i>Précédent
                                     </button>
-                                    <button type="button" class="btn next-step" data-next="3"
-                                        style="
-                                            background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
-                                            border: none;
-                                            border-radius: 25px;
-                                            padding: 12px 30px;
-                                            font-weight: 600;
-                                            color: white;
-                                            transition: all 0.3s ease;
-                                        ">
+                                    <button type="button" class="btn next-step" data-next="3" style="
+                                                background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                border: none;
+                                                border-radius: 25px;
+                                                padding: 12px 30px;
+                                                font-weight: 600;
+                                                color: white;
+                                                transition: all 0.3s ease;
+                                            ">
                                         Suivant <i class="fas fa-arrow-right ms-2"></i>
                                     </button>
                                 </div>
@@ -350,8 +339,7 @@
                                         <div class="form-group">
                                             <label for="name_destinataire" class="form-label required">Nom</label>
                                             <input type="text" class="modern-input" id="name_destinataire"
-                                                name="name_destinataire" value="{{ $colis->name_destinataire }}"
-                                                required>
+                                                name="name_destinataire" value="{{ $colis->name_destinataire }}" required>
                                         </div>
                                     </div>
 
@@ -380,8 +368,8 @@
                                             <label for="indicatif" class="form-label required">Indicatif</label>
                                             <select class="modern-select" id="indicatif" name="indicatif" required>
                                                 <option value="">Sélectionnez un indicatif</option>
-                                                <option value="+225"
-                                                    {{ $colis->indicatif == '+225' ? 'selected' : '' }}>+225 (Côte
+                                                <option value="+225" {{ $colis->indicatif == '+225' ? 'selected' : '' }}>+225
+                                                    (Côte
                                                     d'Ivoire)</option>
                                                 <option value="+33" {{ $colis->indicatif == '+33' ? 'selected' : '' }}>
                                                     +33 (France)</option>
@@ -418,34 +406,34 @@
                                         <div class="form-group">
                                             <label for="adresse_destinataire" class="form-label required">Adresse en Côte
                                                 d'Ivoire</label>
-                                            <textarea class="modern-input" id="adresse_destinataire" name="adresse_destinataire" rows="3" required>{{ $colis->adresse_destinataire }}</textarea>
+                                            <textarea class="modern-input" id="adresse_destinataire"
+                                                name="adresse_destinataire" rows="3"
+                                                required>{{ $colis->adresse_destinataire }}</textarea>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="d-flex justify-content-between mt-5 pt-3">
-                                    <button type="button" class="btn prev-step" data-prev="2"
-                                        style="
-                                            background: white;
-                                            border: 2px solid #0e914b;
-                                            border-radius: 25px;
-                                            padding: 12px 30px;
-                                            font-weight: 600;
-                                            color: #0e914b;
-                                            transition: all 0.3s ease;
-                                        ">
+                                    <button type="button" class="btn prev-step" data-prev="2" style="
+                                                background: white;
+                                                border: 2px solid #0e914b;
+                                                border-radius: 25px;
+                                                padding: 12px 30px;
+                                                font-weight: 600;
+                                                color: #0e914b;
+                                                transition: all 0.3s ease;
+                                            ">
                                         <i class="fas fa-arrow-left me-2"></i>Précédent
                                     </button>
-                                    <button type="button" class="btn next-step" data-next="4"
-                                        style="
-                                            background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
-                                            border: none;
-                                            border-radius: 25px;
-                                            padding: 12px 30px;
-                                            font-weight: 600;
-                                            color: white;
-                                            transition: all 0.3s ease;
-                                        ">
+                                    <button type="button" class="btn next-step" data-next="4" style="
+                                                background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                border: none;
+                                                border-radius: 25px;
+                                                padding: 12px 30px;
+                                                font-weight: 600;
+                                                color: white;
+                                                transition: all 0.3s ease;
+                                            ">
                                         Suivant <i class="fas fa-arrow-right ms-2"></i>
                                     </button>
                                 </div>
@@ -472,8 +460,7 @@
                                         $colisData = json_decode($colis->colis, true);
                                     @endphp
                                     @foreach ($colisData as $index => $item)
-                                        <div class="colis-item card mb-4 border-0 shadow-sm"
-                                            data-index="{{ $index }}"
+                                        <div class="colis-item card mb-4 border-0 shadow-sm" data-index="{{ $index }}"
                                             style="border-radius: 15px; border-left: 4px solid #fea219;">
                                             <div class="card-header bg-white d-flex justify-content-between align-items-center py-3"
                                                 style="border-radius: 15px 15px 0 0; border-bottom: 1px solid #e9ecef;">
@@ -485,8 +472,7 @@
                                                         <i class="fas fa-times"></i>
                                                     </button>
                                                 @else
-                                                    <button type="button"
-                                                        class="btn btn-sm btn-danger remove-colis d-none">
+                                                    <button type="button" class="btn btn-sm btn-danger remove-colis d-none">
                                                         <i class="fas fa-times"></i>
                                                     </button>
                                                 @endif
@@ -511,8 +497,7 @@
                                                                     name="colis[{{ $index }}][produit]"
                                                                     placeholder="Rechercher un produit..."
                                                                     value="{{ $item['produit'] }}" required>
-                                                                <button type="button"
-                                                                    class="btn btn-primary add-produit-btn"
+                                                                <button type="button" class="btn btn-primary add-produit-btn"
                                                                     data-index="{{ $index }}">
                                                                     <i class="fas fa-plus"></i>
                                                                 </button>
@@ -528,19 +513,16 @@
                                                     <div class="col-md-3">
                                                         <label class="form-label fw-bold required">Prix Unitaire</label>
                                                         <input type="number" class="form-control prix-unitaire-input"
-                                                            name="colis[{{ $index }}][prix_unitaire]"
-                                                            step="0.01" min="0"
+                                                            name="colis[{{ $index }}][prix_unitaire]" step="0.01" min="0"
                                                             value="{{ $item['prix_unitaire'] }}" required>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <label class="form-label fw-bold required">Type de Colis</label>
-                                                        <select class="form-control"
-                                                            name="colis[{{ $index }}][type_colis]" required>
-                                                            <option value="Standard"
-                                                                {{ ($item['type_colis'] ?? 'Standard') == 'Standard' ? 'selected' : '' }}>
+                                                        <select class="form-control" name="colis[{{ $index }}][type_colis]"
+                                                            required>
+                                                            <option value="Standard" {{ ($item['type_colis'] ?? 'Standard') == 'Standard' ? 'selected' : '' }}>
                                                                 Standard</option>
-                                                            <option value="Fragile"
-                                                                {{ ($item['type_colis'] ?? 'Standard') == 'Fragile' ? 'selected' : '' }}>
+                                                            <option value="Fragile" {{ ($item['type_colis'] ?? 'Standard') == 'Fragile' ? 'selected' : '' }}>
                                                                 Fragile</option>
                                                         </select>
                                                     </div>
@@ -552,32 +534,33 @@
                                                     <div class="col-md-3">
                                                         <label class="form-label fw-bold">Longueur (cm)</label>
                                                         <input type="number" class="form-control"
-                                                            name="colis[{{ $index }}][longueur]" step="0.1"
-                                                            min="0" value="{{ $item['longueur'] ?? '' }}">
+                                                            name="colis[{{ $index }}][longueur]" step="0.1" min="0"
+                                                            value="{{ $item['longueur'] ?? '' }}">
                                                     </div>
                                                     <div class="col-md-3">
                                                         <label class="form-label fw-bold">Largeur (cm)</label>
                                                         <input type="number" class="form-control"
-                                                            name="colis[{{ $index }}][largeur]" step="0.1"
-                                                            min="0" value="{{ $item['largeur'] ?? '' }}">
+                                                            name="colis[{{ $index }}][largeur]" step="0.1" min="0"
+                                                            value="{{ $item['largeur'] ?? '' }}">
                                                     </div>
                                                     <div class="col-md-3">
                                                         <label class="form-label fw-bold">Hauteur (cm)</label>
                                                         <input type="number" class="form-control"
-                                                            name="colis[{{ $index }}][hauteur]" step="0.1"
-                                                            min="0" value="{{ $item['hauteur'] ?? '' }}">
+                                                            name="colis[{{ $index }}][hauteur]" step="0.1" min="0"
+                                                            value="{{ $item['hauteur'] ?? '' }}">
                                                     </div>
                                                     <div class="col-md-3">
                                                         <label class="form-label fw-bold">Poids (kg)</label>
                                                         <input type="number" class="form-control"
-                                                            name="colis[{{ $index }}][poids]" step="0.1"
-                                                            min="0" value="{{ $item['poids'] ?? '' }}">
+                                                            name="colis[{{ $index }}][poids]" step="0.1" min="0"
+                                                            value="{{ $item['poids'] ?? '' }}">
                                                     </div>
                                                 </div>
 
                                                 <div class="mt-3">
                                                     <label class="form-label fw-bold">Description</label>
-                                                    <textarea class="form-control" name="colis[{{ $index }}][description]" rows="2"
+                                                    <textarea class="form-control" name="colis[{{ $index }}][description]"
+                                                        rows="2"
                                                         placeholder="Description du produit...">{{ $item['description'] ?? '' }}</textarea>
                                                 </div>
                                             </div>
@@ -586,35 +569,8 @@
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center mt-4 pt-3">
-                                    <button type="button" class="btn" id="add-colis"
-                                        style="
-                                            background: linear-gradient(135deg, #fea219 0%, #e69100 100%);
-                                            border: none;
-                                            border-radius: 25px;
-                                            padding: 10px 25px;
-                                            font-weight: 600;
-                                            color: white;
-                                            transition: all 0.3s ease;
-                                        ">
-                                        <i class="fas fa-plus me-2"></i>Ajouter un autre colis
-                                    </button>
-
-                                    <div>
-                                        <button type="button" class="btn prev-step me-2" data-prev="3"
-                                            style="
-                                                background: white;
-                                                border: 2px solid #0e914b;
-                                                border-radius: 25px;
-                                                padding: 10px 25px;
-                                                font-weight: 600;
-                                                color: #0e914b;
-                                                transition: all 0.3s ease;
-                                            ">
-                                            <i class="fas fa-arrow-left me-2"></i>Précédent
-                                        </button>
-                                        <button type="button" class="btn next-step" data-next="5"
-                                            style="
-                                                background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                    <button type="button" class="btn" id="add-colis" style="
+                                                background: linear-gradient(135deg, #fea219 0%, #e69100 100%);
                                                 border: none;
                                                 border-radius: 25px;
                                                 padding: 10px 25px;
@@ -622,6 +578,30 @@
                                                 color: white;
                                                 transition: all 0.3s ease;
                                             ">
+                                        <i class="fas fa-plus me-2"></i>Ajouter un autre colis
+                                    </button>
+
+                                    <div>
+                                        <button type="button" class="btn prev-step me-2" data-prev="3" style="
+                                                    background: white;
+                                                    border: 2px solid #0e914b;
+                                                    border-radius: 25px;
+                                                    padding: 10px 25px;
+                                                    font-weight: 600;
+                                                    color: #0e914b;
+                                                    transition: all 0.3s ease;
+                                                ">
+                                            <i class="fas fa-arrow-left me-2"></i>Précédent
+                                        </button>
+                                        <button type="button" class="btn next-step" data-next="5" style="
+                                                    background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                    border: none;
+                                                    border-radius: 25px;
+                                                    padding: 10px 25px;
+                                                    font-weight: 600;
+                                                    color: white;
+                                                    transition: all 0.3s ease;
+                                                ">
                                             Suivant <i class="fas fa-arrow-right ms-2"></i>
                                         </button>
                                     </div>
@@ -644,8 +624,7 @@
                                                     <option value="">Aucun service supplémentaire</option>
                                                     @foreach ($services as $service)
                                                         <option value="{{ $service->id }}"
-                                                            data-prix="{{ $service->prix_unitaire }}"
-                                                            {{ $colis->service_id == $service->id ? 'selected' : '' }}>
+                                                            data-prix="{{ $service->prix_unitaire }}" {{ $colis->service_id == $service->id ? 'selected' : '' }}>
                                                             {{ $service->designation }} - {{ $service->prix_unitaire }}
                                                             <span class="devise-dynamic">XOF</span>
                                                         </option>
@@ -659,9 +638,9 @@
 
                                         <div class="form-group mt-3">
                                             <label for="prix_service" class="form-label">Prix du Service</label>
-                                            <input type="number" class=" modern-input" id="prix_service"
-                                                name="prix_service" readonly step="0.01" min="0"
-                                                placeholder="Sélectionnez un service" value="{{ $colis->prix_service }}">
+                                            <input type="number" class=" modern-input" id="prix_service" name="prix_service"
+                                                readonly step="0.01" min="0" placeholder="Sélectionnez un service"
+                                                value="{{ $colis->prix_service }}">
                                         </div>
 
                                         <div class="mt-4 p-3 bg-light rounded">
@@ -731,20 +710,15 @@
                                             <select class="modern-select" id="methode_paiement" name="methode_paiement"
                                                 required>
                                                 <option value="">Sélectionnez une méthode</option>
-                                                <option value="espece"
-                                                    {{ $colis->methode_paiement == 'espece' ? 'selected' : '' }}>Espèce
+                                                <option value="espece" {{ $colis->methode_paiement == 'espece' ? 'selected' : '' }}>Espèce
                                                 </option>
-                                                <option value="virement_bancaire"
-                                                    {{ $colis->methode_paiement == 'virement_bancaire' ? 'selected' : '' }}>
+                                                <option value="virement_bancaire" {{ $colis->methode_paiement == 'virement_bancaire' ? 'selected' : '' }}>
                                                     Virement Bancaire</option>
-                                                <option value="cheque"
-                                                    {{ $colis->methode_paiement == 'cheque' ? 'selected' : '' }}>Chèque
+                                                <option value="cheque" {{ $colis->methode_paiement == 'cheque' ? 'selected' : '' }}>Chèque
                                                 </option>
-                                                <option value="mobile_money"
-                                                    {{ $colis->methode_paiement == 'mobile_money' ? 'selected' : '' }}>
+                                                <option value="mobile_money" {{ $colis->methode_paiement == 'mobile_money' ? 'selected' : '' }}>
                                                     Mobile Money</option>
-                                                <option value="livraison"
-                                                    {{ $colis->methode_paiement == 'livraison' ? 'selected' : '' }}>
+                                                <option value="livraison" {{ $colis->methode_paiement == 'livraison' ? 'selected' : '' }}>
                                                     Paiement à la Livraison</option>
                                             </select>
                                         </div>
@@ -765,16 +739,14 @@
                                                         <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label class="form-label required">Nom de la Banque</label>
-                                                                <input type="text" class="modern-input"
-                                                                    name="nom_banque" value="{{ $colis->nom_banque }}"
-                                                                    required>
+                                                                <input type="text" class="modern-input" name="nom_banque"
+                                                                    value="{{ $colis->nom_banque }}" required>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label class="form-label required">Numéro de Compte</label>
-                                                                <input type="text" class="modern-input"
-                                                                    name="numero_compte"
+                                                                <input type="text" class="modern-input" name="numero_compte"
                                                                     value="{{ $colis->numero_compte }}" required>
                                                             </div>
                                                         </div>
@@ -786,21 +758,17 @@
                                                         <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label class="form-label required">Opérateur</label>
-                                                                <select class="modern-select"
-                                                                    name="operateur_mobile_money" required>
+                                                                <select class="modern-select" name="operateur_mobile_money"
+                                                                    required>
                                                                     <option value="">Sélectionnez un opérateur
                                                                     </option>
-                                                                    <option value="WAVE"
-                                                                        {{ $colis->operateur_mobile_money == 'WAVE' ? 'selected' : '' }}>
+                                                                    <option value="WAVE" {{ $colis->operateur_mobile_money == 'WAVE' ? 'selected' : '' }}>
                                                                         WAVE</option>
-                                                                    <option value="ORANGE"
-                                                                        {{ $colis->operateur_mobile_money == 'ORANGE' ? 'selected' : '' }}>
+                                                                    <option value="ORANGE" {{ $colis->operateur_mobile_money == 'ORANGE' ? 'selected' : '' }}>
                                                                         ORANGE</option>
-                                                                    <option value="MOOV"
-                                                                        {{ $colis->operateur_mobile_money == 'MOOV' ? 'selected' : '' }}>
+                                                                    <option value="MOOV" {{ $colis->operateur_mobile_money == 'MOOV' ? 'selected' : '' }}>
                                                                         MOOV</option>
-                                                                    <option value="MTN"
-                                                                        {{ $colis->operateur_mobile_money == 'MTN' ? 'selected' : '' }}>
+                                                                    <option value="MTN" {{ $colis->operateur_mobile_money == 'MTN' ? 'selected' : '' }}>
                                                                         MTN</option>
                                                                 </select>
                                                             </div>
@@ -862,21 +830,19 @@
                                                 Paiement</label>
                                             <select class="modern-select" id="statut_paiement" name="statut_paiement"
                                                 required>
-                                                <option value="non_paye"
-                                                    {{ $colis->statut_paiement == 'non_paye' ? 'selected' : '' }}>Non Payé
+                                                <option value="non_paye" {{ $colis->statut_paiement == 'non_paye' ? 'selected' : '' }}>Non Payé
                                                 </option>
-                                                <option value="partiellement_paye"
-                                                    {{ $colis->statut_paiement == 'partiellement_paye' ? 'selected' : '' }}>
+                                                <option value="partiellement_paye" {{ $colis->statut_paiement == 'partiellement_paye' ? 'selected' : '' }}>
                                                     Partiellement Payé</option>
-                                                <option value="totalement_paye"
-                                                    {{ $colis->statut_paiement == 'totalement_paye' ? 'selected' : '' }}>
+                                                <option value="totalement_paye" {{ $colis->statut_paiement == 'totalement_paye' ? 'selected' : '' }}>
                                                     Totalement Payé</option>
                                             </select>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="notes_paiement" class="form-label">Notes de Paiement</label>
-                                            <textarea class="modern-input" id="notes_paiement" name="notes_paiement" rows="3"
+                                            <textarea class="modern-input" id="notes_paiement" name="notes_paiement"
+                                                rows="3"
                                                 placeholder="Notes supplémentaires concernant le paiement...">{{ $colis->notes_paiement }}</textarea>
                                         </div>
                                     </div>
@@ -920,12 +886,14 @@
                                                         <tr>
                                                             <td class="fw-bold">Agence Expédition:</td>
                                                             <td id="recap_agence_expedition">
-                                                                {{ $colis->agence_expedition }}</td>
+                                                                {{ $colis->agence_expedition }}
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td class="fw-bold">Agence Destination:</td>
                                                             <td id="recap_agence_destination">
-                                                                {{ $colis->agence_destination }}</td>
+                                                                {{ $colis->agence_destination }}
+                                                            </td>
                                                         </tr>
                                                     </table>
                                                 </div>
@@ -934,12 +902,14 @@
                                                         <tr>
                                                             <td class="fw-bold" style="width: 40%;">Référence:</td>
                                                             <td id="recap_reference" class="fw-bold text-primary">
-                                                                {{ $colis->reference_colis }}</td>
+                                                                {{ $colis->reference_colis }}
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td class="fw-bold">Conteneur:</td>
                                                             <td id="recap_conteneur">
-                                                                {{ $colis->conteneur->name_conteneur ?? '-' }}</td>
+                                                                {{ $colis->conteneur->name_conteneur ?? '-' }}
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td class="fw-bold">Devise:</td>
@@ -971,22 +941,26 @@
                                                         <tr>
                                                             <td class="fw-bold">Prénom:</td>
                                                             <td id="recap_expediteur_prenom">
-                                                                {{ $colis->prenom_expediteur ?? 'Non applicable' }}</td>
+                                                                {{ $colis->prenom_expediteur ?? 'Non applicable' }}
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td class="fw-bold">Email:</td>
                                                             <td id="recap_expediteur_email">
-                                                                {{ $colis->email_expediteur ?? '-' }}</td>
+                                                                {{ $colis->email_expediteur ?? '-' }}
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td class="fw-bold">Contact:</td>
                                                             <td id="recap_expediteur_contact">
-                                                                {{ $colis->contact_expediteur }}</td>
+                                                                {{ $colis->contact_expediteur }}
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td class="fw-bold">Adresse:</td>
                                                             <td id="recap_expediteur_adresse">
-                                                                {{ $colis->adresse_expediteur }}</td>
+                                                                {{ $colis->adresse_expediteur }}
+                                                            </td>
                                                         </tr>
                                                     </table>
                                                 </div>
@@ -1005,27 +979,32 @@
                                                         <tr>
                                                             <td class="fw-bold" style="width: 40%;">Nom:</td>
                                                             <td id="recap_destinataire_nom">
-                                                                {{ $colis->name_destinataire }}</td>
+                                                                {{ $colis->name_destinataire }}
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td class="fw-bold">Prénom:</td>
                                                             <td id="recap_destinataire_prenom">
-                                                                {{ $colis->prenom_destinataire }}</td>
+                                                                {{ $colis->prenom_destinataire }}
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td class="fw-bold">Email:</td>
                                                             <td id="recap_destinataire_email">
-                                                                {{ $colis->email_destinataire ?? '-' }}</td>
+                                                                {{ $colis->email_destinataire ?? '-' }}
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td class="fw-bold">Contact:</td>
                                                             <td id="recap_destinataire_contact">
-                                                                {{ $colis->contact_destinataire }}</td>
+                                                                {{ $colis->contact_destinataire }}
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td class="fw-bold">Adresse:</td>
                                                             <td id="recap_destinataire_adresse">
-                                                                {{ $colis->adresse_destinataire }}</td>
+                                                                {{ $colis->adresse_destinataire }}
+                                                            </td>
                                                         </tr>
                                                     </table>
                                                 </div>
@@ -1065,20 +1044,23 @@
                                                         @endphp
                                                         @foreach ($colisData as $index => $item)
                                                             @php
-                                                                $totalColis =
-                                                                    $item['quantite'] * $item['prix_unitaire'];
+                                                                if ($colis->mode_transit === 'Aerien') {
+                                                                    $totalColis = $item['prix_unitaire'];
+                                                                } else {
+                                                                    $totalColis = $item['quantite'] * $item['prix_unitaire'];
+                                                                }
                                                                 $totalGeneral += $totalColis;
                                                                 $dimensions =
                                                                     $item['longueur'] ??
                                                                     (false && $item['largeur'] ??
                                                                         (false && $item['hauteur'] ?? false))
-                                                                        ? $item['longueur'] .
-                                                                            '×' .
-                                                                            $item['largeur'] .
-                                                                            '×' .
-                                                                            $item['hauteur'] .
-                                                                            ' cm'
-                                                                        : 'Non spécifié';
+                                                                    ? $item['longueur'] .
+                                                                    '×' .
+                                                                    $item['largeur'] .
+                                                                    '×' .
+                                                                    $item['hauteur'] .
+                                                                    ' cm'
+                                                                    : 'Non spécifié';
                                                             @endphp
                                                             <tr>
                                                                 <td class="fw-bold">{{ $index + 1 }}</td>
@@ -1100,7 +1082,8 @@
                                                             <td colspan="3" class="fw-bold text-primary"
                                                                 id="recap_total_colis">
                                                                 {{ number_format($totalGeneral, 2) }}
-                                                                {{ $colis->devise }}</td>
+                                                                {{ $colis->devise }}
+                                                            </td>
                                                         </tr>
                                                     </tfoot>
                                                 </table>
@@ -1123,13 +1106,15 @@
                                                         <tr>
                                                             <td class="fw-bold" style="width: 50%;">Service:</td>
                                                             <td id="recap_service">
-                                                                {{ $colis->service->designation ?? 'Aucun service' }}</td>
+                                                                {{ $colis->service->designation ?? 'Aucun service' }}
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td class="fw-bold">Prix Service:</td>
                                                             <td id="recap_prix_service">
                                                                 {{ number_format($colis->prix_service ?? 0, 2) }}
-                                                                {{ $colis->devise }}</td>
+                                                                {{ $colis->devise }}
+                                                            </td>
                                                         </tr>
                                                     </table>
                                                 </div>
@@ -1167,30 +1152,31 @@
                                                             <td class="fw-bold">Montant Total:</td>
                                                             <td id="recap_montant_total">
                                                                 {{ number_format($colis->montant_total, 2) }}
-                                                                {{ $colis->devise }}</td>
+                                                                {{ $colis->devise }}
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td class="fw-bold">Montant Payé:</td>
                                                             <td id="recap_montant_paye">
                                                                 {{ number_format($colis->montant_paye, 2) }}
-                                                                {{ $colis->devise }}</td>
+                                                                {{ $colis->devise }}
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td class="fw-bold">Reste à Payer:</td>
                                                             <td id="recap_reste_payer">
                                                                 {{ number_format($colis->reste_a_payer, 2) }}
-                                                                {{ $colis->devise }}</td>
+                                                                {{ $colis->devise }}
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td class="fw-bold">Statut:</td>
                                                             <td>
-                                                                <span
-                                                                    class="badge 
-                                                                @if ($colis->statut_paiement == 'non_paye') bg-danger
-                                                                @elseif($colis->statut_paiement == 'partiellement_paye') bg-warning text-dark
-                                                                @elseif($colis->statut_paiement == 'totalement_paye') bg-success
-                                                                @else bg-secondary @endif"
-                                                                    id="recap_statut_paiement">
+                                                                <span class="badge 
+                                                                    @if ($colis->statut_paiement == 'non_paye') bg-danger
+                                                                    @elseif($colis->statut_paiement == 'partiellement_paye') bg-warning text-dark
+                                                                    @elseif($colis->statut_paiement == 'totalement_paye') bg-success
+                                                                    @else bg-secondary @endif" id="recap_statut_paiement">
                                                                     @if ($colis->statut_paiement == 'non_paye')
                                                                         Non Payé
                                                                     @elseif($colis->statut_paiement == 'partiellement_paye')
@@ -1211,28 +1197,26 @@
                                 </div>
 
                                 <div class="d-flex justify-content-between mt-5 pt-3">
-                                    <button type="button" class="btn prev-step" data-prev="6"
-                                        style="
-                                            background: white;
-                                            border: 2px solid #0e914b;
-                                            border-radius: 25px;
-                                            padding: 12px 30px;
-                                            font-weight: 600;
-                                            color: #0e914b;
-                                            transition: all 0.3s ease;
-                                        ">
+                                    <button type="button" class="btn prev-step" data-prev="6" style="
+                                                background: white;
+                                                border: 2px solid #0e914b;
+                                                border-radius: 25px;
+                                                padding: 12px 30px;
+                                                font-weight: 600;
+                                                color: #0e914b;
+                                                transition: all 0.3s ease;
+                                            ">
                                         <i class="fas fa-arrow-left me-2"></i>Précédent
                                     </button>
-                                    <button type="submit" class="btn btn-success" id="submit-btn"
-                                        style="
-                                            background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
-                                            border: none;
-                                            border-radius: 25px;
-                                            padding: 12px 30px;
-                                            font-weight: 600;
-                                            color: white;
-                                            transition: all 0.3s ease;
-                                        ">
+                                    <button type="submit" class="btn btn-success" id="submit-btn" style="
+                                                background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                border: none;
+                                                border-radius: 25px;
+                                                padding: 12px 30px;
+                                                font-weight: 600;
+                                                color: white;
+                                                transition: all 0.3s ease;
+                                            ">
                                         <i class="fas fa-save me-2"></i>Modifier le Colis
                                     </button>
                                 </div>
@@ -1266,8 +1250,7 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label required">Prix Unitaire</label>
-                            <input type="number" class="form-control" name="prix_unitaire" step="0.01"
-                                min="0" required>
+                            <input type="number" class="form-control" name="prix_unitaire" step="0.01" min="0" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label required">Agence de Destination</label>
@@ -1303,8 +1286,7 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label required">Prix Unitaire</label>
-                            <input type="number" class="form-control" name="prix_unitaire" step="0.01"
-                                min="0" required>
+                            <input type="number" class="form-control" name="prix_unitaire" step="0.01" min="0" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label required">Agence de Destination</label>
@@ -1315,7 +1297,8 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label">Description</label>
-                            <textarea class="form-control" name="description" rows="3" placeholder="Description du service..."></textarea>
+                            <textarea class="form-control" name="description" rows="3"
+                                placeholder="Description du service..."></textarea>
                         </div>
                         <div class="form-group">
                             <label class="form-label required">Type de Service</label>
@@ -1340,7 +1323,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             let currentStep = 1;
             let colisCount = {{ count($colisData) }};
             let searchTimeout;
@@ -1359,76 +1342,76 @@
 
             const paiementTemplates = {
                 espece: `
-        <div class="paiement-method-fields">
-            <div class="alert alert-info">
-                <i class="fas fa-info-circle me-2"></i>
-                Le montant payé sera enregistré dans le champ "Montant Payé" ci-dessous.
+            <div class="paiement-method-fields">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Le montant payé sera enregistré dans le champ "Montant Payé" ci-dessous.
+                </div>
             </div>
-        </div>
-    `,
+        `,
 
                 virement_bancaire: `
-        <div class="paiement-method-fields">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="form-label required">Nom de la Banque</label>
-                        <input type="text" class="modern-input" name="nom_banque" value="{{ $colis->nom_banque }}" required>
+            <div class="paiement-method-fields">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label required">Nom de la Banque</label>
+                            <input type="text" class="modern-input" name="nom_banque" value="{{ $colis->nom_banque }}" required>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="form-label required">Numéro de Compte</label>
-                        <input type="text" class="modern-input" name="numero_compte" value="{{ $colis->numero_compte }}" required>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label required">Numéro de Compte</label>
+                            <input type="text" class="modern-input" name="numero_compte" value="{{ $colis->numero_compte }}" required>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    `,
+        `,
 
                 cheque: `
-        <div class="paiement-method-fields">
-            <div class="alert alert-info">
-                <i class="fas fa-info-circle me-2"></i>
-                Le montant du chèque sera enregistré dans le champ "Montant Payé" ci-dessous.
+            <div class="paiement-method-fields">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Le montant du chèque sera enregistré dans le champ "Montant Payé" ci-dessous.
+                </div>
             </div>
-        </div>
-    `,
+        `,
 
                 mobile_money: `
-        <div class="paiement-method-fields">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="form-label required">Opérateur</label>
-                        <select class="modern-select" name="operateur_mobile_money" required>
-                            <option value="">Sélectionnez un opérateur</option>
-                            <option value="WAVE" {{ $colis->operateur_mobile_money == 'WAVE' ? 'selected' : '' }}>WAVE</option>
-                            <option value="ORANGE" {{ $colis->operateur_mobile_money == 'ORANGE' ? 'selected' : '' }}>ORANGE</option>
-                            <option value="MOOV" {{ $colis->operateur_mobile_money == 'MOOV' ? 'selected' : '' }}>MOOV</option>
-                            <option value="MTN" {{ $colis->operateur_mobile_money == 'MTN' ? 'selected' : '' }}>MTN</option>
-                        </select>
+            <div class="paiement-method-fields">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label required">Opérateur</label>
+                            <select class="modern-select" name="operateur_mobile_money" required>
+                                <option value="">Sélectionnez un opérateur</option>
+                                <option value="WAVE" {{ $colis->operateur_mobile_money == 'WAVE' ? 'selected' : '' }}>WAVE</option>
+                                <option value="ORANGE" {{ $colis->operateur_mobile_money == 'ORANGE' ? 'selected' : '' }}>ORANGE</option>
+                                <option value="MOOV" {{ $colis->operateur_mobile_money == 'MOOV' ? 'selected' : '' }}>MOOV</option>
+                                <option value="MTN" {{ $colis->operateur_mobile_money == 'MTN' ? 'selected' : '' }}>MTN</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="form-label required">Numéro de Téléphone</label>
-                        <input type="text" class="modern-input" name="numero_mobile_money" value="{{ $colis->numero_mobile_money }}" required>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label required">Numéro de Téléphone</label>
+                            <input type="text" class="modern-input" name="numero_mobile_money" value="{{ $colis->numero_mobile_money }}" required>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    `,
+        `,
 
                 livraison: `
-        <div class="paiement-method-fields">
-            <div class="alert alert-info">
-                <i class="fas fa-info-circle me-2"></i>
-                Le paiement sera effectué à la livraison du colis. Le montant payé sera de 0.
+            <div class="paiement-method-fields">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Le paiement sera effectué à la livraison du colis. Le montant payé sera de 0.
+                </div>
+                <input type="hidden" name="montant_livraison" value="0">
             </div>
-            <input type="hidden" name="montant_livraison" value="0">
-        </div>
-    `
+        `
             };
 
             // Gestion des étapes
@@ -1463,7 +1446,7 @@
 
             // Navigation entre les étapes
             document.querySelectorAll('.next-step').forEach(button => {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function () {
                     const nextStep = parseInt(this.dataset.next);
                     if (validateStep(currentStep)) {
                         showStep(nextStep);
@@ -1472,14 +1455,14 @@
             });
 
             document.querySelectorAll('.prev-step').forEach(button => {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function () {
                     const prevStep = parseInt(this.dataset.prev);
                     showStep(prevStep);
                 });
             });
 
             // Gestion du mode de transit
-            document.getElementById('mode_transit').addEventListener('change', function() {
+            document.getElementById('mode_transit').addEventListener('change', function () {
                 updateAgenceDestination();
                 updateConteneurEtReference();
                 updateTypeCalcul();
@@ -1487,7 +1470,7 @@
             });
 
             // Gestion de l'agence d'expédition (devise)
-            document.getElementById('agence_expedition_id').addEventListener('change', function() {
+            document.getElementById('agence_expedition_id').addEventListener('change', function () {
                 updateDeviseExpedition();
                 updateAgenceDestination();
                 updateConteneurEtReference();
@@ -1507,12 +1490,12 @@
             });
 
             // Gestion du type d'expéditeur
-            document.getElementById('type_expediteur').addEventListener('change', function() {
+            document.getElementById('type_expediteur').addEventListener('change', function () {
                 updateExpediteurFields();
             });
 
             // Gestion de la méthode de paiement
-            document.getElementById('methode_paiement').addEventListener('change', function() {
+            document.getElementById('methode_paiement').addEventListener('change', function () {
                 const method = this.value;
                 const fieldsContainer = document.getElementById('paiement-fields');
 
@@ -1535,12 +1518,12 @@
             });
 
             // Gestion du montant payé
-            document.getElementById('montant_paye').addEventListener('input', function() {
+            document.getElementById('montant_paye').addEventListener('input', function () {
                 updateResteAPayer();
             });
 
             // Gestion du service
-            document.getElementById('service_id').addEventListener('change', function() {
+            document.getElementById('service_id').addEventListener('change', function () {
                 const selectedOption = this.options[this.selectedIndex];
                 const prix = selectedOption.getAttribute('data-prix') || 0;
 
@@ -1549,27 +1532,27 @@
             });
 
             // Écouteur pour le bouton d'ajout de service
-            document.getElementById('add-service-btn').addEventListener('click', function() {
+            document.getElementById('add-service-btn').addEventListener('click', function () {
                 $('#addServiceModal').modal('show');
             });
 
             // Sauvegarde d'un nouveau produit
-            document.getElementById('saveProduitBtn').addEventListener('click', function() {
+            document.getElementById('saveProduitBtn').addEventListener('click', function () {
                 saveProduit();
             });
 
             // Sauvegarde d'un nouveau service
-            document.getElementById('saveServiceBtn').addEventListener('click', function() {
+            document.getElementById('saveServiceBtn').addEventListener('click', function () {
                 saveService();
             });
 
             // Ajout de colis
-            document.getElementById('add-colis').addEventListener('click', function() {
+            document.getElementById('add-colis').addEventListener('click', function () {
                 addColis();
             });
 
             // Recherche d'utilisateurs
-            document.getElementById('userSearch').addEventListener('input', function(e) {
+            document.getElementById('userSearch').addEventListener('input', function (e) {
                 clearTimeout(searchTimeout);
                 const searchTerm = e.target.value.trim();
 
@@ -1584,7 +1567,7 @@
             });
 
             // Recherche de produits
-            document.addEventListener('input', function(e) {
+            document.addEventListener('input', function (e) {
                 if (e.target.classList.contains('produit-input')) {
                     clearTimeout(produitSearchTimeout);
                     const searchTerm = e.target.value.trim();
@@ -1603,7 +1586,7 @@
             });
 
             // Gestion des boutons d'ajout de produit
-            document.addEventListener('click', function(e) {
+            document.addEventListener('click', function (e) {
                 if (e.target.closest('.add-produit-btn')) {
                     currentProduitIndex = e.target.closest('.add-produit-btn').getAttribute('data-index');
                     $('#addProduitModal').modal('show');
@@ -1611,7 +1594,7 @@
             });
 
             // Suppression de colis
-            document.addEventListener('click', function(e) {
+            document.addEventListener('click', function (e) {
                 if (e.target.closest('.remove-colis')) {
                     const colisItem = e.target.closest('.colis-item');
                     if (document.querySelectorAll('.colis-item').length > 1) {
@@ -1628,7 +1611,7 @@
             });
 
             // Cacher les résultats quand on clique ailleurs
-            document.addEventListener('click', function(e) {
+            document.addEventListener('click', function (e) {
                 if (!e.target.closest('.search-container')) {
                     hideSearchResults();
                     hideProduitResults();
@@ -1636,7 +1619,7 @@
             });
 
             // CORRECTION PRINCIPALE : Gestion de la soumission du formulaire
-            document.getElementById('colisForm').addEventListener('submit', function(e) {
+            document.getElementById('colisForm').addEventListener('submit', function (e) {
                 console.log('=== DÉBUT MODIFICATION FORMULAIRE ===');
 
                 // Valider toutes les étapes
@@ -1684,17 +1667,17 @@
                 const conteneurDetails = document.getElementById('conteneur_details');
                 if (conteneurDetails) {
                     conteneurDetails.innerHTML = `
-            <p class="mb-0 text-black">
-                <strong>Nom:</strong> {{ $colis->conteneur->name_conteneur ?? 'Non spécifié' }} | 
-                <strong>Type:</strong> {{ $colis->conteneur->type_conteneur ?? 'Non spécifié' }} | 
-                <strong>Statut:</strong> 
-                <span class="badge bg-success text-white">{{ $colis->conteneur->statut ?? 'Actif' }}</span>
-            </p>
-            <small class="text-muted">
-                <i class="fas fa-info-circle me-1"></i>
-                Conteneur original du colis - Non modifiable en édition
-            </small>
-        `;
+                <p class="mb-0 text-black">
+                    <strong>Nom:</strong> {{ $colis->conteneur->name_conteneur ?? 'Non spécifié' }} | 
+                    <strong>Type:</strong> {{ $colis->conteneur->type_conteneur ?? 'Non spécifié' }} | 
+                    <strong>Statut:</strong> 
+                    <span class="badge bg-success text-white">{{ $colis->conteneur->statut ?? 'Actif' }}</span>
+                </p>
+                <small class="text-muted">
+                    <i class="fas fa-info-circle me-1"></i>
+                    Conteneur original du colis - Non modifiable en édition
+                </small>
+            `;
                 }
             }
 
@@ -1702,18 +1685,18 @@
                 const conteneurDetails = document.getElementById('conteneur_details');
 
                 conteneurDetails.innerHTML = `
-            <p class="mb-0 text-black">
-                <strong>Nom:</strong> ${conteneur.name_conteneur} | 
-                <strong>Type:</strong> ${conteneur.type_conteneur} | 
-                <strong>Statut:</strong> 
-                <span class="badge bg-success text-white">${conteneur.statut}</span>
-                ${conteneur.agence ? `| <strong>Agence:</strong> ${conteneur.agence.name}` : ''}
-            </p>
-            <small class="text-muted">
-                <i class="fas fa-info-circle me-1"></i>
-                Conteneur créé automatiquement pour l'agence sélectionnée
-            </small>
-        `;
+                <p class="mb-0 text-black">
+                    <strong>Nom:</strong> ${conteneur.name_conteneur} | 
+                    <strong>Type:</strong> ${conteneur.type_conteneur} | 
+                    <strong>Statut:</strong> 
+                    <span class="badge bg-success text-white">${conteneur.statut}</span>
+                    ${conteneur.agence ? `| <strong>Agence:</strong> ${conteneur.agence.name}` : ''}
+                </p>
+                <small class="text-muted">
+                    <i class="fas fa-info-circle me-1"></i>
+                    Conteneur créé automatiquement pour l'agence sélectionnée
+                </small>
+            `;
 
                 document.getElementById('conteneur_id_input').value = conteneur.id;
             }
@@ -1908,7 +1891,7 @@
                     }
                 }
             }
-            document.getElementById('mode_transit').addEventListener('change', function() {
+            document.getElementById('mode_transit').addEventListener('change', function () {
                 // Recalculer tous les montants quand le mode change
                 updateMontants();
                 if (currentStep === 7) {
@@ -1970,12 +1953,12 @@
                 const url = '{{ url('users/search') }}?q=' + encodeURIComponent(searchTerm);
 
                 fetch(url, {
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest',
-                            'Accept': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        }
-                    })
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Erreur réseau: ' + response.status);
@@ -2002,11 +1985,11 @@
                         const userElement = document.createElement('div');
                         userElement.className = 'user-result-item';
                         userElement.innerHTML = `
-                    <div class="user-name">${user.name} ${user.prenom || ''}</div>
-                    <div class="user-details">
-                        ${user.email} • ${user.contact || 'Non renseigné'}
-                    </div>
-                `;
+                        <div class="user-name">${user.name} ${user.prenom || ''}</div>
+                        <div class="user-details">
+                            ${user.email} • ${user.contact || 'Non renseigné'}
+                        </div>
+                    `;
                         userElement.addEventListener('click', () => selectUser(user));
                         resultsContainer.appendChild(userElement);
                     });
@@ -2045,8 +2028,8 @@
                 const agenceDestinationId = document.getElementById('agence_destination_id').value;
 
                 fetch(
-                        `/produits/search?q=${encodeURIComponent(searchTerm)}&agence_destination_id=${agenceDestinationId}`
-                    )
+                    `/produits/search?q=${encodeURIComponent(searchTerm)}&agence_destination_id=${agenceDestinationId}`
+                )
                     .then(response => response.json())
                     .then(produits => {
                         displayProduitResults(produits, currentIndex);
@@ -2073,11 +2056,11 @@
                         const produitElement = document.createElement('div');
                         produitElement.className = 'user-result-item';
                         produitElement.innerHTML = `
-                    <div class="user-name">${produit.designation}</div>
-                    <div class="user-details">
-                        ${produit.prix_unitaire} • ${produit.agence_destination?.name || 'Agence non spécifiée'}
-                    </div>
-                `;
+                        <div class="user-name">${produit.designation}</div>
+                        <div class="user-details">
+                            ${produit.prix_unitaire} • ${produit.agence_destination?.name || 'Agence non spécifiée'}
+                        </div>
+                    `;
                         produitElement.addEventListener('click', () => selectProduit(produit,
                             currentIndex));
                         resultsContainer.appendChild(produitElement);
@@ -2135,13 +2118,13 @@
 
                 const url = "{{ route('admin.produits.store') }}";
                 fetch(url, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Accept': 'application/json'
-                        }
-                    })
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json'
+                    }
+                })
                     .then(response => {
                         if (!response.ok) {
                             throw new Error(`Erreur HTTP: ${response.status}`);
@@ -2191,13 +2174,13 @@
 
                 const url = "{{ route('admin.services.store') }}";
                 fetch(url, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Accept': 'application/json'
-                        }
-                    })
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json'
+                    }
+                })
                     .then(response => {
                         if (!response.ok) {
                             throw new Error(`Erreur HTTP: ${response.status}`);
@@ -2411,26 +2394,26 @@
                     // MODIFICATION : Affichage différent selon le mode de transit
                     if (modeTransit === 'Aerien') {
                         row.innerHTML = `
-                    <td class="fw-bold">${index + 1}</td>
-                    <td>${produit}</td>
-                    <td>${quantite}</td>
-                    <td>${prixUnitaire.toFixed(2)}</td>
-                    <td class="fw-bold">${totalColis.toFixed(2)}</td>
-                    <td>${typeColis}</td>
-                    <td>${dimensions}</td>
-                    <td>${poids !== '-' ? poids + ' kg' : '-'}</td>
-                `;
+                        <td class="fw-bold">${index + 1}</td>
+                        <td>${produit}</td>
+                        <td>${quantite}</td>
+                        <td>${prixUnitaire.toFixed(2)}</td>
+                        <td class="fw-bold">${totalColis.toFixed(2)}</td>
+                        <td>${typeColis}</td>
+                        <td>${dimensions}</td>
+                        <td>${poids !== '-' ? poids + ' kg' : '-'}</td>
+                    `;
                     } else {
                         row.innerHTML = `
-                    <td class="fw-bold">${index + 1}</td>
-                    <td>${produit}</td>
-                    <td>${quantite}</td>
-                    <td>${prixUnitaire.toFixed(2)}</td>
-                    <td class="fw-bold">${totalColis.toFixed(2)}</td>
-                    <td>${typeColis}</td>
-                    <td>${dimensions}</td>
-                    <td>${poids !== '-' ? poids + ' kg' : '-'}</td>
-                `;
+                        <td class="fw-bold">${index + 1}</td>
+                        <td>${produit}</td>
+                        <td>${quantite}</td>
+                        <td>${prixUnitaire.toFixed(2)}</td>
+                        <td class="fw-bold">${totalColis.toFixed(2)}</td>
+                        <td>${typeColis}</td>
+                        <td>${dimensions}</td>
+                        <td>${poids !== '-' ? poids + ' kg' : '-'}</td>
+                    `;
                     }
 
                     tbody.appendChild(row);
@@ -2562,7 +2545,7 @@
             }
 
             // Écouteur pour les changements de poids (mode aérien)
-            document.addEventListener('input', function(e) {
+            document.addEventListener('input', function (e) {
                 if (e.target.name && e.target.name.includes('[poids]')) {
                     const modeTransit = document.getElementById('mode_transit').value;
                     if (modeTransit === 'Aerien') {
@@ -2571,7 +2554,7 @@
                 }
 
                 if (e.target.name && (e.target.name.includes('[quantite]') || e.target.name.includes(
-                        '[prix_unitaire]'))) {
+                    '[prix_unitaire]'))) {
                     updateMontants();
                 }
             });
@@ -2605,16 +2588,16 @@
             const infoMessage = document.getElementById('conteneur_info_message');
             if (infoMessage) {
                 infoMessage.innerHTML = `
-            <i class="fas fa-info-circle me-2"></i>
-            <strong>Mode édition :</strong> La référence et l'agence d'expédition ne sont pas modifiables.
-            Les QR codes existants seront conservés, de nouveaux seront générés pour les colis ajoutés.
-        `;
+                <i class="fas fa-info-circle me-2"></i>
+                <strong>Mode édition :</strong> La référence et l'agence d'expédition ne sont pas modifiables.
+                Les QR codes existants seront conservés, de nouveaux seront générés pour les colis ajoutés.
+            `;
                 infoMessage.style.display = 'block';
             }
         }
 
         // Appeler l'initialisation du mode édition au chargement
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // ... le reste de votre code d'initialisation ...
 
             // Initialiser le mode édition
