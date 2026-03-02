@@ -133,7 +133,7 @@ class EtiquetteController extends Controller
                 'resteAPayer' => $resteAPayer,
                 'devise' => $devise,
                 'dateFacture' => $colis->created_at->format('d/m/Y'),
-                'numeroFacture' => 'FACT-' . $colis->reference_colis . '-' . $colis->created_at->format('Ymd'),
+                'numeroFacture' => 'FACT-' . $colis->reference_colis,
                 'entreprise' => [
                     'nom' => 'AFT IMPORT EXPORT',
                     'adresse' => '7 AVENUE LOUIS BLERIOT LA COURNEUVE 93120 France',
