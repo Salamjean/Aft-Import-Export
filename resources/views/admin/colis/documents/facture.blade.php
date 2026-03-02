@@ -125,7 +125,6 @@
         }
 
         .meta-value {
-            text-align: center;
             font-weight: bold;
             background-color: #d3d3d3;
         }
@@ -400,7 +399,11 @@
                 @php $totalAmount = 0; @endphp
                 @foreach($colisDetails as $detail)
                 @php 
-                    $amount = ($detail['quantite'] ?? 1) * ($detail['prix_unitaire'] ?? 0); 
+                    if (isset($colis->mode_transit) && strtolower($colis->mode_transit) === 'aerien') {
+                        $amount = $detail['prix_unitaire'] ?? 0;
+                    } else {
+                        $amount = ($detail['quantite'] ?? 1) * ($detail['prix_unitaire'] ?? 0); 
+                    }
                     $totalAmount += $amount;
                 @endphp
                 <tr>
@@ -498,10 +501,21 @@
                    @endif
                 </div>
                 
-                <div class="notes-section">
+                <div class="notes-section" style="margin-bottom: 10px;">
                     <span class="notes-label">Notes</span>
-                    EBURNY SOLUTIONS et autre fournisseur. <br>
-                    Les marchandises transportées doivent être soldées avant livraison. Pénalités de 10% après 5 jours de retard.
+                    @php
+                        $descriptions = [];
+                        foreach($colisDetails as $detail) {
+                            if (!empty($detail['description'])) {
+                                $descriptions[] = $detail['description'];
+                            }
+                        }
+                    @endphp
+                    @if(count($descriptions) > 0)
+                        {!! nl2br(e(implode("\n", $descriptions))) !!}
+                    @else
+                        Aucune note
+                    @endif
                 </div>
             </div>
             
