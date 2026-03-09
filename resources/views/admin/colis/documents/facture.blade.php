@@ -347,12 +347,12 @@
             <div class="client-column">
                 <!-- Client Name & Address -->
                 <div class="client-name-large">
-                    Nom & Prénoms: {{ $colis->name_destinataire }} {{ $colis->prenom_destinataire }}
+                    Nom & Prénoms: {{ $colis->name_expediteur }} {{ $colis->prenom_expediteur }}
                 </div>
                 <div style="font-size: 11px; line-height: 1.4;">
-                    Adresse: {{ $colis->adresse_destinataire }}<br>
-                    Email: {{ $colis->email_destinataire }}<br>
-                    Contact: {{ $colis->contact_destinataire }}
+                    Adresse: {{ $colis->adresse_expediteur }}<br>
+                    Email: {{ $colis->email_expediteur }}<br>
+                    Contact: {{ $colis->contact_expediteur }}
                 </div>
             </div>
 
