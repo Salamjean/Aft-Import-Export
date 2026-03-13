@@ -1539,6 +1539,8 @@
 
             // Écouteur pour le bouton d'ajout de service
             document.getElementById('add-service-btn').addEventListener('click', function () {
+                console.log('🔄 Ouverture modal service, rechargement des agences...');
+                loadAgencesFromAPI();
                 $('#addServiceModal').modal('show');
             });
 
@@ -1595,6 +1597,8 @@
             document.addEventListener('click', function (e) {
                 if (e.target.closest('.add-produit-btn')) {
                     currentProduitIndex = e.target.closest('.add-produit-btn').getAttribute('data-index');
+                    console.log('🔄 Ouverture modal produit, rechargement des agences...');
+                    loadAgencesFromAPI();
                     $('#addProduitModal').modal('show');
                 }
             });
@@ -1716,19 +1720,83 @@
             }
 
             function updateAgencesInModals(agences) {
+                console.log('🔄 updateAgencesInModals appelée avec:', agences);
+
                 const selects = document.querySelectorAll(
                     '#addProduitModal select[name="agence_destination_id"], #addServiceModal select[name="agence_destination_id"]'
                 );
 
-                selects.forEach(select => {
+                console.log('🔍 Nombre de selects trouvés:', selects.length);
+
+                selects.forEach((select, index) => {
+                    console.log(`🔍 Traitement du select ${index + 1}:`, select);
                     select.innerHTML = '<option value="">Sélectionnez une agence</option>';
-                    agences.forEach(agence => {
-                        const option = document.createElement('option');
-                        option.value = agence.id;
-                        option.textContent = `${agence.name} (${agence.pays})`;
-                        select.appendChild(option);
-                    });
+
+                    if (agences && agences.length > 0) {
+                        agences.forEach(agence => {
+                            const option = document.createElement('option');
+                            option.value = agence.id;
+                            option.textContent = `${agence.name} (${agence.pays})`;
+                            select.appendChild(option);
+                        });
+                        console.log(`✅ ${agences.length} agences ajoutées au select ${index + 1}`);
+                    } else {
+                        console.warn('⚠️ Aucune agence à ajouter');
+                    }
                 });
+            }
+
+            // Fonction pour charger les agences depuis l'API
+            async function loadAgencesFromAPI() {
+                const modeTransit = document.getElementById('mode_transit').value;
+
+                if (!modeTransit) {
+                    console.warn('⚠️ Mode de transit non sélectionné pour charger les agences');
+                    return;
+                }
+
+                try {
+                    const url = "{{ route('agent.colis.get-conteneur-reference') }}";
+                    const params = new URLSearchParams({
+                        mode_transit: modeTransit
+                    });
+
+                    console.log('🔄 Chargement des agences depuis API...');
+
+                    const response = await fetch(`${url}?${params}`, {
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`Erreur HTTP: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+
+                    if (data.success && data.agencesDestination) {
+                        console.log('✅ Agences chargées:', data.agencesDestination);
+                        updateAgencesInModals(data.agencesDestination);
+                    } else {
+                        console.warn('⚠️ Aucune agence dans la réponse');
+                        // Fallback : utiliser l'agence de destination actuelle
+                        const agenceDestinationId = document.getElementById('agence_destination_id').value;
+                        const agenceDestinationName = document.getElementById('agence_destination').value;
+                        if (agenceDestinationId) {
+                            const fallbackAgences = [{
+                                id: agenceDestinationId,
+                                name: agenceDestinationName,
+                                pays: 'Côte d\'Ivoire'
+                            }];
+                            updateAgencesInModals(fallbackAgences);
+                        }
+                    }
+                } catch (error) {
+                    console.error('❌ Erreur lors du chargement des agences:', error);
+                }
             }
 
             function updateExpediteurFields() {
