@@ -29,7 +29,13 @@ class AgentDashboard extends Controller
             'colis_valides' => Colis::where('agence_expedition_id', $agenceId)->where('statut', 'valide')->count(),
             'colis_livres' => Colis::where('agence_expedition_id', $agenceId)->where('statut', 'livre')->count(),
             'colis_annules' => Colis::where('agence_expedition_id', $agenceId)->where('statut', 'annule')->count(),
-            'conteneurs_ouverts' => Conteneur::where('statut', 'ouvert')->count(),
+            'conteneurs_ouverts' => Conteneur::where('statut', 'ouvert')
+                ->where(function($q) use ($agenceId) {
+                    $q->where('agence_id', $agenceId) // Agence de départ
+                      ->orWhereHas('colis', function($sub) use ($agenceId) {
+                          $sub->where('agence_destination_id', $agenceId);
+                      });
+                })->count(),
             
             // Statistiques des devis
             'devis_en_attente' => Devis::where('agence_destination_id', $agenceId)->where('statut', 'en_attente')->where('montant_devis', null)->count(),

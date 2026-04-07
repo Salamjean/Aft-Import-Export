@@ -191,7 +191,14 @@ class AgentCoteDashboard extends Controller
 
     public function colis(Request $request)
     {
+        $agent = Auth::guard('agent')->user();
+        $agenceId = $agent->agence_id;
+
         $query = Colis::with(['agenceExpedition', 'agenceDestination', 'conteneur'])
+                    ->where(function($q) use ($agenceId) {
+                        $q->where('agence_expedition_id', $agenceId)
+                          ->orWhere('agence_destination_id', $agenceId);
+                    })
                     ->orderBy('created_at', 'desc');
        
 
