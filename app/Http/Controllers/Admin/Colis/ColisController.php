@@ -407,6 +407,28 @@ class ColisController extends Controller
                 'statuts_individuels' => json_encode($statutsIndividuels),
             ]);
 
+            // Créer une transaction réelle dans la table paiements si un montant est payé
+            if ($request->montant_paye > 0) {
+                $admin = Auth::guard('admin')->user();
+                $parisAgence = Agence::where('name', 'LIKE', '%Paris%')->orWhere('name', 'LIKE', '%Siège%')->first();
+                
+                Paiement::create([
+                    'colis_id' => $colis->id,
+                    'montant' => $request->montant_paye,
+                    'methode_paiement' => $request->methode_paiement,
+                    'nom_banque' => $request->nom_banque,
+                    'numero_compte' => $request->numero_compte,
+                    'operateur_mobile_money' => $request->operateur_mobile_money,
+                    'numero_mobile_money' => $request->numero_mobile_money,
+                    'notes' => 'Paiement initial lors de la création du colis.',
+                    'agent_id' => $admin->id,
+                    'agent_type' => 'admin',
+                    'agent_name' => $admin->name,
+                    'agence_id' => $parisAgence ? $parisAgence->id : $colis->agence_expedition_id,
+                    'devise' => $parisAgence ? ($parisAgence->devise ?? 'EUR') : ($colis->agenceExpedition->devise ?? 'EUR'),
+                ]);
+            }
+
             // Envoi d'email uniquement à l'expéditeur s'il a un email
             if ($colis->email_expediteur) {
                 $this->sendNotificationToExpediteur($colis);
@@ -722,6 +744,11 @@ class ColisController extends Controller
                 $codesColis['individuels']
             );
 
+            // Calculer la différence de paiement pour enregistrer la transaction
+            $ancienMontantPaye = $colis->montant_paye;
+            $nouveauMontantPaye = $request->montant_paye;
+            $differencePaiement = $nouveauMontantPaye - $ancienMontantPaye;
+
             // Mettre à jour le colis existant
             $colis->update([
                 'conteneur_id' => $request->conteneur_id,
@@ -777,6 +804,28 @@ class ColisController extends Controller
                 // Statuts individuels mis à jour
                 'statuts_individuels' => json_encode($statutsIndividuels),
             ]);
+
+            // Enregistrer la transaction si le montant payé a augmenté
+            if ($differencePaiement > 0) {
+                $admin = Auth::guard('admin')->user();
+                $parisAgence = Agence::where('name', 'LIKE', '%Paris%')->orWhere('name', 'LIKE', '%Siège%')->first();
+
+                Paiement::create([
+                    'colis_id' => $colis->id,
+                    'montant' => $differencePaiement,
+                    'methode_paiement' => $request->methode_paiement,
+                    'nom_banque' => $request->nom_banque,
+                    'numero_compte' => $request->numero_compte,
+                    'operateur_mobile_money' => $request->operateur_mobile_money,
+                    'numero_mobile_money' => $request->numero_mobile_money,
+                    'notes' => 'Ajustement du montant payé lors de la modification du colis.',
+                    'agent_id' => $admin->id,
+                    'agent_type' => 'admin',
+                    'agent_name' => $admin->name,
+                    'agence_id' => $parisAgence ? $parisAgence->id : $colis->agence_expedition_id,
+                    'devise' => $parisAgence ? ($parisAgence->devise ?? 'EUR') : ($colis->agenceExpedition->devise ?? 'EUR'),
+                ]);
+            }
 
             // Compter les nouveaux codes colis générés
             $nouveauxCodes = array_filter($codesColis['individuels'], function ($code) use ($anciensCodesColis) {

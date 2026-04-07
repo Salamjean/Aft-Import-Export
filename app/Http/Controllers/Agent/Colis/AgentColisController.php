@@ -453,6 +453,26 @@ class AgentColisController extends Controller
                 'statuts_individuels' => json_encode($statutsIndividuels),
             ]);
 
+            // Créer une transaction réelle dans la table paiements si un montant est payé
+            if ($request->montant_paye > 0) {
+                $agent = Auth::guard('agent')->user();
+                Paiement::create([
+                    'colis_id' => $colis->id,
+                    'montant' => $request->montant_paye,
+                    'methode_paiement' => $request->methode_paiement,
+                    'nom_banque' => $request->nom_banque,
+                    'numero_compte' => $request->numero_compte,
+                    'operateur_mobile_money' => $request->operateur_mobile_money,
+                    'numero_mobile_money' => $request->numero_mobile_money,
+                    'notes' => 'Paiement initial lors de la création du colis.',
+                    'agent_id' => $agent->id,
+                    'agent_type' => 'agent',
+                    'agent_name' => $agent->name . ' ' . ($agent->prenom ?? ''),
+                    'agence_id' => $agent->agence_id,
+                    'devise' => $agent->agence->devise ?? 'XOF',
+                ]);
+            }
+
             // Envoi d'email uniquement à l'expéditeur s'il a un email
             if ($colis->email_expediteur) {
                 $this->sendNotificationToExpediteur($colis);
@@ -769,6 +789,11 @@ class AgentColisController extends Controller
                 $codesColis['individuels']
             );
 
+            // Calculer la différence de paiement pour enregistrer la transaction
+            $ancienMontantPaye = $colis->montant_paye;
+            $nouveauMontantPaye = $request->montant_paye;
+            $differencePaiement = $nouveauMontantPaye - $ancienMontantPaye;
+
             // Mettre à jour le colis existant
             $colis->update([
                 'conteneur_id' => $request->conteneur_id,
@@ -802,7 +827,6 @@ class AgentColisController extends Controller
                 'montant_colis' => $montantColis,
                 'montant_paye_colis' => $request->montant_paye,
 
-
                 // Services
                 'service_id' => $request->service_id,
                 'prix_service' => $request->prix_service,
@@ -826,12 +850,39 @@ class AgentColisController extends Controller
                 'statuts_individuels' => json_encode($statutsIndividuels),
             ]);
 
+            // Enregistrer la transaction si le montant payé a augmenté
+            if ($differencePaiement > 0) {
+                $agent = Auth::guard('agent')->user();
+                Paiement::create([
+                    'colis_id' => $colis->id,
+                    'montant' => $differencePaiement,
+                    'methode_paiement' => $request->methode_paiement,
+                    'nom_banque' => $request->nom_banque,
+                    'numero_compte' => $request->numero_compte,
+                    'operateur_mobile_money' => $request->operateur_mobile_money,
+                    'numero_mobile_money' => $request->numero_mobile_money,
+                    'notes' => 'Ajustement du montant payé lors de la modification du colis.',
+                    'agent_id' => $agent->id,
+                    'agent_type' => 'agent',
+                    'agent_name' => $agent->name . ' ' . ($agent->prenom ?? ''),
+                    'agence_id' => $agent->agence_id,
+                    'devise' => $agent->agence->devise ?? 'XOF',
+                ]);
+            }
+
             // Compter les nouveaux codes colis générés
             $nouveauxCodes = array_filter($codesColis['individuels'], function ($code) use ($anciensCodesColis) {
                 return !$this->codeExisteDansAnciens($code['code_colis'], $anciensCodesColis);
             });
 
             $messageSucces = 'Colis modifié avec succès. Référence: ' . $colis->reference_colis;
+
+            if (count($nouveauxCodes) > 0) {
+                $messageSucces .= '. ' . count($nouveauxCodes) . ' nouveaux codes colis générés avec leurs QR codes.';
+            }
+
+            return redirect()->route('agent.colis.index')
+                ->with('success', $messageSucces);
 
             if (count($nouveauxCodes) > 0) {
                 $messageSucces .= '. ' . count($nouveauxCodes) . ' nouveaux codes colis générés avec leurs QR codes.';

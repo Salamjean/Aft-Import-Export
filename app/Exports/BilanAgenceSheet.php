@@ -49,7 +49,7 @@ class BilanAgenceSheet implements FromCollection, WithHeadings, WithMapping, Wit
             $item['agence']->name,
             $item['agence']->pays,
             $item['total_colis'],
-            number_format($item['total_encaisse_agents'], 2, '.', ''),
+            number_format($item['total_encaisse'], 2, '.', ''),
             $item['agence']->devise ?? 'XOF'
         ];
     }

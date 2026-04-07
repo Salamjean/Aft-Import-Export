@@ -18,6 +18,8 @@ class Paiement extends Model
         'agent_id',
         'agent_type',
         'agent_name',
+        'agence_id',
+        'devise',
     ];
 
     public function colis()
