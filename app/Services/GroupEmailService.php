@@ -15,18 +15,28 @@ class GroupEmailService
     {
         $emails = $this->getFilteredEmailsQuery($filtres);
         $count = 0;
-        
+
         foreach ($emails as $email) {
+            // Filtrer les emails vides ou invalides
+            if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                continue;
+            }
+
             // Trouver l'utilisateur ou créer un objet utilisateur virtuel
             $user = User::where('email', $email)->first();
-            
+
             if (!$user) {
                 // Si l'utilisateur n'existe pas, créer un objet virtuel pour l'email
                 $user = new \stdClass();
                 $user->email = $email;
                 $user->name = $this->extractNameFromEmail($email);
             }
-            
+
+            // Sécurité supplémentaire : ne pas envoyer si email vide ou invalide
+            if (empty($user->email) || !is_string($user->email) || !filter_var($user->email, FILTER_VALIDATE_EMAIL)) {
+                continue;
+            }
+
             // Envoyer l'email directement sans passer par les notifications
             Mail::send('emails.group_email', [
                 'contenu' => $contenu,
@@ -34,33 +44,33 @@ class GroupEmailService
                 'sujet' => $sujet
             ], function ($message) use ($user, $sujet) {
                 $message->to($user->email, $user->name ?? '')
-                        ->subject($sujet);
+                    ->subject($sujet);
             });
-            
+
             $count++;
         }
-        
+
         return $count;
     }
-    
+
     private function extractNameFromEmail($email)
     {
         $name = strstr($email, '@', true);
         return ucfirst($name);
     }
-    
+
     public function getFilteredEmailsQuery($filtres)
     {
         // Initialiser les requêtes
         $expediteursQuery = Colis::select('email_expediteur as email');
         $destinatairesQuery = Colis::select('email_destinataire as email');
-        
+
         // Appliquer le filtre conteneur aux deux requêtes
         if (!empty($filtres['conteneur_id'])) {
             $expediteursQuery->where('conteneur_id', $filtres['conteneur_id']);
             $destinatairesQuery->where('conteneur_id', $filtres['conteneur_id']);
         }
-        
+
         // Construire la requête selon le type de destinataire
         if (empty($filtres['type_destinataire']) || $filtres['type_destinataire'] === 'tous') {
             // Union des deux requêtes
@@ -72,21 +82,26 @@ class GroupEmailService
         } else {
             $emails = [];
         }
-        
+
+        // Filtrer les emails vides ou invalides
+        $emails = array_filter($emails, function ($email) {
+            return !empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL);
+        });
+
         return $emails;
     }
-    
+
     // Nouvelle méthode pour debug
     public function debugEmails($filtres)
     {
         $expediteurs = Colis::select('email_expediteur as email');
         $destinataires = Colis::select('email_destinataire as email');
-        
+
         if (!empty($filtres['conteneur_id'])) {
             $expediteurs->where('conteneur_id', $filtres['conteneur_id']);
             $destinataires->where('conteneur_id', $filtres['conteneur_id']);
         }
-        
+
         return [
             'expediteurs' => $expediteurs->distinct()->pluck('email')->toArray(),
             'destinataires' => $destinataires->distinct()->pluck('email')->toArray(),
