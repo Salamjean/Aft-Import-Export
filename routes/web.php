@@ -481,6 +481,8 @@ Route::prefix('user')->group(function () {
 Route::post('/scan/livrer', [ChauffeurScanLivraison::class, 'scanLivraison'])->name('chauffeur.scan.livrer');
 Route::middleware('auth')->prefix('user')->group(function () {
     Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
+    Route::get('/profile', [UserController::class, 'editProfile'])->name('user.profile.edit');
+    Route::put('/profile', [UserController::class, 'updateProfile'])->name('user.profile.update');
     Route::get('/logout', [UserController::class, 'logout'])->name('user.logout');
 
     //les routes pour faire les demandes de devis
