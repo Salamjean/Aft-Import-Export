@@ -15,60 +15,60 @@ use Illuminate\Support\Facades\Notification;
 
 class DevisController extends Controller
 {
-   public function enAttente(Request $request)
+    public function enAttente(Request $request)
     {
         $user = Auth::user();
-    
-    // Compter les devis par statut
-    $totalDevis = Devis::where('user_id', $user->id)->count();
-    $devisEnAttente = Devis::where('user_id', $user->id)->where('statut', 'en_attente') ->where('montant_devis',null)->count();
-    $devisTraites = Devis::where('user_id', $user->id)->where('statut', 'traite') ->where('montant_devis','!=',null)->count();
-    $devisAnnules = Devis::where('user_id', $user->id)->where('statut', 'annule')->count();
-    
-    // Récupérer les devis avec filtre
-    $devis = Devis::where('user_id', $user->id)
-                ->when($request->statut, function($query, $statut) {
-                    return $query->where('statut', $statut);
-                })
-                ->where('montant_devis',null)
-                ->orderBy('created_at', 'desc')
-                ->paginate(10);
-    
-    return view('user.devis.attente', compact(
-        'devis', 
-        'totalDevis', 
-        'devisEnAttente', 
-        'devisTraites', 
-        'devisAnnules'
-    ));
+
+        // Compter les devis par statut
+        $totalDevis = Devis::where('user_id', $user->id)->count();
+        $devisEnAttente = Devis::where('user_id', $user->id)->where('statut', 'en_attente')->where('montant_devis', null)->count();
+        $devisTraites = Devis::where('user_id', $user->id)->where('statut', 'traite')->where('montant_devis', '!=', null)->count();
+        $devisAnnules = Devis::where('user_id', $user->id)->where('statut', 'annule')->count();
+
+        // Récupérer les devis avec filtre
+        $devis = Devis::where('user_id', $user->id)
+            ->when($request->statut, function ($query, $statut) {
+                return $query->where('statut', $statut);
+            })
+            ->where('montant_devis', null)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return view('user.devis.attente', compact(
+            'devis',
+            'totalDevis',
+            'devisEnAttente',
+            'devisTraites',
+            'devisAnnules'
+        ));
     }
 
-   public function confirmed(Request $request)
+    public function confirmed(Request $request)
     {
         $user = Auth::user();
-    
-    // Compter les devis par statut
-    $totalDevis = Devis::where('user_id', $user->id)->count();
-    $devisEnAttente = Devis::where('user_id', $user->id)->where('statut', 'en_attente') ->where('montant_devis',null)->count();
-    $devisTraites = Devis::where('user_id', $user->id)->where('statut', 'traite') ->where('montant_devis','!=',null)->count();
-    $devisAnnules = Devis::where('user_id', $user->id)->where('statut', 'annule')->count();
-    
-    // Récupérer les devis avec filtre
-    $devis = Devis::where('user_id', $user->id)
-                ->when($request->statut, function($query, $statut) {
-                    return $query->where('statut', $statut);
-                })
-                ->where('montant_devis','!=',null)
-                ->orderBy('created_at', 'desc')
-                ->paginate(10);
-    
-    return view('user.devis.confirme', compact(
-        'devis', 
-        'totalDevis', 
-        'devisEnAttente', 
-        'devisTraites', 
-        'devisAnnules'
-    ));
+
+        // Compter les devis par statut
+        $totalDevis = Devis::where('user_id', $user->id)->count();
+        $devisEnAttente = Devis::where('user_id', $user->id)->where('statut', 'en_attente')->where('montant_devis', null)->count();
+        $devisTraites = Devis::where('user_id', $user->id)->where('statut', 'traite')->where('montant_devis', '!=', null)->count();
+        $devisAnnules = Devis::where('user_id', $user->id)->where('statut', 'annule')->count();
+
+        // Récupérer les devis avec filtre
+        $devis = Devis::where('user_id', $user->id)
+            ->when($request->statut, function ($query, $statut) {
+                return $query->where('statut', $statut);
+            })
+            ->where('montant_devis', '!=', null)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return view('user.devis.confirme', compact(
+            'devis',
+            'totalDevis',
+            'devisEnAttente',
+            'devisTraites',
+            'devisAnnules'
+        ));
     }
 
     public function accepter(Request $request, Devis $devis)
@@ -109,7 +109,6 @@ class DevisController extends Controller
                 'message' => 'Devis accepté avec succès !',
                 'reference' => $reference
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -125,22 +124,22 @@ class DevisController extends Controller
     {
         // Récupérer les initiales
         $initiales = '';
-        
+
         if (!empty($user->name)) {
             // Prendre les 2 premières lettres du name
             $initiales .= strtoupper(substr($user->name, 0, 2));
         }
-        
+
         if (!empty($user->prenom)) {
             // Prendre la première lettre du prénom
             $initiales .= strtoupper(substr($user->prenom, 0, 1));
         }
-        
+
         // Si pas de name, prendre les 2 premières lettres du prénom
         if (empty($initiales) && !empty($user->prenom)) {
             $initiales = strtoupper(substr($user->prenom, 0, 2));
         }
-        
+
         // Si toujours pas d'initiales, utiliser "CL"
         if (empty($initiales)) {
             $initiales = 'CL';
@@ -154,108 +153,114 @@ class DevisController extends Controller
 
         return $reference;
     }
-        
-   public function create()
+
+    public function create()
     {
         $agences = Agence::all();
         $user = Auth::user();
-        
+
         return view('user.devis.create', compact('agences', 'user'));
     }
 
- public function store(Request $request)
-{
-    $validated = $request->validate([
-        'mode_transit' => 'required|string|in:Maritime,Aerien',
-        'agence_expedition_id' => 'required|exists:agences,id',
-        'agence_destination_id' => 'required|exists:agences,id',
-        'pays_expedition' => 'required|string|in:France,Chine',
-        'name_client' => 'required|string|max:255',
-        'prenom_client' => 'required|string|max:255',
-        'email_client' => 'required|email',
-        'contact_client' => 'required|string',
-        'adresse_client' => 'required|string',
-        'colis' => 'required|array|min:1',
-        'colis.*.quantite' => 'required|integer|min:1',
-        'colis.*.produit' => 'required|string|max:255',
-        'colis.*.valeur' => 'required|numeric|min:0',
-        'colis.*.type_colis' => 'nullable|string',
-        'colis.*.longueur' => 'nullable|numeric|min:0',
-        'colis.*.largeur' => 'nullable|numeric|min:0',
-        'colis.*.hauteur' => 'nullable|numeric|min:0',
-        'colis.*.description' => 'nullable|string',
-    ]);
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'mode_transit' => 'required|string|in:Maritime,Aerien',
+            'agence_expedition_id' => 'required|exists:agences,id',
+            'agence_destination_id' => 'required|exists:agences,id',
+            'pays_expedition' => 'required|string|in:France,Chine',
+            'name_client' => 'required|string|max:255',
+            'prenom_client' => 'required|string|max:255',
+            'email_client' => 'required|email',
+            'contact_client' => 'required|string',
+            'adresse_client' => 'required|string',
+            'colis' => 'required|array|min:1',
+            'colis.*.quantite' => 'required|integer|min:1',
+            'colis.*.produit' => 'required|string|max:255',
+            'colis.*.valeur' => 'required|numeric|min:0',
+            'colis.*.type_colis' => 'nullable|string',
+            'colis.*.longueur' => 'nullable|numeric|min:0',
+            'colis.*.largeur' => 'nullable|numeric|min:0',
+            'colis.*.hauteur' => 'nullable|numeric|min:0',
+            'colis.*.description' => 'nullable|string',
+            'colis.*.photo' => 'nullable|image|max:10240',
+        ]);
 
-    DB::beginTransaction();
+        DB::beginTransaction();
 
-    try {
-        // Récupérer les agences
-        $agenceExpedition = Agence::findOrFail($validated['agence_expedition_id']);
-        $agenceDestination = Agence::findOrFail($validated['agence_destination_id']);
+        try {
+            // Récupérer les agences
+            $agenceExpedition = Agence::findOrFail($validated['agence_expedition_id']);
+            $agenceDestination = Agence::findOrFail($validated['agence_destination_id']);
 
-        // CORRECTION : S'assurer que les données des colis sont bien formatées
-        $colisData = [];
-        foreach ($validated['colis'] as $index => $colis) {
-            $colisData[] = [
-                'quantite' => $colis['quantite'],
-                'produit' => $colis['produit'],
-                'valeur' => $colis['valeur'],
-                'type_colis' => $colis['type_colis'] ?? null,
-                'longueur' => $colis['longueur'] ?? null,
-                'largeur' => $colis['largeur'] ?? null,
-                'hauteur' => $colis['hauteur'] ?? null,
-                'description' => $colis['description'] ?? null,
-            ];
+            // CORRECTION : S'assurer que les données des colis sont bien formatées
+            $colisData = [];
+            foreach ($validated['colis'] as $index => $colis) {
+                $photoPath = null;
+                if ($request->hasFile("colis.{$index}.photo")) {
+                    $photoPath = $request->file("colis.{$index}.photo")->store('devis_photos', 'public');
+                }
+
+                $colisData[] = [
+                    'quantite' => $colis['quantite'],
+                    'produit' => $colis['produit'],
+                    'valeur' => $colis['valeur'],
+                    'type_colis' => $colis['type_colis'] ?? null,
+                    'longueur' => $colis['longueur'] ?? null,
+                    'largeur' => $colis['largeur'] ?? null,
+                    'hauteur' => $colis['hauteur'] ?? null,
+                    'description' => $colis['description'] ?? null,
+                    'photo' => $photoPath,
+                ];
+            }
+
+            $devis = Devis::create([
+                'mode_transit' => $validated['mode_transit'],
+                'agence_expedition_id' => $validated['agence_expedition_id'],
+                'agence_destination_id' => $validated['agence_destination_id'],
+                'agence_expedition' => $agenceExpedition->name,
+                'agence_destination' => $agenceDestination->name,
+                'pays_expedition' => $validated['pays_expedition'],
+                'name_client' => $validated['name_client'],
+                'prenom_client' => $validated['prenom_client'],
+                'email_client' => $validated['email_client'],
+                'contact_client' => $validated['contact_client'],
+                'adresse_client' => $validated['adresse_client'],
+                'devise' => $agenceDestination->devise,
+                'colis' => $colisData, // Utiliser les données formatées
+                'user_id' => Auth::id(),
+                'statut' => 'en_attente',
+            ]);
+
+            DB::commit();
+
+            Log::info('Devis créé avec succès', [
+                'devis_id' => $devis->id,
+                'user_id' => Auth::id(),
+                'colis_count' => count($colisData)
+            ]);
+
+            // Envoi des notifications aux administrateurs
+            $this->sendNotificationToAdmins($devis);
+
+            return redirect()
+                ->route('user.devis.attente')
+                ->with('success', 'Votre demande de tarification a été soumise avec succès!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Erreur création devis', [
+                'error' => $e->getMessage(),
+                'user_id' => Auth::id(),
+                'input' => $request->all(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Erreur lors de la soumission de votre demande: ' . $e->getMessage());
         }
-
-        $devis = Devis::create([
-            'mode_transit' => $validated['mode_transit'],
-            'agence_expedition_id' => $validated['agence_expedition_id'],
-            'agence_destination_id' => $validated['agence_destination_id'],
-            'agence_expedition' => $agenceExpedition->name,
-            'agence_destination' => $agenceDestination->name,
-            'pays_expedition' => $validated['pays_expedition'],
-            'name_client' => $validated['name_client'],
-            'prenom_client' => $validated['prenom_client'],
-            'email_client' => $validated['email_client'],
-            'contact_client' => $validated['contact_client'],
-            'adresse_client' => $validated['adresse_client'],
-            'devise' => $agenceDestination->devise,
-            'colis' => $colisData, // Utiliser les données formatées
-            'user_id' => Auth::id(),
-            'statut' => 'en_attente',
-        ]);
-
-        DB::commit();
-
-        Log::info('Devis créé avec succès', [
-            'devis_id' => $devis->id,
-            'user_id' => Auth::id(),
-            'colis_count' => count($colisData)
-        ]);
-        
-        // Envoi des notifications aux administrateurs
-        $this->sendNotificationToAdmins($devis);
-
-        return redirect()
-            ->route('user.devis.attente')
-            ->with('success', 'Votre demande de tarification a été soumise avec succès!');
-
-    } catch (\Exception $e) {
-        DB::rollBack();
-        Log::error('Erreur création devis', [
-            'error' => $e->getMessage(),
-            'user_id' => Auth::id(),
-            'input' => $request->all(),
-            'trace' => $e->getTraceAsString()
-        ]);
-        
-        return redirect()
-            ->back()
-            ->withInput()
-            ->with('error', 'Erreur lors de la soumission de votre demande: ' . $e->getMessage());
     }
-}
 
     /**
      * Envoi de notification aux administrateurs
@@ -264,7 +269,7 @@ class DevisController extends Controller
     {
         try {
             $emails = ['contact@aft-app.com', 'entrepot.paris@aft-app.com'];
-            
+
             foreach ($emails as $email) {
                 // Créer un utilisateur temporaire pour la notification
                 $tempUser = new User();
@@ -272,7 +277,7 @@ class DevisController extends Controller
                 $tempUser->name = 'Administrateur';
                 $tempUser->notify(new DevisSoumisNotification($devis));
             }
-            
+
             Log::info('Notifications de nouveau devis envoyées aux administrateurs');
         } catch (\Exception $e) {
             Log::error('Erreur envoi notification admin: ' . $e->getMessage());
@@ -295,18 +300,16 @@ class DevisController extends Controller
         $devis->update(['statut' => 'annule']);
 
         return redirect()->route('user.devis.attente')
-                        ->with('success', 'La demande de devis a été annulée avec succès.');
+            ->with('success', 'La demande de devis a été annulée avec succès.');
     }
 
     public function getDevisDetails(Devis $devis)
-{
-    // Vérifier que le devis appartient à l'utilisateur connecté
-    if ($devis->user_id !== Auth::id()) {
-        return response()->json(['error' => 'Accès non autorisé'], 403);
+    {
+        // Vérifier que le devis appartient à l'utilisateur connecté
+        if ($devis->user_id !== Auth::id()) {
+            return response()->json(['error' => 'Accès non autorisé'], 403);
+        }
+
+        return response()->json($devis);
     }
-
-    return response()->json($devis);
-}
-
-
 }

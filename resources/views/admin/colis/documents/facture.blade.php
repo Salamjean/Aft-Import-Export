@@ -394,7 +394,6 @@
                     <div class="party-title">Destinataire</div>
                     <div style="line-height: 1.4;">
                         Nom & Prénoms: {{ $colis->name_destinataire }} {{ $colis->prenom_destinataire }}
-
                         Adresse: {{ $colis->adresse_destinataire }}<br>
                         Email: {{ $colis->email_destinataire }}<br>
                         Contact: {{ $colis->contact_destinataire }}
