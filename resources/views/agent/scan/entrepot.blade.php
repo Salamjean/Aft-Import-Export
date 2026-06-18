@@ -1610,6 +1610,10 @@ function getMethodePaiementText(methode) {
 // Fonction pour afficher le formulaire de paiement
 function showPaymentForm(colisId, reference, montantTotal, montantPaye, resteAPayer, devise) {
     const montantRestant = parseFloat(resteAPayer) || (parseFloat(montantTotal) - parseFloat(montantPaye));
+    const rate = 655;
+    const isIvoryAgent = {{ (Auth::guard('agent')->check() && Auth::guard('agent')->user()->agence && Auth::guard('agent')->user()->agence->pays === "Côte d'Ivoire") ? 'true' : 'false' }};
+    const showCFAField = isIvoryAgent && (devise && (devise.trim().toUpperCase() === 'EUR' || devise.trim() === '€'));
+    const montantRestantCFA = Math.round(montantRestant * rate);
     
     Swal.fire({
         title: `Enregistrer un Paiement`,
@@ -1617,18 +1621,28 @@ function showPaymentForm(colisId, reference, montantTotal, montantPaye, resteAPa
             <div class="text-start">
                 <div class="alert alert-info">
                     <strong>Référence:</strong> ${reference}<br>
-                    <strong>Montant Total:</strong> ${parseFloat(montantTotal).toFixed(0)} ${devise}<br>
-                    <strong>Déjà Payé:</strong> ${parseFloat(montantPaye).toFixed(0)} ${devise}<br>
-                    <strong>Reste à Payer:</strong> <span class="text-success fw-bold">${montantRestant.toFixed(0)} ${devise}</span>
+                    <strong>Montant Total:</strong> ${parseFloat(montantTotal).toFixed(0)} ${devise} ${showCFAField ? `(${Math.round(montantTotal * rate).toLocaleString('fr-FR')} FCFA)` : ''}<br>
+                    <strong>Déjà Payé:</strong> ${parseFloat(montantPaye).toFixed(0)} ${devise} ${showCFAField ? `(${Math.round(montantPaye * rate).toLocaleString('fr-FR')} FCFA)` : ''}<br>
+                    <strong>Reste à Payer:</strong> <span class="text-success fw-bold">${montantRestant.toFixed(0)} ${devise} ${showCFAField ? `(${montantRestantCFA.toLocaleString('fr-FR')} FCFA)` : ''}</span>
                 </div>
                 
                 <form id="paymentForm">
+                    ${showCFAField ? `
                     <div class="mb-3">
-                        <label for="montant" class="form-label"><strong>Montant du Paiement *</strong></label>
+                        <label for="montant_cfa" class="form-label"><strong>Montant en Franc CFA (FCFA)</strong></label>
+                        <input type="number" class="form-control" id="montant_cfa" 
+                               min="1" max="${montantRestantCFA}" step="1"
+                               placeholder="Entrez le montant en CFA (FCFA)">
+                        <div class="form-text">Maximum: ${montantRestantCFA.toLocaleString('fr-FR')} FCFA (Taux fixe: 1 EUR = 655 FCFA)</div>
+                    </div>
+                    ` : ''}
+
+                    <div class="mb-3">
+                        <label for="montant" class="form-label"><strong>Montant du Paiement (${devise}) *</strong></label>
                         <input type="number" class="form-control" id="montant" 
                                min="0.01" max="${montantRestant}" step="0.01"
-                               placeholder="Entrez le montant payé" required>
-                        <div class="form-text">Maximum: ${montantRestant.toFixed(0)} ${devise}</div>
+                               placeholder="Entrez le montant payé" required ${showCFAField ? 'readonly' : ''}>
+                        <div class="form-text">Maximum: ${montantRestant.toFixed(2)} ${devise}</div>
                     </div>
                     
                     <div class="mb-3">
@@ -1704,6 +1718,38 @@ function showPaymentForm(colisId, reference, montantTotal, montantPaye, resteAPa
                     mobileFields.style.display = 'none';
                 }
             });
+
+            // Conversion bidirectionnelle EUR <-> CFA
+            const montantCfaInput = document.getElementById('montant_cfa');
+            const montantInput = document.getElementById('montant');
+
+            if (montantCfaInput && montantInput) {
+                montantCfaInput.addEventListener('input', function() {
+                    const cfaVal = parseFloat(this.value);
+                    if (!isNaN(cfaVal) && cfaVal > 0) {
+                        if (cfaVal === montantRestantCFA) {
+                            montantInput.value = montantRestant.toFixed(2);
+                        } else {
+                            montantInput.value = (cfaVal / rate).toFixed(2);
+                        }
+                    } else {
+                        montantInput.value = '';
+                    }
+                });
+
+                montantInput.addEventListener('input', function() {
+                    const eurVal = parseFloat(this.value);
+                    if (!isNaN(eurVal) && eurVal > 0) {
+                        if (eurVal === montantRestant) {
+                            montantCfaInput.value = montantRestantCFA;
+                        } else {
+                            montantCfaInput.value = Math.round(eurVal * rate);
+                        }
+                    } else {
+                        montantCfaInput.value = '';
+                    }
+                });
+            }
         },
         preConfirm: () => {
             const montant = parseFloat(document.getElementById('montant').value);
@@ -1715,7 +1761,7 @@ function showPaymentForm(colisId, reference, montantTotal, montantPaye, resteAPa
             }
             
             if (montant > montantRestant) {
-                Swal.showValidationMessage(`Le montant ne peut pas dépasser ${montantRestant.toFixed(0)} ${devise}`);
+                Swal.showValidationMessage(`Le montant ne peut pas dépasser ${montantRestant.toFixed(2)} ${devise}`);
                 return false;
             }
             

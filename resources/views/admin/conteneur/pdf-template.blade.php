@@ -66,6 +66,7 @@
             border-bottom: 1px solid #ddd;
             border-right: 1px solid #f0f0f0;
             font-size: 8px;
+            font-weight: bold;
         }
         table tr:nth-child(even) {
             background-color: #f8f9fa;
