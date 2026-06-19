@@ -15,9 +15,10 @@ class IvoireController extends Controller
     {
         try {
             $conteneur = Conteneur::with(['colis' => function($query) {
-                $query->whereNotIn('statut', ['valide', 'entrepot'])
-                ->orderBy('created_at', 'desc');
+                $query->whereNotIn('statut', ['valide', 'entrepot']);
             }])->findOrFail($conteneurId);
+
+            $conteneur->setRelation('colis', $conteneur->colis->sortByDesc('created_at'));
 
             return view('ivoire.conteneur.list', compact('conteneur'));
             
@@ -59,9 +60,9 @@ class IvoireController extends Controller
     public function downloadConteneurPDF($conteneurId)
     {
         try {
-            $conteneur = Conteneur::with(['colis' => function($query) {
-                $query->orderBy('created_at', 'desc');
-            }])->findOrFail($conteneurId);
+            $conteneur = Conteneur::with(['colis'])->findOrFail($conteneurId);
+
+            $conteneur->setRelation('colis', $conteneur->colis->sortByDesc('created_at'));
 
             // Calculer les statistiques pour chaque colis
             foreach ($conteneur->colis as $colis) {

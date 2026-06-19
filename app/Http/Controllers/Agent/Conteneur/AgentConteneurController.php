@@ -157,9 +157,10 @@ class AgentConteneurController extends Controller
     {
         try {
             $conteneur = Conteneur::with(['colis' => function($query) {
-                $query->whereNotIn('statut', ['valide', 'entrepot'])
-                ->orderBy('created_at', 'desc');
+                $query->whereNotIn('statut', ['valide', 'entrepot']);
             }])->findOrFail($conteneurId);
+
+            $conteneur->setRelation('colis', $conteneur->colis->sortByDesc('created_at'));
 
             return view('agent.conteneur.colis', compact('conteneur'));
             
@@ -210,9 +211,10 @@ class AgentConteneurController extends Controller
     {
         try {
             $conteneur = Conteneur::with(['colis' => function($query) {
-                $query->whereNotIn('statut', ['valide', 'entrepot'])
-                ->orderBy('created_at', 'desc');
+                $query->whereNotIn('statut', ['valide', 'entrepot']);
             }])->findOrFail($conteneurId);
+
+            $conteneur->setRelation('colis', $conteneur->colis->sortByDesc('created_at'));
 
             // Calculer les statistiques pour chaque colis et regrouper les produits
             foreach ($conteneur->colis as $colis) {

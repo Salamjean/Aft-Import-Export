@@ -128,9 +128,10 @@ class ConteneurController extends Controller
     {
         try {
             $conteneur = Conteneur::with(['colis' => function($query) {
-                $query->whereNotIn('statut', ['valide', 'entrepot'])
-                    ->orderBy('created_at', 'desc');
+                $query->whereNotIn('statut', ['valide', 'entrepot']);
             }])->findOrFail($conteneurId);
+
+            $conteneur->setRelation('colis', $conteneur->colis->sortByDesc('created_at'));
 
             return view('admin.conteneur.colis', compact('conteneur'));
             
@@ -177,13 +178,14 @@ public function open($id)
     ]);
 }
 
- public function downloadConteneurPDF($conteneurId)
+    public function downloadConteneurPDF($conteneurId)
     {
         try {
             $conteneur = Conteneur::with(['colis' => function($query) {
-                $query->whereNotIn('statut', ['valide', 'entrepot'])
-                ->orderBy('created_at', 'desc');
+                $query->whereNotIn('statut', ['valide', 'entrepot']);
             }])->findOrFail($conteneurId);
+
+            $conteneur->setRelation('colis', $conteneur->colis->sortByDesc('created_at'));
 
             // Calculer les statistiques pour chaque colis et regrouper les produits
             foreach ($conteneur->colis as $colis) {
