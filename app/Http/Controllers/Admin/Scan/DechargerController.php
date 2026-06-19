@@ -15,7 +15,10 @@ class DechargerController extends Controller
     public function decharge(Request $request)
     {
         $query = Colis::with(['agenceExpedition', 'agenceDestination', 'conteneur'])
-            ->where('statuts_individuels', 'LIKE', '%"statut":"decharge"%');
+            ->where(function ($q) {
+                $q->where('statuts_individuels', 'LIKE', '%"statut":"decharge"%')
+                  ->orWhere('statuts_individuels', 'LIKE', '%"statut": "decharge"%');
+            });
 
         // Appliquer les filtres supplémentaires en SQL
         if ($request->has('search') && !empty($request->search)) {

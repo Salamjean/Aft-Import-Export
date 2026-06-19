@@ -12,7 +12,10 @@ class ScannerController extends Controller
     public function entrepot(Request $request)
     {
         $query = Colis::with(['agenceExpedition', 'agenceDestination', 'conteneur'])
-            ->where('statuts_individuels', 'LIKE', '%"statut":"entrepot"%');
+            ->where(function ($q) {
+                $q->where('statuts_individuels', 'LIKE', '%"statut":"entrepot"%')
+                  ->orWhere('statuts_individuels', 'LIKE', '%"statut": "entrepot"%');
+            });
 
         // Appliquer les filtres supplémentaires en SQL
         if ($request->has('search') && !empty($request->search)) {

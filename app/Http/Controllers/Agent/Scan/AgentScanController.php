@@ -23,7 +23,10 @@ class AgentScanController extends Controller
 
         $query = Colis::with(['agenceExpedition', 'agenceDestination', 'conteneur'])
             ->where('agence_expedition_id', $agent->agence_id) // FILTRE PAR AGENCE
-            ->where('statuts_individuels', 'LIKE', '%"statut":"entrepot"%');
+            ->where(function ($q) {
+                $q->where('statuts_individuels', 'LIKE', '%"statut":"entrepot"%')
+                  ->orWhere('statuts_individuels', 'LIKE', '%"statut": "entrepot"%');
+            });
 
         // Appliquer les filtres supplémentaires en SQL
         if ($request->has('search') && !empty($request->search)) {

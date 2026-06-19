@@ -28,8 +28,14 @@ class AgentChargerController extends Controller
         $query = Colis::with(['agenceExpedition', 'agenceDestination', 'conteneur'])
             ->where('agence_expedition_id', $agent->agence_id) // Filtrer par l'agence d'expédition
             ->where(function ($q) {
-                $q->where('statuts_individuels', 'LIKE', '%"statut":"entrepot"%')
-                  ->orWhere('statuts_individuels', 'LIKE', '%"statut":"charge"%');
+                $q->where(function ($sq) {
+                    $sq->where('statuts_individuels', 'LIKE', '%"statut":"entrepot"%')
+                       ->orWhere('statuts_individuels', 'LIKE', '%"statut": "entrepot"%');
+                })
+                ->orWhere(function ($sq) {
+                    $sq->where('statuts_individuels', 'LIKE', '%"statut":"charge"%')
+                       ->orWhere('statuts_individuels', 'LIKE', '%"statut": "charge"%');
+                });
             });
 
         // Appliquer les filtres supplémentaires en SQL

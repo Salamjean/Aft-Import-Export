@@ -29,7 +29,10 @@ class IvoireScanLivrerController extends Controller
                 $q->where('agence_expedition_id', $agent->agence_id)
                   ->orWhere('agence_destination_id', $agent->agence_id);
             })
-            ->where('statuts_individuels', 'LIKE', '%"statut":"livre"%');
+            ->where(function ($q) {
+                $q->where('statuts_individuels', 'LIKE', '%"statut":"livre"%')
+                  ->orWhere('statuts_individuels', 'LIKE', '%"statut": "livre"%');
+            });
 
         // Appliquer les filtres supplémentaires en SQL
         if ($request->has('search') && !empty($request->search)) {

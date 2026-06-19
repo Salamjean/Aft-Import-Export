@@ -29,7 +29,10 @@ class AgentDechargerController extends Controller
                 $q->where('agence_expedition_id', $agent->agence_id)
                   ->orWhere('agence_destination_id', $agent->agence_id);
             })
-            ->where('statuts_individuels', 'LIKE', '%"statut":"decharge"%');
+            ->where(function ($q) {
+                $q->where('statuts_individuels', 'LIKE', '%"statut":"decharge"%')
+                  ->orWhere('statuts_individuels', 'LIKE', '%"statut": "decharge"%');
+            });
 
         // Appliquer les filtres supplémentaires en SQL
         if ($request->has('search') && !empty($request->search)) {
