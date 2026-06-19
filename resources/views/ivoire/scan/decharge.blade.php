@@ -1566,7 +1566,7 @@ function getMethodePaiementText(methode) {
 // Fonction pour afficher le formulaire de paiement
 function showPaymentForm(colisId, reference, montantTotal, montantPaye, resteAPayer, devise) {
     const montantRestant = parseFloat(resteAPayer) || (parseFloat(montantTotal) - parseFloat(montantPaye));
-    const rate = 655;
+    const rate = 655.95;
     const isIvoryAgent = {{ (Auth::guard('agent')->check() && Auth::guard('agent')->user()->agence && Auth::guard('agent')->user()->agence->pays === "Côte d'Ivoire") ? 'true' : 'false' }};
     const showCFAField = isIvoryAgent && (devise && (devise.trim().toUpperCase() === 'EUR' || devise.trim() === '€'));
     const montantRestantCFA = Math.round(montantRestant * rate);
@@ -1589,7 +1589,7 @@ function showPaymentForm(colisId, reference, montantTotal, montantPaye, resteAPa
                         <input type="number" class="form-control" id="montant_cfa" 
                                min="1" max="${montantRestantCFA}" step="1"
                                placeholder="Entrez le montant en CFA (FCFA)">
-                        <div class="form-text">Maximum: ${montantRestantCFA.toLocaleString('fr-FR')} FCFA (Taux fixe: 1 EUR = 655 FCFA)</div>
+                        <div class="form-text">Maximum: ${montantRestantCFA.toLocaleString('fr-FR')} FCFA (Taux fixe: 1 EUR = 655,95 FCFA)</div>
                     </div>
                     ` : ''}
 

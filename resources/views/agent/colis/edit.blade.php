@@ -192,14 +192,14 @@
                                 <div class="d-flex justify-content-between mt-5 pt-3">
                                     <div></div>
                                     <button type="button" class="btn next-step" data-next="2" style="
-                                                background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
-                                                border: none;
-                                                border-radius: 25px;
-                                                padding: 12px 30px;
-                                                font-weight: 600;
-                                                color: white;
-                                                transition: all 0.3s ease;
-                                            ">
+                                                    background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                    border: none;
+                                                    border-radius: 25px;
+                                                    padding: 12px 30px;
+                                                    font-weight: 600;
+                                                    color: white;
+                                                    transition: all 0.3s ease;
+                                                ">
                                         Suivant <i class="fas fa-arrow-right ms-2"></i>
                                     </button>
                                 </div>
@@ -302,25 +302,25 @@
 
                                 <div class="d-flex justify-content-between mt-5 pt-3">
                                     <button type="button" class="btn prev-step" data-prev="1" style="
-                                                background: white;
-                                                border: 2px solid #0e914b;
-                                                border-radius: 25px;
-                                                padding: 12px 30px;
-                                                font-weight: 600;
-                                                color: #0e914b;
-                                                transition: all 0.3s ease;
-                                            ">
+                                                    background: white;
+                                                    border: 2px solid #0e914b;
+                                                    border-radius: 25px;
+                                                    padding: 12px 30px;
+                                                    font-weight: 600;
+                                                    color: #0e914b;
+                                                    transition: all 0.3s ease;
+                                                ">
                                         <i class="fas fa-arrow-left me-2"></i>Précédent
                                     </button>
                                     <button type="button" class="btn next-step" data-next="3" style="
-                                                background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
-                                                border: none;
-                                                border-radius: 25px;
-                                                padding: 12px 30px;
-                                                font-weight: 600;
-                                                color: white;
-                                                transition: all 0.3s ease;
-                                            ">
+                                                    background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                    border: none;
+                                                    border-radius: 25px;
+                                                    padding: 12px 30px;
+                                                    font-weight: 600;
+                                                    color: white;
+                                                    transition: all 0.3s ease;
+                                                ">
                                         Suivant <i class="fas fa-arrow-right ms-2"></i>
                                     </button>
                                 </div>
@@ -415,25 +415,25 @@
 
                                 <div class="d-flex justify-content-between mt-5 pt-3">
                                     <button type="button" class="btn prev-step" data-prev="2" style="
-                                                background: white;
-                                                border: 2px solid #0e914b;
-                                                border-radius: 25px;
-                                                padding: 12px 30px;
-                                                font-weight: 600;
-                                                color: #0e914b;
-                                                transition: all 0.3s ease;
-                                            ">
+                                                    background: white;
+                                                    border: 2px solid #0e914b;
+                                                    border-radius: 25px;
+                                                    padding: 12px 30px;
+                                                    font-weight: 600;
+                                                    color: #0e914b;
+                                                    transition: all 0.3s ease;
+                                                ">
                                         <i class="fas fa-arrow-left me-2"></i>Précédent
                                     </button>
                                     <button type="button" class="btn next-step" data-next="4" style="
-                                                background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
-                                                border: none;
-                                                border-radius: 25px;
-                                                padding: 12px 30px;
-                                                font-weight: 600;
-                                                color: white;
-                                                transition: all 0.3s ease;
-                                            ">
+                                                    background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                    border: none;
+                                                    border-radius: 25px;
+                                                    padding: 12px 30px;
+                                                    font-weight: 600;
+                                                    color: white;
+                                                    transition: all 0.3s ease;
+                                                ">
                                         Suivant <i class="fas fa-arrow-right ms-2"></i>
                                     </button>
                                 </div>
@@ -570,31 +570,7 @@
 
                                 <div class="d-flex justify-content-between align-items-center mt-4 pt-3">
                                     <button type="button" class="btn" id="add-colis" style="
-                                                background: linear-gradient(135deg, #fea219 0%, #e69100 100%);
-                                                border: none;
-                                                border-radius: 25px;
-                                                padding: 10px 25px;
-                                                font-weight: 600;
-                                                color: white;
-                                                transition: all 0.3s ease;
-                                            ">
-                                        <i class="fas fa-plus me-2"></i>Ajouter un autre colis
-                                    </button>
-
-                                    <div>
-                                        <button type="button" class="btn prev-step me-2" data-prev="3" style="
-                                                    background: white;
-                                                    border: 2px solid #0e914b;
-                                                    border-radius: 25px;
-                                                    padding: 10px 25px;
-                                                    font-weight: 600;
-                                                    color: #0e914b;
-                                                    transition: all 0.3s ease;
-                                                ">
-                                            <i class="fas fa-arrow-left me-2"></i>Précédent
-                                        </button>
-                                        <button type="button" class="btn next-step" data-next="5" style="
-                                                    background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                    background: linear-gradient(135deg, #fea219 0%, #e69100 100%);
                                                     border: none;
                                                     border-radius: 25px;
                                                     padding: 10px 25px;
@@ -602,6 +578,30 @@
                                                     color: white;
                                                     transition: all 0.3s ease;
                                                 ">
+                                        <i class="fas fa-plus me-2"></i>Ajouter un autre colis
+                                    </button>
+
+                                    <div>
+                                        <button type="button" class="btn prev-step me-2" data-prev="3" style="
+                                                        background: white;
+                                                        border: 2px solid #0e914b;
+                                                        border-radius: 25px;
+                                                        padding: 10px 25px;
+                                                        font-weight: 600;
+                                                        color: #0e914b;
+                                                        transition: all 0.3s ease;
+                                                    ">
+                                            <i class="fas fa-arrow-left me-2"></i>Précédent
+                                        </button>
+                                        <button type="button" class="btn next-step" data-next="5" style="
+                                                        background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                        border: none;
+                                                        border-radius: 25px;
+                                                        padding: 10px 25px;
+                                                        font-weight: 600;
+                                                        color: white;
+                                                        transition: all 0.3s ease;
+                                                    ">
                                             Suivant <i class="fas fa-arrow-right ms-2"></i>
                                         </button>
                                     </div>
@@ -1173,10 +1173,11 @@
                                                             <td class="fw-bold">Statut:</td>
                                                             <td>
                                                                 <span class="badge 
-                                                                    @if ($colis->statut_paiement == 'non_paye') bg-danger
-                                                                    @elseif($colis->statut_paiement == 'partiellement_paye') bg-warning text-dark
-                                                                    @elseif($colis->statut_paiement == 'totalement_paye') bg-success
-                                                                    @else bg-secondary @endif" id="recap_statut_paiement">
+                                                                        @if ($colis->statut_paiement == 'non_paye') bg-danger
+                                                                        @elseif($colis->statut_paiement == 'partiellement_paye') bg-warning text-dark
+                                                                        @elseif($colis->statut_paiement == 'totalement_paye') bg-success
+                                                                        @else bg-secondary @endif"
+                                                                    id="recap_statut_paiement">
                                                                     @if ($colis->statut_paiement == 'non_paye')
                                                                         Non Payé
                                                                     @elseif($colis->statut_paiement == 'partiellement_paye')
@@ -1198,25 +1199,25 @@
 
                                 <div class="d-flex justify-content-between mt-5 pt-3">
                                     <button type="button" class="btn prev-step" data-prev="6" style="
-                                                background: white;
-                                                border: 2px solid #0e914b;
-                                                border-radius: 25px;
-                                                padding: 12px 30px;
-                                                font-weight: 600;
-                                                color: #0e914b;
-                                                transition: all 0.3s ease;
-                                            ">
+                                                    background: white;
+                                                    border: 2px solid #0e914b;
+                                                    border-radius: 25px;
+                                                    padding: 12px 30px;
+                                                    font-weight: 600;
+                                                    color: #0e914b;
+                                                    transition: all 0.3s ease;
+                                                ">
                                         <i class="fas fa-arrow-left me-2"></i>Précédent
                                     </button>
                                     <button type="submit" class="btn btn-success" id="submit-btn" style="
-                                                background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
-                                                border: none;
-                                                border-radius: 25px;
-                                                padding: 12px 30px;
-                                                font-weight: 600;
-                                                color: white;
-                                                transition: all 0.3s ease;
-                                            ">
+                                                    background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                    border: none;
+                                                    border-radius: 25px;
+                                                    padding: 12px 30px;
+                                                    font-weight: 600;
+                                                    color: white;
+                                                    transition: all 0.3s ease;
+                                                ">
                                         <i class="fas fa-save me-2"></i>Modifier le Colis
                                     </button>
                                 </div>
@@ -1348,76 +1349,76 @@
 
             const paiementTemplates = {
                 espece: `
-            <div class="paiement-method-fields">
-                <div class="alert alert-info">
-                    <i class="fas fa-info-circle me-2"></i>
-                    Le montant payé sera enregistré dans le champ "Montant Payé" ci-dessous.
+                <div class="paiement-method-fields">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Le montant payé sera enregistré dans le champ "Montant Payé" ci-dessous.
+                    </div>
                 </div>
-            </div>
-        `,
+            `,
 
                 virement_bancaire: `
-            <div class="paiement-method-fields">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-label required">Nom de la Banque</label>
-                            <input type="text" class="modern-input" name="nom_banque" value="{{ $colis->nom_banque }}" required>
+                <div class="paiement-method-fields">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label required">Nom de la Banque</label>
+                                <input type="text" class="modern-input" name="nom_banque" value="{{ $colis->nom_banque }}" required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-label required">Numéro de Compte</label>
-                            <input type="text" class="modern-input" name="numero_compte" value="{{ $colis->numero_compte }}" required>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label required">Numéro de Compte</label>
+                                <input type="text" class="modern-input" name="numero_compte" value="{{ $colis->numero_compte }}" required>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        `,
+            `,
 
                 cheque: `
-            <div class="paiement-method-fields">
-                <div class="alert alert-info">
-                    <i class="fas fa-info-circle me-2"></i>
-                    Le montant du chèque sera enregistré dans le champ "Montant Payé" ci-dessous.
+                <div class="paiement-method-fields">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Le montant du chèque sera enregistré dans le champ "Montant Payé" ci-dessous.
+                    </div>
                 </div>
-            </div>
-        `,
+            `,
 
                 mobile_money: `
-            <div class="paiement-method-fields">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-label required">Opérateur</label>
-                            <select class="modern-select" name="operateur_mobile_money" required>
-                                <option value="">Sélectionnez un opérateur</option>
-                                <option value="WAVE" {{ $colis->operateur_mobile_money == 'WAVE' ? 'selected' : '' }}>WAVE</option>
-                                <option value="ORANGE" {{ $colis->operateur_mobile_money == 'ORANGE' ? 'selected' : '' }}>ORANGE</option>
-                                <option value="MOOV" {{ $colis->operateur_mobile_money == 'MOOV' ? 'selected' : '' }}>MOOV</option>
-                                <option value="MTN" {{ $colis->operateur_mobile_money == 'MTN' ? 'selected' : '' }}>MTN</option>
-                            </select>
+                <div class="paiement-method-fields">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label required">Opérateur</label>
+                                <select class="modern-select" name="operateur_mobile_money" required>
+                                    <option value="">Sélectionnez un opérateur</option>
+                                    <option value="WAVE" {{ $colis->operateur_mobile_money == 'WAVE' ? 'selected' : '' }}>WAVE</option>
+                                    <option value="ORANGE" {{ $colis->operateur_mobile_money == 'ORANGE' ? 'selected' : '' }}>ORANGE</option>
+                                    <option value="MOOV" {{ $colis->operateur_mobile_money == 'MOOV' ? 'selected' : '' }}>MOOV</option>
+                                    <option value="MTN" {{ $colis->operateur_mobile_money == 'MTN' ? 'selected' : '' }}>MTN</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-label required">Numéro de Téléphone</label>
-                            <input type="text" class="modern-input" name="numero_mobile_money" value="{{ $colis->numero_mobile_money }}" required>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label required">Numéro de Téléphone</label>
+                                <input type="text" class="modern-input" name="numero_mobile_money" value="{{ $colis->numero_mobile_money }}" required>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        `,
+            `,
 
                 livraison: `
-            <div class="paiement-method-fields">
-                <div class="alert alert-info">
-                    <i class="fas fa-info-circle me-2"></i>
-                    Le paiement sera effectué à la livraison du colis. Le montant payé sera de 0.
+                <div class="paiement-method-fields">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Le paiement sera effectué à la livraison du colis. Le montant payé sera de 0.
+                    </div>
+                    <input type="hidden" name="montant_livraison" value="0">
                 </div>
-                <input type="hidden" name="montant_livraison" value="0">
-            </div>
-        `
+            `
             };
 
             // Gestion des étapes
@@ -1677,17 +1678,17 @@
                 const conteneurDetails = document.getElementById('conteneur_details');
                 if (conteneurDetails) {
                     conteneurDetails.innerHTML = `
-                <p class="mb-0 text-black">
-                    <strong>Nom:</strong> {{ $colis->conteneur->name_conteneur ?? 'Non spécifié' }} | 
-                    <strong>Type:</strong> {{ $colis->conteneur->type_conteneur ?? 'Non spécifié' }} | 
-                    <strong>Statut:</strong> 
-                    <span class="badge bg-success text-white">{{ $colis->conteneur->statut ?? 'Actif' }}</span>
-                </p>
-                <small class="text-muted">
-                    <i class="fas fa-info-circle me-1"></i>
-                    Conteneur original du colis - Non modifiable en édition
-                </small>
-            `;
+                    <p class="mb-0 text-black">
+                        <strong>Nom:</strong> {{ $colis->conteneur->name_conteneur ?? 'Non spécifié' }} | 
+                        <strong>Type:</strong> {{ $colis->conteneur->type_conteneur ?? 'Non spécifié' }} | 
+                        <strong>Statut:</strong> 
+                        <span class="badge bg-success text-white">{{ $colis->conteneur->statut ?? 'Actif' }}</span>
+                    </p>
+                    <small class="text-muted">
+                        <i class="fas fa-info-circle me-1"></i>
+                        Conteneur original du colis - Non modifiable en édition
+                    </small>
+                `;
                 }
             }
 
@@ -1695,18 +1696,18 @@
                 const conteneurDetails = document.getElementById('conteneur_details');
 
                 conteneurDetails.innerHTML = `
-                <p class="mb-0 text-black">
-                    <strong>Nom:</strong> ${conteneur.name_conteneur} | 
-                    <strong>Type:</strong> ${conteneur.type_conteneur} | 
-                    <strong>Statut:</strong> 
-                    <span class="badge bg-success text-white">${conteneur.statut}</span>
-                    ${conteneur.agence ? `| <strong>Agence:</strong> ${conteneur.agence.name}` : ''}
-                </p>
-                <small class="text-muted">
-                    <i class="fas fa-info-circle me-1"></i>
-                    Conteneur créé automatiquement pour l'agence sélectionnée
-                </small>
-            `;
+                    <p class="mb-0 text-black">
+                        <strong>Nom:</strong> ${conteneur.name_conteneur} | 
+                        <strong>Type:</strong> ${conteneur.type_conteneur} | 
+                        <strong>Statut:</strong> 
+                        <span class="badge bg-success text-white">${conteneur.statut}</span>
+                        ${conteneur.agence ? `| <strong>Agence:</strong> ${conteneur.agence.name}` : ''}
+                    </p>
+                    <small class="text-muted">
+                        <i class="fas fa-info-circle me-1"></i>
+                        Conteneur créé automatiquement pour l'agence sélectionnée
+                    </small>
+                `;
 
                 document.getElementById('conteneur_id_input').value = conteneur.id;
             }
@@ -2059,11 +2060,11 @@
                         const userElement = document.createElement('div');
                         userElement.className = 'user-result-item';
                         userElement.innerHTML = `
-                        <div class="user-name">${user.name} ${user.prenom || ''}</div>
-                        <div class="user-details">
-                            ${user.email} • ${user.contact || 'Non renseigné'}
-                        </div>
-                    `;
+                            <div class="user-name">${user.name} ${user.prenom || ''}</div>
+                            <div class="user-details">
+                                ${user.email} • ${user.contact || 'Non renseigné'}
+                            </div>
+                        `;
                         userElement.addEventListener('click', () => selectUser(user));
                         resultsContainer.appendChild(userElement);
                     });
@@ -2130,11 +2131,11 @@
                         const produitElement = document.createElement('div');
                         produitElement.className = 'user-result-item';
                         produitElement.innerHTML = `
-                        <div class="user-name">${produit.designation}</div>
-                        <div class="user-details">
-                            ${produit.prix_unitaire} • ${produit.agence_destination?.name || 'Agence non spécifiée'}
-                        </div>
-                    `;
+                            <div class="user-name">${produit.designation}</div>
+                            <div class="user-details">
+                                ${produit.prix_unitaire} • ${produit.agence_destination?.name || 'Agence non spécifiée'}
+                            </div>
+                        `;
                         produitElement.addEventListener('click', () => selectProduit(produit,
                             currentIndex));
                         resultsContainer.appendChild(produitElement);
@@ -2468,26 +2469,26 @@
                     // MODIFICATION : Affichage différent selon le mode de transit
                     if (modeTransit === 'Aerien') {
                         row.innerHTML = `
-                        <td class="fw-bold">${index + 1}</td>
-                        <td>${produit}</td>
-                        <td>${quantite}</td>
-                        <td>${prixUnitaire.toFixed(2)}</td>
-                        <td class="fw-bold">${totalColis.toFixed(2)}</td>
-                        <td>${typeColis}</td>
-                        <td>${dimensions}</td>
-                        <td>${poids !== '-' ? poids + ' kg' : '-'}</td>
-                    `;
+                            <td class="fw-bold">${index + 1}</td>
+                            <td>${produit}</td>
+                            <td>${quantite}</td>
+                            <td>${prixUnitaire.toFixed(2)}</td>
+                            <td class="fw-bold">${totalColis.toFixed(2)}</td>
+                            <td>${typeColis}</td>
+                            <td>${dimensions}</td>
+                            <td>${poids !== '-' ? poids + ' kg' : '-'}</td>
+                        `;
                     } else {
                         row.innerHTML = `
-                        <td class="fw-bold">${index + 1}</td>
-                        <td>${produit}</td>
-                        <td>${quantite}</td>
-                        <td>${prixUnitaire.toFixed(2)}</td>
-                        <td class="fw-bold">${totalColis.toFixed(2)}</td>
-                        <td>${typeColis}</td>
-                        <td>${dimensions}</td>
-                        <td>${poids !== '-' ? poids + ' kg' : '-'}</td>
-                    `;
+                            <td class="fw-bold">${index + 1}</td>
+                            <td>${produit}</td>
+                            <td>${quantite}</td>
+                            <td>${prixUnitaire.toFixed(2)}</td>
+                            <td class="fw-bold">${totalColis.toFixed(2)}</td>
+                            <td>${typeColis}</td>
+                            <td>${dimensions}</td>
+                            <td>${poids !== '-' ? poids + ' kg' : '-'}</td>
+                        `;
                     }
 
                     tbody.appendChild(row);
@@ -2662,10 +2663,10 @@
             const infoMessage = document.getElementById('conteneur_info_message');
             if (infoMessage) {
                 infoMessage.innerHTML = `
-                <i class="fas fa-info-circle me-2"></i>
-                <strong>Mode édition :</strong> La référence et l'agence d'expédition ne sont pas modifiables.
-                Les QR codes existants seront conservés, de nouveaux seront générés pour les colis ajoutés.
-            `;
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Mode édition :</strong> La référence et l'agence d'expédition ne sont pas modifiables.
+                    Les QR codes existants seront conservés, de nouveaux seront générés pour les colis ajoutés.
+                `;
                 infoMessage.style.display = 'block';
             }
         }

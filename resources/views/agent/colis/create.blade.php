@@ -186,14 +186,14 @@
                                 <div class="d-flex justify-content-between mt-5 pt-3">
                                     <div></div>
                                     <button type="button" class="btn next-step" data-next="2" style="
-                                                background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
-                                                border: none;
-                                                border-radius: 25px;
-                                                padding: 12px 30px;
-                                                font-weight: 600;
-                                                color: white;
-                                                transition: all 0.3s ease;
-                                            ">
+                                                    background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                    border: none;
+                                                    border-radius: 25px;
+                                                    padding: 12px 30px;
+                                                    font-weight: 600;
+                                                    color: white;
+                                                    transition: all 0.3s ease;
+                                                ">
                                         Suivant <i class="fas fa-arrow-right ms-2"></i>
                                     </button>
                                 </div>
@@ -294,25 +294,25 @@
 
                                 <div class="d-flex justify-content-between mt-5 pt-3">
                                     <button type="button" class="btn prev-step" data-prev="1" style="
-                                                background: white;
-                                                border: 2px solid #0e914b;
-                                                border-radius: 25px;
-                                                padding: 12px 30px;
-                                                font-weight: 600;
-                                                color: #0e914b;
-                                                transition: all 0.3s ease;
-                                            ">
+                                                    background: white;
+                                                    border: 2px solid #0e914b;
+                                                    border-radius: 25px;
+                                                    padding: 12px 30px;
+                                                    font-weight: 600;
+                                                    color: #0e914b;
+                                                    transition: all 0.3s ease;
+                                                ">
                                         <i class="fas fa-arrow-left me-2"></i>Précédent
                                     </button>
                                     <button type="button" class="btn next-step" data-next="3" style="
-                                                background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
-                                                border: none;
-                                                border-radius: 25px;
-                                                padding: 12px 30px;
-                                                font-weight: 600;
-                                                color: white;
-                                                transition: all 0.3s ease;
-                                            ">
+                                                    background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                    border: none;
+                                                    border-radius: 25px;
+                                                    padding: 12px 30px;
+                                                    font-weight: 600;
+                                                    color: white;
+                                                    transition: all 0.3s ease;
+                                                ">
                                         Suivant <i class="fas fa-arrow-right ms-2"></i>
                                     </button>
                                 </div>
@@ -400,25 +400,25 @@
 
                                 <div class="d-flex justify-content-between mt-5 pt-3">
                                     <button type="button" class="btn prev-step" data-prev="2" style="
-                                                background: white;
-                                                border: 2px solid #0e914b;
-                                                border-radius: 25px;
-                                                padding: 12px 30px;
-                                                font-weight: 600;
-                                                color: #0e914b;
-                                                transition: all 0.3s ease;
-                                            ">
+                                                    background: white;
+                                                    border: 2px solid #0e914b;
+                                                    border-radius: 25px;
+                                                    padding: 12px 30px;
+                                                    font-weight: 600;
+                                                    color: #0e914b;
+                                                    transition: all 0.3s ease;
+                                                ">
                                         <i class="fas fa-arrow-left me-2"></i>Précédent
                                     </button>
                                     <button type="button" class="btn next-step" data-next="4" style="
-                                                background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
-                                                border: none;
-                                                border-radius: 25px;
-                                                padding: 12px 30px;
-                                                font-weight: 600;
-                                                color: white;
-                                                transition: all 0.3s ease;
-                                            ">
+                                                    background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                    border: none;
+                                                    border-radius: 25px;
+                                                    padding: 12px 30px;
+                                                    font-weight: 600;
+                                                    color: white;
+                                                    transition: all 0.3s ease;
+                                                ">
                                         Suivant <i class="fas fa-arrow-right ms-2"></i>
                                     </button>
                                 </div>
@@ -522,31 +522,7 @@
 
                                 <div class="d-flex justify-content-between align-items-center mt-4 pt-3">
                                     <button type="button" class="btn" id="add-colis" style="
-                                                background: linear-gradient(135deg, #fea219 0%, #e69100 100%);
-                                                border: none;
-                                                border-radius: 25px;
-                                                padding: 10px 25px;
-                                                font-weight: 600;
-                                                color: white;
-                                                transition: all 0.3s ease;
-                                            ">
-                                        <i class="fas fa-plus me-2"></i>Ajouter un autre colis
-                                    </button>
-
-                                    <div>
-                                        <button type="button" class="btn prev-step me-2" data-prev="3" style="
-                                                    background: white;
-                                                    border: 2px solid #0e914b;
-                                                    border-radius: 25px;
-                                                    padding: 10px 25px;
-                                                    font-weight: 600;
-                                                    color: #0e914b;
-                                                    transition: all 0.3s ease;
-                                                ">
-                                            <i class="fas fa-arrow-left me-2"></i>Précédent
-                                        </button>
-                                        <button type="button" class="btn next-step" data-next="5" style="
-                                                    background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                    background: linear-gradient(135deg, #fea219 0%, #e69100 100%);
                                                     border: none;
                                                     border-radius: 25px;
                                                     padding: 10px 25px;
@@ -554,6 +530,30 @@
                                                     color: white;
                                                     transition: all 0.3s ease;
                                                 ">
+                                        <i class="fas fa-plus me-2"></i>Ajouter un autre colis
+                                    </button>
+
+                                    <div>
+                                        <button type="button" class="btn prev-step me-2" data-prev="3" style="
+                                                        background: white;
+                                                        border: 2px solid #0e914b;
+                                                        border-radius: 25px;
+                                                        padding: 10px 25px;
+                                                        font-weight: 600;
+                                                        color: #0e914b;
+                                                        transition: all 0.3s ease;
+                                                    ">
+                                            <i class="fas fa-arrow-left me-2"></i>Précédent
+                                        </button>
+                                        <button type="button" class="btn next-step" data-next="5" style="
+                                                        background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                        border: none;
+                                                        border-radius: 25px;
+                                                        padding: 10px 25px;
+                                                        font-weight: 600;
+                                                        color: white;
+                                                        transition: all 0.3s ease;
+                                                    ">
                                             Suivant <i class="fas fa-arrow-right ms-2"></i>
                                         </button>
                                     </div>
@@ -949,25 +949,25 @@
 
                                 <div class="d-flex justify-content-between mt-5 pt-3">
                                     <button type="button" class="btn prev-step" data-prev="6" style="
-                                                background: white;
-                                                border: 2px solid #0e914b;
-                                                border-radius: 25px;
-                                                padding: 12px 30px;
-                                                font-weight: 600;
-                                                color: #0e914b;
-                                                transition: all 0.3s ease;
-                                            ">
+                                                    background: white;
+                                                    border: 2px solid #0e914b;
+                                                    border-radius: 25px;
+                                                    padding: 12px 30px;
+                                                    font-weight: 600;
+                                                    color: #0e914b;
+                                                    transition: all 0.3s ease;
+                                                ">
                                         <i class="fas fa-arrow-left me-2"></i>Précédent
                                     </button>
                                     <button type="submit" class="btn btn-success" id="submit-btn" style="
-                                                background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
-                                                border: none;
-                                                border-radius: 25px;
-                                                padding: 12px 30px;
-                                                font-weight: 600;
-                                                color: white;
-                                                transition: all 0.3s ease;
-                                            ">
+                                                    background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                    border: none;
+                                                    border-radius: 25px;
+                                                    padding: 12px 30px;
+                                                    font-weight: 600;
+                                                    color: white;
+                                                    transition: all 0.3s ease;
+                                                ">
                                         <i class="fas fa-save me-2"></i>Enregistrer le Colis
                                     </button>
                                 </div>
@@ -1081,2104 +1081,2104 @@
             const PRIX_PAR_KG_AERIEN_EURO = 15;
             const TAUX_CONVERSION_EURO_XOF = 655;
 
-            // Données des agences de destination en Côte d'Ivoire
-            const agencesDestination = {
-                'Maritime': {
-                    name: 'DS Translog Carrefour Angré',
-                    id: 4
-                },
-                'Aerien': {
-                    name: 'DS Translog Angré 8ème Tranche',
-                    id: 2
-                }
-            };
+                // Données des agences de destination en Côte d'Ivoire
+                const agencesDestination = {
+                    'Maritime': {
+                        name: 'DS Translog Carrefour Angré',
+                        id: 4
+                    },
+                    'Aerien': {
+                        name: 'DS Translog Angré 8ème Tranche',
+                        id: 2
+                    }
+                };
 
-            const paiementTemplates = {
-                espece: `
-            <div class="paiement-method-fields">
-                <div class="alert alert-info">
-                    <i class="fas fa-info-circle me-2"></i>
-                    Le montant payé sera enregistré dans le champ "Montant Payé" ci-dessous.
-                </div>
-            </div>
-        `,
-
-                virement_bancaire: `
-            <div class="paiement-method-fields">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-label required">Nom de la Banque</label>
-                            <input type="text" class="modern-input" name="nom_banque" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-label required">Numéro de Compte</label>
-                            <input type="text" class="modern-input" name="numero_compte" required>
-                        </div>
+                const paiementTemplates = {
+                    espece: `
+                <div class="paiement-method-fields">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Le montant payé sera enregistré dans le champ "Montant Payé" ci-dessous.
                     </div>
                 </div>
-            </div>
-        `,
+            `,
 
-                cheque: `
-            <div class="paiement-method-fields">
-                <div class="alert alert-info">
-                    <i class="fas fa-info-circle me-2"></i>
-                    Le montant du chèque sera enregistré dans le champ "Montant Payé" ci-dessous.
-                </div>
-            </div>
-        `,
-
-                mobile_money: `
-            <div class="paiement-method-fields">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-label required">Opérateur</label>
-                            <select class="modern-select" name="operateur_mobile_money" required>
-                                <option value="">Sélectionnez un opérateur</option>
-                                <option value="WAVE">WAVE</option>
-                                <option value="ORANGE">ORANGE</option>
-                                <option value="MOOV">MOOV</option>
-                                <option value="MTN">MTN</option>
-                            </select>
+                    virement_bancaire: `
+                <div class="paiement-method-fields">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label required">Nom de la Banque</label>
+                                <input type="text" class="modern-input" name="nom_banque" required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-label required">Numéro de Téléphone</label>
-                            <input type="text" class="modern-input" name="numero_mobile_money" required>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label required">Numéro de Compte</label>
+                                <input type="text" class="modern-input" name="numero_compte" required>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        `,
+            `,
 
-                livraison: `
-            <div class="paiement-method-fields">
-                <div class="alert alert-info">
-                    <i class="fas fa-info-circle me-2"></i>
-                    Le paiement sera effectué à la livraison du colis. Le montant payé sera de 0.
+                    cheque: `
+                <div class="paiement-method-fields">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Le montant du chèque sera enregistré dans le champ "Montant Payé" ci-dessous.
+                    </div>
                 </div>
-                <input type="hidden" name="montant_livraison" value="0">
-            </div>
-        `
-            };
+            `,
 
-            // Gestion des étapes
-            function showStep(step) {
-                document.querySelectorAll('.step-content').forEach(el => {
-                    el.classList.add('d-none');
-                });
-                document.getElementById(`step-${step}`).classList.remove('d-none');
+                    mobile_money: `
+                <div class="paiement-method-fields">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label required">Opérateur</label>
+                                <select class="modern-select" name="operateur_mobile_money" required>
+                                    <option value="">Sélectionnez un opérateur</option>
+                                    <option value="WAVE">WAVE</option>
+                                    <option value="ORANGE">ORANGE</option>
+                                    <option value="MOOV">MOOV</option>
+                                    <option value="MTN">MTN</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label required">Numéro de Téléphone</label>
+                                <input type="text" class="modern-input" name="numero_mobile_money" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
 
-                // Mettre à jour la barre de progression
-                const progress = ((step - 1) / 6) * 100;
-                document.getElementById('progress-bar').style.width = `${progress}%`;
+                    livraison: `
+                <div class="paiement-method-fields">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Le paiement sera effectué à la livraison du colis. Le montant payé sera de 0.
+                    </div>
+                    <input type="hidden" name="montant_livraison" value="0">
+                </div>
+            `
+                };
 
-                // Mettre à jour les indicateurs d'étapes
-                document.querySelectorAll('.step-indicator').forEach(el => {
-                    el.classList.remove('active');
-                    if (parseInt(el.dataset.step) <= step) {
-                        el.classList.add('active');
-                    }
-                });
+                // Gestion des étapes
+                function showStep(step) {
+                    document.querySelectorAll('.step-content').forEach(el => {
+                        el.classList.add('d-none');
+                    });
+                    document.getElementById(`step-${step}`).classList.remove('d-none');
 
-                currentStep = step;
+                    // Mettre à jour la barre de progression
+                    const progress = ((step - 1) / 6) * 100;
+                    document.getElementById('progress-bar').style.width = `${progress}%`;
 
-                // Mettre à jour les montants à chaque changement d'étape
-                updateMontants();
-
-                // Si on arrive à l'étape 7, mettre à jour le récapitulatif
-                if (step === 7) {
-                    updateRecap();
-                }
-            }
-
-            // Navigation entre les étapes
-            document.querySelectorAll('.next-step').forEach(button => {
-                button.addEventListener('click', function () {
-                    const nextStep = parseInt(this.dataset.next);
-                    if (validateStep(currentStep)) {
-                        showStep(nextStep);
-                    }
-                });
-            });
-
-            document.querySelectorAll('.prev-step').forEach(button => {
-                button.addEventListener('click', function () {
-                    const prevStep = parseInt(this.dataset.prev);
-                    showStep(prevStep);
-                });
-            });
-
-            // Gestion du mode de transit
-            document.getElementById('mode_transit').addEventListener('change', function () {
-                updateAgenceDestination();
-                updateConteneurEtReference();
-                updateTypeCalcul();
-                toggleInfoCalculAuto();
-                updateMontants(); // Ajouté pour mettre à jour les montants
-            });
-
-            // Gestion du type d'expéditeur
-            document.getElementById('type_expediteur').addEventListener('change', function () {
-                updateExpediteurFields();
-            });
-
-            // Gestion de la méthode de paiement
-            document.getElementById('methode_paiement').addEventListener('change', function () {
-                const method = this.value;
-                const fieldsContainer = document.getElementById('paiement-fields');
-
-                if (method && paiementTemplates[method]) {
-                    fieldsContainer.innerHTML = paiementTemplates[method];
-
-                    // Si c'est le paiement à la livraison, on désactive le montant payé
-                    if (method === 'livraison') {
-                        document.getElementById('montant_paye').value = '0';
-                        document.getElementById('montant_paye').setAttribute('readonly', 'true');
-                        document.getElementById('statut_paiement').value = 'non_paye';
-                    } else {
-                        document.getElementById('montant_paye').removeAttribute('readonly');
-                    }
-
-                    updateResteAPayer();
-                } else {
-                    fieldsContainer.innerHTML = '';
-                }
-            });
-
-            // Gestion du montant payé
-            document.getElementById('montant_paye').addEventListener('input', function () {
-                updateResteAPayer();
-            });
-
-            // Gestion du service
-            document.getElementById('service_id').addEventListener('change', function () {
-                const selectedOption = this.options[this.selectedIndex];
-                const prix = selectedOption.getAttribute('data-prix') || 0;
-
-                document.getElementById('prix_service').value = prix;
-                updateMontants();
-            });
-
-            // Écouteur pour le bouton d'ajout de service
-            document.getElementById('add-service-btn').addEventListener('click', function () {
-                $('#addServiceModal').modal('show');
-            });
-
-            // Sauvegarde d'un nouveau produit
-            document.getElementById('saveProduitBtn').addEventListener('click', function () {
-                saveProduit();
-            });
-
-            // Sauvegarde d'un nouveau service
-            document.getElementById('saveServiceBtn').addEventListener('click', function () {
-                saveService();
-            });
-
-            // Ajout de colis
-            document.getElementById('add-colis').addEventListener('click', function () {
-                addColis();
-            });
-
-            // Recherche d'utilisateurs
-            document.getElementById('userSearch').addEventListener('input', function (e) {
-                clearTimeout(searchTimeout);
-                const searchTerm = e.target.value.trim();
-
-                if (searchTerm.length < 2) {
-                    hideSearchResults();
-                    return;
-                }
-
-                searchTimeout = setTimeout(() => {
-                    searchUsers(searchTerm);
-                }, 300);
-            });
-
-            function searchUsers(searchTerm) {
-                const url = '{{ url('users/search') }}?q=' + encodeURIComponent(searchTerm);
-
-                fetch(url, {
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    }
-                })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Erreur réseau: ' + response.status);
+                    // Mettre à jour les indicateurs d'étapes
+                    document.querySelectorAll('.step-indicator').forEach(el => {
+                        el.classList.remove('active');
+                        if (parseInt(el.dataset.step) <= step) {
+                            el.classList.add('active');
                         }
-                        return response.json();
-                    })
-                    .then(users => {
-                        displaySearchResults(users);
-                    })
-                    .catch(error => {
-                        console.error('Erreur de recherche:', error);
-                        hideSearchResults();
                     });
-            }
 
-            function displaySearchResults(users) {
-                const resultsContainer = document.getElementById('userSearchResults');
-                resultsContainer.innerHTML = '';
+                    currentStep = step;
 
-                if (users.length === 0) {
-                    resultsContainer.innerHTML = '<div class="no-results">Aucun utilisateur trouvé</div>';
-                } else {
-                    users.forEach(user => {
-                        const userElement = document.createElement('div');
-                        userElement.className = 'user-result-item';
-                        userElement.innerHTML = `
-                        <div class="user-name">${user.name} ${user.prenom || ''}</div>
-                        <div class="user-details">
-                            ${user.email} • ${user.contact || 'Non renseigné'}
-                        </div>
-                    `;
-                        userElement.addEventListener('click', () => selectUser(user));
-                        resultsContainer.appendChild(userElement);
-                    });
-                }
-
-                resultsContainer.style.display = 'block';
-            }
-
-            function hideSearchResults() {
-                document.getElementById('userSearchResults').style.display = 'none';
-            }
-
-            function selectUser(user) {
-                document.getElementById('name_expediteur').value = user.name;
-                document.getElementById('prenom_expediteur').value = user.prenom || '';
-                document.getElementById('email_expediteur').value = user.email;
-                document.getElementById('contact_expediteur').value = user.contact || '';
-                document.getElementById('adresse_expediteur').value = user.adresse || '';
-
-                // Remplir le champ caché avec l'ID de l'utilisateur
-                document.getElementById('user_id').value = user.id;
-
-                hideSearchResults();
-                document.getElementById('userSearch').value = '';
-
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Utilisateur sélectionné',
-                    text: `Les informations de ${user.name} ont été pré-remplies`,
-                    confirmButtonColor: '#0e914b',
-                    timer: 2000
-                });
-            }
-
-            function searchProduits(searchTerm, currentIndex) {
-                const agenceDestinationId = document.getElementById('agence_destination_id').value;
-
-                fetch(
-                    `/produits/search?q=${encodeURIComponent(searchTerm)}&agence_destination_id=${agenceDestinationId}`
-                )
-                    .then(response => response.json())
-                    .then(produits => {
-                        displayProduitResults(produits, currentIndex);
-                    })
-                    .catch(error => {
-                        console.error('Erreur de recherche de produits:', error);
-                        hideProduitResults();
-                    });
-            }
-
-            function displayProduitResults(produits, currentIndex) {
-                const colisItem = document.querySelector(`.colis-item[data-index="${currentIndex}"]`);
-                if (!colisItem) return;
-
-                const resultsContainer = colisItem.querySelector('.produit-search-results');
-                if (!resultsContainer) return;
-
-                resultsContainer.innerHTML = '';
-
-                if (produits.length === 0) {
-                    resultsContainer.innerHTML = '<div class="no-results">Aucun produit trouvé</div>';
-                } else {
-                    produits.forEach(produit => {
-                        const produitElement = document.createElement('div');
-                        produitElement.className = 'user-result-item';
-                        produitElement.innerHTML = `
-                        <div class="user-name">${produit.designation}</div>
-                        <div class="user-details">
-                            ${produit.prix_unitaire} • ${produit.agence_destination?.name || 'Agence non spécifiée'}
-                        </div>
-                    `;
-                        produitElement.addEventListener('click', () => selectProduit(produit,
-                            currentIndex));
-                        resultsContainer.appendChild(produitElement);
-                    });
-                }
-
-                resultsContainer.style.display = 'block';
-            }
-
-            function selectProduit(produit, index) {
-                const modeTransit = document.getElementById('mode_transit').value;
-
-                if (modeTransit === 'Aerien') {
-                    Swal.fire({
-                        icon: 'info',
-                        title: 'Mode Aérien',
-                        text: 'En mode aérien, le prix est calculé automatiquement basé sur le poids. La sélection de produit est désactivée.',
-                        confirmButtonColor: '#0e914b'
-                    });
-                    return;
-                }
-
-                const colisItem = document.querySelector(`.colis-item[data-index="${index}"]`);
-                if (colisItem) {
-                    const produitInput = colisItem.querySelector(`[name="colis[${index}][produit]"]`);
-                    const prixInput = colisItem.querySelector(`[name="colis[${index}][prix_unitaire]"]`);
-
-                    produitInput.value = produit.designation;
-                    prixInput.value = produit.prix_unitaire;
-
-                    hideProduitResults(index);
+                    // Mettre à jour les montants à chaque changement d'étape
                     updateMontants();
+
+                    // Si on arrive à l'étape 7, mettre à jour le récapitulatif
+                    if (step === 7) {
+                        updateRecap();
+                    }
                 }
-            }
 
-            // Fonction identique à celle de l'admin pour charger les agences - VERSION CORRIGÉE
-            function updateAgencesInModals(agences) {
-                console.log('🔄 updateAgencesInModals appelée avec:', agences);
+                // Navigation entre les étapes
+                document.querySelectorAll('.next-step').forEach(button => {
+                    button.addEventListener('click', function () {
+                        const nextStep = parseInt(this.dataset.next);
+                        if (validateStep(currentStep)) {
+                            showStep(nextStep);
+                        }
+                    });
+                });
 
-                const selects = document.querySelectorAll(
-                    '#addProduitModal select[name="agence_destination_id"], #addServiceModal select[name="agence_destination_id"]'
-                );
+                document.querySelectorAll('.prev-step').forEach(button => {
+                    button.addEventListener('click', function () {
+                        const prevStep = parseInt(this.dataset.prev);
+                        showStep(prevStep);
+                    });
+                });
 
-                console.log('🔍 Nombre de selects trouvés:', selects.length);
+                // Gestion du mode de transit
+                document.getElementById('mode_transit').addEventListener('change', function () {
+                    updateAgenceDestination();
+                    updateConteneurEtReference();
+                    updateTypeCalcul();
+                    toggleInfoCalculAuto();
+                    updateMontants(); // Ajouté pour mettre à jour les montants
+                });
 
-                selects.forEach((select, index) => {
-                    console.log(`🔍 Traitement du select ${index + 1}:`, select);
-                    select.innerHTML = '<option value="">Sélectionnez une agence</option>';
+                // Gestion du type d'expéditeur
+                document.getElementById('type_expediteur').addEventListener('change', function () {
+                    updateExpediteurFields();
+                });
 
-                    if (agences && agences.length > 0) {
-                        agences.forEach(agence => {
-                            const option = document.createElement('option');
-                            option.value = agence.id;
-                            option.textContent = `${agence.name} (${agence.pays})`;
-                            select.appendChild(option);
-                        });
-                        console.log(`✅ ${agences.length} agences ajoutées au select ${index + 1}`);
+                // Gestion de la méthode de paiement
+                document.getElementById('methode_paiement').addEventListener('change', function () {
+                    const method = this.value;
+                    const fieldsContainer = document.getElementById('paiement-fields');
+
+                    if (method && paiementTemplates[method]) {
+                        fieldsContainer.innerHTML = paiementTemplates[method];
+
+                        // Si c'est le paiement à la livraison, on désactive le montant payé
+                        if (method === 'livraison') {
+                            document.getElementById('montant_paye').value = '0';
+                            document.getElementById('montant_paye').setAttribute('readonly', 'true');
+                            document.getElementById('statut_paiement').value = 'non_paye';
+                        } else {
+                            document.getElementById('montant_paye').removeAttribute('readonly');
+                        }
+
+                        updateResteAPayer();
                     } else {
-                        console.warn('⚠️ Aucune agence à ajouter');
+                        fieldsContainer.innerHTML = '';
                     }
                 });
-            }
 
-            // Modifier la fonction updateConteneurEtReference pour inclure le chargement des agences
-            async function updateConteneurEtReference() {
-                const modeTransit = document.getElementById('mode_transit').value;
+                // Gestion du montant payé
+                document.getElementById('montant_paye').addEventListener('input', function () {
+                    updateResteAPayer();
+                });
 
-                if (!modeTransit) {
-                    console.log('Mode de transit non sélectionné');
-                    return;
-                }
+                // Gestion du service
+                document.getElementById('service_id').addEventListener('change', function () {
+                    const selectedOption = this.options[this.selectedIndex];
+                    const prix = selectedOption.getAttribute('data-prix') || 0;
 
-                try {
-                    const url = "{{ route('agent.colis.get-conteneur-reference') }}";
-                    const params = new URLSearchParams({
-                        mode_transit: modeTransit
-                    });
+                    document.getElementById('prix_service').value = prix;
+                    updateMontants();
+                });
 
-                    console.log('Envoi requête:', `${url}?${params}`);
+                // Écouteur pour le bouton d'ajout de service
+                document.getElementById('add-service-btn').addEventListener('click', function () {
+                    $('#addServiceModal').modal('show');
+                });
 
-                    const response = await fetch(`${url}?${params}`, {
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest',
-                            'Accept': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        }
-                    });
+                // Sauvegarde d'un nouveau produit
+                document.getElementById('saveProduitBtn').addEventListener('click', function () {
+                    saveProduit();
+                });
 
-                    console.log('Statut réponse:', response.status);
+                // Sauvegarde d'un nouveau service
+                document.getElementById('saveServiceBtn').addEventListener('click', function () {
+                    saveService();
+                });
 
-                    if (!response.ok) {
-                        throw new Error(`Erreur HTTP: ${response.status}`);
-                    }
+                // Ajout de colis
+                document.getElementById('add-colis').addEventListener('click', function () {
+                    addColis();
+                });
 
-                    const data = await response.json();
-                    console.log('Données reçues:', data);
-
-                    if (data.success) {
-                        // Mettre à jour le conteneur
-                        document.getElementById('current_conteneur_name').textContent = data.conteneur
-                            .name_conteneur;
-                        document.getElementById('current_conteneur_type').textContent = data.conteneur
-                            .type_conteneur;
-                        document.getElementById('conteneur_id_input').value = data.conteneur.id;
-
-                        // Mettre à jour la référence
-                        document.getElementById('reference_display').textContent = data.reference;
-                        document.getElementById('reference_colis_input').value = data.reference;
-
-                        // Mettre à jour l'agence d'expédition
-                        if (data.agenceExpedition) {
-                            document.getElementById('agence_expedition_display').textContent = data
-                                .agenceExpedition.name;
-                            document.getElementById('agence_expedition_id').value = data.agenceExpedition.id;
-                            document.getElementById('devise_expedition_display').textContent = data
-                                .agenceExpedition.devise;
-                            document.getElementById('devise').value = data.agenceExpedition.devise;
-                            updateAllDevises(data.agenceExpedition.devise);
-                        }
-
-                        // CHARGER LES AGENCES DANS LES MODALS (comme dans l'admin)
-                        if (data.agencesDestination) {
-                            updateAgencesInModals(data.agencesDestination);
-                        }
-
-                        console.log('Mise à jour réussie');
-
-                        // Mettre à jour le type de calcul après la mise à jour de la devise
-                        setTimeout(() => {
-                            updateTypeCalcul();
-                            toggleInfoCalculAuto();
-                            updatePrixKgDisplay();
-                        }, 100);
-
-                        // Mettre à jour le récapitulatif si on est à l'étape 7
-                        if (currentStep === 7) {
-                            updateRecap();
-                        }
-
-                    } else {
-                        throw new Error(data.message || 'Erreur inconnue du serveur');
-                    }
-                } catch (error) {
-                    console.error('Erreur lors de la mise à jour du conteneur:', error);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Erreur',
-                        text: 'Impossible de mettre à jour le conteneur et la référence: ' + error
-                            .message,
-                        confirmButtonColor: '#0e914b'
-                    });
-                }
-            }
-
-            function hideProduitResults(index = null) {
-                if (index !== null) {
-                    const colisItem = document.querySelector(`.colis-item[data-index="${index}"]`);
-                    if (colisItem) {
-                        const resultsContainer = colisItem.querySelector('.produit-search-results');
-                        if (resultsContainer) {
-                            resultsContainer.style.display = 'none';
-                        }
-                    }
-                } else {
-                    document.querySelectorAll('.produit-search-results').forEach(container => {
-                        container.style.display = 'none';
-                    });
-                }
-            }
-
-            function saveProduit() {
-                const form = document.getElementById('addProduitForm');
-                const formData = new FormData(form);
-
-                // Utiliser exactement la même route que l'admin
-                const url = "{{ route('admin.produits.store') }}";
-
-                fetch(url, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'Accept': 'application/json'
-                    }
-                })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`Erreur HTTP: ${response.status}`);
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data.success) {
-                            const produitInput = document.querySelector(
-                                `[name="colis[${currentProduitIndex}][produit]"]`);
-                            const prixInput = document.querySelector(
-                                `[name="colis[${currentProduitIndex}][prix_unitaire]"]`);
-
-                            produitInput.value = data.produit.designation;
-                            prixInput.value = data.produit.prix_unitaire;
-
-                            $('#addProduitModal').modal('hide');
-                            form.reset();
-
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Produit ajouté',
-                                text: 'Le produit a été ajouté avec succès',
-                                confirmButtonColor: '#0e914b'
-                            });
-
-                            updateMontants();
-                        } else {
-                            throw new Error(data.message || 'Erreur lors de l\'ajout du produit');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Erreur:', error);
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Erreur',
-                            text: 'Une erreur est survenue lors de l\'ajout du produit: ' + error
-                                .message,
-                            confirmButtonColor: '#0e914b'
-                        });
-                    });
-            }
-
-            function saveService() {
-                const form = document.getElementById('addServiceForm');
-                const formData = new FormData(form);
-
-                // Utiliser exactement la même route que l'admin
-                const url = "{{ route('admin.services.store') }}";
-
-                fetch(url, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'Accept': 'application/json'
-                    }
-                })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`Erreur HTTP: ${response.status}`);
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data.success) {
-                            const serviceSelect = document.getElementById('service_id');
-                            const newOption = document.createElement('option');
-                            newOption.value = data.service.id;
-                            newOption.textContent =
-                                `${data.service.designation} - ${data.service.prix_unitaire} XOF`;
-                            newOption.setAttribute('data-prix', data.service.prix_unitaire);
-                            serviceSelect.appendChild(newOption);
-
-                            $('#addServiceModal').modal('hide');
-                            form.reset();
-
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Service ajouté',
-                                text: 'Le service a été ajouté avec succès',
-                                confirmButtonColor: '#0e914b'
-                            });
-                        } else {
-                            throw new Error(data.message || 'Erreur lors de l\'ajout du service');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Erreur:', error);
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Erreur',
-                            text: 'Une erreur est survenue lors de l\'ajout du service: ' + error
-                                .message,
-                            confirmButtonColor: '#0e914b'
-                        });
-                    });
-            }
-            // Recherche de produits
-            document.addEventListener('input', function (e) {
-                if (e.target.classList.contains('produit-input')) {
-                    clearTimeout(produitSearchTimeout);
+                // Recherche d'utilisateurs
+                document.getElementById('userSearch').addEventListener('input', function (e) {
+                    clearTimeout(searchTimeout);
                     const searchTerm = e.target.value.trim();
-                    const colisItem = e.target.closest('.colis-item');
-                    const index = colisItem ? colisItem.dataset.index : 0;
 
                     if (searchTerm.length < 2) {
-                        hideProduitResults(index);
+                        hideSearchResults();
                         return;
                     }
 
-                    produitSearchTimeout = setTimeout(() => {
-                        searchProduits(searchTerm, index);
+                    searchTimeout = setTimeout(() => {
+                        searchUsers(searchTerm);
                     }, 300);
-                }
-            });
+                });
 
-            // Écouteurs pour recharger les agences à l'ouverture des modals
-            document.addEventListener('click', function (e) {
-                if (e.target.closest('.add-produit-btn')) {
-                    currentProduitIndex = e.target.closest('.add-produit-btn').getAttribute('data-index');
-                    console.log('🔄 Ouverture modal produit, rechargement des agences...');
-                    // Recharger les agences depuis l'API
-                    loadAgencesFromAPI();
-                    $('#addProduitModal').modal('show');
-                }
-            });
+                function searchUsers(searchTerm) {
+                    const url = '{{ url('users/search') }}?q=' + encodeURIComponent(searchTerm);
 
-            // Écouteur pour le bouton d'ajout de service
-            document.getElementById('add-service-btn').addEventListener('click', function () {
-                console.log('🔄 Ouverture modal service, rechargement des agences...');
-                // Recharger les agences depuis l'API
-                loadAgencesFromAPI();
-                $('#addServiceModal').modal('show');
-            });
-
-            // Fonction pour charger les agences depuis l'API
-            async function loadAgencesFromAPI() {
-                const modeTransit = document.getElementById('mode_transit').value;
-
-                if (!modeTransit) {
-                    console.warn('⚠️ Mode de transit non sélectionné pour charger les agences');
-                    return;
-                }
-
-                try {
-                    const url = "{{ route('agent.colis.get-conteneur-reference') }}";
-                    const params = new URLSearchParams({
-                        mode_transit: modeTransit
-                    });
-
-                    console.log('🔄 Chargement des agences depuis API...');
-
-                    const response = await fetch(`${url}?${params}`, {
+                    fetch(url, {
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest',
                             'Accept': 'application/json',
                             'X-CSRF-TOKEN': '{{ csrf_token() }}'
                         }
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`Erreur HTTP: ${response.status}`);
-                    }
-
-                    const data = await response.json();
-
-                    if (data.success && data.agencesDestination) {
-                        console.log('✅ Agences chargées:', data.agencesDestination);
-                        updateAgencesInModals(data.agencesDestination);
-                    } else {
-                        console.warn('⚠️ Aucune agence dans la réponse');
-                        // Fallback : utiliser l'agence de destination actuelle
-                        const agenceDestinationId = document.getElementById('agence_destination_id').value;
-                        const agenceDestinationName = document.getElementById('agence_destination').value;
-                        if (agenceDestinationId) {
-                            const fallbackAgences = [{
-                                id: agenceDestinationId,
-                                name: agenceDestinationName,
-                                pays: 'Côte d\'Ivoire'
-                            }];
-                            updateAgencesInModals(fallbackAgences);
-                        }
-                    }
-                } catch (error) {
-                    console.error('❌ Erreur lors du chargement des agences:', error);
-                }
-            }
-
-            // Suppression de colis
-            document.addEventListener('click', function (e) {
-                if (e.target.closest('.remove-colis')) {
-                    const colisItem = e.target.closest('.colis-item');
-                    if (document.querySelectorAll('.colis-item').length > 1) {
-                        colisItem.remove();
-                        document.querySelectorAll('.colis-item').forEach((item, index) => {
-                            item.dataset.index = index;
-                            item.querySelector('.card-header h6').textContent =
-                                `Colis #${index + 1}`;
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Erreur réseau: ' + response.status);
+                            }
+                            return response.json();
+                        })
+                        .then(users => {
+                            displaySearchResults(users);
+                        })
+                        .catch(error => {
+                            console.error('Erreur de recherche:', error);
+                            hideSearchResults();
                         });
-                        colisCount = document.querySelectorAll('.colis-item').length;
+                }
+
+                function displaySearchResults(users) {
+                    const resultsContainer = document.getElementById('userSearchResults');
+                    resultsContainer.innerHTML = '';
+
+                    if (users.length === 0) {
+                        resultsContainer.innerHTML = '<div class="no-results">Aucun utilisateur trouvé</div>';
+                    } else {
+                        users.forEach(user => {
+                            const userElement = document.createElement('div');
+                            userElement.className = 'user-result-item';
+                            userElement.innerHTML = `
+                            <div class="user-name">${user.name} ${user.prenom || ''}</div>
+                            <div class="user-details">
+                                ${user.email} • ${user.contact || 'Non renseigné'}
+                            </div>
+                        `;
+                            userElement.addEventListener('click', () => selectUser(user));
+                            resultsContainer.appendChild(userElement);
+                        });
+                    }
+
+                    resultsContainer.style.display = 'block';
+                }
+
+                function hideSearchResults() {
+                    document.getElementById('userSearchResults').style.display = 'none';
+                }
+
+                function selectUser(user) {
+                    document.getElementById('name_expediteur').value = user.name;
+                    document.getElementById('prenom_expediteur').value = user.prenom || '';
+                    document.getElementById('email_expediteur').value = user.email;
+                    document.getElementById('contact_expediteur').value = user.contact || '';
+                    document.getElementById('adresse_expediteur').value = user.adresse || '';
+
+                    // Remplir le champ caché avec l'ID de l'utilisateur
+                    document.getElementById('user_id').value = user.id;
+
+                    hideSearchResults();
+                    document.getElementById('userSearch').value = '';
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Utilisateur sélectionné',
+                        text: `Les informations de ${user.name} ont été pré-remplies`,
+                        confirmButtonColor: '#0e914b',
+                        timer: 2000
+                    });
+                }
+
+                function searchProduits(searchTerm, currentIndex) {
+                    const agenceDestinationId = document.getElementById('agence_destination_id').value;
+
+                    fetch(
+                        `/produits/search?q=${encodeURIComponent(searchTerm)}&agence_destination_id=${agenceDestinationId}`
+                    )
+                        .then(response => response.json())
+                        .then(produits => {
+                            displayProduitResults(produits, currentIndex);
+                        })
+                        .catch(error => {
+                            console.error('Erreur de recherche de produits:', error);
+                            hideProduitResults();
+                        });
+                }
+
+                function displayProduitResults(produits, currentIndex) {
+                    const colisItem = document.querySelector(`.colis-item[data-index="${currentIndex}"]`);
+                    if (!colisItem) return;
+
+                    const resultsContainer = colisItem.querySelector('.produit-search-results');
+                    if (!resultsContainer) return;
+
+                    resultsContainer.innerHTML = '';
+
+                    if (produits.length === 0) {
+                        resultsContainer.innerHTML = '<div class="no-results">Aucun produit trouvé</div>';
+                    } else {
+                        produits.forEach(produit => {
+                            const produitElement = document.createElement('div');
+                            produitElement.className = 'user-result-item';
+                            produitElement.innerHTML = `
+                            <div class="user-name">${produit.designation}</div>
+                            <div class="user-details">
+                                ${produit.prix_unitaire} • ${produit.agence_destination?.name || 'Agence non spécifiée'}
+                            </div>
+                        `;
+                            produitElement.addEventListener('click', () => selectProduit(produit,
+                                currentIndex));
+                            resultsContainer.appendChild(produitElement);
+                        });
+                    }
+
+                    resultsContainer.style.display = 'block';
+                }
+
+                function selectProduit(produit, index) {
+                    const modeTransit = document.getElementById('mode_transit').value;
+
+                    if (modeTransit === 'Aerien') {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Mode Aérien',
+                            text: 'En mode aérien, le prix est calculé automatiquement basé sur le poids. La sélection de produit est désactivée.',
+                            confirmButtonColor: '#0e914b'
+                        });
+                        return;
+                    }
+
+                    const colisItem = document.querySelector(`.colis-item[data-index="${index}"]`);
+                    if (colisItem) {
+                        const produitInput = colisItem.querySelector(`[name="colis[${index}][produit]"]`);
+                        const prixInput = colisItem.querySelector(`[name="colis[${index}][prix_unitaire]"]`);
+
+                        produitInput.value = produit.designation;
+                        prixInput.value = produit.prix_unitaire;
+
+                        hideProduitResults(index);
                         updateMontants();
                     }
                 }
-            });
 
-            // Cacher les résultats quand on clique ailleurs
-            document.addEventListener('click', function (e) {
-                if (!e.target.closest('.search-container')) {
-                    hideSearchResults();
-                    hideProduitResults();
-                }
-            });
+                // Fonction identique à celle de l'admin pour charger les agences - VERSION CORRIGÉE
+                function updateAgencesInModals(agences) {
+                    console.log('🔄 updateAgencesInModals appelée avec:', agences);
 
-            // Gestion de la soumission du formulaire
-            document.getElementById('colisForm').addEventListener('submit', function (e) {
-                console.log('=== DÉBUT SOUMISSION FORMULAIRE ===');
+                    const selects = document.querySelectorAll(
+                        '#addProduitModal select[name="agence_destination_id"], #addServiceModal select[name="agence_destination_id"]'
+                    );
 
-                // Valider toutes les étapes
-                if (!validateAllSteps()) {
-                    console.log('❌ Validation échouée - Soumission bloquée');
-                    e.preventDefault();
-                    return;
-                }
+                    console.log('🔍 Nombre de selects trouvés:', selects.length);
 
-                console.log('✅ Validation réussie - Soumission autorisée');
+                    selects.forEach((select, index) => {
+                        console.log(`🔍 Traitement du select ${index + 1}:`, select);
+                        select.innerHTML = '<option value="">Sélectionnez une agence</option>';
 
-                // Afficher l'indicateur de chargement
-                const submitBtn = document.getElementById('submit-btn');
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Enregistrement...';
-
-                // La soumission se poursuit normalement
-                console.log('=== FIN SOUMISSION FORMULAIRE ===');
-            });
-
-            // Fonctions principales
-            function updateAgenceDestination() {
-                const modeTransit = document.getElementById('mode_transit').value;
-
-                if (modeTransit && agencesDestination[modeTransit]) {
-                    const agence = agencesDestination[modeTransit];
-                    document.getElementById('agence_destination').value = agence.name;
-                    document.getElementById('agence_destination_id').value = agence.id;
-                } else {
-                    document.getElementById('agence_destination').value = '';
-                    document.getElementById('agence_destination_id').value = '';
-                }
-
-                // Mettre à jour le récapitulatif si on est à l'étape 7
-                if (currentStep === 7) {
-                    updateRecap();
-                }
-            }
-
-            async function updateConteneurEtReference() {
-                const modeTransit = document.getElementById('mode_transit').value;
-
-                if (!modeTransit) {
-                    console.log('Mode de transit non sélectionné');
-                    return;
-                }
-
-                try {
-                    const url = "{{ route('agent.colis.get-conteneur-reference') }}";
-                    const params = new URLSearchParams({
-                        mode_transit: modeTransit
-                    });
-
-                    console.log('Envoi requête:', `${url}?${params}`);
-
-                    const response = await fetch(`${url}?${params}`, {
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest',
-                            'Accept': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        if (agences && agences.length > 0) {
+                            agences.forEach(agence => {
+                                const option = document.createElement('option');
+                                option.value = agence.id;
+                                option.textContent = `${agence.name} (${agence.pays})`;
+                                select.appendChild(option);
+                            });
+                            console.log(`✅ ${agences.length} agences ajoutées au select ${index + 1}`);
+                        } else {
+                            console.warn('⚠️ Aucune agence à ajouter');
                         }
                     });
+                }
 
-                    console.log('Statut réponse:', response.status);
+                // Modifier la fonction updateConteneurEtReference pour inclure le chargement des agences
+                async function updateConteneurEtReference() {
+                    const modeTransit = document.getElementById('mode_transit').value;
 
-                    if (!response.ok) {
-                        throw new Error(`Erreur HTTP: ${response.status}`);
+                    if (!modeTransit) {
+                        console.log('Mode de transit non sélectionné');
+                        return;
                     }
 
-                    const data = await response.json();
-                    console.log('Données reçues:', data);
+                    try {
+                        const url = "{{ route('agent.colis.get-conteneur-reference') }}";
+                        const params = new URLSearchParams({
+                            mode_transit: modeTransit
+                        });
 
-                    if (data.success) {
-                        // Mettre à jour le conteneur
-                        document.getElementById('current_conteneur_name').textContent = data.conteneur
-                            .name_conteneur;
-                        document.getElementById('current_conteneur_type').textContent = data.conteneur
-                            .type_conteneur;
-                        document.getElementById('conteneur_id_input').value = data.conteneur.id;
+                        console.log('Envoi requête:', `${url}?${params}`);
 
-                        // Mettre à jour la référence
-                        document.getElementById('reference_display').textContent = data.reference;
-                        document.getElementById('reference_colis_input').value = data.reference;
+                        const response = await fetch(`${url}?${params}`, {
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            }
+                        });
 
-                        // Mettre à jour l'agence d'expédition
-                        if (data.agenceExpedition) {
-                            document.getElementById('agence_expedition_display').textContent = data
-                                .agenceExpedition.name;
-                            document.getElementById('agence_expedition_id').value = data.agenceExpedition.id;
-                            document.getElementById('devise_expedition_display').textContent = data
-                                .agenceExpedition.devise;
-                            document.getElementById('devise').value = data.agenceExpedition.devise;
-                            updateAllDevises(data.agenceExpedition.devise);
+                        console.log('Statut réponse:', response.status);
+
+                        if (!response.ok) {
+                            throw new Error(`Erreur HTTP: ${response.status}`);
                         }
 
-                        console.log('Mise à jour réussie');
+                        const data = await response.json();
+                        console.log('Données reçues:', data);
 
-                        // Mettre à jour le type de calcul après la mise à jour de la devise
-                        setTimeout(() => {
-                            updateTypeCalcul();
-                            toggleInfoCalculAuto();
-                            updatePrixKgDisplay();
-                        }, 100);
+                        if (data.success) {
+                            // Mettre à jour le conteneur
+                            document.getElementById('current_conteneur_name').textContent = data.conteneur
+                                .name_conteneur;
+                            document.getElementById('current_conteneur_type').textContent = data.conteneur
+                                .type_conteneur;
+                            document.getElementById('conteneur_id_input').value = data.conteneur.id;
 
-                        // Mettre à jour le récapitulatif si on est à l'étape 7
-                        if (currentStep === 7) {
-                            updateRecap();
+                            // Mettre à jour la référence
+                            document.getElementById('reference_display').textContent = data.reference;
+                            document.getElementById('reference_colis_input').value = data.reference;
+
+                            // Mettre à jour l'agence d'expédition
+                            if (data.agenceExpedition) {
+                                document.getElementById('agence_expedition_display').textContent = data
+                                    .agenceExpedition.name;
+                                document.getElementById('agence_expedition_id').value = data.agenceExpedition.id;
+                                document.getElementById('devise_expedition_display').textContent = data
+                                    .agenceExpedition.devise;
+                                document.getElementById('devise').value = data.agenceExpedition.devise;
+                                updateAllDevises(data.agenceExpedition.devise);
+                            }
+
+                            // CHARGER LES AGENCES DANS LES MODALS (comme dans l'admin)
+                            if (data.agencesDestination) {
+                                updateAgencesInModals(data.agencesDestination);
+                            }
+
+                            console.log('Mise à jour réussie');
+
+                            // Mettre à jour le type de calcul après la mise à jour de la devise
+                            setTimeout(() => {
+                                updateTypeCalcul();
+                                toggleInfoCalculAuto();
+                                updatePrixKgDisplay();
+                            }, 100);
+
+                            // Mettre à jour le récapitulatif si on est à l'étape 7
+                            if (currentStep === 7) {
+                                updateRecap();
+                            }
+
+                        } else {
+                            throw new Error(data.message || 'Erreur inconnue du serveur');
                         }
-
-                    } else {
-                        throw new Error(data.message || 'Erreur inconnue du serveur');
+                    } catch (error) {
+                        console.error('Erreur lors de la mise à jour du conteneur:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Erreur',
+                            text: 'Impossible de mettre à jour le conteneur et la référence: ' + error
+                                .message,
+                            confirmButtonColor: '#0e914b'
+                        });
                     }
-                } catch (error) {
-                    console.error('Erreur lors de la mise à jour du conteneur:', error);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Erreur',
-                        text: 'Impossible de mettre à jour le conteneur et la référence: ' + error
-                            .message,
-                        confirmButtonColor: '#0e914b'
-                    });
-                }
-            }
-
-            function updateExpediteurFields() {
-                const typeExpediteur = document.getElementById('type_expediteur').value;
-                const prenomField = document.getElementById('prenom_field');
-                const labelNom = document.getElementById('label_nom');
-
-                if (typeExpediteur === 'societe') {
-                    // Mode Société
-                    prenomField.style.display = 'none';
-                    labelNom.innerHTML = 'Nom de la Société <span class="text-danger">*</span>';
-                    document.getElementById('prenom_expediteur').value = '';
-                    document.getElementById('prenom_expediteur').removeAttribute('required');
-                } else {
-                    // Mode Particulier
-                    prenomField.style.display = 'block';
-                    labelNom.innerHTML = 'Nom <span class="text-danger">*</span>';
-                    document.getElementById('prenom_expediteur').setAttribute('required', 'required');
                 }
 
-                // Mettre à jour le récapitulatif si on est à l'étape 7
-                if (currentStep === 7) {
-                    updateRecap();
-                }
-            }
-
-            // NOUVELLE FONCTION : Mettre à jour le type de calcul basé sur le mode de transit
-            function updateTypeCalcul() {
-                const modeTransit = document.getElementById('mode_transit').value;
-
-                document.querySelectorAll('.colis-item').forEach(item => {
-                    const prixUnitaireInput = item.querySelector('.prix-unitaire-input');
-                    const poidsInput = item.querySelector('input[name*="[poids]"]');
-
-                    if (modeTransit === 'Aerien') {
-                        // Mode aérien : calcul automatique basé sur le poids
-                        if (prixUnitaireInput) {
-                            prixUnitaireInput.setAttribute('readonly', 'true');
-                            prixUnitaireInput.style.backgroundColor = '#f8f9fa';
-                            prixUnitaireInput.style.cursor = 'not-allowed';
-
-                            // Calculer le prix automatiquement si le poids est renseigné
-                            if (poidsInput && poidsInput.value) {
-                                calculerPrixAuto(poidsInput);
+                function hideProduitResults(index = null) {
+                    if (index !== null) {
+                        const colisItem = document.querySelector(`.colis-item[data-index="${index}"]`);
+                        if (colisItem) {
+                            const resultsContainer = colisItem.querySelector('.produit-search-results');
+                            if (resultsContainer) {
+                                resultsContainer.style.display = 'none';
                             }
                         }
                     } else {
-                        // Mode maritime : saisie manuelle
-                        if (prixUnitaireInput) {
-                            prixUnitaireInput.removeAttribute('readonly');
-                            prixUnitaireInput.style.backgroundColor = '';
-                            prixUnitaireInput.style.cursor = '';
-                        }
-                    }
-                });
-
-                updateMontants();
-            }
-
-            // NOUVELLE FONCTION : Calculer le prix automatiquement basé sur le poids (mode aérien)
-            function calculerPrixAuto(poidsInput) {
-                const colisItem = poidsInput.closest('.colis-item');
-                const prixUnitaireInput = colisItem.querySelector('.prix-unitaire-input');
-                const poids = parseFloat(poidsInput.value) || 0;
-
-                if (!prixUnitaireInput) return;
-
-                const devise = document.getElementById('devise').value;
-
-                let prixUnitaire = 0;
-
-                if (poids > 0) {
-                    if (devise === 'EUR') {
-                        prixUnitaire = poids * PRIX_PAR_KG_AERIEN_EURO;
-                    } else {
-                        // Convertir en XOF
-                        prixUnitaire = poids * PRIX_PAR_KG_AERIEN_EURO * TAUX_CONVERSION_EURO_XOF;
-                    }
-                }
-
-                prixUnitaireInput.value = prixUnitaire.toFixed(2);
-
-                updateMontants();
-
-                if (currentStep === 7) {
-                    updateRecap();
-                }
-            }
-
-            // NOUVELLE FONCTION : Gérer l'affichage du message d'information
-            function toggleInfoCalculAuto() {
-                const modeTransit = document.getElementById('mode_transit').value;
-                // Créer un élément d'information si nécessaire
-                let infoDiv = document.getElementById('info-calcul-auto');
-
-                if (!infoDiv) {
-                    infoDiv = document.createElement('div');
-                    infoDiv.className = 'calcul-auto-info mb-4';
-                    infoDiv.id = 'info-calcul-auto';
-                    infoDiv.innerHTML = `
-                    <i class="fas fa-calculator me-2"></i>
-                    <strong>Calcul automatique :</strong> En mode aérien, le prix est calculé automatiquement à raison de 
-                    <strong id="prix-kg-display">15 EUR par kg</strong>. Le prix sera converti en XOF si nécessaire.
-                `;
-
-                    const colisContainer = document.getElementById('colis-container');
-                    colisContainer.parentNode.insertBefore(infoDiv, colisContainer);
-                }
-
-                if (modeTransit === 'Aerien') {
-                    infoDiv.classList.remove('d-none');
-                    updatePrixKgDisplay();
-                } else {
-                    infoDiv.classList.add('d-none');
-                }
-            }
-
-            // NOUVELLE FONCTION : Mettre à jour l'affichage du prix par kg
-            function updatePrixKgDisplay() {
-                const modeTransit = document.getElementById('mode_transit').value;
-                const prixKgDisplay = document.getElementById('prix-kg-display');
-                const devise = document.getElementById('devise').value;
-
-                if (modeTransit === 'Aerien' && prixKgDisplay) {
-                    if (devise === 'EUR') {
-                        prixKgDisplay.textContent = '15 EUR par kg';
-                    } else {
-                        prixKgDisplay.textContent = `${(15 * TAUX_CONVERSION_EURO_XOF).toFixed(0)} XOF par kg`;
-                    }
-                }
-            }
-
-            function updateMontants() {
-                let montantColis = 0;
-                const modeTransit = document.getElementById('mode_transit').value;
-
-                // Calculer le montant total des colis
-                document.querySelectorAll('.colis-item').forEach(item => {
-                    const index = item.dataset.index;
-                    const quantite = parseFloat(item.querySelector(`[name="colis[${index}][quantite]"]`)
-                        .value) || 0;
-                    const prixUnitaire = parseFloat(item.querySelector(
-                        `[name="colis[${index}][prix_unitaire]"]`).value) || 0;
-
-                    // MODIFICATION : Calcul différent selon le mode de transit
-                    if (modeTransit === 'Aerien') {
-                        // En mode aérien, le prix unitaire est déjà le total pour le colis (calculé par poids)
-                        montantColis += prixUnitaire;
-                    } else {
-                        // En mode maritime, on multiplie par la quantité
-                        montantColis += quantite * prixUnitaire;
-                    }
-                });
-
-                const prixService = parseFloat(document.getElementById('prix_service').value) || 0;
-                const montantTotal = montantColis + prixService;
-
-                // Mettre à jour l'affichage
-                document.getElementById('montant_colis_display').textContent = montantColis.toFixed(2);
-                document.getElementById('montant_service_display').textContent = prixService.toFixed(2);
-                document.getElementById('montant_total_display').textContent = montantTotal.toFixed(2);
-
-                // Mettre à jour les champs cachés pour le formulaire
-                document.getElementById('montant_colis_input').value = montantColis;
-                document.getElementById('montant_total_input').value = montantTotal;
-
-                // Mettre à jour le reste à payer
-                updateResteAPayer();
-
-                // Mettre à jour le récapitulatif si on est à l'étape 7
-                if (currentStep === 7) {
-                    updateRecap();
-                }
-            }
-
-            function updateResteAPayer() {
-                const montantTotal = parseFloat(document.getElementById('montant_total_display').textContent) || 0;
-                const montantPaye = parseFloat(document.getElementById('montant_paye').value) || 0;
-                const resteAPayer = Math.max(0, montantTotal - montantPaye);
-
-                document.getElementById('reste_a_payer').value = resteAPayer.toFixed(2);
-
-                // Mettre à jour le statut de paiement
-                const statutPaiement = document.getElementById('statut_paiement');
-                if (montantPaye === 0) {
-                    statutPaiement.value = 'non_paye';
-                } else if (montantPaye < montantTotal) {
-                    statutPaiement.value = 'partiellement_paye';
-                } else {
-                    statutPaiement.value = 'totalement_paye';
-                }
-
-                // Mettre à jour le récapitulatif si on est à l'étape 7
-                if (currentStep === 7) {
-                    updateRecap();
-                }
-            }
-
-            function addColis() {
-                const container = document.getElementById('colis-container');
-                const newColis = document.querySelector('.colis-item').cloneNode(true);
-
-                newColis.dataset.index = colisCount;
-                newColis.querySelector('.card-header h6').textContent = `Colis #${colisCount + 1}`;
-
-                newColis.querySelectorAll('input, select, textarea').forEach(field => {
-                    const name = field.getAttribute('name');
-                    if (name) {
-                        field.setAttribute('name', name.replace('[0]', `[${colisCount}]`));
-                        if (field.type !== 'select-one') {
-                            field.value = '';
-                        }
-                    }
-                });
-
-                newColis.querySelector('.remove-colis').classList.remove('d-none');
-                container.appendChild(newColis);
-                colisCount++;
-
-                // Mettre à jour le type de calcul pour le nouveau colis
-                updateTypeCalcul();
-
-                // Mettre à jour les montants
-                updateMontants();
-            }
-
-            // Fonction pour mettre à jour toutes les devises affichées
-            function updateAllDevises(devise) {
-                console.log('🔄 Mise à jour des devises:', devise);
-
-                // Mettre à jour tous les éléments avec la classe .devise-dynamic
-                document.querySelectorAll('.devise-dynamic').forEach(element => {
-                    element.textContent = devise;
-                });
-
-                // Mettre à jour les options des services (si nécessaire)
-                document.querySelectorAll('#service_id option').forEach(option => {
-                    if (option.textContent.includes(' - ')) {
-                        const parts = option.textContent.split(' - ');
-                        if (parts.length >= 2) {
-                            // Garder la désignation et le prix, changer seulement la devise
-                            const prixPart = parts[1].split(' ')[0]; // Prendre seulement le nombre
-                            option.textContent = `${parts[0]} - ${prixPart} ${devise}`;
-                        }
-                    }
-                });
-
-                // Mettre à jour le récapitulatif si on est à l'étape 7
-                if (currentStep === 7) {
-                    updateRecap();
-                }
-            }
-
-            function updateRecap() {
-                console.log('🔄 Mise à jour du récapitulatif...');
-
-                // Récupérer toutes les données du formulaire
-                const modeTransit = document.getElementById('mode_transit').value;
-                const agenceExpedition = document.getElementById('agence_expedition_display').textContent;
-                const agenceDestination = document.getElementById('agence_destination').value;
-                const devise = document.getElementById('devise').value;
-                const reference = document.getElementById('reference_display').textContent;
-                const conteneur = document.getElementById('current_conteneur_name').textContent;
-
-                // Expéditeur
-                const typeExpediteur = document.getElementById('type_expediteur').value;
-                const nameExpediteur = document.getElementById('name_expediteur').value;
-                const prenomExpediteur = document.getElementById('prenom_expediteur').value;
-                const emailExpediteur = document.getElementById('email_expediteur').value;
-                const contactExpediteur = document.getElementById('contact_expediteur').value;
-                const adresseExpediteur = document.getElementById('adresse_expediteur').value;
-
-                // Destinataire
-                const nameDestinataire = document.getElementById('name_destinataire').value;
-                const prenomDestinataire = document.getElementById('prenom_destinataire').value;
-                const emailDestinataire = document.getElementById('email_destinataire').value;
-                const indicatif = document.getElementById('indicatif').value;
-                const contactDestinataire = document.getElementById('contact_destinataire').value;
-                const adresseDestinataire = document.getElementById('adresse_destinataire').value;
-
-                // Services
-                const serviceSelect = document.getElementById('service_id');
-                const service = serviceSelect.options[serviceSelect.selectedIndex].textContent;
-                const prixService = document.getElementById('prix_service').value;
-
-                // Paiement
-                const methodePaiement = document.getElementById('methode_paiement').value;
-                const montantPaye = document.getElementById('montant_paye').value;
-                const resteAPayer = document.getElementById('reste_a_payer').value;
-                const statutPaiement = document.getElementById('statut_paiement').value;
-
-                console.log('Données récupérées:', {
-                    modeTransit,
-                    agenceExpedition,
-                    agenceDestination,
-                    devise,
-                    reference,
-                    conteneur,
-                    nameExpediteur,
-                    prenomExpediteur,
-                    emailExpediteur,
-                    contactExpediteur,
-                    nameDestinataire,
-                    prenomDestinataire,
-                    emailDestinataire,
-                    contactDestinataire
-                });
-
-                // Mettre à jour les informations de transport
-                document.getElementById('recap_mode_transit').textContent = modeTransit || '-';
-                document.getElementById('recap_agence_expedition').textContent = agenceExpedition || '-';
-                document.getElementById('recap_agence_destination').textContent = agenceDestination || '-';
-                document.getElementById('recap_reference').textContent = reference || '-';
-                document.getElementById('recap_conteneur').textContent = conteneur || '-';
-                document.getElementById('recap_devise').textContent = devise || '-';
-
-                // Mettre à jour l'expéditeur
-                document.getElementById('recap_expediteur_nom').textContent = nameExpediteur || '-';
-                document.getElementById('recap_expediteur_prenom').textContent = typeExpediteur === 'societe' ?
-                    'Non applicable' : (prenomExpediteur || '-');
-                document.getElementById('recap_expediteur_email').textContent = emailExpediteur || '-';
-                document.getElementById('recap_expediteur_contact').textContent = contactExpediteur || '-';
-                document.getElementById('recap_expediteur_adresse').textContent = adresseExpediteur || '-';
-
-                // Mettre à jour le destinataire
-                document.getElementById('recap_destinataire_nom').textContent = nameDestinataire || '-';
-                document.getElementById('recap_destinataire_prenom').textContent = prenomDestinataire || '-';
-                document.getElementById('recap_destinataire_email').textContent = emailDestinataire || '-';
-                document.getElementById('recap_destinataire_contact').textContent = (indicatif || '') + ' ' + (
-                    contactDestinataire || '-');
-                document.getElementById('recap_destinataire_adresse').textContent = adresseDestinataire || '-';
-
-                // Mettre à jour les services
-                document.getElementById('recap_service').textContent = service.includes('Aucun') ? 'Aucun service' :
-                    service;
-                document.getElementById('recap_prix_service').textContent = (parseFloat(prixService) || 0).toFixed(
-                    2) + ' ' + devise;
-
-                // Mettre à jour le paiement
-                document.getElementById('recap_methode_paiement').textContent = getMethodePaiementText(
-                    methodePaiement);
-                document.getElementById('recap_montant_total').textContent = document.getElementById(
-                    'montant_total_display').textContent + ' ' + devise;
-                document.getElementById('recap_montant_paye').textContent = (parseFloat(montantPaye) || 0).toFixed(
-                    2) + ' ' + devise;
-                document.getElementById('recap_reste_payer').textContent = (parseFloat(resteAPayer) || 0).toFixed(
-                    2) + ' ' + devise;
-
-                // Mettre à jour le statut de paiement avec badge coloré
-                const statutBadge = document.getElementById('recap_statut_paiement');
-                statutBadge.textContent = getStatutPaiementText(statutPaiement);
-                statutBadge.className = 'badge ' + getStatutPaiementClass(statutPaiement);
-
-                // Mettre à jour le tableau des colis
-                updateColisTable();
-
-                console.log('✅ Récapitulatif mis à jour');
-            }
-
-            function getMethodePaiementText(methode) {
-                const methodes = {
-                    'espece': 'Espèce',
-                    'virement_bancaire': 'Virement Bancaire',
-                    'cheque': 'Chèque',
-                    'mobile_money': 'Mobile Money',
-                    'livraison': 'Paiement à la Livraison'
-                };
-                return methodes[methode] || '-';
-            }
-
-            function getStatutPaiementText(statut) {
-                const statuts = {
-                    'non_paye': 'Non Payé',
-                    'partiellement_paye': 'Partiellement Payé',
-                    'totalement_paye': 'Totalement Payé'
-                };
-                return statuts[statut] || '-';
-            }
-
-            function getStatutPaiementClass(statut) {
-                const classes = {
-                    'non_paye': 'bg-danger',
-                    'partiellement_paye': 'bg-warning',
-                    'totalement_paye': 'bg-success'
-                };
-                return classes[statut] || 'bg-secondary';
-            }
-
-            function updateColisTable() {
-                const tbody = document.getElementById('recap_colis_body');
-                tbody.innerHTML = '';
-
-                let totalGeneral = 0;
-                let nombreColis = 0;
-                const modeTransit = document.getElementById('mode_transit').value;
-
-                document.querySelectorAll('.colis-item').forEach((item, index) => {
-                    const quantite = parseFloat(item.querySelector(`[name="colis[${index}][quantite]"]`)
-                        .value) || 0;
-                    const produit = item.querySelector(`[name="colis[${index}][produit]"]`).value || '-';
-                    const prixUnitaire = parseFloat(item.querySelector(
-                        `[name="colis[${index}][prix_unitaire]"]`).value) || 0;
-                    const longueur = item.querySelector(`[name="colis[${index}][longueur]"]`).value || '-';
-                    const largeur = item.querySelector(`[name="colis[${index}][largeur]"]`).value || '-';
-                    const hauteur = item.querySelector(`[name="colis[${index}][hauteur]"]`).value || '-';
-                    const poids = item.querySelector(`[name="colis[${index}][poids]"]`).value || '-';
-                    const typeColisInput = item.querySelector(`[name="colis[${index}][type_colis]"]`);
-                    const typeColis = typeColisInput?.value || 'Standard';
-                    // MODIFICATION : Calcul différent selon le mode de transit
-                    let totalColis = 0;
-                    if (modeTransit === 'Aerien') {
-                        totalColis =
-                            prixUnitaire; // En aérien, le prix unitaire est déjà le total pour le colis
-                    } else {
-                        totalColis = quantite * prixUnitaire; // En maritime, on multiplie par la quantité
-                    }
-
-                    totalGeneral += totalColis;
-                    nombreColis++;
-
-                    const dimensions = (longueur !== '-' && largeur !== '-' && hauteur !== '-') ?
-                        `${longueur}x${largeur}x${hauteur} cm` :
-                        'Non spécifié';
-
-                    const row = document.createElement('tr');
-
-                    // MODIFICATION : Affichage différent selon le mode de transit
-                    if (modeTransit === 'Aerien') {
-                        row.innerHTML = `
-                        <td class="fw-bold">${index + 1}</td>
-                        <td>${produit}</td>
-                        <td>${quantite}</td>
-                        <td>${prixUnitaire.toFixed(2)}</td>
-                        <td class="fw-bold">${totalColis.toFixed(2)}</td>
-                        <td>${typeColis}</td>
-                        <td>${dimensions}</td>
-                        <td>${poids !== '-' ? poids + ' kg' : '-'}</td>
-                    `;
-                    } else {
-                        row.innerHTML = `
-                        <td class="fw-bold">${index + 1}</td>
-                        <td>${produit}</td>
-                        <td>${quantite}</td>
-                        <td>${prixUnitaire.toFixed(2)}</td>
-                        <td class="fw-bold">${totalColis.toFixed(2)}</td>
-                        <td>${typeColis}</td>
-                        <td>${dimensions}</td>
-                        <td>${poids !== '-' ? poids + ' kg' : '-'}</td>
-                    `;
-                    }
-
-                    tbody.appendChild(row);
-                });
-
-                // Mettre à jour les totaux
-                const devise = document.getElementById('devise').value || 'XOF';
-                document.getElementById('recap_total_colis').textContent = totalGeneral.toFixed(2) + ' ' + devise;
-                document.getElementById('recap_nombre_colis').textContent = nombreColis + ' colis' + (nombreColis >
-                    1 ? 's' : '');
-            }
-
-            function validateStep(step) {
-                let isValid = true;
-
-                if (step === 1) {
-                    const modeTransit = document.getElementById('mode_transit').value;
-                    const agenceExpedition = document.getElementById('agence_expedition_id').value;
-
-                    if (!modeTransit || !agenceExpedition) {
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Champs obligatoires',
-                            text: 'Veuillez sélectionner le mode de transit et l\'agence d\'expédition',
-                            confirmButtonColor: '#0e914b'
+                        document.querySelectorAll('.produit-search-results').forEach(container => {
+                            container.style.display = 'none';
                         });
-                        isValid = false;
                     }
                 }
 
-                if (step === 2) {
-                    const nameExpediteur = document.getElementById('name_expediteur').value;
-                    const contactExpediteur = document.getElementById('contact_expediteur').value;
+                function saveProduit() {
+                    const form = document.getElementById('addProduitForm');
+                    const formData = new FormData(form);
 
-                    if (!nameExpediteur || !contactExpediteur) { // Retirer email_expediteur
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Champs obligatoires',
-                            text: 'Veuillez remplir tous les champs obligatoires de l\'expéditeur',
-                            confirmButtonColor: '#0e914b'
-                        });
-                        isValid = false;
-                    }
-                }
+                    // Utiliser exactement la même route que l'admin
+                    const url = "{{ route('admin.produits.store') }}";
 
-                if (step === 3) {
-                    const nameDestinataire = document.getElementById('name_destinataire').value;
-                    const prenomDestinataire = document.getElementById('prenom_destinataire').value;
-                    const contactDestinataire = document.getElementById('contact_destinataire').value;
+                    fetch(url, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json'
+                        }
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`Erreur HTTP: ${response.status}`);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.success) {
+                                const produitInput = document.querySelector(
+                                    `[name="colis[${currentProduitIndex}][produit]"]`);
+                                const prixInput = document.querySelector(
+                                    `[name="colis[${currentProduitIndex}][prix_unitaire]"]`);
 
-                    if (!nameDestinataire || !prenomDestinataire || !
-                        contactDestinataire) { // Retirer email_destinataire
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Champs obligatoires',
-                            text: 'Veuillez remplir tous les champs obligatoires du destinataire',
-                            confirmButtonColor: '#0e914b'
-                        });
-                        isValid = false;
-                    }
-                }
+                                produitInput.value = data.produit.designation;
+                                prixInput.value = data.produit.prix_unitaire;
 
-                if (step === 4) {
-                    const colisItems = document.querySelectorAll('.colis-item');
-                    for (let i = 0; i < colisItems.length; i++) {
-                        const quantite = colisItems[i].querySelector(`input[name="colis[${i}][quantite]"]`).value;
-                        const produit = colisItems[i].querySelector(`input[name="colis[${i}][produit]"]`).value;
-                        const prixUnitaire = colisItems[i].querySelector(`input[name="colis[${i}][prix_unitaire]"]`)
-                            .value;
+                                $('#addProduitModal').modal('hide');
+                                form.reset();
 
-                        if (!quantite || !produit || !prixUnitaire) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Produit ajouté',
+                                    text: 'Le produit a été ajouté avec succès',
+                                    confirmButtonColor: '#0e914b'
+                                });
+
+                                updateMontants();
+                            } else {
+                                throw new Error(data.message || 'Erreur lors de l\'ajout du produit');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Erreur:', error);
                             Swal.fire({
-                                icon: 'warning',
-                                title: 'Champs obligatoires',
-                                text: 'Veuillez remplir tous les champs obligatoires pour le colis #' + (i +
-                                    1),
+                                icon: 'error',
+                                title: 'Erreur',
+                                text: 'Une erreur est survenue lors de l\'ajout du produit: ' + error
+                                    .message,
                                 confirmButtonColor: '#0e914b'
                             });
-                            isValid = false;
-                            break;
+                        });
+                }
+
+                function saveService() {
+                    const form = document.getElementById('addServiceForm');
+                    const formData = new FormData(form);
+
+                    // Utiliser exactement la même route que l'admin
+                    const url = "{{ route('admin.services.store') }}";
+
+                    fetch(url, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json'
+                        }
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`Erreur HTTP: ${response.status}`);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.success) {
+                                const serviceSelect = document.getElementById('service_id');
+                                const newOption = document.createElement('option');
+                                newOption.value = data.service.id;
+                                newOption.textContent =
+                                    `${data.service.designation} - ${data.service.prix_unitaire} XOF`;
+                                newOption.setAttribute('data-prix', data.service.prix_unitaire);
+                                serviceSelect.appendChild(newOption);
+
+                                $('#addServiceModal').modal('hide');
+                                form.reset();
+
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Service ajouté',
+                                    text: 'Le service a été ajouté avec succès',
+                                    confirmButtonColor: '#0e914b'
+                                });
+                            } else {
+                                throw new Error(data.message || 'Erreur lors de l\'ajout du service');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Erreur:', error);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Erreur',
+                                text: 'Une erreur est survenue lors de l\'ajout du service: ' + error
+                                    .message,
+                                confirmButtonColor: '#0e914b'
+                            });
+                        });
+                }
+                // Recherche de produits
+                document.addEventListener('input', function (e) {
+                    if (e.target.classList.contains('produit-input')) {
+                        clearTimeout(produitSearchTimeout);
+                        const searchTerm = e.target.value.trim();
+                        const colisItem = e.target.closest('.colis-item');
+                        const index = colisItem ? colisItem.dataset.index : 0;
+
+                        if (searchTerm.length < 2) {
+                            hideProduitResults(index);
+                            return;
+                        }
+
+                        produitSearchTimeout = setTimeout(() => {
+                            searchProduits(searchTerm, index);
+                        }, 300);
+                    }
+                });
+
+                // Écouteurs pour recharger les agences à l'ouverture des modals
+                document.addEventListener('click', function (e) {
+                    if (e.target.closest('.add-produit-btn')) {
+                        currentProduitIndex = e.target.closest('.add-produit-btn').getAttribute('data-index');
+                        console.log('🔄 Ouverture modal produit, rechargement des agences...');
+                        // Recharger les agences depuis l'API
+                        loadAgencesFromAPI();
+                        $('#addProduitModal').modal('show');
+                    }
+                });
+
+                // Écouteur pour le bouton d'ajout de service
+                document.getElementById('add-service-btn').addEventListener('click', function () {
+                    console.log('🔄 Ouverture modal service, rechargement des agences...');
+                    // Recharger les agences depuis l'API
+                    loadAgencesFromAPI();
+                    $('#addServiceModal').modal('show');
+                });
+
+                // Fonction pour charger les agences depuis l'API
+                async function loadAgencesFromAPI() {
+                    const modeTransit = document.getElementById('mode_transit').value;
+
+                    if (!modeTransit) {
+                        console.warn('⚠️ Mode de transit non sélectionné pour charger les agences');
+                        return;
+                    }
+
+                    try {
+                        const url = "{{ route('agent.colis.get-conteneur-reference') }}";
+                        const params = new URLSearchParams({
+                            mode_transit: modeTransit
+                        });
+
+                        console.log('🔄 Chargement des agences depuis API...');
+
+                        const response = await fetch(`${url}?${params}`, {
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            }
+                        });
+
+                        if (!response.ok) {
+                            throw new Error(`Erreur HTTP: ${response.status}`);
+                        }
+
+                        const data = await response.json();
+
+                        if (data.success && data.agencesDestination) {
+                            console.log('✅ Agences chargées:', data.agencesDestination);
+                            updateAgencesInModals(data.agencesDestination);
+                        } else {
+                            console.warn('⚠️ Aucune agence dans la réponse');
+                            // Fallback : utiliser l'agence de destination actuelle
+                            const agenceDestinationId = document.getElementById('agence_destination_id').value;
+                            const agenceDestinationName = document.getElementById('agence_destination').value;
+                            if (agenceDestinationId) {
+                                const fallbackAgences = [{
+                                    id: agenceDestinationId,
+                                    name: agenceDestinationName,
+                                    pays: 'Côte d\'Ivoire'
+                                }];
+                                updateAgencesInModals(fallbackAgences);
+                            }
+                        }
+                    } catch (error) {
+                        console.error('❌ Erreur lors du chargement des agences:', error);
+                    }
+                }
+
+                // Suppression de colis
+                document.addEventListener('click', function (e) {
+                    if (e.target.closest('.remove-colis')) {
+                        const colisItem = e.target.closest('.colis-item');
+                        if (document.querySelectorAll('.colis-item').length > 1) {
+                            colisItem.remove();
+                            document.querySelectorAll('.colis-item').forEach((item, index) => {
+                                item.dataset.index = index;
+                                item.querySelector('.card-header h6').textContent =
+                                    `Colis #${index + 1}`;
+                            });
+                            colisCount = document.querySelectorAll('.colis-item').length;
+                            updateMontants();
                         }
                     }
-                }
+                });
 
-                if (step === 6) {
-                    const methodePaiement = document.getElementById('methode_paiement').value;
-                    const montantPaye = parseFloat(document.getElementById('montant_paye').value) || 0;
+                // Cacher les résultats quand on clique ailleurs
+                document.addEventListener('click', function (e) {
+                    if (!e.target.closest('.search-container')) {
+                        hideSearchResults();
+                        hideProduitResults();
+                    }
+                });
 
-                    if (!methodePaiement) {
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Méthode de paiement requise',
-                            text: 'Veuillez sélectionner une méthode de paiement',
-                            confirmButtonColor: '#0e914b'
-                        });
-                        isValid = false;
+                // Gestion de la soumission du formulaire
+                document.getElementById('colisForm').addEventListener('submit', function (e) {
+                    console.log('=== DÉBUT SOUMISSION FORMULAIRE ===');
+
+                    // Valider toutes les étapes
+                    if (!validateAllSteps()) {
+                        console.log('❌ Validation échouée - Soumission bloquée');
+                        e.preventDefault();
+                        return;
                     }
 
-                    // Validation du montant payé
-                    if (montantPaye < 0) {
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Montant invalide',
-                            text: 'Le montant payé ne peut pas être négatif',
-                            confirmButtonColor: '#0e914b'
-                        });
-                        isValid = false;
-                    }
-                }
+                    console.log('✅ Validation réussie - Soumission autorisée');
 
-                return isValid;
-            }
+                    // Afficher l'indicateur de chargement
+                    const submitBtn = document.getElementById('submit-btn');
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Enregistrement...';
 
-            function validateAllSteps() {
-                console.log('🔍 Validation de toutes les étapes...');
+                    // La soumission se poursuit normalement
+                    console.log('=== FIN SOUMISSION FORMULAIRE ===');
+                });
 
-                const stepsToValidate = [1, 2, 3, 4, 6]; // Étape 5 et 7 sont optionnelles
-
-                for (let step of stepsToValidate) {
-                    if (!validateStep(step)) {
-                        console.log(`❌ Étape ${step} a échoué`);
-                        showStep(step);
-                        return false;
-                    }
-                    console.log(`✅ Étape ${step} validée`);
-                }
-
-                console.log('🎉 Toutes les étapes sont valides');
-                return true;
-            }
-
-            // Écouter les changements dans les champs de colis pour mettre à jour les montants
-            document.addEventListener('input', function (e) {
-                // Champs quantité et prix unitaire
-                if (e.target.name && (e.target.name.includes('[quantite]') || e.target.name.includes(
-                    '[prix_unitaire]'))) {
-                    updateMontants();
-                }
-
-                // Champs poids en mode aérien
-                if (e.target.name && e.target.name.includes('[poids]')) {
+                // Fonctions principales
+                function updateAgenceDestination() {
                     const modeTransit = document.getElementById('mode_transit').value;
-                    if (modeTransit === 'Aerien') {
-                        calculerPrixAuto(e.target);
-                    }
-                }
 
-                // Champs dimensions
-                if (e.target.name && (e.target.name.includes('[longueur]') || e.target.name.includes(
-                    '[largeur]') ||
-                    e.target.name.includes('[hauteur]'))) {
+                    if (modeTransit && agencesDestination[modeTransit]) {
+                        const agence = agencesDestination[modeTransit];
+                        document.getElementById('agence_destination').value = agence.name;
+                        document.getElementById('agence_destination_id').value = agence.id;
+                    } else {
+                        document.getElementById('agence_destination').value = '';
+                        document.getElementById('agence_destination_id').value = '';
+                    }
+
+                    // Mettre à jour le récapitulatif si on est à l'étape 7
                     if (currentStep === 7) {
                         updateRecap();
                     }
                 }
-            });
 
-            // Initialisation
-            showStep(1);
-            updateExpediteurFields();
-            updateMontants();
-            updateTypeCalcul();
-            toggleInfoCalculAuto();
+                async function updateConteneurEtReference() {
+                    const modeTransit = document.getElementById('mode_transit').value;
 
-            // Initialiser les écouteurs pour les champs de formulaire
-            document.addEventListener('input', function (e) {
-                if (currentStep === 7 && (
-                    e.target.id === 'name_expediteur' || e.target.id === 'prenom_expediteur' ||
-                    e.target.id === 'email_expediteur' || e.target.id === 'contact_expediteur' ||
-                    e.target.id === 'adresse_expediteur' || e.target.id === 'name_destinataire' ||
-                    e.target.id === 'prenom_destinataire' || e.target.id === 'email_destinataire' ||
-                    e.target.id === 'contact_destinataire' || e.target.id === 'adresse_destinataire' ||
-                    e.target.id === 'indicatif'
-                )) {
-                    updateRecap();
-                }
-            });
-        });
-
-        // Recherche de récupération au step 1
-        document.getElementById('search-recuperation-btn').addEventListener('click', searchRecuperation);
-        document.getElementById('search-recuperation').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                searchRecuperation();
-            }
-        });
-
-        function searchRecuperation() {
-            const reference = document.getElementById('search-recuperation').value.trim();
-
-            if (!reference) {
-                Swal.fire({
-                    title: 'Champ vide',
-                    text: 'Veuillez entrer une référence de récupération',
-                    icon: 'warning',
-                    confirmButtonColor: '#0e914b'
-                });
-                return;
-            }
-
-            if (!reference.startsWith('REC-')) {
-                Swal.fire({
-                    title: 'Format invalide',
-                    text: 'La référence doit commencer par "REC-"',
-                    icon: 'warning',
-                    confirmButtonColor: '#0e914b'
-                });
-                return;
-            }
-
-            Swal.fire({
-                title: 'Recherche en cours...',
-                text: 'Recherche de la récupération ' + reference,
-                allowOutsideClick: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                }
-            });
-
-            fetch(`/admin/recuperation/search?reference=${encodeURIComponent(reference)}`)
-                .then(response => response.json())
-                .then(data => {
-                    Swal.close();
-
-                    if (data.success && data.recuperation) {
-                        displayRecuperationResults(data.recuperation);
-                    } else {
-                        Swal.fire({
-                            title: 'Non trouvé',
-                            text: data.error || 'Aucune récupération trouvée avec cette référence',
-                            icon: 'error',
-                            confirmButtonColor: '#0e914b'
-                        });
-                    }
-                })
-                .catch(error => {
-                    Swal.fire({
-                        title: 'Erreur',
-                        text: 'Erreur lors de la recherche: ' + error.message,
-                        icon: 'error',
-                        confirmButtonColor: '#0e914b'
-                    });
-                });
-        }
-
-        function displayRecuperationResults(recuperation) {
-            const resultsDiv = document.getElementById('search-recuperation-results');
-
-            // Vérifier si des informations spécifiques du destinataire existent
-            const hasSpecificDestinataire = recuperation.nom_destinataire || recuperation.prenom_destinataire;
-
-            resultsDiv.innerHTML = `
-            <div class="alert alert-success">
-                <div class="row align-items-center">
-                    <div class="col-md-8">
-                        <h6 class="mb-1"><i class="fas fa-check-circle me-2"></i>Récupération trouvée</h6>
-                        <p class="mb-1"><strong>Référence:</strong> ${recuperation.reference}</p>
-                        <p class="mb-1"><strong>Nature:</strong> ${recuperation.nature_objet}</p>
-                        <p class="mb-1"><strong>Quantité:</strong> ${recuperation.quantite}</p>
-                        <p class="mb-1"><strong>Expéditeur:</strong> ${recuperation.nom_concerne} ${recuperation.prenom_concerne}</p>
-                        ${hasSpecificDestinataire ?
-                    `<p class="mb-1"><strong>Destinataire spécifique:</strong> ${recuperation.nom_destinataire} ${recuperation.prenom_destinataire}</p>` :
-                    ''}
-                        <p class="mb-1"><strong>Contact:</strong> ${recuperation.contact}</p>
-                    </div>
-                    <div class="col-md-4 text-end">
-                        <button type="button" class="btn btn-primary" onclick="fillAllFieldsFromRecuperation(${recuperation.id})">
-                            <i class="fas fa-magic me-2"></i>Pré-remplir tout
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
-            resultsDiv.style.display = 'block';
-        }
-
-        function fillAllFieldsFromRecuperation(recuperationId) {
-            fetch(`/admin/recuperation/${recuperationId}/details`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success && data.data) {
-                        const recuperation = data.data;
-
-                        // 1. Pré-remplir l'expéditeur (étape 2)
-                        document.getElementById('name_expediteur').value = recuperation.nom_concerne || '';
-                        document.getElementById('prenom_expediteur').value = recuperation.prenom_concerne || '';
-                        document.getElementById('email_expediteur').value = recuperation.email || '';
-                        document.getElementById('contact_expediteur').value = recuperation.contact || '';
-                        document.getElementById('adresse_expediteur').value = recuperation.adresse_recuperation || '';
-
-                        // 2. Pré-remplir le destinataire (étape 3) - CORRECTION ICI
-                        // Utiliser les champs spécifiques du destinataire s'ils existent, sinon utiliser les champs de l'expéditeur
-                        document.getElementById('name_destinataire').value = recuperation.nom_destinataire ||
-                            recuperation.nom_concerne || '';
-                        document.getElementById('prenom_destinataire').value = recuperation.prenom_destinataire ||
-                            recuperation.prenom_concerne || '';
-                        document.getElementById('email_destinataire').value = recuperation.email_destinataire ||
-                            recuperation.email || '';
-                        document.getElementById('contact_destinataire').value = recuperation.contact_destinataire ||
-                            recuperation.contact || '';
-                        document.getElementById('adresse_destinataire').value = recuperation.adresse_destinataire ||
-                            recuperation.adresse_recuperation || '';
-
-                        // Gérer l'indicatif
-                        if (recuperation.indicatif_destinataire) {
-                            document.getElementById('indicatif').value = recuperation.indicatif_destinataire;
-                        } else {
-                            document.getElementById('indicatif').value = '+225'; // Indicatif Côte d'Ivoire par défaut
-                        }
-
-                        // 3. Pré-remplir les colis (étape 4)
-                        const firstColis = document.querySelector('.colis-item[data-index="0"]');
-                        if (firstColis) {
-                            const produitInput = firstColis.querySelector('input[name="colis[0][produit]"]');
-                            const quantiteInput = firstColis.querySelector('input[name="colis[0][quantite]"]');
-
-                            if (produitInput) {
-                                produitInput.value = recuperation.nature_objet || '';
-                            }
-
-                            if (quantiteInput) {
-                                quantiteInput.value = recuperation.quantite || 1;
-                            }
-
-                            // Déclencher les événements de mise à jour
-                            quantiteInput.dispatchEvent(new Event('input'));
-                        }
-
-                        Swal.fire({
-                            title: 'Formulaire pré-rempli !',
-                            html: `
-                    <div class="text-start">
-                        <p><strong>✓ Expéditeur:</strong> Rempli</p>
-                        <p><strong>✓ Destinataire:</strong> Rempli</p>
-                        <p><strong>✓ Colis:</strong> Nature: ${recuperation.nature_objet}, Quantité: ${recuperation.quantite}</p>
-                        ${recuperation.nom_destinataire ? '<p><strong>✓ Destinataire spécifique:</strong> Utilisé</p>' : ''}
-                    </div>
-                `,
-                            icon: 'success',
-                            confirmButtonColor: '#0e914b',
-                            timer: 3000
-                        });
-
-                        // Cacher les résultats
-                        document.getElementById('search-recuperation-results').style.display = 'none';
-                        document.getElementById('search-recuperation').value = '';
-                    }
-                })
-                .catch(error => {
-                    Swal.fire({
-                        title: 'Erreur',
-                        text: 'Erreur lors du chargement des détails: ' + error.message,
-                        icon: 'error',
-                        confirmButtonColor: '#0e914b'
-                    });
-                });
-        }
-
-        function clearRecuperationSearch() {
-            document.getElementById('search-recuperation').value = '';
-            document.getElementById('search-recuperation-results').style.display = 'none';
-
-            Swal.fire({
-                title: 'Champ effacé',
-                text: 'La recherche a été réinitialisée',
-                icon: 'info',
-                confirmButtonColor: '#0e914b',
-                timer: 1500
-            });
-        }
-
-        // --- DÉBUT LOGIQUE AUTOCOMPLÉTION CLIENT (Expéditeur / Destinataire) ---
-        function setupClientAutocomplete(inputIds, type) {
-            const inputs = inputIds.map(id => document.getElementById(id)).filter(input => input);
-            let timeout = null;
-
-            inputs.forEach(input => {
-                // Créer le conteneur de résultats s'il n'existe pas
-                let resultsDiv = input.parentNode.querySelector('.client-search-results');
-                if (!resultsDiv) {
-                    resultsDiv = document.createElement('div');
-                    resultsDiv.className = 'search-results client-search-results';
-                    resultsDiv.style.display = 'none';
-                    resultsDiv.style.width = '100%';
-                    resultsDiv.style.zIndex = '1000';
-                    // Le parent doit être relative pour que le positionnement absolute fonctionne
-                    if (getComputedStyle(input.parentNode).position === 'static') {
-                        input.parentNode.style.position = 'relative';
-                    }
-                    input.parentNode.appendChild(resultsDiv);
-                }
-
-                input.addEventListener('input', function () {
-                    const query = this.value.trim();
-
-                    // Cacher les autres résultats pour éviter la pollution visuelle
-                    document.querySelectorAll('.client-search-results').forEach(el => el.style.display = 'none');
-
-                    if (query.length < 2) {
+                    if (!modeTransit) {
+                        console.log('Mode de transit non sélectionné');
                         return;
                     }
 
-                    clearTimeout(timeout);
-                    timeout = setTimeout(() => {
-                        const url = `{{ route('agent.colis.search-client') }}?type=${type}&q=${encodeURIComponent(query)}`;
+                    try {
+                        const url = "{{ route('agent.colis.get-conteneur-reference') }}";
+                        const params = new URLSearchParams({
+                            mode_transit: modeTransit
+                        });
 
-                        fetch(url)
-                            .then(response => response.json())
-                            .then(data => {
-                                resultsDiv.innerHTML = '';
-                                if (data.length > 0) {
-                                    data.forEach(client => {
-                                        const div = document.createElement('div');
-                                        div.className = 'user-result-item';
-                                        div.innerHTML = `
-                                                <div class="user-name">${client.name} ${client.prenom || ''}</div>
-                                                <div class="user-details">${client.contact} ${client.email ? '- ' + client.email : ''}</div>
-                                            `;
-                                        div.addEventListener('click', () => {
-                                            fillClientFields(client, type);
-                                            resultsDiv.style.display = 'none';
-                                        });
-                                        resultsDiv.appendChild(div);
-                                    });
-                                    resultsDiv.style.display = 'block';
-                                } else {
-                                    resultsDiv.style.display = 'none';
+                        console.log('Envoi requête:', `${url}?${params}`);
+
+                        const response = await fetch(`${url}?${params}`, {
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            }
+                        });
+
+                        console.log('Statut réponse:', response.status);
+
+                        if (!response.ok) {
+                            throw new Error(`Erreur HTTP: ${response.status}`);
+                        }
+
+                        const data = await response.json();
+                        console.log('Données reçues:', data);
+
+                        if (data.success) {
+                            // Mettre à jour le conteneur
+                            document.getElementById('current_conteneur_name').textContent = data.conteneur
+                                .name_conteneur;
+                            document.getElementById('current_conteneur_type').textContent = data.conteneur
+                                .type_conteneur;
+                            document.getElementById('conteneur_id_input').value = data.conteneur.id;
+
+                            // Mettre à jour la référence
+                            document.getElementById('reference_display').textContent = data.reference;
+                            document.getElementById('reference_colis_input').value = data.reference;
+
+                            // Mettre à jour l'agence d'expédition
+                            if (data.agenceExpedition) {
+                                document.getElementById('agence_expedition_display').textContent = data
+                                    .agenceExpedition.name;
+                                document.getElementById('agence_expedition_id').value = data.agenceExpedition.id;
+                                document.getElementById('devise_expedition_display').textContent = data
+                                    .agenceExpedition.devise;
+                                document.getElementById('devise').value = data.agenceExpedition.devise;
+                                updateAllDevises(data.agenceExpedition.devise);
+                            }
+
+                            console.log('Mise à jour réussie');
+
+                            // Mettre à jour le type de calcul après la mise à jour de la devise
+                            setTimeout(() => {
+                                updateTypeCalcul();
+                                toggleInfoCalculAuto();
+                                updatePrixKgDisplay();
+                            }, 100);
+
+                            // Mettre à jour le récapitulatif si on est à l'étape 7
+                            if (currentStep === 7) {
+                                updateRecap();
+                            }
+
+                        } else {
+                            throw new Error(data.message || 'Erreur inconnue du serveur');
+                        }
+                    } catch (error) {
+                        console.error('Erreur lors de la mise à jour du conteneur:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Erreur',
+                            text: 'Impossible de mettre à jour le conteneur et la référence: ' + error
+                                .message,
+                            confirmButtonColor: '#0e914b'
+                        });
+                    }
+                }
+
+                function updateExpediteurFields() {
+                    const typeExpediteur = document.getElementById('type_expediteur').value;
+                    const prenomField = document.getElementById('prenom_field');
+                    const labelNom = document.getElementById('label_nom');
+
+                    if (typeExpediteur === 'societe') {
+                        // Mode Société
+                        prenomField.style.display = 'none';
+                        labelNom.innerHTML = 'Nom de la Société <span class="text-danger">*</span>';
+                        document.getElementById('prenom_expediteur').value = '';
+                        document.getElementById('prenom_expediteur').removeAttribute('required');
+                    } else {
+                        // Mode Particulier
+                        prenomField.style.display = 'block';
+                        labelNom.innerHTML = 'Nom <span class="text-danger">*</span>';
+                        document.getElementById('prenom_expediteur').setAttribute('required', 'required');
+                    }
+
+                    // Mettre à jour le récapitulatif si on est à l'étape 7
+                    if (currentStep === 7) {
+                        updateRecap();
+                    }
+                }
+
+                // NOUVELLE FONCTION : Mettre à jour le type de calcul basé sur le mode de transit
+                function updateTypeCalcul() {
+                    const modeTransit = document.getElementById('mode_transit').value;
+
+                    document.querySelectorAll('.colis-item').forEach(item => {
+                        const prixUnitaireInput = item.querySelector('.prix-unitaire-input');
+                        const poidsInput = item.querySelector('input[name*="[poids]"]');
+
+                        if (modeTransit === 'Aerien') {
+                            // Mode aérien : calcul automatique basé sur le poids
+                            if (prixUnitaireInput) {
+                                prixUnitaireInput.setAttribute('readonly', 'true');
+                                prixUnitaireInput.style.backgroundColor = '#f8f9fa';
+                                prixUnitaireInput.style.cursor = 'not-allowed';
+
+                                // Calculer le prix automatiquement si le poids est renseigné
+                                if (poidsInput && poidsInput.value) {
+                                    calculerPrixAuto(poidsInput);
                                 }
-                            })
-                            .catch(err => console.error('Erreur recherche client:', err));
-                    }, 300);
+                            }
+                        } else {
+                            // Mode maritime : saisie manuelle
+                            if (prixUnitaireInput) {
+                                prixUnitaireInput.removeAttribute('readonly');
+                                prixUnitaireInput.style.backgroundColor = '';
+                                prixUnitaireInput.style.cursor = '';
+                            }
+                        }
+                    });
+
+                    updateMontants();
+                }
+
+                // NOUVELLE FONCTION : Calculer le prix automatiquement basé sur le poids (mode aérien)
+                function calculerPrixAuto(poidsInput) {
+                    const colisItem = poidsInput.closest('.colis-item');
+                    const prixUnitaireInput = colisItem.querySelector('.prix-unitaire-input');
+                    const poids = parseFloat(poidsInput.value) || 0;
+
+                    if (!prixUnitaireInput) return;
+
+                    const devise = document.getElementById('devise').value;
+
+                    let prixUnitaire = 0;
+
+                    if (poids > 0) {
+                        if (devise === 'EUR') {
+                            prixUnitaire = poids * PRIX_PAR_KG_AERIEN_EURO;
+                        } else {
+                            // Convertir en XOF
+                            prixUnitaire = poids * PRIX_PAR_KG_AERIEN_EURO * TAUX_CONVERSION_EURO_XOF;
+                        }
+                    }
+
+                    prixUnitaireInput.value = prixUnitaire.toFixed(2);
+
+                    updateMontants();
+
+                    if (currentStep === 7) {
+                        updateRecap();
+                    }
+                }
+
+                // NOUVELLE FONCTION : Gérer l'affichage du message d'information
+                function toggleInfoCalculAuto() {
+                    const modeTransit = document.getElementById('mode_transit').value;
+                    // Créer un élément d'information si nécessaire
+                    let infoDiv = document.getElementById('info-calcul-auto');
+
+                    if (!infoDiv) {
+                        infoDiv = document.createElement('div');
+                        infoDiv.className = 'calcul-auto-info mb-4';
+                        infoDiv.id = 'info-calcul-auto';
+                        infoDiv.innerHTML = `
+                        <i class="fas fa-calculator me-2"></i>
+                        <strong>Calcul automatique :</strong> En mode aérien, le prix est calculé automatiquement à raison de 
+                        <strong id="prix-kg-display">15 EUR par kg</strong>. Le prix sera converti en XOF si nécessaire.
+                    `;
+
+                        const colisContainer = document.getElementById('colis-container');
+                        colisContainer.parentNode.insertBefore(infoDiv, colisContainer);
+                    }
+
+                    if (modeTransit === 'Aerien') {
+                        infoDiv.classList.remove('d-none');
+                        updatePrixKgDisplay();
+                    } else {
+                        infoDiv.classList.add('d-none');
+                    }
+                }
+
+                // NOUVELLE FONCTION : Mettre à jour l'affichage du prix par kg
+                function updatePrixKgDisplay() {
+                    const modeTransit = document.getElementById('mode_transit').value;
+                    const prixKgDisplay = document.getElementById('prix-kg-display');
+                    const devise = document.getElementById('devise').value;
+
+                    if (modeTransit === 'Aerien' && prixKgDisplay) {
+                        if (devise === 'EUR') {
+                            prixKgDisplay.textContent = '15 EUR par kg';
+                        } else {
+                            prixKgDisplay.textContent = `${(15 * TAUX_CONVERSION_EURO_XOF).toFixed(0)} XOF par kg`;
+                        }
+                    }
+                }
+
+                function updateMontants() {
+                    let montantColis = 0;
+                    const modeTransit = document.getElementById('mode_transit').value;
+
+                    // Calculer le montant total des colis
+                    document.querySelectorAll('.colis-item').forEach(item => {
+                        const index = item.dataset.index;
+                        const quantite = parseFloat(item.querySelector(`[name="colis[${index}][quantite]"]`)
+                            .value) || 0;
+                        const prixUnitaire = parseFloat(item.querySelector(
+                            `[name="colis[${index}][prix_unitaire]"]`).value) || 0;
+
+                        // MODIFICATION : Calcul différent selon le mode de transit
+                        if (modeTransit === 'Aerien') {
+                            // En mode aérien, le prix unitaire est déjà le total pour le colis (calculé par poids)
+                            montantColis += prixUnitaire;
+                        } else {
+                            // En mode maritime, on multiplie par la quantité
+                            montantColis += quantite * prixUnitaire;
+                        }
+                    });
+
+                    const prixService = parseFloat(document.getElementById('prix_service').value) || 0;
+                    const montantTotal = montantColis + prixService;
+
+                    // Mettre à jour l'affichage
+                    document.getElementById('montant_colis_display').textContent = montantColis.toFixed(2);
+                    document.getElementById('montant_service_display').textContent = prixService.toFixed(2);
+                    document.getElementById('montant_total_display').textContent = montantTotal.toFixed(2);
+
+                    // Mettre à jour les champs cachés pour le formulaire
+                    document.getElementById('montant_colis_input').value = montantColis;
+                    document.getElementById('montant_total_input').value = montantTotal;
+
+                    // Mettre à jour le reste à payer
+                    updateResteAPayer();
+
+                    // Mettre à jour le récapitulatif si on est à l'étape 7
+                    if (currentStep === 7) {
+                        updateRecap();
+                    }
+                }
+
+                function updateResteAPayer() {
+                    const montantTotal = parseFloat(document.getElementById('montant_total_display').textContent) || 0;
+                    const montantPaye = parseFloat(document.getElementById('montant_paye').value) || 0;
+                    const resteAPayer = Math.max(0, montantTotal - montantPaye);
+
+                    document.getElementById('reste_a_payer').value = resteAPayer.toFixed(2);
+
+                    // Mettre à jour le statut de paiement
+                    const statutPaiement = document.getElementById('statut_paiement');
+                    if (montantPaye === 0) {
+                        statutPaiement.value = 'non_paye';
+                    } else if (montantPaye < montantTotal) {
+                        statutPaiement.value = 'partiellement_paye';
+                    } else {
+                        statutPaiement.value = 'totalement_paye';
+                    }
+
+                    // Mettre à jour le récapitulatif si on est à l'étape 7
+                    if (currentStep === 7) {
+                        updateRecap();
+                    }
+                }
+
+                function addColis() {
+                    const container = document.getElementById('colis-container');
+                    const newColis = document.querySelector('.colis-item').cloneNode(true);
+
+                    newColis.dataset.index = colisCount;
+                    newColis.querySelector('.card-header h6').textContent = `Colis #${colisCount + 1}`;
+
+                    newColis.querySelectorAll('input, select, textarea').forEach(field => {
+                        const name = field.getAttribute('name');
+                        if (name) {
+                            field.setAttribute('name', name.replace('[0]', `[${colisCount}]`));
+                            if (field.type !== 'select-one') {
+                                field.value = '';
+                            }
+                        }
+                    });
+
+                    newColis.querySelector('.remove-colis').classList.remove('d-none');
+                    container.appendChild(newColis);
+                    colisCount++;
+
+                    // Mettre à jour le type de calcul pour le nouveau colis
+                    updateTypeCalcul();
+
+                    // Mettre à jour les montants
+                    updateMontants();
+                }
+
+                // Fonction pour mettre à jour toutes les devises affichées
+                function updateAllDevises(devise) {
+                    console.log('🔄 Mise à jour des devises:', devise);
+
+                    // Mettre à jour tous les éléments avec la classe .devise-dynamic
+                    document.querySelectorAll('.devise-dynamic').forEach(element => {
+                        element.textContent = devise;
+                    });
+
+                    // Mettre à jour les options des services (si nécessaire)
+                    document.querySelectorAll('#service_id option').forEach(option => {
+                        if (option.textContent.includes(' - ')) {
+                            const parts = option.textContent.split(' - ');
+                            if (parts.length >= 2) {
+                                // Garder la désignation et le prix, changer seulement la devise
+                                const prixPart = parts[1].split(' ')[0]; // Prendre seulement le nombre
+                                option.textContent = `${parts[0]} - ${prixPart} ${devise}`;
+                            }
+                        }
+                    });
+
+                    // Mettre à jour le récapitulatif si on est à l'étape 7
+                    if (currentStep === 7) {
+                        updateRecap();
+                    }
+                }
+
+                function updateRecap() {
+                    console.log('🔄 Mise à jour du récapitulatif...');
+
+                    // Récupérer toutes les données du formulaire
+                    const modeTransit = document.getElementById('mode_transit').value;
+                    const agenceExpedition = document.getElementById('agence_expedition_display').textContent;
+                    const agenceDestination = document.getElementById('agence_destination').value;
+                    const devise = document.getElementById('devise').value;
+                    const reference = document.getElementById('reference_display').textContent;
+                    const conteneur = document.getElementById('current_conteneur_name').textContent;
+
+                    // Expéditeur
+                    const typeExpediteur = document.getElementById('type_expediteur').value;
+                    const nameExpediteur = document.getElementById('name_expediteur').value;
+                    const prenomExpediteur = document.getElementById('prenom_expediteur').value;
+                    const emailExpediteur = document.getElementById('email_expediteur').value;
+                    const contactExpediteur = document.getElementById('contact_expediteur').value;
+                    const adresseExpediteur = document.getElementById('adresse_expediteur').value;
+
+                    // Destinataire
+                    const nameDestinataire = document.getElementById('name_destinataire').value;
+                    const prenomDestinataire = document.getElementById('prenom_destinataire').value;
+                    const emailDestinataire = document.getElementById('email_destinataire').value;
+                    const indicatif = document.getElementById('indicatif').value;
+                    const contactDestinataire = document.getElementById('contact_destinataire').value;
+                    const adresseDestinataire = document.getElementById('adresse_destinataire').value;
+
+                    // Services
+                    const serviceSelect = document.getElementById('service_id');
+                    const service = serviceSelect.options[serviceSelect.selectedIndex].textContent;
+                    const prixService = document.getElementById('prix_service').value;
+
+                    // Paiement
+                    const methodePaiement = document.getElementById('methode_paiement').value;
+                    const montantPaye = document.getElementById('montant_paye').value;
+                    const resteAPayer = document.getElementById('reste_a_payer').value;
+                    const statutPaiement = document.getElementById('statut_paiement').value;
+
+                    console.log('Données récupérées:', {
+                        modeTransit,
+                        agenceExpedition,
+                        agenceDestination,
+                        devise,
+                        reference,
+                        conteneur,
+                        nameExpediteur,
+                        prenomExpediteur,
+                        emailExpediteur,
+                        contactExpediteur,
+                        nameDestinataire,
+                        prenomDestinataire,
+                        emailDestinataire,
+                        contactDestinataire
+                    });
+
+                    // Mettre à jour les informations de transport
+                    document.getElementById('recap_mode_transit').textContent = modeTransit || '-';
+                    document.getElementById('recap_agence_expedition').textContent = agenceExpedition || '-';
+                    document.getElementById('recap_agence_destination').textContent = agenceDestination || '-';
+                    document.getElementById('recap_reference').textContent = reference || '-';
+                    document.getElementById('recap_conteneur').textContent = conteneur || '-';
+                    document.getElementById('recap_devise').textContent = devise || '-';
+
+                    // Mettre à jour l'expéditeur
+                    document.getElementById('recap_expediteur_nom').textContent = nameExpediteur || '-';
+                    document.getElementById('recap_expediteur_prenom').textContent = typeExpediteur === 'societe' ?
+                        'Non applicable' : (prenomExpediteur || '-');
+                    document.getElementById('recap_expediteur_email').textContent = emailExpediteur || '-';
+                    document.getElementById('recap_expediteur_contact').textContent = contactExpediteur || '-';
+                    document.getElementById('recap_expediteur_adresse').textContent = adresseExpediteur || '-';
+
+                    // Mettre à jour le destinataire
+                    document.getElementById('recap_destinataire_nom').textContent = nameDestinataire || '-';
+                    document.getElementById('recap_destinataire_prenom').textContent = prenomDestinataire || '-';
+                    document.getElementById('recap_destinataire_email').textContent = emailDestinataire || '-';
+                    document.getElementById('recap_destinataire_contact').textContent = (indicatif || '') + ' ' + (
+                        contactDestinataire || '-');
+                    document.getElementById('recap_destinataire_adresse').textContent = adresseDestinataire || '-';
+
+                    // Mettre à jour les services
+                    document.getElementById('recap_service').textContent = service.includes('Aucun') ? 'Aucun service' :
+                        service;
+                    document.getElementById('recap_prix_service').textContent = (parseFloat(prixService) || 0).toFixed(
+                        2) + ' ' + devise;
+
+                    // Mettre à jour le paiement
+                    document.getElementById('recap_methode_paiement').textContent = getMethodePaiementText(
+                        methodePaiement);
+                    document.getElementById('recap_montant_total').textContent = document.getElementById(
+                        'montant_total_display').textContent + ' ' + devise;
+                    document.getElementById('recap_montant_paye').textContent = (parseFloat(montantPaye) || 0).toFixed(
+                        2) + ' ' + devise;
+                    document.getElementById('recap_reste_payer').textContent = (parseFloat(resteAPayer) || 0).toFixed(
+                        2) + ' ' + devise;
+
+                    // Mettre à jour le statut de paiement avec badge coloré
+                    const statutBadge = document.getElementById('recap_statut_paiement');
+                    statutBadge.textContent = getStatutPaiementText(statutPaiement);
+                    statutBadge.className = 'badge ' + getStatutPaiementClass(statutPaiement);
+
+                    // Mettre à jour le tableau des colis
+                    updateColisTable();
+
+                    console.log('✅ Récapitulatif mis à jour');
+                }
+
+                function getMethodePaiementText(methode) {
+                    const methodes = {
+                        'espece': 'Espèce',
+                        'virement_bancaire': 'Virement Bancaire',
+                        'cheque': 'Chèque',
+                        'mobile_money': 'Mobile Money',
+                        'livraison': 'Paiement à la Livraison'
+                    };
+                    return methodes[methode] || '-';
+                }
+
+                function getStatutPaiementText(statut) {
+                    const statuts = {
+                        'non_paye': 'Non Payé',
+                        'partiellement_paye': 'Partiellement Payé',
+                        'totalement_paye': 'Totalement Payé'
+                    };
+                    return statuts[statut] || '-';
+                }
+
+                function getStatutPaiementClass(statut) {
+                    const classes = {
+                        'non_paye': 'bg-danger',
+                        'partiellement_paye': 'bg-warning',
+                        'totalement_paye': 'bg-success'
+                    };
+                    return classes[statut] || 'bg-secondary';
+                }
+
+                function updateColisTable() {
+                    const tbody = document.getElementById('recap_colis_body');
+                    tbody.innerHTML = '';
+
+                    let totalGeneral = 0;
+                    let nombreColis = 0;
+                    const modeTransit = document.getElementById('mode_transit').value;
+
+                    document.querySelectorAll('.colis-item').forEach((item, index) => {
+                        const quantite = parseFloat(item.querySelector(`[name="colis[${index}][quantite]"]`)
+                            .value) || 0;
+                        const produit = item.querySelector(`[name="colis[${index}][produit]"]`).value || '-';
+                        const prixUnitaire = parseFloat(item.querySelector(
+                            `[name="colis[${index}][prix_unitaire]"]`).value) || 0;
+                        const longueur = item.querySelector(`[name="colis[${index}][longueur]"]`).value || '-';
+                        const largeur = item.querySelector(`[name="colis[${index}][largeur]"]`).value || '-';
+                        const hauteur = item.querySelector(`[name="colis[${index}][hauteur]"]`).value || '-';
+                        const poids = item.querySelector(`[name="colis[${index}][poids]"]`).value || '-';
+                        const typeColisInput = item.querySelector(`[name="colis[${index}][type_colis]"]`);
+                        const typeColis = typeColisInput?.value || 'Standard';
+                        // MODIFICATION : Calcul différent selon le mode de transit
+                        let totalColis = 0;
+                        if (modeTransit === 'Aerien') {
+                            totalColis =
+                                prixUnitaire; // En aérien, le prix unitaire est déjà le total pour le colis
+                        } else {
+                            totalColis = quantite * prixUnitaire; // En maritime, on multiplie par la quantité
+                        }
+
+                        totalGeneral += totalColis;
+                        nombreColis++;
+
+                        const dimensions = (longueur !== '-' && largeur !== '-' && hauteur !== '-') ?
+                            `${longueur}x${largeur}x${hauteur} cm` :
+                            'Non spécifié';
+
+                        const row = document.createElement('tr');
+
+                        // MODIFICATION : Affichage différent selon le mode de transit
+                        if (modeTransit === 'Aerien') {
+                            row.innerHTML = `
+                            <td class="fw-bold">${index + 1}</td>
+                            <td>${produit}</td>
+                            <td>${quantite}</td>
+                            <td>${prixUnitaire.toFixed(2)}</td>
+                            <td class="fw-bold">${totalColis.toFixed(2)}</td>
+                            <td>${typeColis}</td>
+                            <td>${dimensions}</td>
+                            <td>${poids !== '-' ? poids + ' kg' : '-'}</td>
+                        `;
+                        } else {
+                            row.innerHTML = `
+                            <td class="fw-bold">${index + 1}</td>
+                            <td>${produit}</td>
+                            <td>${quantite}</td>
+                            <td>${prixUnitaire.toFixed(2)}</td>
+                            <td class="fw-bold">${totalColis.toFixed(2)}</td>
+                            <td>${typeColis}</td>
+                            <td>${dimensions}</td>
+                            <td>${poids !== '-' ? poids + ' kg' : '-'}</td>
+                        `;
+                        }
+
+                        tbody.appendChild(row);
+                    });
+
+                    // Mettre à jour les totaux
+                    const devise = document.getElementById('devise').value || 'XOF';
+                    document.getElementById('recap_total_colis').textContent = totalGeneral.toFixed(2) + ' ' + devise;
+                    document.getElementById('recap_nombre_colis').textContent = nombreColis + ' colis' + (nombreColis >
+                        1 ? 's' : '');
+                }
+
+                function validateStep(step) {
+                    let isValid = true;
+
+                    if (step === 1) {
+                        const modeTransit = document.getElementById('mode_transit').value;
+                        const agenceExpedition = document.getElementById('agence_expedition_id').value;
+
+                        if (!modeTransit || !agenceExpedition) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Champs obligatoires',
+                                text: 'Veuillez sélectionner le mode de transit et l\'agence d\'expédition',
+                                confirmButtonColor: '#0e914b'
+                            });
+                            isValid = false;
+                        }
+                    }
+
+                    if (step === 2) {
+                        const nameExpediteur = document.getElementById('name_expediteur').value;
+                        const contactExpediteur = document.getElementById('contact_expediteur').value;
+
+                        if (!nameExpediteur || !contactExpediteur) { // Retirer email_expediteur
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Champs obligatoires',
+                                text: 'Veuillez remplir tous les champs obligatoires de l\'expéditeur',
+                                confirmButtonColor: '#0e914b'
+                            });
+                            isValid = false;
+                        }
+                    }
+
+                    if (step === 3) {
+                        const nameDestinataire = document.getElementById('name_destinataire').value;
+                        const prenomDestinataire = document.getElementById('prenom_destinataire').value;
+                        const contactDestinataire = document.getElementById('contact_destinataire').value;
+
+                        if (!nameDestinataire || !prenomDestinataire || !
+                            contactDestinataire) { // Retirer email_destinataire
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Champs obligatoires',
+                                text: 'Veuillez remplir tous les champs obligatoires du destinataire',
+                                confirmButtonColor: '#0e914b'
+                            });
+                            isValid = false;
+                        }
+                    }
+
+                    if (step === 4) {
+                        const colisItems = document.querySelectorAll('.colis-item');
+                        for (let i = 0; i < colisItems.length; i++) {
+                            const quantite = colisItems[i].querySelector(`input[name="colis[${i}][quantite]"]`).value;
+                            const produit = colisItems[i].querySelector(`input[name="colis[${i}][produit]"]`).value;
+                            const prixUnitaire = colisItems[i].querySelector(`input[name="colis[${i}][prix_unitaire]"]`)
+                                .value;
+
+                            if (!quantite || !produit || !prixUnitaire) {
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: 'Champs obligatoires',
+                                    text: 'Veuillez remplir tous les champs obligatoires pour le colis #' + (i +
+                                        1),
+                                    confirmButtonColor: '#0e914b'
+                                });
+                                isValid = false;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (step === 6) {
+                        const methodePaiement = document.getElementById('methode_paiement').value;
+                        const montantPaye = parseFloat(document.getElementById('montant_paye').value) || 0;
+
+                        if (!methodePaiement) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Méthode de paiement requise',
+                                text: 'Veuillez sélectionner une méthode de paiement',
+                                confirmButtonColor: '#0e914b'
+                            });
+                            isValid = false;
+                        }
+
+                        // Validation du montant payé
+                        if (montantPaye < 0) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Montant invalide',
+                                text: 'Le montant payé ne peut pas être négatif',
+                                confirmButtonColor: '#0e914b'
+                            });
+                            isValid = false;
+                        }
+                    }
+
+                    return isValid;
+                }
+
+                function validateAllSteps() {
+                    console.log('🔍 Validation de toutes les étapes...');
+
+                    const stepsToValidate = [1, 2, 3, 4, 6]; // Étape 5 et 7 sont optionnelles
+
+                    for (let step of stepsToValidate) {
+                        if (!validateStep(step)) {
+                            console.log(`❌ Étape ${step} a échoué`);
+                            showStep(step);
+                            return false;
+                        }
+                        console.log(`✅ Étape ${step} validée`);
+                    }
+
+                    console.log('🎉 Toutes les étapes sont valides');
+                    return true;
+                }
+
+                // Écouter les changements dans les champs de colis pour mettre à jour les montants
+                document.addEventListener('input', function (e) {
+                    // Champs quantité et prix unitaire
+                    if (e.target.name && (e.target.name.includes('[quantite]') || e.target.name.includes(
+                        '[prix_unitaire]'))) {
+                        updateMontants();
+                    }
+
+                    // Champs poids en mode aérien
+                    if (e.target.name && e.target.name.includes('[poids]')) {
+                        const modeTransit = document.getElementById('mode_transit').value;
+                        if (modeTransit === 'Aerien') {
+                            calculerPrixAuto(e.target);
+                        }
+                    }
+
+                    // Champs dimensions
+                    if (e.target.name && (e.target.name.includes('[longueur]') || e.target.name.includes(
+                        '[largeur]') ||
+                        e.target.name.includes('[hauteur]'))) {
+                        if (currentStep === 7) {
+                            updateRecap();
+                        }
+                    }
+                });
+
+                // Initialisation
+                showStep(1);
+                updateExpediteurFields();
+                updateMontants();
+                updateTypeCalcul();
+                toggleInfoCalculAuto();
+
+                // Initialiser les écouteurs pour les champs de formulaire
+                document.addEventListener('input', function (e) {
+                    if (currentStep === 7 && (
+                        e.target.id === 'name_expediteur' || e.target.id === 'prenom_expediteur' ||
+                        e.target.id === 'email_expediteur' || e.target.id === 'contact_expediteur' ||
+                        e.target.id === 'adresse_expediteur' || e.target.id === 'name_destinataire' ||
+                        e.target.id === 'prenom_destinataire' || e.target.id === 'email_destinataire' ||
+                        e.target.id === 'contact_destinataire' || e.target.id === 'adresse_destinataire' ||
+                        e.target.id === 'indicatif'
+                    )) {
+                        updateRecap();
+                    }
                 });
             });
 
-            // Cacher les résultats au clic ailleurs
-            document.addEventListener('click', function (e) {
-                if (!e.target.closest('.form-group')) {
-                    document.querySelectorAll('.client-search-results').forEach(el => el.style.display = 'none');
+            // Recherche de récupération au step 1
+            document.getElementById('search-recuperation-btn').addEventListener('click', searchRecuperation);
+            document.getElementById('search-recuperation').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    searchRecuperation();
                 }
             });
-        }
 
-        function fillClientFields(client, type) {
-            if (type === 'expediteur') {
-                document.getElementById('name_expediteur').value = client.name || '';
-                document.getElementById('prenom_expediteur').value = client.prenom || '';
-                document.getElementById('email_expediteur').value = client.email || '';
-                document.getElementById('contact_expediteur').value = client.contact || '';
-                document.getElementById('adresse_expediteur').value = client.adresse || '';
+            function searchRecuperation() {
+                const reference = document.getElementById('search-recuperation').value.trim();
 
-            } else {
-                document.getElementById('name_destinataire').value = client.name || '';
-                document.getElementById('prenom_destinataire').value = client.prenom || '';
-                document.getElementById('email_destinataire').value = client.email || '';
-                document.getElementById('contact_destinataire').value = client.contact || '';
-                document.getElementById('adresse_destinataire').value = client.adresse || '';
-                if (client.indicatif) {
-                    document.getElementById('indicatif').value = client.indicatif;
+                if (!reference) {
+                    Swal.fire({
+                        title: 'Champ vide',
+                        text: 'Veuillez entrer une référence de récupération',
+                        icon: 'warning',
+                        confirmButtonColor: '#0e914b'
+                    });
+                    return;
+                }
+
+                if (!reference.startsWith('REC-')) {
+                    Swal.fire({
+                        title: 'Format invalide',
+                        text: 'La référence doit commencer par "REC-"',
+                        icon: 'warning',
+                        confirmButtonColor: '#0e914b'
+                    });
+                    return;
+                }
+
+                Swal.fire({
+                    title: 'Recherche en cours...',
+                    text: 'Recherche de la récupération ' + reference,
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                fetch(`/admin/recuperation/search?reference=${encodeURIComponent(reference)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        Swal.close();
+
+                        if (data.success && data.recuperation) {
+                            displayRecuperationResults(data.recuperation);
+                        } else {
+                            Swal.fire({
+                                title: 'Non trouvé',
+                                text: data.error || 'Aucune récupération trouvée avec cette référence',
+                                icon: 'error',
+                                confirmButtonColor: '#0e914b'
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            title: 'Erreur',
+                            text: 'Erreur lors de la recherche: ' + error.message,
+                            icon: 'error',
+                            confirmButtonColor: '#0e914b'
+                        });
+                    });
+            }
+
+            function displayRecuperationResults(recuperation) {
+                const resultsDiv = document.getElementById('search-recuperation-results');
+
+                // Vérifier si des informations spécifiques du destinataire existent
+                const hasSpecificDestinataire = recuperation.nom_destinataire || recuperation.prenom_destinataire;
+
+                resultsDiv.innerHTML = `
+                <div class="alert alert-success">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h6 class="mb-1"><i class="fas fa-check-circle me-2"></i>Récupération trouvée</h6>
+                            <p class="mb-1"><strong>Référence:</strong> ${recuperation.reference}</p>
+                            <p class="mb-1"><strong>Nature:</strong> ${recuperation.nature_objet}</p>
+                            <p class="mb-1"><strong>Quantité:</strong> ${recuperation.quantite}</p>
+                            <p class="mb-1"><strong>Expéditeur:</strong> ${recuperation.nom_concerne} ${recuperation.prenom_concerne}</p>
+                            ${hasSpecificDestinataire ?
+                        `<p class="mb-1"><strong>Destinataire spécifique:</strong> ${recuperation.nom_destinataire} ${recuperation.prenom_destinataire}</p>` :
+                        ''}
+                            <p class="mb-1"><strong>Contact:</strong> ${recuperation.contact}</p>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <button type="button" class="btn btn-primary" onclick="fillAllFieldsFromRecuperation(${recuperation.id})">
+                                <i class="fas fa-magic me-2"></i>Pré-remplir tout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+                resultsDiv.style.display = 'block';
+            }
+
+            function fillAllFieldsFromRecuperation(recuperationId) {
+                fetch(`/admin/recuperation/${recuperationId}/details`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success && data.data) {
+                            const recuperation = data.data;
+
+                            // 1. Pré-remplir l'expéditeur (étape 2)
+                            document.getElementById('name_expediteur').value = recuperation.nom_concerne || '';
+                            document.getElementById('prenom_expediteur').value = recuperation.prenom_concerne || '';
+                            document.getElementById('email_expediteur').value = recuperation.email || '';
+                            document.getElementById('contact_expediteur').value = recuperation.contact || '';
+                            document.getElementById('adresse_expediteur').value = recuperation.adresse_recuperation || '';
+
+                            // 2. Pré-remplir le destinataire (étape 3) - CORRECTION ICI
+                            // Utiliser les champs spécifiques du destinataire s'ils existent, sinon utiliser les champs de l'expéditeur
+                            document.getElementById('name_destinataire').value = recuperation.nom_destinataire ||
+                                recuperation.nom_concerne || '';
+                            document.getElementById('prenom_destinataire').value = recuperation.prenom_destinataire ||
+                                recuperation.prenom_concerne || '';
+                            document.getElementById('email_destinataire').value = recuperation.email_destinataire ||
+                                recuperation.email || '';
+                            document.getElementById('contact_destinataire').value = recuperation.contact_destinataire ||
+                                recuperation.contact || '';
+                            document.getElementById('adresse_destinataire').value = recuperation.adresse_destinataire ||
+                                recuperation.adresse_recuperation || '';
+
+                            // Gérer l'indicatif
+                            if (recuperation.indicatif_destinataire) {
+                                document.getElementById('indicatif').value = recuperation.indicatif_destinataire;
+                            } else {
+                                document.getElementById('indicatif').value = '+225'; // Indicatif Côte d'Ivoire par défaut
+                            }
+
+                            // 3. Pré-remplir les colis (étape 4)
+                            const firstColis = document.querySelector('.colis-item[data-index="0"]');
+                            if (firstColis) {
+                                const produitInput = firstColis.querySelector('input[name="colis[0][produit]"]');
+                                const quantiteInput = firstColis.querySelector('input[name="colis[0][quantite]"]');
+
+                                if (produitInput) {
+                                    produitInput.value = recuperation.nature_objet || '';
+                                }
+
+                                if (quantiteInput) {
+                                    quantiteInput.value = recuperation.quantite || 1;
+                                }
+
+                                // Déclencher les événements de mise à jour
+                                quantiteInput.dispatchEvent(new Event('input'));
+                            }
+
+                            Swal.fire({
+                                title: 'Formulaire pré-rempli !',
+                                html: `
+                        <div class="text-start">
+                            <p><strong>✓ Expéditeur:</strong> Rempli</p>
+                            <p><strong>✓ Destinataire:</strong> Rempli</p>
+                            <p><strong>✓ Colis:</strong> Nature: ${recuperation.nature_objet}, Quantité: ${recuperation.quantite}</p>
+                            ${recuperation.nom_destinataire ? '<p><strong>✓ Destinataire spécifique:</strong> Utilisé</p>' : ''}
+                        </div>
+                    `,
+                                icon: 'success',
+                                confirmButtonColor: '#0e914b',
+                                timer: 3000
+                            });
+
+                            // Cacher les résultats
+                            document.getElementById('search-recuperation-results').style.display = 'none';
+                            document.getElementById('search-recuperation').value = '';
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            title: 'Erreur',
+                            text: 'Erreur lors du chargement des détails: ' + error.message,
+                            icon: 'error',
+                            confirmButtonColor: '#0e914b'
+                        });
+                    });
+            }
+
+            function clearRecuperationSearch() {
+                document.getElementById('search-recuperation').value = '';
+                document.getElementById('search-recuperation-results').style.display = 'none';
+
+                Swal.fire({
+                    title: 'Champ effacé',
+                    text: 'La recherche a été réinitialisée',
+                    icon: 'info',
+                    confirmButtonColor: '#0e914b',
+                    timer: 1500
+                });
+            }
+
+            // --- DÉBUT LOGIQUE AUTOCOMPLÉTION CLIENT (Expéditeur / Destinataire) ---
+            function setupClientAutocomplete(inputIds, type) {
+                const inputs = inputIds.map(id => document.getElementById(id)).filter(input => input);
+                let timeout = null;
+
+                inputs.forEach(input => {
+                    // Créer le conteneur de résultats s'il n'existe pas
+                    let resultsDiv = input.parentNode.querySelector('.client-search-results');
+                    if (!resultsDiv) {
+                        resultsDiv = document.createElement('div');
+                        resultsDiv.className = 'search-results client-search-results';
+                        resultsDiv.style.display = 'none';
+                        resultsDiv.style.width = '100%';
+                        resultsDiv.style.zIndex = '1000';
+                        // Le parent doit être relative pour que le positionnement absolute fonctionne
+                        if (getComputedStyle(input.parentNode).position === 'static') {
+                            input.parentNode.style.position = 'relative';
+                        }
+                        input.parentNode.appendChild(resultsDiv);
+                    }
+
+                    input.addEventListener('input', function () {
+                        const query = this.value.trim();
+
+                        // Cacher les autres résultats pour éviter la pollution visuelle
+                        document.querySelectorAll('.client-search-results').forEach(el => el.style.display = 'none');
+
+                        if (query.length < 2) {
+                            return;
+                        }
+
+                        clearTimeout(timeout);
+                        timeout = setTimeout(() => {
+                            const url = `{{ route('agent.colis.search-client') }}?type=${type}&q=${encodeURIComponent(query)}`;
+
+                            fetch(url)
+                                .then(response => response.json())
+                                .then(data => {
+                                    resultsDiv.innerHTML = '';
+                                    if (data.length > 0) {
+                                        data.forEach(client => {
+                                            const div = document.createElement('div');
+                                            div.className = 'user-result-item';
+                                            div.innerHTML = `
+                                                    <div class="user-name">${client.name} ${client.prenom || ''}</div>
+                                                    <div class="user-details">${client.contact} ${client.email ? '- ' + client.email : ''}</div>
+                                                `;
+                                            div.addEventListener('click', () => {
+                                                fillClientFields(client, type);
+                                                resultsDiv.style.display = 'none';
+                                            });
+                                            resultsDiv.appendChild(div);
+                                        });
+                                        resultsDiv.style.display = 'block';
+                                    } else {
+                                        resultsDiv.style.display = 'none';
+                                    }
+                                })
+                                .catch(err => console.error('Erreur recherche client:', err));
+                        }, 300);
+                    });
+                });
+
+                // Cacher les résultats au clic ailleurs
+                document.addEventListener('click', function (e) {
+                    if (!e.target.closest('.form-group')) {
+                        document.querySelectorAll('.client-search-results').forEach(el => el.style.display = 'none');
+                    }
+                });
+            }
+
+            function fillClientFields(client, type) {
+                if (type === 'expediteur') {
+                    document.getElementById('name_expediteur').value = client.name || '';
+                    document.getElementById('prenom_expediteur').value = client.prenom || '';
+                    document.getElementById('email_expediteur').value = client.email || '';
+                    document.getElementById('contact_expediteur').value = client.contact || '';
+                    document.getElementById('adresse_expediteur').value = client.adresse || '';
+
+                } else {
+                    document.getElementById('name_destinataire').value = client.name || '';
+                    document.getElementById('prenom_destinataire').value = client.prenom || '';
+                    document.getElementById('email_destinataire').value = client.email || '';
+                    document.getElementById('contact_destinataire').value = client.contact || '';
+                    document.getElementById('adresse_destinataire').value = client.adresse || '';
+                    if (client.indicatif) {
+                        document.getElementById('indicatif').value = client.indicatif;
+                    }
+                }
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Informations chargées',
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+
+                // Mettre à jour le récapitulatif si on est à l'étape 7
+                if (typeof updateRecap === 'function' && typeof currentStep !== 'undefined' && currentStep === 7) {
+                    updateRecap();
                 }
             }
 
-            Swal.fire({
-                icon: 'success',
-                title: 'Informations chargées',
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 1500
+            document.addEventListener('DOMContentLoaded', function () {
+                // Initialiser l'autocomplétion pour l'expéditeur
+                setupClientAutocomplete(['name_expediteur', 'prenom_expediteur', 'contact_expediteur'], 'expediteur');
+
+                // Initialiser l'autocomplétion pour le destinataire
+                setupClientAutocomplete(['name_destinataire', 'prenom_destinataire', 'contact_destinataire'], 'destinataire');
             });
+            // --- FIN LOGIQUE AUTOCOMPLÉTION CLIENT ---
+        </script>
 
-            // Mettre à jour le récapitulatif si on est à l'étape 7
-            if (typeof updateRecap === 'function' && typeof currentStep !== 'undefined' && currentStep === 7) {
-                updateRecap();
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            // Initialiser l'autocomplétion pour l'expéditeur
-            setupClientAutocomplete(['name_expediteur', 'prenom_expediteur', 'contact_expediteur'], 'expediteur');
-
-            // Initialiser l'autocomplétion pour le destinataire
-            setupClientAutocomplete(['name_destinataire', 'prenom_destinataire', 'contact_destinataire'], 'destinataire');
-        });
-        // --- FIN LOGIQUE AUTOCOMPLÉTION CLIENT ---
-    </script>
-
-    <style>
-        :root {
-            --primary-color: #fea219;
-            --primary-dark: #e8910c;
-            --white: #ffffff;
-            --light-gray: #f8f9fa;
-            --medium-gray: #e9ecef;
-            --dark-gray: #6c757d;
-            --text-color: #333333;
-            --border-radius: 12px;
-            --box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
-        }
-
-        .modern-card {
-            border: none;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            overflow: hidden;
-            margin-top: 30px;
-        }
-
-        .modern-header {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            color: var(--white);
-            border: none;
-            padding: 30px;
-            text-align: center;
-        }
-
-        .modern-header .header-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-
-        .modern-header .card-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .modern-header .card-subtitle {
-            opacity: 0.9;
-            font-size: 1rem;
-        }
-
-        .card-body {
-            padding: 40px;
-        }
-
-        /* Styles pour les étapes */
-        .steps-indicator {
-            position: relative;
-        }
-
-        .step-connector {
-            position: absolute;
-            top: 25px;
-            left: 10%;
-            right: 10%;
-            height: 3px;
-            background: #e9ecef;
-            z-index: 1;
-        }
-
-        .step-indicator {
-            flex: 1;
-            z-index: 2;
-        }
-
-        .step-number {
-            width: 50px;
-            height: 50px;
-            background: #e9ecef;
-            color: #6c757d;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.1rem;
-            border: 3px solid white;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: var(--transition);
-            margin-bottom: 10px;
-        }
-
-        .step-indicator.active .step-number {
-            background: linear-gradient(135deg, #fea219 0%, #e69100 100%);
-            color: white;
-            transform: scale(1.1);
-        }
-
-        .step-label {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #6c757d;
-            transition: var(--transition);
-        }
-
-        .step-indicator.active .step-label {
-            color: #0e914b;
-        }
-
-        .step-content {
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
+        <style>
+            :root {
+                --primary-color: #fea219;
+                --primary-dark: #e8910c;
+                --white: #ffffff;
+                --light-gray: #f8f9fa;
+                --medium-gray: #e9ecef;
+                --dark-gray: #6c757d;
+                --text-color: #333333;
+                --border-radius: 12px;
+                --box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+                --transition: all 0.3s ease;
             }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Autres styles */
-        .conteneur-info-card {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-radius: var(--border-radius);
-            padding: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            font-weight: 600;
-            color: var(--text-color);
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .form-label.required::after {
-            content: " *";
-            color: #e74c3c;
-        }
-
-        .modern-input,
-        .modern-select {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid var(--medium-gray);
-            border-radius: 8px;
-            font-size: 16px;
-            transition: var(--transition);
-            background-color: var(--white);
-        }
-
-        .modern-input:focus,
-        .modern-select:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(254, 162, 25, 0.2);
-        }
-
-        .modern-select {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236c757d' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 16px center;
-            background-size: 16px;
-        }
-
-        .info-field {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-            border: 1px solid #e9ecef;
-        }
-
-        .btn {
-            transition: all 0.3s ease;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .input-group-text {
-            background-color: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-right: none;
-        }
-
-        /* Styles pour la recherche d'utilisateurs */
-        .search-container {
-            position: relative;
-        }
-
-        .search-results {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            z-index: 1000;
-            background: white;
-            border: 1px solid #e9ecef;
-            border-radius: 8px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .user-result-item {
-            padding: 12px 15px;
-            border-bottom: 1px solid #f8f9fa;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .user-result-item:hover {
-            background-color: #f8f9fa;
-        }
-
-        .user-result-item:last-child {
-            border-bottom: none;
-        }
-
-        .user-name {
-            font-weight: 600;
-            color: #333;
-        }
-
-        .user-details {
-            font-size: 0.85rem;
-            color: #6c757d;
-        }
-
-        .no-results {
-            padding: 15px;
-            text-align: center;
-            color: #6c757d;
-            font-style: italic;
-        }
-
-        /* Styles pour les colis */
-        .colis-item {
-            border: 1px solid var(--medium-gray);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-        }
-
-        .colis-item .card-header {
-            background: var(--light-gray);
-            border-bottom: 1px solid var(--medium-gray);
-        }
-
-        .add-produit-btn,
-        #add-service-btn {
-            border-radius: 0 8px 8px 0;
-            border-left: none;
-        }
-
-        .input-group . {
-            border-radius: 8px 0 0 8px;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .step-indicator {
-                margin-bottom: 15px;
-            }
-
-            .step-connector {
-                display: none;
-            }
-
-            .card-body {
-                padding: 25px;
+            .modern-card {
+                border: none;
+                border-radius: var(--border-radius);
+                box-shadow: var(--box-shadow);
+                overflow: hidden;
+                margin-top: 30px;
             }
 
             .modern-header {
+                background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+                color: var(--white);
+                border: none;
+                padding: 30px;
+                text-align: center;
+            }
+
+            .modern-header .header-icon {
+                font-size: 2.5rem;
+                margin-bottom: 15px;
+            }
+
+            .modern-header .card-title {
+                font-size: 1.8rem;
+                font-weight: 700;
+                margin-bottom: 5px;
+            }
+
+            .modern-header .card-subtitle {
+                opacity: 0.9;
+                font-size: 1rem;
+            }
+
+            .card-body {
+                padding: 40px;
+            }
+
+            /* Styles pour les étapes */
+            .steps-indicator {
+                position: relative;
+            }
+
+            .step-connector {
+                position: absolute;
+                top: 25px;
+                left: 10%;
+                right: 10%;
+                height: 3px;
+                background: #e9ecef;
+                z-index: 1;
+            }
+
+            .step-indicator {
+                flex: 1;
+                z-index: 2;
+            }
+
+            .step-number {
+                width: 50px;
+                height: 50px;
+                background: #e9ecef;
+                color: #6c757d;
+                border-radius: 50%;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                font-size: 1.1rem;
+                border: 3px solid white;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                transition: var(--transition);
+                margin-bottom: 10px;
+            }
+
+            .step-indicator.active .step-number {
+                background: linear-gradient(135deg, #fea219 0%, #e69100 100%);
+                color: white;
+                transform: scale(1.1);
+            }
+
+            .step-label {
+                font-size: 0.9rem;
+                font-weight: 600;
+                color: #6c757d;
+                transition: var(--transition);
+            }
+
+            .step-indicator.active .step-label {
+                color: #0e914b;
+            }
+
+            .step-content {
+                animation: fadeIn 0.5s ease-in-out;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* Autres styles */
+            .conteneur-info-card {
+                background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+                border-radius: var(--border-radius);
                 padding: 20px;
             }
 
-            .form-actions {
-                flex-direction: column;
-                gap: 10px;
+            .form-group {
+                margin-bottom: 20px;
             }
-        }
 
-        /* Styles pour la recherche de produits */
-        .produit-search-results {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            z-index: 1000;
-            background: white;
-            border: 1px solid #e9ecef;
-            border-radius: 8px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            width: 100%;
-        }
+            .form-label {
+                font-weight: 600;
+                color: var(--text-color);
+                margin-bottom: 8px;
+                display: block;
+            }
 
-        /* Ajustement pour les champs sur la même ligne */
-        .col-md-6 .form-group {
-            margin-bottom: 1rem;
-        }
+            .form-label.required::after {
+                content: " *";
+                color: #e74c3c;
+            }
 
-        /* Responsive pour les champs sur la même ligne */
-        @media (max-width: 768px) {
-            .col-md-6 {
+            .modern-input,
+            .modern-select {
+                width: 100%;
+                padding: 12px 16px;
+                border: 2px solid var(--medium-gray);
+                border-radius: 8px;
+                font-size: 16px;
+                transition: var(--transition);
+                background-color: var(--white);
+            }
+
+            .modern-input:focus,
+            .modern-select:focus {
+                outline: none;
+                border-color: var(--primary-color);
+                box-shadow: 0 0 0 3px rgba(254, 162, 25, 0.2);
+            }
+
+            .modern-select {
+                appearance: none;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236c757d' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 16px center;
+                background-size: 16px;
+            }
+
+            .info-field {
+                background: #f8f9fa;
+                border-radius: 8px;
+                padding: 15px;
+                text-align: center;
+                border: 1px solid #e9ecef;
+            }
+
+            .btn {
+                transition: all 0.3s ease;
+            }
+
+            .btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            }
+
+            .input-group-text {
+                background-color: #f8f9fa;
+                border: 1px solid #e9ecef;
+                border-right: none;
+            }
+
+            /* Styles pour la recherche d'utilisateurs */
+            .search-container {
+                position: relative;
+            }
+
+            .search-results {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                z-index: 1000;
+                background: white;
+                border: 1px solid #e9ecef;
+                border-radius: 8px;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            }
+
+            .user-result-item {
+                padding: 12px 15px;
+                border-bottom: 1px solid #f8f9fa;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .user-result-item:hover {
+                background-color: #f8f9fa;
+            }
+
+            .user-result-item:last-child {
+                border-bottom: none;
+            }
+
+            .user-name {
+                font-weight: 600;
+                color: #333;
+            }
+
+            .user-details {
+                font-size: 0.85rem;
+                color: #6c757d;
+            }
+
+            .no-results {
+                padding: 15px;
+                text-align: center;
+                color: #6c757d;
+                font-style: italic;
+            }
+
+            /* Styles pour les colis */
+            .colis-item {
+                border: 1px solid var(--medium-gray);
+                border-radius: var(--border-radius);
+                overflow: hidden;
+            }
+
+            .colis-item .card-header {
+                background: var(--light-gray);
+                border-bottom: 1px solid var(--medium-gray);
+            }
+
+            .add-produit-btn,
+            #add-service-btn {
+                border-radius: 0 8px 8px 0;
+                border-left: none;
+            }
+
+            .input-group . {
+                border-radius: 8px 0 0 8px;
+            }
+
+            /* Responsive */
+            @media (max-width: 768px) {
+                .step-indicator {
+                    margin-bottom: 15px;
+                }
+
+                .step-connector {
+                    display: none;
+                }
+
+                .card-body {
+                    padding: 25px;
+                }
+
+                .modern-header {
+                    padding: 20px;
+                }
+
+                .form-actions {
+                    flex-direction: column;
+                    gap: 10px;
+                }
+            }
+
+            /* Styles pour la recherche de produits */
+            .produit-search-results {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                z-index: 1000;
+                background: white;
+                border: 1px solid #e9ecef;
+                border-radius: 8px;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+                width: 100%;
+            }
+
+            /* Ajustement pour les champs sur la même ligne */
+            .col-md-6 .form-group {
                 margin-bottom: 1rem;
             }
-        }
-    </style>
+
+            /* Responsive pour les champs sur la même ligne */
+            @media (max-width: 768px) {
+                .col-md-6 {
+                    margin-bottom: 1rem;
+                }
+            }
+        </style>
 @endsection

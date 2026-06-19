@@ -43,21 +43,16 @@
                                     <div class="filter-group">
                                         <select class="form-control modern-select" name="mode_transit">
                                             <option value="">Tous les modes</option>
-                                            <option value="Maritime"
-                                                {{ request('mode_transit') == 'Maritime' ? 'selected' : '' }}>Maritime
+                                            <option value="Maritime" {{ request('mode_transit') == 'Maritime' ? 'selected' : '' }}>Maritime
                                             </option>
-                                            <option value="Aerien"
-                                                {{ request('mode_transit') == 'Aerien' ? 'selected' : '' }}>Aérien</option>
+                                            <option value="Aerien" {{ request('mode_transit') == 'Aerien' ? 'selected' : '' }}>Aérien</option>
                                         </select>
                                         <select class="form-control modern-select" name="paiement">
                                             <option value="">Tous les paiements</option>
-                                            <option value="non_paye"
-                                                {{ request('paiement') == 'non_paye' ? 'selected' : '' }}>Non payé</option>
-                                            <option value="partiellement_paye"
-                                                {{ request('paiement') == 'partiellement_paye' ? 'selected' : '' }}>
+                                            <option value="non_paye" {{ request('paiement') == 'non_paye' ? 'selected' : '' }}>Non payé</option>
+                                            <option value="partiellement_paye" {{ request('paiement') == 'partiellement_paye' ? 'selected' : '' }}>
                                                 Partiellement payé</option>
-                                            <option value="totalement_paye"
-                                                {{ request('paiement') == 'totalement_paye' ? 'selected' : '' }}>Totalement
+                                            <option value="totalement_paye" {{ request('paiement') == 'totalement_paye' ? 'selected' : '' }}>Totalement
                                                 payé</option>
                                         </select>
                                         <button type="submit" class="btn btn-primary">
@@ -98,8 +93,8 @@
                                                     <i class="fas fa-times-circle text-danger" title="Non payé"
                                                         style="font-size: 18px;"></i>
                                                 @elseif($item->statut_paiement == 'partiellement_paye')
-                                                    <i class="fas fa-exclamation-circle text-warning"
-                                                        title="Partiellement payé" style="font-size: 18px;"></i>
+                                                    <i class="fas fa-exclamation-circle text-warning" title="Partiellement payé"
+                                                        style="font-size: 18px;"></i>
                                                 @else
                                                     <i class="fas fa-check-circle text-success" title="Totalement payé"
                                                         style="font-size: 18px;"></i>
@@ -295,15 +290,15 @@
                                             <td class="text-center">
                                                 <div class="action-buttons">
                                                     <button class="btn-action btn-view"
-                                                        onclick="showColisDetails({{ $item->id }})"
-                                                        title="Voir détails">
+                                                        onclick="showColisDetails({{ $item->id }})" title="Voir détails">
                                                         <i class="fas fa-eye"></i>
                                                     </button>
 
                                                     <!-- Bouton de paiement - grisé si totalement payé -->
                                                     <button
                                                         class="btn-action {{ $item->statut_paiement == 'totalement_paye' ? 'btn-payment-disabled' : 'btn-payment' }}"
-                                                        @if ($item->statut_paiement != 'totalement_paye') onclick="showPaymentForm({{ $item->id }}, '{{ $item->reference_colis }}', {{ $item->montant_total }}, {{ $item->montant_paye }}, {{ $item->reste_a_payer ?? 0 }}, '{{ $item->devise }}')"
+                                                        @if ($item->statut_paiement != 'totalement_paye')
+                                                            onclick="showPaymentForm({{ $item->id }}, '{{ $item->reference_colis }}', {{ $item->montant_total }}, {{ $item->montant_paye }}, {{ $item->reste_a_payer ?? 0 }}, '{{ $item->devise }}')"
                                                         @else disabled @endif
                                                         title="{{ $item->statut_paiement == 'totalement_paye' ? 'Paiement complet' : 'Enregistrer un paiement' }}">
                                                         <i class="fas fa-money-bill-wave"></i>
@@ -804,49 +799,49 @@
             Swal.fire({
                 title: '📦 Scanner pour Chargement',
                 html: `
-                <div class="text-center">
-                    <div class="alert alert-info">
-                        <i class="fas fa-info-circle"></i>
-                        Scanner les unités qui sont en entrepôt pour les charger
-                    </div>
-                    <div id="qr-scanner-container" style="width: 100%; max-width: 500px; margin: 0 auto;">
-                        <div id="qr-reader" style="width: 100%; min-height: 300px; border: 2px dashed #007bff; border-radius: 10px; background: #f8f9fa;"></div>
-                    </div>
-                    <div class="mt-3">
-                        <p class="text-muted" id="scan-status">🔄 Initialisation du scanner...</p>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-warning btn-sm" onclick="switchCamera()" id="switch-camera-btn" disabled>
-                                <i class="fas fa-camera-rotate"></i> Changer caméra
-                            </button>
-                            <button type="button" class="btn btn-secondary btn-sm" onclick="stopQRScannerAndClose()">
-                                <i class="fas fa-stop"></i> Arrêter
-                            </button>
+                    <div class="text-center">
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i>
+                            Scanner les unités qui sont en entrepôt pour les charger
                         </div>
-                    </div>
-
-                    <!-- Alternative manuelle -->
-                    <div class="mt-4">
-                        <div class="card">
-                            <div class="card-header bg-light">
-                                <h6 class="mb-0"><i class="fas fa-keyboard me-2"></i>Entrée manuelle</h6>
+                        <div id="qr-scanner-container" style="width: 100%; max-width: 500px; margin: 0 auto;">
+                            <div id="qr-reader" style="width: 100%; min-height: 300px; border: 2px dashed #007bff; border-radius: 10px; background: #f8f9fa;"></div>
+                        </div>
+                        <div class="mt-3">
+                            <p class="text-muted" id="scan-status">🔄 Initialisation du scanner...</p>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-warning btn-sm" onclick="switchCamera()" id="switch-camera-btn" disabled>
+                                    <i class="fas fa-camera-rotate"></i> Changer caméra
+                                </button>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="stopQRScannerAndClose()">
+                                    <i class="fas fa-stop"></i> Arrêter
+                                </button>
                             </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control" id="manualCodeInput" 
-                                               placeholder="Ex: CO-3HAJVMZS" autocomplete="off">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <button type="button" class="btn btn-outline-primary w-100" onclick="validateManualCodeCharge()">
-                                            Valider
-                                        </button>
+                        </div>
+
+                        <!-- Alternative manuelle -->
+                        <div class="mt-4">
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h6 class="mb-0"><i class="fas fa-keyboard me-2"></i>Entrée manuelle</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" id="manualCodeInput" 
+                                                   placeholder="Ex: CO-3HAJVMZS" autocomplete="off">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button type="button" class="btn btn-outline-primary w-100" onclick="validateManualCodeCharge()">
+                                                Valider
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            `,
+                `,
                 showConfirmButton: false,
                 showCloseButton: true,
                 width: 600,
@@ -858,7 +853,7 @@
                     const manualInput = document.getElementById('manualCodeInput');
                     if (manualInput) {
                         manualInput.focus();
-                        manualInput.addEventListener('keypress', function(e) {
+                        manualInput.addEventListener('keypress', function (e) {
                             if (e.key === 'Enter') {
                                 validateManualCodeCharge();
                             }
@@ -889,13 +884,13 @@
 
                 // Vider le conteneur
                 container.innerHTML = `
-                <div id="qr-reader" style="width: 100%; min-height: 300px; border: 2px dashed #007bff; border-radius: 10px; background: #f8f9fa;">
-                    <div class="text-center py-5">
-                        <i class="fas fa-camera text-muted" style="font-size: 2rem;"></i>
-                        <p class="mt-2">Initialisation de la caméra...</p>
+                    <div id="qr-reader" style="width: 100%; min-height: 300px; border: 2px dashed #007bff; border-radius: 10px; background: #f8f9fa;">
+                        <div class="text-center py-5">
+                            <i class="fas fa-camera text-muted" style="font-size: 2rem;"></i>
+                            <p class="mt-2">Initialisation de la caméra...</p>
+                        </div>
                     </div>
-                </div>
-            `;
+                `;
 
                 // Créer l'instance du scanner
                 const html5QrCode = new Html5Qrcode("qr-reader");
@@ -914,8 +909,8 @@
 
                 // Démarrer le scanner
                 html5QrCode.start({
-                        facingMode: "environment"
-                    },
+                    facingMode: "environment"
+                },
                     config,
                     onScanSuccessCharge,
                     onScanFailure
@@ -988,16 +983,16 @@
             Swal.fire({
                 title: '🔄 Chargement en cours...',
                 html: `
-                <div class="text-center">
-                    <i class="fas fa-truck-loading fa-spin text-primary" style="font-size: 3rem;"></i>
-                    <div class="mt-3 p-3 bg-light rounded">
-                        <strong>Code scanné:</strong><br>
-                        <code style="font-size: 1.1rem; word-break: break-all; background: #fff; padding: 5px 10px; border-radius: 4px;">${qrCode}</code>
-                        ${conteneurId ? `<br><strong>Conteneur:</strong> #${conteneurId}` : ''}
+                    <div class="text-center">
+                        <i class="fas fa-truck-loading fa-spin text-primary" style="font-size: 3rem;"></i>
+                        <div class="mt-3 p-3 bg-light rounded">
+                            <strong>Code scanné:</strong><br>
+                            <code style="font-size: 1.1rem; word-break: break-all; background: #fff; padding: 5px 10px; border-radius: 4px;">${qrCode}</code>
+                            ${conteneurId ? `<br><strong>Conteneur:</strong> #${conteneurId}` : ''}
+                        </div>
+                        <p class="mt-3">Chargement de l'unité dans le conteneur...</p>
                     </div>
-                    <p class="mt-3">Chargement de l'unité dans le conteneur...</p>
-                </div>
-            `,
+                `,
                 showConfirmButton: false,
                 showCancelButton: false,
                 allowOutsideClick: false,
@@ -1017,17 +1012,17 @@
             console.log("📍 URL utilisée:", url);
 
             fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        qr_code: qrCode,
-                        conteneur_id: conteneurId
-                    })
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    qr_code: qrCode,
+                    conteneur_id: conteneurId
                 })
+            })
                 .then(response => {
                     console.log("📨 Réponse HTTP:", response.status, response.statusText);
 
@@ -1056,44 +1051,44 @@
             Swal.fire({
                 title: '✅ Chargement Réussi !',
                 html: `
-                <div class="text-center">
-                    <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
-                    <p class="mt-3"><strong>${data.message}</strong></p>
+                    <div class="text-center">
+                        <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
+                        <p class="mt-3"><strong>${data.message}</strong></p>
 
-                    ${data.unite ? `
-                        <div class="alert alert-success">
-                            <h6>📦 Informations de l'unité</h6>
-                            <p class="mb-1"><strong>Code:</strong> ${data.unite.code_colis}</p>
-                            <p class="mb-1"><strong>Produit:</strong> ${data.unite.produit}</p>
-                            <p class="mb-1"><strong>Position:</strong> ${data.unite.position}</p>
-                            <p class="mb-1"><strong>Statut:</strong> 
-                                <span class="badge bg-warning">${data.unite.nouveau_statut}</span>
-                            </p>
-                            <p class="mb-1"><strong>Localisation:</strong> ${data.unite.localisation}</p>
-                        </div>
-                        ` : ''}
+                        ${data.unite ? `
+                            <div class="alert alert-success">
+                                <h6>📦 Informations de l'unité</h6>
+                                <p class="mb-1"><strong>Code:</strong> ${data.unite.code_colis}</p>
+                                <p class="mb-1"><strong>Produit:</strong> ${data.unite.produit}</p>
+                                <p class="mb-1"><strong>Position:</strong> ${data.unite.position}</p>
+                                <p class="mb-1"><strong>Statut:</strong> 
+                                    <span class="badge bg-warning">${data.unite.nouveau_statut}</span>
+                                </p>
+                                <p class="mb-1"><strong>Localisation:</strong> ${data.unite.localisation}</p>
+                            </div>
+                            ` : ''}
 
-                    ${data.colis ? `
-                        <div class="alert alert-info">
-                            <h6>📊 Progression du chargement</h6>
-                            <p class="mb-1"><strong>Référence:</strong> ${data.colis.reference_colis}</p>
-                            <p class="mb-1"><strong>Progression:</strong> 
-                                ${data.colis.unites_chargees}/${data.colis.total_unites} unités chargées
-                            </p>
-                            <div class="progress mt-2">
-                                <div class="progress-bar bg-warning" 
-                                     role="progressbar" 
-                                     style="width: ${data.colis.progression}%"
-                                     aria-valuenow="${data.colis.progression}" 
-                                     aria-valuemin="0" 
-                                     aria-valuemax="100">
-                                    ${data.colis.progression}%
+                        ${data.colis ? `
+                            <div class="alert alert-info">
+                                <h6>📊 Progression du chargement</h6>
+                                <p class="mb-1"><strong>Référence:</strong> ${data.colis.reference_colis}</p>
+                                <p class="mb-1"><strong>Progression:</strong> 
+                                    ${data.colis.unites_chargees}/${data.colis.total_unites} unités chargées
+                                </p>
+                                <div class="progress mt-2">
+                                    <div class="progress-bar bg-warning" 
+                                         role="progressbar" 
+                                         style="width: ${data.colis.progression}%"
+                                         aria-valuenow="${data.colis.progression}" 
+                                         aria-valuemin="0" 
+                                         aria-valuemax="100">
+                                        ${data.colis.progression}%
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        ` : ''}
-                </div>
-            `,
+                            ` : ''}
+                    </div>
+                `,
                 icon: 'success',
                 confirmButtonColor: '#007bff',
                 confirmButtonText: '🔄 Scanner une autre unité',
@@ -1113,18 +1108,18 @@
             Swal.fire({
                 title: 'ℹ️ Information',
                 html: `
-                <div class="text-center">
-                    <i class="fas fa-info-circle text-warning" style="font-size: 3rem;"></i>
-                    <p class="mt-3"><strong>${data.message}</strong></p>
-                    ${data.unite ? `
-                        <div class="alert alert-warning mt-3">
-                            <p><strong>Code:</strong> ${data.unite.code_colis}</p>
-                            <p><strong>Statut actuel:</strong> <span class="badge bg-warning">${data.unite.statut}</span></p>
-                            <p><strong>Produit:</strong> ${data.unite.produit}</p>
-                        </div>
-                        ` : ''}
-                </div>
-            `,
+                    <div class="text-center">
+                        <i class="fas fa-info-circle text-warning" style="font-size: 3rem;"></i>
+                        <p class="mt-3"><strong>${data.message}</strong></p>
+                        ${data.unite ? `
+                            <div class="alert alert-warning mt-3">
+                                <p><strong>Code:</strong> ${data.unite.code_colis}</p>
+                                <p><strong>Statut actuel:</strong> <span class="badge bg-warning">${data.unite.statut}</span></p>
+                                <p><strong>Produit:</strong> ${data.unite.produit}</p>
+                            </div>
+                            ` : ''}
+                    </div>
+                `,
                 icon: 'info',
                 confirmButtonColor: '#17a2b8',
                 confirmButtonText: '🔄 Scanner à nouveau'
@@ -1138,17 +1133,17 @@
             Swal.fire({
                 title: '❌ Erreur de Connexion',
                 html: `
-                <div class="text-center">
-                    <i class="fas fa-exclamation-triangle text-danger" style="font-size: 3rem;"></i>
-                    <p class="mt-3"><strong>Erreur lors du chargement</strong></p>
-                    <p class="text-muted">${error.message}</p>
-                    <div class="mt-3">
-                        <button class="btn btn-primary me-2" onclick="openQRScannerCharge()">
-                            <i class="fas fa-redo"></i> Ressayer
-                        </button>
+                    <div class="text-center">
+                        <i class="fas fa-exclamation-triangle text-danger" style="font-size: 3rem;"></i>
+                        <p class="mt-3"><strong>Erreur lors du chargement</strong></p>
+                        <p class="text-muted">${error.message}</p>
+                        <div class="mt-3">
+                            <button class="btn btn-primary me-2" onclick="openQRScannerCharge()">
+                                <i class="fas fa-redo"></i> Ressayer
+                            </button>
+                        </div>
                     </div>
-                </div>
-            `,
+                `,
                 icon: 'error',
                 showConfirmButton: false,
                 showCloseButton: true,
@@ -1182,23 +1177,23 @@
             Swal.fire({
                 title: 'Scanner une Unité',
                 html: `
-                <div class="text-center">
-                    <p>Entrez le code de l'unité à charger</p>
-                    <input type="text" id="uniteCodeInput" class="form-control form-control-lg" 
-                           placeholder="Ex: CO-3HAJVMZS" 
-                           style="text-align: center; font-size: 1.2rem;"
-                           autocomplete="off" autofocus>
-                    <div class="mt-3">
-                        <label for="conteneurSelectSingle" class="form-label">Conteneur (Optionnel)</label>
-                        <select class="form-control" id="conteneurSelectSingle">
-                            <option value="">Sélectionner un conteneur</option>
-                            <option value="1">Conteneur #1</option>
-                            <option value="2">Conteneur #2</option>
-                            <option value="3">Conteneur #3</option>
-                        </select>
+                    <div class="text-center">
+                        <p>Entrez le code de l'unité à charger</p>
+                        <input type="text" id="uniteCodeInput" class="form-control form-control-lg" 
+                               placeholder="Ex: CO-3HAJVMZS" 
+                               style="text-align: center; font-size: 1.2rem;"
+                               autocomplete="off" autofocus>
+                        <div class="mt-3">
+                            <label for="conteneurSelectSingle" class="form-label">Conteneur (Optionnel)</label>
+                            <select class="form-control" id="conteneurSelectSingle">
+                                <option value="">Sélectionner un conteneur</option>
+                                <option value="1">Conteneur #1</option>
+                                <option value="2">Conteneur #2</option>
+                                <option value="3">Conteneur #3</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-            `,
+                `,
                 showCancelButton: true,
                 confirmButtonText: 'Charger',
                 cancelButtonText: 'Annuler',
@@ -1254,195 +1249,195 @@
                     Swal.fire({
                         title: `Détails du Colis - ${data.reference_colis}`,
                         html: `
-                        <div class="text-start">
-                            <!-- Section Informations Générales -->
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <div class="card">
-                                        <div class="card-header bg-light">
-                                            <strong>Expéditeur</strong>
+                            <div class="text-start">
+                                <!-- Section Informations Générales -->
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-header bg-light">
+                                                <strong>Expéditeur</strong>
+                                            </div>
+                                            <div class="card-body">
+                                                <p class="mb-1"><strong>Nom:</strong> ${data.name_expediteur} ${data.prenom_expediteur || ''}</p>
+                                                <p class="mb-1"><strong>Email:</strong> ${data.email_expediteur}</p>
+                                                <p class="mb-1"><strong>Contact:</strong> ${data.contact_expediteur}</p>
+                                                <p class="mb-0"><strong>Adresse:</strong> ${data.adresse_expediteur}</p>
+                                            </div>
                                         </div>
-                                        <div class="card-body">
-                                            <p class="mb-1"><strong>Nom:</strong> ${data.name_expediteur} ${data.prenom_expediteur || ''}</p>
-                                            <p class="mb-1"><strong>Email:</strong> ${data.email_expediteur}</p>
-                                            <p class="mb-1"><strong>Contact:</strong> ${data.contact_expediteur}</p>
-                                            <p class="mb-0"><strong>Adresse:</strong> ${data.adresse_expediteur}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-header bg-light">
+                                                <strong>Destinataire</strong>
+                                            </div>
+                                            <div class="card-body">
+                                                <p class="mb-1"><strong>Nom:</strong> ${data.name_destinataire} ${data.prenom_destinataire}</p>
+                                                <p class="mb-1"><strong>Email:</strong> ${data.email_destinataire}</p>
+                                                <p class="mb-1"><strong>Contact:</strong> ${data.indicatif} ${data.contact_destinataire}</p>
+                                                <p class="mb-0"><strong>Adresse:</strong> ${data.adresse_destinataire}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="card">
-                                        <div class="card-header bg-light">
-                                            <strong>Destinataire</strong>
-                                        </div>
-                                        <div class="card-body">
-                                            <p class="mb-1"><strong>Nom:</strong> ${data.name_destinataire} ${data.prenom_destinataire}</p>
-                                            <p class="mb-1"><strong>Email:</strong> ${data.email_destinataire}</p>
-                                            <p class="mb-1"><strong>Contact:</strong> ${data.indicatif} ${data.contact_destinataire}</p>
-                                            <p class="mb-0"><strong>Adresse:</strong> ${data.adresse_destinataire}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <div class="card">
-                                        <div class="card-header bg-light">
-                                            <strong>Agences</strong>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-header bg-light">
+                                                <strong>Agences</strong>
+                                            </div>
+                                            <div class="card-body">
+                                                <p class="mb-1"><strong>Expédition:</strong> ${data.agence_expedition}</p>
+                                                <p class="mb-0"><strong>Destination:</strong> ${data.agence_destination}</p>
+                                            </div>
                                         </div>
-                                        <div class="card-body">
-                                            <p class="mb-1"><strong>Expédition:</strong> ${data.agence_expedition}</p>
-                                            <p class="mb-0"><strong>Destination:</strong> ${data.agence_destination}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-header bg-light">
+                                                <strong>Statuts Globaux</strong>
+                                            </div>
+                                            <div class="card-body">
+                                                <p class="mb-1">
+                                                    <strong>Colis:</strong> 
+                                                    <span class="badge ${getStatusBadgeClass(data.statut)}">
+                                                        ${getStatusText(data.statut)}
+                                                    </span>
+                                                </p>
+                                                <p class="mb-0">
+                                                    <strong>Paiement:</strong> 
+                                                    <span class="badge ${getPaiementBadgeClass(data.statut_paiement)}">
+                                                        ${getPaiementText(data.statut_paiement)}
+                                                    </span>
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="card">
-                                        <div class="card-header bg-light">
-                                            <strong>Statuts Globaux</strong>
+
+                                <!-- NOUVELLE SECTION: Résumé des Statuts Individuels -->
+                                <div class="card mb-3">
+                                    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                                        <strong>Résumé des Statuts Individuels</strong>
+                                        <span class="badge bg-primary">${data.total_individuels || 0} unité(s)</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row text-center">
+                                            ${data.compteur_statuts ? `
+                                                    <div class="col">
+                                                        <div class="statut-counter ${data.compteur_statuts.valide > 0 ? 'text-success' : 'text-muted'}">
+                                                            <h4>${data.compteur_statuts.valide || 0}</h4>
+                                                            <small>Validé</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="statut-counter ${data.compteur_statuts.charge > 0 ? 'text-warning' : 'text-muted'}">
+                                                            <h4>${data.compteur_statuts.charge || 0}</h4>
+                                                            <small>Chargé</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="statut-counter ${data.compteur_statuts.entrepot > 0 ? 'text-info' : 'text-muted'}">
+                                                            <h4>${data.compteur_statuts.entrepot || 0}</h4>
+                                                            <small>Entrepôt</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="statut-counter ${data.compteur_statuts.decharge > 0 ? 'text-primary' : 'text-muted'}">
+                                                            <h4>${data.compteur_statuts.decharge || 0}</h4>
+                                                            <small>Déchargé</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="statut-counter ${data.compteur_statuts.livre > 0 ? 'text-success' : 'text-muted'}">
+                                                            <h4>${data.compteur_statuts.livre || 0}</h4>
+                                                            <small>Livré</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="statut-counter ${data.compteur_statuts.annule > 0 ? 'text-danger' : 'text-muted'}">
+                                                            <h4>${data.compteur_statuts.annule || 0}</h4>
+                                                            <small>Annulé</small>
+                                                        </div>
+                                                    </div>
+                                                ` : '<div class="col-12 text-muted">Aucune donnée disponible</div>'}
                                         </div>
-                                        <div class="card-body">
-                                            <p class="mb-1">
-                                                <strong>Colis:</strong> 
-                                                <span class="badge ${getStatusBadgeClass(data.statut)}">
-                                                    ${getStatusText(data.statut)}
-                                                </span>
-                                            </p>
-                                            <p class="mb-0">
-                                                <strong>Paiement:</strong> 
-                                                <span class="badge ${getPaiementBadgeClass(data.statut_paiement)}">
-                                                    ${getPaiementText(data.statut_paiement)}
-                                                </span>
-                                            </p>
+                                    </div>
+                                </div>
+
+                                <!-- SECTION: Détails des Statuts Individuels -->
+                                <div class="card">
+                                    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                                        <strong>Détails des Unités Individuelles</strong>
+                                    </div>
+                                    <div class="card-body">
+                                        ${statutsIndividuelsHTML}
+                                    </div>
+                                </div>
+
+                                <!-- Section Informations Financières -->
+                                <div class="card mt-3">
+                                    <div class="card-header bg-light">
+                                        <strong>Informations Financières</strong>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-1"><strong>Montant Total:</strong> ${parseFloat(data.montant_total).toFixed(0)} ${data.devise}</p>
+                                        <p class="mb-1"><strong>Montant Payé:</strong> ${parseFloat(data.montant_paye).toFixed(0)} ${data.devise}</p>
+                                        <p class="mb-1"><strong>Reste à Payer:</strong> ${parseFloat(data.reste_a_payer || 0).toFixed(0)} ${data.devise}</p>
+                                        <p class="mb-0"><strong>Méthode Paiement:</strong> ${getMethodePaiementText(data.methode_paiement)}</p>
+                                    </div>
+                                </div>
+
+                                <!-- Section Détails des Types de Colis -->
+                                <div class="card mt-3">
+                                    <div class="card-header bg-light">
+                                        <strong>Détails des Types de Colis (${data.nombre_types_colis} type(s))</strong>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">#</th>
+                                                        <th class="text-center">Produit</th>
+                                                        <th class="text-center">Quantité</th>
+                                                        <th class="text-center">Prix Unitaire</th>
+                                                        <th class="text-center">Total</th>
+                                                        <th class="text-center">Dimensions</th>
+                                                        <th class="text-center">Poids</th>
+                                                        <th class="text-center">Description</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    ${data.colis_details.map((colis, index) => `
+                                                            <tr>
+                                                                <td class="text-center"><strong>${index + 1}</strong></td>
+                                                                <td class="text-center">${colis.produit}</td>
+                                                                <td class="text-center">${colis.quantite}</td>
+                                                                <td class="text-center">${parseFloat(colis.prix_unitaire).toFixed(0)} ${data.devise}</td>
+                                                                <td class="text-center">${parseFloat(colis.quantite * colis.prix_unitaire).toFixed(0)} ${data.devise}</td>
+                                                                <td class="text-center">
+                                                                    ${colis.longueur && colis.largeur && colis.hauteur ?
+                                `${colis.longueur}x${colis.largeur}x${colis.hauteur} cm` :
+                                'Non spécifié'}
+                                                                </td>
+                                                                <td class="text-center">${colis.poids ? colis.poids + ' kg' : '--'}</td>
+                                                                <td class="text-center">${colis.description || '--'}</td>
+                                                            </tr>
+                                                        `).join('')}
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr class="table-active">
+                                                        <td colspan="4" class="text-end"><strong>Total Colis:</strong></td>
+                                                        <td colspan="4"><strong>${parseFloat(data.montant_colis || data.montant_total).toFixed(0)} ${data.devise}</strong></td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- NOUVELLE SECTION: Résumé des Statuts Individuels -->
-                            <div class="card mb-3">
-                                <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                                    <strong>Résumé des Statuts Individuels</strong>
-                                    <span class="badge bg-primary">${data.total_individuels || 0} unité(s)</span>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row text-center">
-                                        ${data.compteur_statuts ? `
-                                                <div class="col">
-                                                    <div class="statut-counter ${data.compteur_statuts.valide > 0 ? 'text-success' : 'text-muted'}">
-                                                        <h4>${data.compteur_statuts.valide || 0}</h4>
-                                                        <small>Validé</small>
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="statut-counter ${data.compteur_statuts.charge > 0 ? 'text-warning' : 'text-muted'}">
-                                                        <h4>${data.compteur_statuts.charge || 0}</h4>
-                                                        <small>Chargé</small>
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="statut-counter ${data.compteur_statuts.entrepot > 0 ? 'text-info' : 'text-muted'}">
-                                                        <h4>${data.compteur_statuts.entrepot || 0}</h4>
-                                                        <small>Entrepôt</small>
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="statut-counter ${data.compteur_statuts.decharge > 0 ? 'text-primary' : 'text-muted'}">
-                                                        <h4>${data.compteur_statuts.decharge || 0}</h4>
-                                                        <small>Déchargé</small>
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="statut-counter ${data.compteur_statuts.livre > 0 ? 'text-success' : 'text-muted'}">
-                                                        <h4>${data.compteur_statuts.livre || 0}</h4>
-                                                        <small>Livré</small>
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="statut-counter ${data.compteur_statuts.annule > 0 ? 'text-danger' : 'text-muted'}">
-                                                        <h4>${data.compteur_statuts.annule || 0}</h4>
-                                                        <small>Annulé</small>
-                                                    </div>
-                                                </div>
-                                            ` : '<div class="col-12 text-muted">Aucune donnée disponible</div>'}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- SECTION: Détails des Statuts Individuels -->
-                            <div class="card">
-                                <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                                    <strong>Détails des Unités Individuelles</strong>
-                                </div>
-                                <div class="card-body">
-                                    ${statutsIndividuelsHTML}
-                                </div>
-                            </div>
-
-                            <!-- Section Informations Financières -->
-                            <div class="card mt-3">
-                                <div class="card-header bg-light">
-                                    <strong>Informations Financières</strong>
-                                </div>
-                                <div class="card-body">
-                                    <p class="mb-1"><strong>Montant Total:</strong> ${parseFloat(data.montant_total).toFixed(0)} ${data.devise}</p>
-                                    <p class="mb-1"><strong>Montant Payé:</strong> ${parseFloat(data.montant_paye).toFixed(0)} ${data.devise}</p>
-                                    <p class="mb-1"><strong>Reste à Payer:</strong> ${parseFloat(data.reste_a_payer || 0).toFixed(0)} ${data.devise}</p>
-                                    <p class="mb-0"><strong>Méthode Paiement:</strong> ${getMethodePaiementText(data.methode_paiement)}</p>
-                                </div>
-                            </div>
-
-                            <!-- Section Détails des Types de Colis -->
-                            <div class="card mt-3">
-                                <div class="card-header bg-light">
-                                    <strong>Détails des Types de Colis (${data.nombre_types_colis} type(s))</strong>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-sm table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center">#</th>
-                                                    <th class="text-center">Produit</th>
-                                                    <th class="text-center">Quantité</th>
-                                                    <th class="text-center">Prix Unitaire</th>
-                                                    <th class="text-center">Total</th>
-                                                    <th class="text-center">Dimensions</th>
-                                                    <th class="text-center">Poids</th>
-                                                    <th class="text-center">Description</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                ${data.colis_details.map((colis, index) => `
-                                                        <tr>
-                                                            <td class="text-center"><strong>${index + 1}</strong></td>
-                                                            <td class="text-center">${colis.produit}</td>
-                                                            <td class="text-center">${colis.quantite}</td>
-                                                            <td class="text-center">${parseFloat(colis.prix_unitaire).toFixed(0)} ${data.devise}</td>
-                                                            <td class="text-center">${parseFloat(colis.quantite * colis.prix_unitaire).toFixed(0)} ${data.devise}</td>
-                                                            <td class="text-center">
-                                                                ${colis.longueur && colis.largeur && colis.hauteur ?
-                                    `${colis.longueur}x${colis.largeur}x${colis.hauteur} cm` :
-                                    'Non spécifié'}
-                                                            </td>
-                                                            <td class="text-center">${colis.poids ? colis.poids + ' kg' : '--'}</td>
-                                                            <td class="text-center">${colis.description || '--'}</td>
-                                                        </tr>
-                                                    `).join('')}
-                                            </tbody>
-                                            <tfoot>
-                                                <tr class="table-active">
-                                                    <td colspan="4" class="text-end"><strong>Total Colis:</strong></td>
-                                                    <td colspan="4"><strong>${parseFloat(data.montant_colis || data.montant_total).toFixed(0)} ${data.devise}</strong></td>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `,
+                        `,
                         width: 1000,
                         showCloseButton: true,
                         showConfirmButton: true,
@@ -1468,19 +1463,19 @@
             }
 
             let html = `
-            <div class="table-responsive">
-                <table class="table table-sm table-hover">
-                    <thead>
-                        <tr>
-                            <th class="text-center">Produit</th>
-                            <th class="text-center">Unité</th>
-                            <th class="text-center">Statut</th>
-                            <th class="text-center">Localisation</th>
-                            <th class="text-center">Date Modif.</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-        `;
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Produit</th>
+                                <th class="text-center">Unité</th>
+                                <th class="text-center">Statut</th>
+                                <th class="text-center">Localisation</th>
+                                <th class="text-center">Date Modif.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
 
             // Convertir l'objet en tableau et trier par colis_numero et unite_numero
             const statutsArray = Object.values(statutsIndividuels).sort((a, b) => {
@@ -1492,29 +1487,29 @@
 
             statutsArray.forEach(statut => {
                 html += `
-                <tr>
-                    <td class="text-center">${statut.produit}</td>
-                    <td class="text-center">
-                        <span class="badge bg-secondary text-white">Colis ${statut.colis_numero} - Unité ${statut.unite_numero}</span>
-                    </td>
-                    <td class="text-center text-white">
-                        <span class="badge ${getStatutIndividuelBadgeClass(statut.statut)}">
-                            ${getStatutIndividuelText(statut.statut)}
-                        </span>
-                    </td>
-                    <td class="text-center">${statut.localisation_actuelle || 'Non spécifié'}</td>
-                    <td class="text-center">
-                        <small>${formatDate(statut.date_modification)}</small>
-                    </td>
-                </tr>
-            `;
+                    <tr>
+                        <td class="text-center">${statut.produit}</td>
+                        <td class="text-center">
+                            <span class="badge bg-secondary text-white">Colis ${statut.colis_numero} - Unité ${statut.unite_numero}</span>
+                        </td>
+                        <td class="text-center text-white">
+                            <span class="badge ${getStatutIndividuelBadgeClass(statut.statut)}">
+                                ${getStatutIndividuelText(statut.statut)}
+                            </span>
+                        </td>
+                        <td class="text-center">${statut.localisation_actuelle || 'Non spécifié'}</td>
+                        <td class="text-center">
+                            <small>${formatDate(statut.date_modification)}</small>
+                        </td>
+                    </tr>
+                `;
             });
 
             html += `
-                    </tbody>
-                </table>
-            </div>
-        `;
+                        </tbody>
+                    </table>
+                </div>
+            `;
 
             return html;
         }
@@ -1560,13 +1555,13 @@
             Swal.fire({
                 title: 'Êtes-vous sûr ?',
                 html: `
-                <div class="text-center">
-                    <i class="fas fa-exclamation-triangle text-warning" style="font-size: 4rem; margin-bottom: 1rem;"></i>
-                    <p>Vous êtes sur le point de supprimer le colis :</p>
-                    <p><strong>"${reference}"</strong></p>
-                    <p class="text-danger">Cette action est irréversible !</p>
-                </div>
-            `,
+                    <div class="text-center">
+                        <i class="fas fa-exclamation-triangle text-warning" style="font-size: 4rem; margin-bottom: 1rem;"></i>
+                        <p>Vous êtes sur le point de supprimer le colis :</p>
+                        <p><strong>"${reference}"</strong></p>
+                        <p class="text-danger">Cette action est irréversible !</p>
+                    </div>
+                `,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Oui, supprimer !',
@@ -1591,12 +1586,12 @@
 
                     // Envoyer la requête de suppression
                     fetch(`/agent/colis/${colisId}`, {
-                            method: 'DELETE',
-                            headers: {
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                'Content-Type': 'application/json'
-                            }
-                        })
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'application/json'
+                        }
+                    })
                         .then(response => {
                             if (!response.ok) {
                                 throw new Error('Erreur lors de la suppression');
@@ -1684,7 +1679,7 @@
         // Fonction pour afficher le formulaire de paiement
         function showPaymentForm(colisId, reference, montantTotal, montantPaye, resteAPayer, devise) {
             const montantRestant = parseFloat(resteAPayer) || (parseFloat(montantTotal) - parseFloat(montantPaye));
-            const rate = 655;
+            const rate = 655.95;
             const isIvoryAgent = {{ (Auth::guard('agent')->check() && Auth::guard('agent')->user()->agence && Auth::guard('agent')->user()->agence->pays === "Côte d'Ivoire") ? 'true' : 'false' }};
             const showCFAField = isIvoryAgent && (devise && (devise.trim().toUpperCase() === 'EUR' || devise.trim() === '€'));
             const montantRestantCFA = Math.round(montantRestant * rate);
@@ -1692,83 +1687,83 @@
             Swal.fire({
                 title: `Enregistrer un Paiement`,
                 html: `
-                <div class="text-start">
-                    <div class="alert alert-info">
-                        <strong>Référence:</strong> ${reference}<br>
-                        <strong>Montant Total:</strong> ${parseFloat(montantTotal).toFixed(0)} ${devise} ${showCFAField ? `(${Math.round(montantTotal * rate).toLocaleString('fr-FR')} FCFA)` : ''}<br>
-                        <strong>Déjà Payé:</strong> ${parseFloat(montantPaye).toFixed(0)} ${devise} ${showCFAField ? `(${Math.round(montantPaye * rate).toLocaleString('fr-FR')} FCFA)` : ''}<br>
-                        <strong>Reste à Payer:</strong> <span class="text-success fw-bold">${montantRestant.toFixed(0)} ${devise} ${showCFAField ? `(${montantRestantCFA.toLocaleString('fr-FR')} FCFA)` : ''}</span>
+                    <div class="text-start">
+                        <div class="alert alert-info">
+                            <strong>Référence:</strong> ${reference}<br>
+                            <strong>Montant Total:</strong> ${parseFloat(montantTotal).toFixed(0)} ${devise} ${showCFAField ? `(${Math.round(montantTotal * rate).toLocaleString('fr-FR')} FCFA)` : ''}<br>
+                            <strong>Déjà Payé:</strong> ${parseFloat(montantPaye).toFixed(0)} ${devise} ${showCFAField ? `(${Math.round(montantPaye * rate).toLocaleString('fr-FR')} FCFA)` : ''}<br>
+                            <strong>Reste à Payer:</strong> <span class="text-success fw-bold">${montantRestant.toFixed(0)} ${devise} ${showCFAField ? `(${montantRestantCFA.toLocaleString('fr-FR')} FCFA)` : ''}</span>
+                        </div>
+
+                        <form id="paymentForm">
+                            ${showCFAField ? `
+                            <div class="mb-3">
+                                <label for="montant_cfa" class="form-label"><strong>Montant en Franc CFA (FCFA)</strong></label>
+                                <input type="number" class="form-control" id="montant_cfa" 
+                                       min="1" max="${montantRestantCFA}" step="1"
+                                       placeholder="Entrez le montant en CFA (FCFA)">
+                                <div class="form-text">Maximum: ${montantRestantCFA.toLocaleString('fr-FR')} FCFA (Taux fixe: 1 EUR = 655,95 FCFA)</div>
+                            </div>
+                            ` : ''}
+
+                            <div class="mb-3">
+                                <label for="montant" class="form-label"><strong>Montant du Paiement (${devise}) *</strong></label>
+                                <input type="number" class="form-control" id="montant" 
+                                       min="0.01" max="${montantRestant}" step="0.01"
+                                       placeholder="Entrez le montant payé" required ${showCFAField ? 'readonly' : ''}>
+                                <div class="form-text">Maximum: ${montantRestant.toFixed(2)} ${devise}</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="methode_paiement" class="form-label"><strong>Méthode de Paiement *</strong></label>
+                                <select class="form-control" id="methode_paiement" required>
+                                    <option value="">Sélectionnez une méthode</option>
+                                    <option value="espece">Espèce</option>
+                                    <option value="virement_bancaire">Virement Bancaire</option>
+                                    <option value="cheque">Chèque</option>
+                                    <option value="mobile_money">Mobile Money</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3" id="banque_fields" style="display: none;">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="nom_banque" class="form-label">Nom de la Banque</label>
+                                        <input type="text" class="form-control" id="nom_banque" placeholder="Nom de la banque">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="numero_compte" class="form-label">Numéro de Compte</label>
+                                        <input type="text" class="form-control" id="numero_compte" placeholder="Numéro de compte">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3" id="mobile_fields" style="display: none;">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="operateur" class="form-label">Opérateur</label>
+                                        <select class="form-control" id="operateur">
+                                            <option value="">Sélectionnez un opérateur</option>
+                                            <option value="WAVE">WAVE</option>
+                                            <option value="ORANGE">ORANGE</option>
+                                            <option value="MOOV">MOOV</option>
+                                            <option value="MTN">MTN</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="numero_mobile" class="form-label">Numéro</label>
+                                        <input type="text" class="form-control" id="numero_mobile" placeholder="Numéro de téléphone">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="notes" class="form-label">Notes (Optionnel)</label>
+                                <textarea class="form-control" id="notes" rows="2" placeholder="Notes supplémentaires..."></textarea>
+                            </div>
+                        </form>
                     </div>
-
-                    <form id="paymentForm">
-                        ${showCFAField ? `
-                        <div class="mb-3">
-                            <label for="montant_cfa" class="form-label"><strong>Montant en Franc CFA (FCFA)</strong></label>
-                            <input type="number" class="form-control" id="montant_cfa" 
-                                   min="1" max="${montantRestantCFA}" step="1"
-                                   placeholder="Entrez le montant en CFA (FCFA)">
-                            <div class="form-text">Maximum: ${montantRestantCFA.toLocaleString('fr-FR')} FCFA (Taux fixe: 1 EUR = 655 FCFA)</div>
-                        </div>
-                        ` : ''}
-
-                        <div class="mb-3">
-                            <label for="montant" class="form-label"><strong>Montant du Paiement (${devise}) *</strong></label>
-                            <input type="number" class="form-control" id="montant" 
-                                   min="0.01" max="${montantRestant}" step="0.01"
-                                   placeholder="Entrez le montant payé" required ${showCFAField ? 'readonly' : ''}>
-                            <div class="form-text">Maximum: ${montantRestant.toFixed(2)} ${devise}</div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="methode_paiement" class="form-label"><strong>Méthode de Paiement *</strong></label>
-                            <select class="form-control" id="methode_paiement" required>
-                                <option value="">Sélectionnez une méthode</option>
-                                <option value="espece">Espèce</option>
-                                <option value="virement_bancaire">Virement Bancaire</option>
-                                <option value="cheque">Chèque</option>
-                                <option value="mobile_money">Mobile Money</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3" id="banque_fields" style="display: none;">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="nom_banque" class="form-label">Nom de la Banque</label>
-                                    <input type="text" class="form-control" id="nom_banque" placeholder="Nom de la banque">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="numero_compte" class="form-label">Numéro de Compte</label>
-                                    <input type="text" class="form-control" id="numero_compte" placeholder="Numéro de compte">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mb-3" id="mobile_fields" style="display: none;">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="operateur" class="form-label">Opérateur</label>
-                                    <select class="form-control" id="operateur">
-                                        <option value="">Sélectionnez un opérateur</option>
-                                        <option value="WAVE">WAVE</option>
-                                        <option value="ORANGE">ORANGE</option>
-                                        <option value="MOOV">MOOV</option>
-                                        <option value="MTN">MTN</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="numero_mobile" class="form-label">Numéro</label>
-                                    <input type="text" class="form-control" id="numero_mobile" placeholder="Numéro de téléphone">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="notes" class="form-label">Notes (Optionnel)</label>
-                            <textarea class="form-control" id="notes" rows="2" placeholder="Notes supplémentaires..."></textarea>
-                        </div>
-                    </form>
-                </div>
-            `,
+                `,
                 showCancelButton: true,
                 confirmButtonText: 'Enregistrer le Paiement',
                 cancelButtonText: 'Annuler',
@@ -1780,7 +1775,7 @@
                     const banqueFields = document.getElementById('banque_fields');
                     const mobileFields = document.getElementById('mobile_fields');
 
-                    methodeSelect.addEventListener('change', function() {
+                    methodeSelect.addEventListener('change', function () {
                         if (this.value === 'virement_bancaire') {
                             banqueFields.style.display = 'block';
                             mobileFields.style.display = 'none';
@@ -1798,7 +1793,7 @@
                     const montantInput = document.getElementById('montant');
 
                     if (montantCfaInput && montantInput) {
-                        montantCfaInput.addEventListener('input', function() {
+                        montantCfaInput.addEventListener('input', function () {
                             const cfaVal = parseFloat(this.value);
                             if (!isNaN(cfaVal) && cfaVal > 0) {
                                 if (cfaVal === montantRestantCFA) {
@@ -1811,7 +1806,7 @@
                             }
                         });
 
-                        montantInput.addEventListener('input', function() {
+                        montantInput.addEventListener('input', function () {
                             const eurVal = parseFloat(this.value);
                             if (!isNaN(eurVal) && eurVal > 0) {
                                 if (eurVal === montantRestant) {
@@ -1875,13 +1870,13 @@
             });
 
             fetch(`/agent/parcel/${colisId}/paiement`, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(paymentData)
-                })
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(paymentData)
+            })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Erreur lors de l\'enregistrement du paiement');
@@ -1920,32 +1915,32 @@
             Swal.fire({
                 title: 'Options de Documents',
                 html: `
-                <div class="text-center">
-                    <i class="fas fa-file-alt text-primary" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-                    <p class="mb-4">Choisissez un document à générer</p>
+                    <div class="text-center">
+                        <i class="fas fa-file-alt text-primary" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <p class="mb-4">Choisissez un document à générer</p>
 
-                    <div class="row g-3">
-                        <div class="col-12">
-                            <button class="btn btn-primary w-100 py-3" onclick="previewDocument(${colisId}, 'etiquette')">
-                                <i class="fas fa-tags me-2"></i>
-                                Télécharger Étiquette
-                            </button>
-                        </div>
-                        <div class="col-12">
-                            <button class="btn btn-success w-100 py-3" onclick="previewDocument(${colisId}, 'facture')">
-                                <i class="fas fa-file-invoice me-2"></i>
-                                Télécharger Facture
-                            </button>
-                        </div>
-                        <div class="col-12">
-                            <button class="btn btn-info w-100 py-3" onclick="previewDocument(${colisId}, 'bon_livraison')">
-                                <i class="fas fa-truck me-2"></i>
-                                Télécharger Bon de Livraison
-                            </button>
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <button class="btn btn-primary w-100 py-3" onclick="previewDocument(${colisId}, 'etiquette')">
+                                    <i class="fas fa-tags me-2"></i>
+                                    Télécharger Étiquette
+                                </button>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-success w-100 py-3" onclick="previewDocument(${colisId}, 'facture')">
+                                    <i class="fas fa-file-invoice me-2"></i>
+                                    Télécharger Facture
+                                </button>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-info w-100 py-3" onclick="previewDocument(${colisId}, 'bon_livraison')">
+                                    <i class="fas fa-truck me-2"></i>
+                                    Télécharger Bon de Livraison
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            `,
+                `,
                 showConfirmButton: false,
                 showCloseButton: true,
                 width: 500
@@ -1975,25 +1970,25 @@
             Swal.fire({
                 title: `Aperçu - ${title}`,
                 html: `
-                <div class="text-center">
-                    <i class="${icon} text-primary" style="font-size: 4rem; margin-bottom: 1rem;"></i>
-                    <p class="mb-3">Voulez-vous voir l'aperçu avant de télécharger ?</p>
-                    <div class="row g-2">
-                        <div class="col-6">
-                            <button class="btn btn-outline-primary w-100" onclick="generateDocument(${colisId}, '${type}', 'preview')">
-                                <i class="fas fa-eye me-2"></i>
-                                Aperçu
-                            </button>
-                        </div>
-                        <div class="col-6">
-                            <button class="btn btn-primary w-100" onclick="generateDocument(${colisId}, '${type}', 'download')">
-                                <i class="fas fa-download me-2"></i>
-                                Télécharger
-                            </button>
+                    <div class="text-center">
+                        <i class="${icon} text-primary" style="font-size: 4rem; margin-bottom: 1rem;"></i>
+                        <p class="mb-3">Voulez-vous voir l'aperçu avant de télécharger ?</p>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <button class="btn btn-outline-primary w-100" onclick="generateDocument(${colisId}, '${type}', 'preview')">
+                                    <i class="fas fa-eye me-2"></i>
+                                    Aperçu
+                                </button>
+                            </div>
+                            <div class="col-6">
+                                <button class="btn btn-primary w-100" onclick="generateDocument(${colisId}, '${type}', 'download')">
+                                    <i class="fas fa-download me-2"></i>
+                                    Télécharger
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            `,
+                `,
                 showConfirmButton: false,
                 showCloseButton: true,
                 width: 500
@@ -2097,14 +2092,14 @@
             const scannerContainer = document.getElementById('qr-scanner-container');
             if (scannerContainer) {
                 scannerContainer.innerHTML = `
-                <div class="alert alert-danger text-center py-4">
-                    <i class="fas fa-camera-slash text-danger" style="font-size: 3rem;"></i>
-                    <h5 class="mt-3">${errorMessage}</h5>
-                    <button class="btn btn-primary mt-2" onclick="openManualInput()">
-                        <i class="fas fa-keyboard"></i> Saisir manuellement
-                    </button>
-                </div>
-            `;
+                    <div class="alert alert-danger text-center py-4">
+                        <i class="fas fa-camera-slash text-danger" style="font-size: 3rem;"></i>
+                        <h5 class="mt-3">${errorMessage}</h5>
+                        <button class="btn btn-primary mt-2" onclick="openManualInput()">
+                            <i class="fas fa-keyboard"></i> Saisir manuellement
+                        </button>
+                    </div>
+                `;
             }
         }
 
@@ -2128,15 +2123,15 @@
             Swal.fire({
                 title: '⌨️ Saisie manuelle',
                 html: `
-                <div class="text-center">
-                    <i class="fas fa-keyboard text-primary" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-                    <p>Entrez le code du colis manuellement</p>
-                    <input type="text" id="manualInput" class="form-control form-control-lg" 
-                           placeholder="Ex: CO-3HAJVMZS" 
-                           style="text-align: center; font-size: 1.2rem;"
-                           autocomplete="off" autofocus>
-                </div>
-            `,
+                    <div class="text-center">
+                        <i class="fas fa-keyboard text-primary" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <p>Entrez le code du colis manuellement</p>
+                        <input type="text" id="manualInput" class="form-control form-control-lg" 
+                               placeholder="Ex: CO-3HAJVMZS" 
+                               style="text-align: center; font-size: 1.2rem;"
+                               autocomplete="off" autofocus>
+                    </div>
+                `,
                 showCancelButton: true,
                 confirmButtonText: 'Valider',
                 cancelButtonText: 'Annuler',
@@ -2162,12 +2157,12 @@
         }
 
         // Nettoyage
-        window.addEventListener('beforeunload', function() {
+        window.addEventListener('beforeunload', function () {
             stopQRScanner();
         });
 
         // Afficher les messages flash Laravel avec SweetAlert2
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Message de succès
             @if (session('success'))
                 Swal.fire({
@@ -2189,7 +2184,7 @@
                     confirmButtonColor: '#fea219'
                 });
             @endif
-        });
+            });
 
         console.log("✅ Page de chargement des colis chargée avec toutes les fonctionnalités");
     </script>

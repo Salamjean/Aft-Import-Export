@@ -194,14 +194,14 @@
                                 <div class="d-flex justify-content-between mt-5 pt-3">
                                     <div></div>
                                     <button type="button" class="btn next-step" data-next="2" style="
-                                                background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
-                                                border: none;
-                                                border-radius: 25px;
-                                                padding: 12px 30px;
-                                                font-weight: 600;
-                                                color: white;
-                                                transition: all 0.3s ease;
-                                            ">
+                                                    background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                    border: none;
+                                                    border-radius: 25px;
+                                                    padding: 12px 30px;
+                                                    font-weight: 600;
+                                                    color: white;
+                                                    transition: all 0.3s ease;
+                                                ">
                                         Suivant <i class="fas fa-arrow-right ms-2"></i>
                                     </button>
                                 </div>
@@ -302,25 +302,25 @@
 
                                 <div class="d-flex justify-content-between mt-5 pt-3">
                                     <button type="button" class="btn prev-step" data-prev="1" style="
-                                                background: white;
-                                                border: 2px solid #0e914b;
-                                                border-radius: 25px;
-                                                padding: 12px 30px;
-                                                font-weight: 600;
-                                                color: #0e914b;
-                                                transition: all 0.3s ease;
-                                            ">
+                                                    background: white;
+                                                    border: 2px solid #0e914b;
+                                                    border-radius: 25px;
+                                                    padding: 12px 30px;
+                                                    font-weight: 600;
+                                                    color: #0e914b;
+                                                    transition: all 0.3s ease;
+                                                ">
                                         <i class="fas fa-arrow-left me-2"></i>Précédent
                                     </button>
                                     <button type="button" class="btn next-step" data-next="3" style="
-                                                background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
-                                                border: none;
-                                                border-radius: 25px;
-                                                padding: 12px 30px;
-                                                font-weight: 600;
-                                                color: white;
-                                                transition: all 0.3s ease;
-                                            ">
+                                                    background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                    border: none;
+                                                    border-radius: 25px;
+                                                    padding: 12px 30px;
+                                                    font-weight: 600;
+                                                    color: white;
+                                                    transition: all 0.3s ease;
+                                                ">
                                         Suivant <i class="fas fa-arrow-right ms-2"></i>
                                     </button>
                                 </div>
@@ -408,25 +408,25 @@
 
                                 <div class="d-flex justify-content-between mt-5 pt-3">
                                     <button type="button" class="btn prev-step" data-prev="2" style="
-                                                background: white;
-                                                border: 2px solid #0e914b;
-                                                border-radius: 25px;
-                                                padding: 12px 30px;
-                                                font-weight: 600;
-                                                color: #0e914b;
-                                                transition: all 0.3s ease;
-                                            ">
+                                                    background: white;
+                                                    border: 2px solid #0e914b;
+                                                    border-radius: 25px;
+                                                    padding: 12px 30px;
+                                                    font-weight: 600;
+                                                    color: #0e914b;
+                                                    transition: all 0.3s ease;
+                                                ">
                                         <i class="fas fa-arrow-left me-2"></i>Précédent
                                     </button>
                                     <button type="button" class="btn next-step" data-next="4" style="
-                                                background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
-                                                border: none;
-                                                border-radius: 25px;
-                                                padding: 12px 30px;
-                                                font-weight: 600;
-                                                color: white;
-                                                transition: all 0.3s ease;
-                                            ">
+                                                    background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                    border: none;
+                                                    border-radius: 25px;
+                                                    padding: 12px 30px;
+                                                    font-weight: 600;
+                                                    color: white;
+                                                    transition: all 0.3s ease;
+                                                ">
                                         Suivant <i class="fas fa-arrow-right ms-2"></i>
                                     </button>
                                 </div>
@@ -541,31 +541,7 @@
 
                                 <div class="d-flex justify-content-between align-items-center mt-4 pt-3">
                                     <button type="button" class="btn" id="add-colis" style="
-                                                background: linear-gradient(135deg, #fea219 0%, #e69100 100%);
-                                                border: none;
-                                                border-radius: 25px;
-                                                padding: 10px 25px;
-                                                font-weight: 600;
-                                                color: white;
-                                                transition: all 0.3s ease;
-                                            ">
-                                        <i class="fas fa-plus me-2"></i>Ajouter un autre colis
-                                    </button>
-
-                                    <div>
-                                        <button type="button" class="btn prev-step me-2" data-prev="3" style="
-                                                    background: white;
-                                                    border: 2px solid #0e914b;
-                                                    border-radius: 25px;
-                                                    padding: 10px 25px;
-                                                    font-weight: 600;
-                                                    color: #0e914b;
-                                                    transition: all 0.3s ease;
-                                                ">
-                                            <i class="fas fa-arrow-left me-2"></i>Précédent
-                                        </button>
-                                        <button type="button" class="btn next-step" data-next="5" style="
-                                                    background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                    background: linear-gradient(135deg, #fea219 0%, #e69100 100%);
                                                     border: none;
                                                     border-radius: 25px;
                                                     padding: 10px 25px;
@@ -573,6 +549,30 @@
                                                     color: white;
                                                     transition: all 0.3s ease;
                                                 ">
+                                        <i class="fas fa-plus me-2"></i>Ajouter un autre colis
+                                    </button>
+
+                                    <div>
+                                        <button type="button" class="btn prev-step me-2" data-prev="3" style="
+                                                        background: white;
+                                                        border: 2px solid #0e914b;
+                                                        border-radius: 25px;
+                                                        padding: 10px 25px;
+                                                        font-weight: 600;
+                                                        color: #0e914b;
+                                                        transition: all 0.3s ease;
+                                                    ">
+                                            <i class="fas fa-arrow-left me-2"></i>Précédent
+                                        </button>
+                                        <button type="button" class="btn next-step" data-next="5" style="
+                                                        background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                        border: none;
+                                                        border-radius: 25px;
+                                                        padding: 10px 25px;
+                                                        font-weight: 600;
+                                                        color: white;
+                                                        transition: all 0.3s ease;
+                                                    ">
                                             Suivant <i class="fas fa-arrow-right ms-2"></i>
                                         </button>
                                     </div>
@@ -967,25 +967,25 @@
 
                                 <div class="d-flex justify-content-between mt-5 pt-3">
                                     <button type="button" class="btn prev-step" data-prev="6" style="
-                                                background: white;
-                                                border: 2px solid #0e914b;
-                                                border-radius: 25px;
-                                                padding: 12px 30px;
-                                                font-weight: 600;
-                                                color: #0e914b;
-                                                transition: all 0.3s ease;
-                                            ">
+                                                    background: white;
+                                                    border: 2px solid #0e914b;
+                                                    border-radius: 25px;
+                                                    padding: 12px 30px;
+                                                    font-weight: 600;
+                                                    color: #0e914b;
+                                                    transition: all 0.3s ease;
+                                                ">
                                         <i class="fas fa-arrow-left me-2"></i>Précédent
                                     </button>
                                     <button type="submit" class="btn btn-success" id="submit-btn" style="
-                                                background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
-                                                border: none;
-                                                border-radius: 25px;
-                                                padding: 12px 30px;
-                                                font-weight: 600;
-                                                color: white;
-                                                transition: all 0.3s ease;
-                                            ">
+                                                    background: linear-gradient(135deg, #0e914b 0%, #0b7a3d 100%);
+                                                    border: none;
+                                                    border-radius: 25px;
+                                                    padding: 12px 30px;
+                                                    font-weight: 600;
+                                                    color: white;
+                                                    transition: all 0.3s ease;
+                                                ">
                                         <i class="fas fa-save me-2"></i>Enregistrer le Colis
                                     </button>
                                 </div>
@@ -1115,76 +1115,76 @@
 
             const paiementTemplates = {
                 espece: `
-            <div class="paiement-method-fields">
-                <div class="alert alert-info">
-                    <i class="fas fa-info-circle me-2"></i>
-                    Le montant payé sera enregistré dans le champ "Montant Payé" ci-dessous.
+                <div class="paiement-method-fields">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Le montant payé sera enregistré dans le champ "Montant Payé" ci-dessous.
+                    </div>
                 </div>
-            </div>
-        `,
+            `,
 
                 virement_bancaire: `
-            <div class="paiement-method-fields">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-label required">Nom de la Banque</label>
-                            <input type="text" class="modern-input" name="nom_banque" required>
+                <div class="paiement-method-fields">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label required">Nom de la Banque</label>
+                                <input type="text" class="modern-input" name="nom_banque" required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-label required">Numéro de Compte</label>
-                            <input type="text" class="modern-input" name="numero_compte" required>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label required">Numéro de Compte</label>
+                                <input type="text" class="modern-input" name="numero_compte" required>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        `,
+            `,
 
                 cheque: `
-            <div class="paiement-method-fields">
-                <div class="alert alert-info">
-                    <i class="fas fa-info-circle me-2"></i>
-                    Le montant du chèque sera enregistré dans le champ "Montant Payé" ci-dessous.
+                <div class="paiement-method-fields">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Le montant du chèque sera enregistré dans le champ "Montant Payé" ci-dessous.
+                    </div>
                 </div>
-            </div>
-        `,
+            `,
 
                 mobile_money: `
-            <div class="paiement-method-fields">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-label required">Opérateur</label>
-                            <select class="modern-select" name="operateur_mobile_money" required>
-                                <option value="">Sélectionnez un opérateur</option>
-                                <option value="WAVE">WAVE</option>
-                                <option value="ORANGE">ORANGE</option>
-                                <option value="MOOV">MOOV</option>
-                                <option value="MTN">MTN</option>
-                            </select>
+                <div class="paiement-method-fields">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label required">Opérateur</label>
+                                <select class="modern-select" name="operateur_mobile_money" required>
+                                    <option value="">Sélectionnez un opérateur</option>
+                                    <option value="WAVE">WAVE</option>
+                                    <option value="ORANGE">ORANGE</option>
+                                    <option value="MOOV">MOOV</option>
+                                    <option value="MTN">MTN</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-label required">Numéro de Téléphone</label>
-                            <input type="text" class="modern-input" name="numero_mobile_money" required>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label required">Numéro de Téléphone</label>
+                                <input type="text" class="modern-input" name="numero_mobile_money" required>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        `,
+            `,
 
                 livraison: `
-            <div class="paiement-method-fields">
-                <div class="alert alert-info">
-                    <i class="fas fa-info-circle me-2"></i>
-                    Le paiement sera effectué à la livraison du colis. Le montant payé sera de 0.
+                <div class="paiement-method-fields">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Le paiement sera effectué à la livraison du colis. Le montant payé sera de 0.
+                    </div>
+                    <input type="hidden" name="montant_livraison" value="0">
                 </div>
-                <input type="hidden" name="montant_livraison" value="0">
-            </div>
-        `
+            `
             };
 
             // Gestion des étapes
@@ -1504,11 +1504,11 @@
 
                     document.getElementById('conteneur_info_section').style.display = 'none';
                     document.getElementById('conteneur_info_message').innerHTML = `
-                    <div class="alert alert-danger">
-                        <i class="fas fa-exclamation-triangle me-2"></i>
-                        Erreur lors de la création du conteneur: ${error.message}
-                    </div>
-                `;
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            Erreur lors de la création du conteneur: ${error.message}
+                        </div>
+                    `;
                     document.getElementById('conteneur_info_message').style.display = 'block';
                 }
             }
@@ -1517,18 +1517,18 @@
                 const conteneurDetails = document.getElementById('conteneur_details');
 
                 conteneurDetails.innerHTML = `
-                <p class="mb-0 text-black">
-                    <strong>Nom:</strong> ${conteneur.name_conteneur} | 
-                    <strong>Type:</strong> ${conteneur.type_conteneur} | 
-                    <strong>Statut:</strong> 
-                    <span class="badge bg-success text-white">${conteneur.statut}</span>
-                    ${conteneur.agence ? `| <strong>Agence:</strong> ${conteneur.agence.name}` : ''}
-                </p>
-                <small class="text-muted">
-                    <i class="fas fa-info-circle me-1"></i>
-                    Conteneur créé automatiquement pour l'agence sélectionnée
-                </small>
-            `;
+                    <p class="mb-0 text-black">
+                        <strong>Nom:</strong> ${conteneur.name_conteneur} | 
+                        <strong>Type:</strong> ${conteneur.type_conteneur} | 
+                        <strong>Statut:</strong> 
+                        <span class="badge bg-success text-white">${conteneur.statut}</span>
+                        ${conteneur.agence ? `| <strong>Agence:</strong> ${conteneur.agence.name}` : ''}
+                    </p>
+                    <small class="text-muted">
+                        <i class="fas fa-info-circle me-1"></i>
+                        Conteneur créé automatiquement pour l'agence sélectionnée
+                    </small>
+                `;
 
                 document.getElementById('conteneur_id_input').value = conteneur.id;
             }
@@ -1817,11 +1817,11 @@
                         const userElement = document.createElement('div');
                         userElement.className = 'user-result-item';
                         userElement.innerHTML = `
-                        <div class="user-name">${user.name} ${user.prenom || ''}</div>
-                        <div class="user-details">
-                            ${user.email} • ${user.contact || 'Non renseigné'}
-                        </div>
-                    `;
+                            <div class="user-name">${user.name} ${user.prenom || ''}</div>
+                            <div class="user-details">
+                                ${user.email} • ${user.contact || 'Non renseigné'}
+                            </div>
+                        `;
                         userElement.addEventListener('click', () => selectUser(user));
                         resultsContainer.appendChild(userElement);
                     });
@@ -1888,11 +1888,11 @@
                         const produitElement = document.createElement('div');
                         produitElement.className = 'user-result-item';
                         produitElement.innerHTML = `
-                        <div class="user-name">${produit.designation}</div>
-                        <div class="user-details">
-                            ${produit.prix_unitaire} • ${produit.agence_destination?.name || 'Agence non spécifiée'}
-                        </div>
-                    `;
+                            <div class="user-name">${produit.designation}</div>
+                            <div class="user-details">
+                                ${produit.prix_unitaire} • ${produit.agence_destination?.name || 'Agence non spécifiée'}
+                            </div>
+                        `;
                         produitElement.addEventListener('click', () => selectProduit(produit,
                             currentIndex));
                         resultsContainer.appendChild(produitElement);
@@ -2226,26 +2226,26 @@
                     // MODIFICATION : Affichage différent selon le mode de transit
                     if (modeTransit === 'Aerien') {
                         row.innerHTML = `
-                        <td class="fw-bold">${index + 1}</td>
-                        <td>${produit}</td>
-                        <td>${quantite}</td>
-                        <td>${prixUnitaire.toFixed(2)}</td>
-                        <td class="fw-bold">${totalColis.toFixed(2)}</td>
-                        <td>${typeColis}</td>
-                        <td>${dimensions}</td>
-                        <td>${poids !== '-' ? poids + ' kg' : '-'}</td>
-                    `;
+                            <td class="fw-bold">${index + 1}</td>
+                            <td>${produit}</td>
+                            <td>${quantite}</td>
+                            <td>${prixUnitaire.toFixed(2)}</td>
+                            <td class="fw-bold">${totalColis.toFixed(2)}</td>
+                            <td>${typeColis}</td>
+                            <td>${dimensions}</td>
+                            <td>${poids !== '-' ? poids + ' kg' : '-'}</td>
+                        `;
                     } else {
                         row.innerHTML = `
-                        <td class="fw-bold">${index + 1}</td>
-                        <td>${produit}</td>
-                        <td>${quantite}</td>
-                        <td>${prixUnitaire.toFixed(2)}</td>
-                        <td class="fw-bold">${totalColis.toFixed(2)}</td>
-                        <td>${typeColis}</td>
-                        <td>${dimensions}</td>
-                        <td>${poids !== '-' ? poids + ' kg' : '-'}</td>
-                    `;
+                            <td class="fw-bold">${index + 1}</td>
+                            <td>${produit}</td>
+                            <td>${quantite}</td>
+                            <td>${prixUnitaire.toFixed(2)}</td>
+                            <td class="fw-bold">${totalColis.toFixed(2)}</td>
+                            <td>${typeColis}</td>
+                            <td>${dimensions}</td>
+                            <td>${poids !== '-' ? poids + ' kg' : '-'}</td>
+                        `;
                     }
 
                     tbody.appendChild(row);
@@ -2476,27 +2476,27 @@
             const hasSpecificDestinataire = recuperation.nom_destinataire || recuperation.prenom_destinataire;
 
             resultsDiv.innerHTML = `
-            <div class="alert alert-success">
-                <div class="row align-items-center">
-                    <div class="col-md-8">
-                        <h6 class="mb-1"><i class="fas fa-check-circle me-2"></i>Récupération trouvée</h6>
-                        <p class="mb-1"><strong>Référence:</strong> ${recuperation.reference}</p>
-                        <p class="mb-1"><strong>Nature:</strong> ${recuperation.nature_objet}</p>
-                        <p class="mb-1"><strong>Quantité:</strong> ${recuperation.quantite}</p>
-                        <p class="mb-1"><strong>Expéditeur:</strong> ${recuperation.nom_concerne} ${recuperation.prenom_concerne}</p>
-                        ${hasSpecificDestinataire ?
+                <div class="alert alert-success">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h6 class="mb-1"><i class="fas fa-check-circle me-2"></i>Récupération trouvée</h6>
+                            <p class="mb-1"><strong>Référence:</strong> ${recuperation.reference}</p>
+                            <p class="mb-1"><strong>Nature:</strong> ${recuperation.nature_objet}</p>
+                            <p class="mb-1"><strong>Quantité:</strong> ${recuperation.quantite}</p>
+                            <p class="mb-1"><strong>Expéditeur:</strong> ${recuperation.nom_concerne} ${recuperation.prenom_concerne}</p>
+                            ${hasSpecificDestinataire ?
                     `<p class="mb-1"><strong>Destinataire spécifique:</strong> ${recuperation.nom_destinataire} ${recuperation.prenom_destinataire}</p>` :
                     ''}
-                        <p class="mb-1"><strong>Contact:</strong> ${recuperation.contact}</p>
-                    </div>
-                    <div class="col-md-4 text-end">
-                        <button type="button" class="btn btn-primary" onclick="fillAllFieldsFromRecuperation(${recuperation.id})">
-                            <i class="fas fa-magic me-2"></i>Pré-remplir tout
-                        </button>
+                            <p class="mb-1"><strong>Contact:</strong> ${recuperation.contact}</p>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <button type="button" class="btn btn-primary" onclick="fillAllFieldsFromRecuperation(${recuperation.id})">
+                                <i class="fas fa-magic me-2"></i>Pré-remplir tout
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        `;
+            `;
             resultsDiv.style.display = 'block';
         }
 
@@ -2555,13 +2555,13 @@
                         Swal.fire({
                             title: 'Formulaire pré-rempli !',
                             html: `
-                    <div class="text-start">
-                        <p><strong>✓ Expéditeur:</strong> Rempli</p>
-                        <p><strong>✓ Destinataire:</strong> Rempli</p>
-                        <p><strong>✓ Colis:</strong> Nature: ${recuperation.nature_objet}, Quantité: ${recuperation.quantite}</p>
-                        ${recuperation.nom_destinataire ? '<p><strong>✓ Destinataire spécifique:</strong> Utilisé</p>' : ''}
-                    </div>
-                `,
+                        <div class="text-start">
+                            <p><strong>✓ Expéditeur:</strong> Rempli</p>
+                            <p><strong>✓ Destinataire:</strong> Rempli</p>
+                            <p><strong>✓ Colis:</strong> Nature: ${recuperation.nature_objet}, Quantité: ${recuperation.quantite}</p>
+                            ${recuperation.nom_destinataire ? '<p><strong>✓ Destinataire spécifique:</strong> Utilisé</p>' : ''}
+                        </div>
+                    `,
                             icon: 'success',
                             confirmButtonColor: '#0e914b',
                             timer: 3000
@@ -2639,9 +2639,9 @@
                                         const div = document.createElement('div');
                                         div.className = 'user-result-item';
                                         div.innerHTML = `
-                                                <div class="user-name">${client.name} ${client.prenom || ''}</div>
-                                                <div class="user-details">${client.contact} ${client.email ? '- ' + client.email : ''}</div>
-                                            `;
+                                                    <div class="user-name">${client.name} ${client.prenom || ''}</div>
+                                                    <div class="user-details">${client.contact} ${client.email ? '- ' + client.email : ''}</div>
+                                                `;
                                         div.addEventListener('click', () => {
                                             fillClientFields(client, type);
                                             resultsDiv.style.display = 'none';

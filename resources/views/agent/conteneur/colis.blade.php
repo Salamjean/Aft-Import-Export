@@ -92,8 +92,8 @@
                                                     <i class="fas fa-times-circle text-danger" title="Non payé"
                                                         style="font-size: 18px;"></i>
                                                 @elseif($item->statut_paiement == 'partiellement_paye')
-                                                    <i class="fas fa-exclamation-circle text-warning"
-                                                        title="Partiellement payé" style="font-size: 18px;"></i>
+                                                    <i class="fas fa-exclamation-circle text-warning" title="Partiellement payé"
+                                                        style="font-size: 18px;"></i>
                                                 @else
                                                     <i class="fas fa-check-circle text-success" title="Totalement payé"
                                                         style="font-size: 18px;"></i>
@@ -254,17 +254,16 @@
                                             <td class="text-center">
                                                 <div class="action-buttons">
                                                     <button class="btn-action btn-view"
-                                                        onclick="showColisDetails({{ $item->id }})"
-                                                        title="Voir détails">
+                                                        onclick="showColisDetails({{ $item->id }})" title="Voir détails">
                                                         <i class="fas fa-eye"></i>
                                                     </button>
 
                                                     <!-- Bouton de paiement - grisé si totalement payé -->
                                                     <button
                                                         class="btn-action {{ $item->statut_paiement == 'totalement_paye' ? 'btn-payment-disabled' : 'btn-payment' }}"
-                                                        @if ($item->statut_paiement != 'totalement_paye') onclick="showPaymentForm({{ $item->id }}, '{{ $item->reference_colis }}', {{ $item->montant_total }}, {{ $item->montant_paye }}, {{ $item->reste_a_payer ?? 0 }}, '{{ $item->devise }}')"
-                                                    @else
-                                                    disabled @endif
+                                                        @if ($item->statut_paiement != 'totalement_paye')
+                                                            onclick="showPaymentForm({{ $item->id }}, '{{ $item->reference_colis }}', {{ $item->montant_total }}, {{ $item->montant_paye }}, {{ $item->reste_a_payer ?? 0 }}, '{{ $item->devise }}')"
+                                                        @else disabled @endif
                                                         title="{{ $item->statut_paiement == 'totalement_paye' ? 'Paiement complet' : 'Enregistrer un paiement' }}">
                                                         <i class="fas fa-money-bill-wave"></i>
                                                     </button>
@@ -280,11 +279,11 @@
                                                         class="btn-action btn-edit" title="Modifier">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
-                                                    {{-- <button class="btn-action btn-delete" 
-                                                    onclick="confirmDelete({{ $item->id }}, '{{ $item->reference_colis }}')" 
-                                                    title="Supprimer">
-                                                <i class="fas fa-trash"></i>
-                                            </button> --}}
+                                                    {{-- <button class="btn-action btn-delete"
+                                                        onclick="confirmDelete({{ $item->id }}, '{{ $item->reference_colis }}')"
+                                                        title="Supprimer">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button> --}}
                                                 </div>
                                             </td>
                                         </tr>
@@ -735,113 +734,113 @@
 
                     // Construire le HTML pour les détails du colis
                     let detailsHTML = `
-                <div class="colis-details">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="detail-section">
-                                <h6>Informations du Colis</h6>
-                                <div class="detail-item">
-                                    <strong>Référence:</strong> ${data.reference_colis || 'N/A'}
+                    <div class="colis-details">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="detail-section">
+                                    <h6>Informations du Colis</h6>
+                                    <div class="detail-item">
+                                        <strong>Référence:</strong> ${data.reference_colis || 'N/A'}
+                                    </div>
+                                    <div class="detail-item">
+                                        <strong>Statut:</strong> 
+                                        <span class="colis-statut statut-${data.statut}">
+                                            ${data.statut}
+                                        </span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <strong>Mode de transit:</strong> ${data.mode_transit}
+                                    </div>
+                                    <div class="detail-item">
+                                        <strong>Devise:</strong> ${data.devise}
+                                    </div>
                                 </div>
-                                <div class="detail-item">
-                                    <strong>Statut:</strong> 
-                                    <span class="colis-statut statut-${data.statut}">
-                                        ${data.statut}
-                                    </span>
-                                </div>
-                                <div class="detail-item">
-                                    <strong>Mode de transit:</strong> ${data.mode_transit}
-                                </div>
-                                <div class="detail-item">
-                                    <strong>Devise:</strong> ${data.devise}
+                            </div>
+                            <div class="col-md-6">
+                                <div class="detail-section">
+                                    <h6>Informations Financières</h6>
+                                    <div class="detail-item">
+                                        <strong>Montant total:</strong> ${data.montant_total ? Number(data.montant_total).toLocaleString('fr-FR', { minimumFractionDigits: 0 }) : '0.00'} ${data.devise}
+                                    </div>
+                                    <div class="detail-item">
+                                        <strong>Montant payé:</strong> ${data.montant_paye ? Number(data.montant_paye).toLocaleString('fr-FR', { minimumFractionDigits: 0 }) : '0.00'} ${data.devise}
+                                    </div>
+                                    <div class="detail-item">
+                                        <strong>Reste à payer:</strong> ${data.reste_a_payer ? Number(data.reste_a_payer).toLocaleString('fr-FR', { minimumFractionDigits: 0 }) : '0.00'} ${data.devise}
+                                    </div>
+                                    <div class="detail-item">
+                                        <strong>Statut paiement:</strong> 
+                                        <span class="badge ${getPaymentStatusBadge(data.statut_paiement)}">
+                                            ${getPaymentStatusText(data.statut_paiement)}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="detail-section">
-                                <h6>Informations Financières</h6>
-                                <div class="detail-item">
-                                    <strong>Montant total:</strong> ${data.montant_total ? Number(data.montant_total).toLocaleString('fr-FR', {minimumFractionDigits: 0}) : '0.00'} ${data.devise}
+
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <div class="detail-section">
+                                    <h6>Expéditeur</h6>
+                                    <div class="detail-item">
+                                        <strong>Nom:</strong> ${data.name_expediteur} ${data.prenom_expediteur || ''}
+                                    </div>
+                                    <div class="detail-item">
+                                        <strong>Email:</strong> ${data.email_expediteur}
+                                    </div>
+                                    <div class="detail-item">
+                                        <strong>Contact:</strong> ${data.contact_expediteur}
+                                    </div>
+                                    <div class="detail-item">
+                                        <strong>Adresse:</strong> ${data.adresse_expediteur}
+                                    </div>
                                 </div>
-                                <div class="detail-item">
-                                    <strong>Montant payé:</strong> ${data.montant_paye ? Number(data.montant_paye).toLocaleString('fr-FR', {minimumFractionDigits: 0}) : '0.00'} ${data.devise}
+                            </div>
+                            <div class="col-md-6">
+                                <div class="detail-section">
+                                    <h6>Destinataire</h6>
+                                    <div class="detail-item">
+                                        <strong>Nom:</strong> ${data.name_destinataire} ${data.prenom_destinataire}
+                                    </div>
+                                    <div class="detail-item">
+                                        <strong>Email:</strong> ${data.email_destinataire}
+                                    </div>
+                                    <div class="detail-item">
+                                        <strong>Contact:</strong> ${data.indicatif} ${data.contact_destinataire}
+                                    </div>
+                                    <div class="detail-item">
+                                        <strong>Adresse:</strong> ${data.adresse_destinataire}
+                                    </div>
                                 </div>
-                                <div class="detail-item">
-                                    <strong>Reste à payer:</strong> ${data.reste_a_payer ? Number(data.reste_a_payer).toLocaleString('fr-FR', {minimumFractionDigits: 0}) : '0.00'} ${data.devise}
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <div class="detail-section">
+                                    <h6>Agences</h6>
+                                    <div class="detail-item">
+                                        <strong>Agence expédition:</strong> ${data.agence_expedition}
+                                    </div>
+                                    <div class="detail-item">
+                                        <strong>Agence destination:</strong> ${data.agence_destination}
+                                    </div>
                                 </div>
-                                <div class="detail-item">
-                                    <strong>Statut paiement:</strong> 
-                                    <span class="badge ${getPaymentStatusBadge(data.statut_paiement)}">
-                                        ${getPaymentStatusText(data.statut_paiement)}
-                                    </span>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="detail-section">
+                                    <h6>Informations Supplémentaires</h6>
+                                    <div class="detail-item">
+                                        <strong>Date création:</strong> ${new Date(data.created_at).toLocaleDateString('fr-FR')}
+                                    </div>
+                                    <div class="detail-item">
+                                        <strong>Dernière modification:</strong> ${new Date(data.updated_at).toLocaleDateString('fr-FR')}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <div class="detail-section">
-                                <h6>Expéditeur</h6>
-                                <div class="detail-item">
-                                    <strong>Nom:</strong> ${data.name_expediteur} ${data.prenom_expediteur || ''}
-                                </div>
-                                <div class="detail-item">
-                                    <strong>Email:</strong> ${data.email_expediteur}
-                                </div>
-                                <div class="detail-item">
-                                    <strong>Contact:</strong> ${data.contact_expediteur}
-                                </div>
-                                <div class="detail-item">
-                                    <strong>Adresse:</strong> ${data.adresse_expediteur}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="detail-section">
-                                <h6>Destinataire</h6>
-                                <div class="detail-item">
-                                    <strong>Nom:</strong> ${data.name_destinataire} ${data.prenom_destinataire}
-                                </div>
-                                <div class="detail-item">
-                                    <strong>Email:</strong> ${data.email_destinataire}
-                                </div>
-                                <div class="detail-item">
-                                    <strong>Contact:</strong> ${data.indicatif} ${data.contact_destinataire}
-                                </div>
-                                <div class="detail-item">
-                                    <strong>Adresse:</strong> ${data.adresse_destinataire}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <div class="detail-section">
-                                <h6>Agences</h6>
-                                <div class="detail-item">
-                                    <strong>Agence expédition:</strong> ${data.agence_expedition}
-                                </div>
-                                <div class="detail-item">
-                                    <strong>Agence destination:</strong> ${data.agence_destination}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="detail-section">
-                                <h6>Informations Supplémentaires</h6>
-                                <div class="detail-item">
-                                    <strong>Date création:</strong> ${new Date(data.created_at).toLocaleDateString('fr-FR')}
-                                </div>
-                                <div class="detail-item">
-                                    <strong>Dernière modification:</strong> ${new Date(data.updated_at).toLocaleDateString('fr-FR')}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
+                `;
 
                     Swal.fire({
                         title: 'Détails du Colis',
@@ -895,13 +894,13 @@
             Swal.fire({
                 title: 'Êtes-vous sûr ?',
                 html: `
-            <div class="text-center">
-                <i class="fas fa-exclamation-triangle text-warning" style="font-size: 4rem; margin-bottom: 1rem;"></i>
-                <p>Vous êtes sur le point de supprimer le colis :</p>
-                <p><strong>"${reference}"</strong></p>
-                <p class="text-danger">Cette action est irréversible !</p>
-            </div>
-        `,
+                <div class="text-center">
+                    <i class="fas fa-exclamation-triangle text-warning" style="font-size: 4rem; margin-bottom: 1rem;"></i>
+                    <p>Vous êtes sur le point de supprimer le colis :</p>
+                    <p><strong>"${reference}"</strong></p>
+                    <p class="text-danger">Cette action est irréversible !</p>
+                </div>
+            `,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Oui, supprimer !',
@@ -923,12 +922,12 @@
 
                     // Envoyer la requête de suppression
                     fetch(`/agent/colis/${colisId}`, {
-                            method: 'DELETE',
-                            headers: {
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                'Content-Type': 'application/json'
-                            }
-                        })
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'application/json'
+                        }
+                    })
                         .then(response => {
                             if (!response.ok) {
                                 throw new Error('Erreur lors de la suppression');
@@ -968,7 +967,7 @@
         // Fonction pour afficher le formulaire de paiement
         function showPaymentForm(colisId, reference, montantTotal, montantPaye, resteAPayer, devise) {
             const montantRestant = parseFloat(resteAPayer) || (parseFloat(montantTotal) - parseFloat(montantPaye));
-            const rate = 655;
+            const rate = 655.95;
             const isIvoryAgent = {{ (Auth::guard('agent')->check() && Auth::guard('agent')->user()->agence && Auth::guard('agent')->user()->agence->pays === "Côte d'Ivoire") ? 'true' : 'false' }};
             const showCFAField = isIvoryAgent && (devise && (devise.trim().toUpperCase() === 'EUR' || devise.trim() === '€'));
             const montantRestantCFA = Math.round(montantRestant * rate);
@@ -976,83 +975,83 @@
             Swal.fire({
                 title: `Enregistrer un Paiement`,
                 html: `
-            <div class="text-start">
-                <div class="alert alert-info">
-                    <strong>Référence:</strong> ${reference}<br>
-                    <strong>Montant Total:</strong> ${parseFloat(montantTotal).toFixed(0)} ${devise} ${showCFAField ? `(${Math.round(montantTotal * rate).toLocaleString('fr-FR')} FCFA)` : ''}<br>
-                    <strong>Déjà Payé:</strong> ${parseFloat(montantPaye).toFixed(0)} ${devise} ${showCFAField ? `(${Math.round(montantPaye * rate).toLocaleString('fr-FR')} FCFA)` : ''}<br>
-                    <strong>Reste à Payer:</strong> <span class="text-success fw-bold">${montantRestant.toFixed(0)} ${devise} ${showCFAField ? `(${montantRestantCFA.toLocaleString('fr-FR')} FCFA)` : ''}</span>
-                </div>
-                
-                <form id="paymentForm">
-                    ${showCFAField ? `
-                    <div class="mb-3">
-                        <label for="montant_cfa" class="form-label"><strong>Montant en Franc CFA (FCFA)</strong></label>
-                        <input type="number" class="form-control" id="montant_cfa" 
-                               min="1" max="${montantRestantCFA}" step="1"
-                               placeholder="Entrez le montant en CFA (FCFA)">
-                        <div class="form-text">Maximum: ${montantRestantCFA.toLocaleString('fr-FR')} FCFA (Taux fixe: 1 EUR = 655 FCFA)</div>
+                <div class="text-start">
+                    <div class="alert alert-info">
+                        <strong>Référence:</strong> ${reference}<br>
+                        <strong>Montant Total:</strong> ${parseFloat(montantTotal).toFixed(0)} ${devise} ${showCFAField ? `(${Math.round(montantTotal * rate).toLocaleString('fr-FR')} FCFA)` : ''}<br>
+                        <strong>Déjà Payé:</strong> ${parseFloat(montantPaye).toFixed(0)} ${devise} ${showCFAField ? `(${Math.round(montantPaye * rate).toLocaleString('fr-FR')} FCFA)` : ''}<br>
+                        <strong>Reste à Payer:</strong> <span class="text-success fw-bold">${montantRestant.toFixed(0)} ${devise} ${showCFAField ? `(${montantRestantCFA.toLocaleString('fr-FR')} FCFA)` : ''}</span>
                     </div>
-                    ` : ''}
 
-                    <div class="mb-3">
-                        <label for="montant" class="form-label"><strong>Montant du Paiement (${devise}) *</strong></label>
-                        <input type="number" class="form-control" id="montant" 
-                               min="0.01" max="${montantRestant}" step="0.01"
-                               placeholder="Entrez le montant payé" required ${showCFAField ? 'readonly' : ''}>
-                        <div class="form-text">Maximum: ${montantRestant.toFixed(2)} ${devise}</div>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="methode_paiement" class="form-label"><strong>Méthode de Paiement *</strong></label>
-                        <select class="form-control" id="methode_paiement" required>
-                            <option value="">Sélectionnez une méthode</option>
-                            <option value="espece">Espèce</option>
-                            <option value="virement_bancaire">Virement Bancaire</option>
-                            <option value="cheque">Chèque</option>
-                            <option value="mobile_money">Mobile Money</option>
-                        </select>
-                    </div>
-                    
-                    <div class="mb-3" id="banque_fields" style="display: none;">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="nom_banque" class="form-label">Nom de la Banque</label>
-                                <input type="text" class="form-control" id="nom_banque" placeholder="Nom de la banque">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="numero_compte" class="form-label">Numéro de Compte</label>
-                                <input type="text" class="form-control" id="numero_compte" placeholder="Numéro de compte">
+                    <form id="paymentForm">
+                        ${showCFAField ? `
+                        <div class="mb-3">
+                            <label for="montant_cfa" class="form-label"><strong>Montant en Franc CFA (FCFA)</strong></label>
+                            <input type="number" class="form-control" id="montant_cfa" 
+                                   min="1" max="${montantRestantCFA}" step="1"
+                                   placeholder="Entrez le montant en CFA (FCFA)">
+                            <div class="form-text">Maximum: ${montantRestantCFA.toLocaleString('fr-FR')} FCFA (Taux fixe: 1 EUR = 655,95 FCFA)</div>
+                        </div>
+                        ` : ''}
+
+                        <div class="mb-3">
+                            <label for="montant" class="form-label"><strong>Montant du Paiement (${devise}) *</strong></label>
+                            <input type="number" class="form-control" id="montant" 
+                                   min="0.01" max="${montantRestant}" step="0.01"
+                                   placeholder="Entrez le montant payé" required ${showCFAField ? 'readonly' : ''}>
+                            <div class="form-text">Maximum: ${montantRestant.toFixed(2)} ${devise}</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="methode_paiement" class="form-label"><strong>Méthode de Paiement *</strong></label>
+                            <select class="form-control" id="methode_paiement" required>
+                                <option value="">Sélectionnez une méthode</option>
+                                <option value="espece">Espèce</option>
+                                <option value="virement_bancaire">Virement Bancaire</option>
+                                <option value="cheque">Chèque</option>
+                                <option value="mobile_money">Mobile Money</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3" id="banque_fields" style="display: none;">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="nom_banque" class="form-label">Nom de la Banque</label>
+                                    <input type="text" class="form-control" id="nom_banque" placeholder="Nom de la banque">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="numero_compte" class="form-label">Numéro de Compte</label>
+                                    <input type="text" class="form-control" id="numero_compte" placeholder="Numéro de compte">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="mb-3" id="mobile_fields" style="display: none;">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="operateur" class="form-label">Opérateur</label>
-                                <select class="form-control" id="operateur">
-                                    <option value="">Sélectionnez un opérateur</option>
-                                    <option value="WAVE">WAVE</option>
-                                    <option value="ORANGE">ORANGE</option>
-                                    <option value="MOOV">MOOV</option>
-                                    <option value="MTN">MTN</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="numero_mobile" class="form-label">Numéro</label>
-                                <input type="text" class="form-control" id="numero_mobile" placeholder="Numéro de téléphone">
+
+                        <div class="mb-3" id="mobile_fields" style="display: none;">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="operateur" class="form-label">Opérateur</label>
+                                    <select class="form-control" id="operateur">
+                                        <option value="">Sélectionnez un opérateur</option>
+                                        <option value="WAVE">WAVE</option>
+                                        <option value="ORANGE">ORANGE</option>
+                                        <option value="MOOV">MOOV</option>
+                                        <option value="MTN">MTN</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="numero_mobile" class="form-label">Numéro</label>
+                                    <input type="text" class="form-control" id="numero_mobile" placeholder="Numéro de téléphone">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="notes" class="form-label">Notes (Optionnel)</label>
-                        <textarea class="form-control" id="notes" rows="2" placeholder="Notes supplémentaires..."></textarea>
-                    </div>
-                </form>
-            </div>
-        `,
+
+                        <div class="mb-3">
+                            <label for="notes" class="form-label">Notes (Optionnel)</label>
+                            <textarea class="form-control" id="notes" rows="2" placeholder="Notes supplémentaires..."></textarea>
+                        </div>
+                    </form>
+                </div>
+            `,
                 showCancelButton: true,
                 confirmButtonText: 'Enregistrer le Paiement',
                 cancelButtonText: 'Annuler',
@@ -1064,7 +1063,7 @@
                     const banqueFields = document.getElementById('banque_fields');
                     const mobileFields = document.getElementById('mobile_fields');
 
-                    methodeSelect.addEventListener('change', function() {
+                    methodeSelect.addEventListener('change', function () {
                         if (this.value === 'virement_bancaire') {
                             banqueFields.style.display = 'block';
                             mobileFields.style.display = 'none';
@@ -1082,7 +1081,7 @@
                     const montantInput = document.getElementById('montant');
 
                     if (montantCfaInput && montantInput) {
-                        montantCfaInput.addEventListener('input', function() {
+                        montantCfaInput.addEventListener('input', function () {
                             const cfaVal = parseFloat(this.value);
                             if (!isNaN(cfaVal) && cfaVal > 0) {
                                 if (cfaVal === montantRestantCFA) {
@@ -1095,7 +1094,7 @@
                             }
                         });
 
-                        montantInput.addEventListener('input', function() {
+                        montantInput.addEventListener('input', function () {
                             const eurVal = parseFloat(this.value);
                             if (!isNaN(eurVal) && eurVal > 0) {
                                 if (eurVal === montantRestant) {
@@ -1159,13 +1158,13 @@
             });
 
             fetch(`/agent/parcel/${colisId}/paiement`, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(paymentData)
-                })
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(paymentData)
+            })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Erreur lors de l\'enregistrement du paiement');
@@ -1204,32 +1203,32 @@
             Swal.fire({
                 title: 'Options de Documents',
                 html: `
-            <div class="text-center">
-                <i class="fas fa-file-alt text-primary" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-                <p class="mb-4">Choisissez un document à générer</p>
-                
-                <div class="row g-3">
-                    <div class="col-12">
-                        <button class="btn btn-primary w-100 py-3" onclick="previewDocument(${colisId}, 'etiquette')">
-                            <i class="fas fa-tags me-2"></i>
-                            Télécharger Étiquette
-                        </button>
-                    </div>
-                    <div class="col-12">
-                        <button class="btn btn-success w-100 py-3" onclick="previewDocument(${colisId}, 'facture')">
-                            <i class="fas fa-file-invoice me-2"></i>
-                            Télécharger Facture
-                        </button>
-                    </div>
-                    <div class="col-12">
-                        <button class="btn btn-info w-100 py-3" onclick="previewDocument(${colisId}, 'bon_livraison')">
-                            <i class="fas fa-truck me-2"></i>
-                            Télécharger Bon de Livraison
-                        </button>
+                <div class="text-center">
+                    <i class="fas fa-file-alt text-primary" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                    <p class="mb-4">Choisissez un document à générer</p>
+
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <button class="btn btn-primary w-100 py-3" onclick="previewDocument(${colisId}, 'etiquette')">
+                                <i class="fas fa-tags me-2"></i>
+                                Télécharger Étiquette
+                            </button>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-success w-100 py-3" onclick="previewDocument(${colisId}, 'facture')">
+                                <i class="fas fa-file-invoice me-2"></i>
+                                Télécharger Facture
+                            </button>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-info w-100 py-3" onclick="previewDocument(${colisId}, 'bon_livraison')">
+                                <i class="fas fa-truck me-2"></i>
+                                Télécharger Bon de Livraison
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        `,
+            `,
                 showConfirmButton: false,
                 showCloseButton: true,
                 width: 500
@@ -1249,12 +1248,12 @@
 
             // Utiliser l'URL correcte selon vos routes
             fetch(`/agent/container/conteneur/${conteneurId}/pdf`, {
-                    method: 'GET',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'Content-Type': 'application/json',
-                    }
-                })
+                method: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                }
+            })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Erreur lors de la génération du PDF');
@@ -1381,25 +1380,25 @@
             Swal.fire({
                 title: `Aperçu - ${title}`,
                 html: `
-            <div class="text-center">
-                <i class="${icon} text-primary" style="font-size: 4rem; margin-bottom: 1rem;"></i>
-                <p class="mb-3">Voulez-vous voir l'aperçu avant de télécharger ?</p>
-                <div class="row g-2">
-                    <div class="col-6">
-                        <button class="btn btn-outline-primary w-100" onclick="generateDocument(${colisId}, '${type}', 'preview')">
-                            <i class="fas fa-eye me-2"></i>
-                            Aperçu
-                        </button>
-                    </div>
-                    <div class="col-6">
-                        <button class="btn btn-primary w-100" onclick="generateDocument(${colisId}, '${type}', 'download')">
-                            <i class="fas fa-download me-2"></i>
-                            Télécharger
-                        </button>
+                <div class="text-center">
+                    <i class="${icon} text-primary" style="font-size: 4rem; margin-bottom: 1rem;"></i>
+                    <p class="mb-3">Voulez-vous voir l'aperçu avant de télécharger ?</p>
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <button class="btn btn-outline-primary w-100" onclick="generateDocument(${colisId}, '${type}', 'preview')">
+                                <i class="fas fa-eye me-2"></i>
+                                Aperçu
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-primary w-100" onclick="generateDocument(${colisId}, '${type}', 'download')">
+                                <i class="fas fa-download me-2"></i>
+                                Télécharger
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        `,
+            `,
                 showConfirmButton: false,
                 showCloseButton: true,
                 width: 500
