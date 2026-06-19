@@ -11,59 +11,39 @@ class ScannerController extends Controller
 {
     public function entrepot(Request $request)
     {
-        // Récupérer tous les colis d'abord
-        $allColis = Colis::with(['agenceExpedition', 'agenceDestination', 'conteneur'])
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $query = Colis::with(['agenceExpedition', 'agenceDestination', 'conteneur'])
+            ->where('statuts_individuels', 'LIKE', '%"statut":"entrepot"%');
 
-        // Filtrer manuellement les colis qui ont au moins une unité "entrepot"
-        $colisFiltres = $allColis->filter(function ($colis) {
-            $statutsIndividuels = json_decode($colis->statuts_individuels, true) ?? [];
-
-            foreach ($statutsIndividuels as $statut) {
-                if (isset($statut['statut']) && $statut['statut'] === 'entrepot') {
-                    return true;
-                }
-            }
-            return false;
-        });
-
-        // Appliquer les filtres supplémentaires
+        // Appliquer les filtres supplémentaires en SQL
         if ($request->has('search') && !empty($request->search)) {
-            $search = strtolower($request->search);
-            $colisFiltres = $colisFiltres->filter(function ($colis) use ($search) {
-                return str_contains(strtolower($colis->reference_colis), $search) ||
-                    str_contains(strtolower($colis->name_expediteur), $search) ||
-                    str_contains(strtolower($colis->name_destinataire), $search) ||
-                    str_contains(strtolower($colis->email_expediteur), $search) ||
-                    str_contains(strtolower($colis->email_destinataire), $search) ||
-                    str_contains(strtolower($colis->code_colis), $search);
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('reference_colis', 'LIKE', "%{$search}%")
+                    ->orWhere('name_expediteur', 'LIKE', "%{$search}%")
+                    ->orWhere('name_destinataire', 'LIKE', "%{$search}%")
+                    ->orWhere('email_expediteur', 'LIKE', "%{$search}%")
+                    ->orWhere('email_destinataire', 'LIKE', "%{$search}%")
+                    ->orWhere('code_colis', 'LIKE', "%{$search}%");
             });
         }
 
         if ($request->has('mode_transit') && !empty($request->mode_transit)) {
-            $colisFiltres = $colisFiltres->where('mode_transit', $request->mode_transit);
+            $query->where('mode_transit', $request->mode_transit);
         }
 
         if ($request->has('paiement') && !empty($request->paiement)) {
-            $colisFiltres = $colisFiltres->where('statut_paiement', $request->paiement);
+            $query->where('statut_paiement', $request->paiement);
         }
 
-        // Pagination manuelle
-        $page = $request->get('page', 1);
-        $perPage = 10;
-
-        $colis = new \Illuminate\Pagination\LengthAwarePaginator(
-            $colisFiltres->forPage($page, $perPage),
-            $colisFiltres->count(),
-            $perPage,
-            $page,
-            ['path' => $request->url(), 'query' => $request->query()]
-        );
+        // Pagination native au niveau SQL
+        $colis = $query->orderBy('created_at', 'desc')->paginate(10);
 
         // Ajouter les métriques
         $colis->getCollection()->transform(function ($item) {
             $colisData = $item->colis;
+            if (is_string($colisData)) {
+                $colisData = json_decode($colisData, true);
+            }
             $item->nombre_types_colis = is_array($colisData) ? count($colisData) : 0;
 
             $statutsIndividuels = is_array($item->statuts_individuels) ? $item->statuts_individuels : (json_decode($item->statuts_individuels, true) ?? []);
@@ -118,21 +98,14 @@ class ScannerController extends Controller
             $qrCode = trim($request->qr_code);
             Log::info('Recherche du code QR:', ['qr_code' => $qrCode]);
 
-            // Rechercher TOUS les colis pour trouver celui qui contient le code QR
-            $colisList = Colis::all();
-            $colisTrouve = null;
+            // Rechercher le colis contenant le code QR
+            $colisTrouve = Colis::where('statuts_individuels', 'LIKE', '%"' . $qrCode . '"%')->first();
 
-            foreach ($colisList as $colis) {
-                $statutsIndividuels = json_decode($colis->statuts_individuels, true) ?? [];
-
-                if (isset($statutsIndividuels[$qrCode])) {
-                    $colisTrouve = $colis;
-                    Log::info('Colis trouvé avec le code QR:', [
-                        'colis_id' => $colis->id,
-                        'reference' => $colis->reference_colis
-                    ]);
-                    break;
-                }
+            if ($colisTrouve) {
+                Log::info('Colis trouvé avec le code QR:', [
+                    'colis_id' => $colisTrouve->id,
+                    'reference' => $colisTrouve->reference_colis
+                ]);
             }
 
             if (!$colisTrouve) {

@@ -24,66 +24,36 @@ class AgentDechargerController extends Controller
             return view('agent.scan.decharge', compact('colis'));
         }
 
-        // Récupérer tous les colis où l'agence de l'agent est soit expéditrice soit destinataire
-        $allColis = Colis::with(['agenceExpedition', 'agenceDestination', 'conteneur'])
-            ->where(function ($query) use ($agent) {
-                // Soit l'agence est l'expéditeur
-                $query->where('agence_expedition_id', $agent->agence_id)
-                    // Soit l'agence est le destinataire
-                    ->orWhere('agence_destination_id', $agent->agence_id);
+        $query = Colis::with(['agenceExpedition', 'agenceDestination', 'conteneur'])
+            ->where(function ($q) use ($agent) {
+                $q->where('agence_expedition_id', $agent->agence_id)
+                  ->orWhere('agence_destination_id', $agent->agence_id);
             })
-            ->orderBy('created_at', 'desc')
-            ->get();
+            ->where('statuts_individuels', 'LIKE', '%"statut":"decharge"%');
 
-        // Filtrer les colis qui ont au moins une unité "decharge" (déjà déchargés)
-        $colisFiltres = $allColis->filter(function ($colis) {
-            $statutsIndividuels = json_decode($colis->statuts_individuels, true) ?? [];
-
-            $aDesUnitesDechargees = false;
-
-            foreach ($statutsIndividuels as $statut) {
-                if (isset($statut['statut']) && $statut['statut'] === 'decharge') {
-                    $aDesUnitesDechargees = true;
-                    break; // On sort dès qu'on trouve une unité déchargée
-                }
-            }
-
-            // Inclure uniquement les colis qui ont au moins une unité déchargée
-            return $aDesUnitesDechargees;
-        });
-
-        // Appliquer les filtres supplémentaires
+        // Appliquer les filtres supplémentaires en SQL
         if ($request->has('search') && !empty($request->search)) {
-            $search = strtolower($request->search);
-            $colisFiltres = $colisFiltres->filter(function ($colis) use ($search) {
-                return str_contains(strtolower($colis->reference_colis), $search) ||
-                    str_contains(strtolower($colis->name_expediteur), $search) ||
-                    str_contains(strtolower($colis->name_destinataire), $search) ||
-                    str_contains(strtolower($colis->email_expediteur), $search) ||
-                    str_contains(strtolower($colis->email_destinataire), $search) ||
-                    str_contains(strtolower($colis->code_colis), $search);
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('reference_colis', 'LIKE', "%{$search}%")
+                    ->orWhere('name_expediteur', 'LIKE', "%{$search}%")
+                    ->orWhere('name_destinataire', 'LIKE', "%{$search}%")
+                    ->orWhere('email_expediteur', 'LIKE', "%{$search}%")
+                    ->orWhere('email_destinataire', 'LIKE', "%{$search}%")
+                    ->orWhere('code_colis', 'LIKE', "%{$search}%");
             });
         }
 
         if ($request->has('mode_transit') && !empty($request->mode_transit)) {
-            $colisFiltres = $colisFiltres->where('mode_transit', $request->mode_transit);
+            $query->where('mode_transit', $request->mode_transit);
         }
 
         if ($request->has('paiement') && !empty($request->paiement)) {
-            $colisFiltres = $colisFiltres->where('statut_paiement', $request->paiement);
+            $query->where('statut_paiement', $request->paiement);
         }
 
-        // Pagination manuelle
-        $page = $request->get('page', 1);
-        $perPage = 10;
-
-        $colis = new \Illuminate\Pagination\LengthAwarePaginator(
-            $colisFiltres->forPage($page, $perPage),
-            $colisFiltres->count(),
-            $perPage,
-            $page,
-            ['path' => $request->url(), 'query' => $request->query()]
-        );
+        // Pagination native au niveau SQL
+        $colis = $query->orderBy('created_at', 'desc')->paginate(10);
 
         // Ajouter les métriques
         $colis->getCollection()->transform(function ($item) {
@@ -108,8 +78,7 @@ class AgentDechargerController extends Controller
         Log::info('Colis filtrés pour déchargement:', [
             'agent_id' => $agent->id,
             'agence_id' => $agent->agence_id,
-            'total_colis_agence' => $allColis->count(),
-            'colis_avec_decharge' => $colisFiltres->count(),
+            'colis_avec_decharge' => $colis->total(),
             'colis_pagines' => $colis->count()
         ]);
 
@@ -150,44 +119,26 @@ class AgentDechargerController extends Controller
                 'agence_destination_id' => $agenceDestinationId
             ]);
 
-            // Rechercher le colis contenant le code QR
-            $colis = null;
-            $colisList = Colis::where('agence_expedition_id', $agent->agence_id)->get();
-
-            foreach ($colisList as $colisItem) {
-                $statutsIndividuels = json_decode($colisItem->statuts_individuels, true) ?? [];
-                if (isset($statutsIndividuels[$qrCode])) {
-                    $colis = $colisItem;
-                    break;
-                }
-            }
-
-            // SUPPRESSION DE LA VÉRIFICATION - Si aucun colis n'est trouvé, on continue
-            // mais on doit vérifier que le colis existe avant d'accéder à ses propriétés
+            // Rechercher le colis contenant le code QR dans l'agence de l'agent
+            $colis = Colis::where('agence_expedition_id', $agent->agence_id)
+                ->where('statuts_individuels', 'LIKE', '%"' . $qrCode . '"%')
+                ->first();
 
             if (!$colis) {
-                // MODIFICATION : Au lieu de retourner une erreur 404, on cherche dans toutes les agences
+                // MODIFICATION : Au lieu de retourner une erreur 404, on cherche dans toutes les agences (recherche globale)
                 Log::info('Code QR non trouvé dans l\'agence de l\'agent, recherche globale...', [
                     'qr_code' => $qrCode,
                     'agence_agent' => $agent->agence_id
                 ]);
 
-                // Recherche dans tous les colis
-                $colisListGlobal = Colis::all();
-                foreach ($colisListGlobal as $colisItem) {
-                    $statutsIndividuels = json_decode($colisItem->statuts_individuels, true) ?? [];
-                    if (isset($statutsIndividuels[$qrCode])) {
-                        $colis = $colisItem;
-                        Log::info('Code QR trouvé dans une autre agence', [
-                            'colis_id' => $colis->id,
-                            'agence_colis' => $colis->agence_expedition_id
-                        ]);
-                        break;
-                    }
-                }
+                $colis = Colis::where('statuts_individuels', 'LIKE', '%"' . $qrCode . '"%')->first();
 
-                // Si toujours pas trouvé, retourner une erreur
-                if (!$colis) {
+                if ($colis) {
+                    Log::info('Code QR trouvé dans une autre agence', [
+                        'colis_id' => $colis->id,
+                        'agence_colis' => $colis->agence_expedition_id
+                    ]);
+                } else {
                     Log::warning('Code QR non trouvé dans aucun colis', ['qr_code' => $qrCode]);
                     return response()->json([
                         'success' => false,

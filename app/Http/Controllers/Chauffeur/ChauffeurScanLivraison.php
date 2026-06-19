@@ -282,23 +282,8 @@ class ChauffeurScanLivraison extends Controller
      */
     private function findColisByQrCode($qrCode)
     {
-        // Méthode 1 : Recherche directe dans le JSON avec MySQL
-        $colis = Colis::where('statuts_individuels', 'LIKE', '%"' . $qrCode . '"%')
-            ->first();
-
-        // Méthode 2 : Si la méthode 1 ne fonctionne pas, recherche manuelle
-        if (!$colis) {
-            $colisList = Colis::all();
-            foreach ($colisList as $colisItem) {
-                $statutsIndividuels = json_decode($colisItem->statuts_individuels, true) ?? [];
-                if (isset($statutsIndividuels[$qrCode])) {
-                    $colis = $colisItem;
-                    break;
-                }
-            }
-        }
-
-        return $colis;
+        // Recherche directe dans le JSON avec MySQL
+        return Colis::where('statuts_individuels', 'LIKE', '%"' . $qrCode . '"%')->first();
     }
 
     /**
