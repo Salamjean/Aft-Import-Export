@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\Bateau\BateauController;
 use App\Http\Controllers\Admin\Chauffeur\ChauffeurController;
 use App\Http\Controllers\Admin\Client\ClientController;
 use App\Http\Controllers\Admin\Client\EmailController;
+use App\Http\Controllers\Admin\Client\SmsController;
 use App\Http\Controllers\Agent\Colis\AgentEtiquetteController;
 use App\Http\Controllers\Admin\Colis\ColisController;
 use App\Http\Controllers\Admin\Colis\EtiquetteController;
@@ -32,6 +33,7 @@ use App\Http\Controllers\Agent\AuthenticateAgent;
 use App\Http\Controllers\Agent\Bateau\AgentBateauController;
 use App\Http\Controllers\Agent\Chauffeur\AgentChauffeurController;
 use App\Http\Controllers\Agent\Client\AgentClientController;
+use App\Http\Controllers\Agent\Client\AgentSmsController;
 use App\Http\Controllers\Agent\Colis\AgentColisController;
 use App\Http\Controllers\Agent\Conteneur\AgentConteneurController;
 use App\Http\Controllers\Agent\Cote_Ivoire\AgentCoteDashboard;
@@ -227,6 +229,16 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::prefix('client')->group(function () {
         Route::get('/AllUsers', [ClientController::class, 'client'])->name('client.all');
         Route::get('/AllProspects', [ClientController::class, 'prospect'])->name('prospect.all');
+    });
+
+    //Les routes pour l'envoi de SMS
+    Route::prefix('sms')->group(function () {
+        Route::get('/', [SmsController::class, 'index'])->name('admin.sms.index');
+        Route::post('/preview', [SmsController::class, 'previewRecipients'])->name('admin.sms.preview');
+        Route::post('/send-group', [SmsController::class, 'sendGroupSms'])->name('admin.sms.send-group');
+        Route::post('/send-individual', [SmsController::class, 'sendIndividualSms'])->name('admin.sms.send-individual');
+        Route::post('/send-prospect-group', [SmsController::class, 'sendProspectGroupSms'])->name('admin.sms.send-prospect-group');
+        Route::post('/send-prospect-individual', [SmsController::class, 'sendProspectIndividualSms'])->name('admin.sms.send-prospect-individual');
     });
 
     //Les routes pour affichés les demandes de recuperations 
@@ -427,6 +439,16 @@ Route::middleware('agent')->prefix('agent')->group(function () {
     Route::prefix('client')->group(function () {
         Route::get('/AllUsers', [AgentClientController::class, 'client'])->name('agent.client.all');
         Route::get('/AllProspects', [AgentClientController::class, 'prospect'])->name('agent.prospect.all');
+    });
+
+    //Les routes pour l'envoi de SMS (Agent)
+    Route::prefix('sms')->group(function () {
+        Route::get('/', [AgentSmsController::class, 'index'])->name('agent.sms.index');
+        Route::post('/preview', [AgentSmsController::class, 'previewRecipients'])->name('agent.sms.preview');
+        Route::post('/send-group', [AgentSmsController::class, 'sendGroupSms'])->name('agent.sms.send-group');
+        Route::post('/send-individual', [AgentSmsController::class, 'sendIndividualSms'])->name('agent.sms.send-individual');
+        Route::post('/send-prospect-group', [AgentSmsController::class, 'sendProspectGroupSms'])->name('agent.sms.send-prospect-group');
+        Route::post('/send-prospect-individual', [AgentSmsController::class, 'sendProspectIndividualSms'])->name('agent.sms.send-prospect-individual');
     });
 
     //Les routes pour affichés les demandes de recuperations 

@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'yellika' => [
+        'api_url' => env('YELLIKA_API_URL', 'https://app.1smsafrica.com/api/v3'),
+        'api_key' => env('YELLIKA_API_KEY'),
+        'sender_id' => env('YELLIKA_SENDER_ID', 'Plateau app'),
+    ],
+
 ];

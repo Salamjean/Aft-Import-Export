@@ -276,6 +276,14 @@
             </nav>
           </div>
         </div>
+
+        <div class="mdc-list-item mdc-drawer-item">
+          <a class="mdc-drawer-link" href="{{route('agent.sms.index')}}">
+            <i class="fas fa-sms mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true"></i>
+            Envoi SMS
+          </a>
+        </div>
+
         <div class="mdc-list-item mdc-drawer-item">
           <a class="mdc-drawer-link" href="{{route('agent.demande.recuperation')}}">
             <i class="fas fa-box mdc-list-item__start-detail mdc-drawer-item-icon"></i>
