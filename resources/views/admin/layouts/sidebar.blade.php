@@ -275,8 +275,8 @@
         </div>
 
         <div class="mdc-list-item mdc-drawer-item">
-          <a class="mdc-drawer-link" href="{{route('admin.sms.index')}}">
-            <i class="fas fa-sms mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true"></i>
+          <a class="mdc-drawer-link" href="javascript:void(0)" title="Bientôt disponible" style="color: #9e9e9e !important; cursor: not-allowed; opacity: 0.6;">
+            <i class="fas fa-sms mdc-list-item__start-detail mdc-drawer-item-icon" style="color: #9e9e9e !important;" aria-hidden="true"></i>
             Envoi SMS
           </a>
         </div>
