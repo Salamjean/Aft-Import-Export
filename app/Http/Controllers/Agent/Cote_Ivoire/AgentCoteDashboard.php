@@ -200,7 +200,7 @@ class AgentCoteDashboard extends Controller
                         $q->where('agence_expedition_id', $agenceId)
                           ->orWhere('agence_destination_id', $agenceId);
                     })
-                    ->orderBy('created_at', 'desc');
+                    ->orderBy('id', 'desc');
        
 
         // Filtre de recherche

@@ -55,8 +55,8 @@ class IvoireScanLivrerController extends Controller
             $query->where('statut_paiement', $request->paiement);
         }
 
-        // Pagination native au niveau SQL
-        $colis = $query->orderBy('created_at', 'desc')->paginate(10);
+        // Pagination native au niveau SQL avec tri sur la clé primaire id
+        $colis = $query->orderBy('id', 'desc')->paginate(10);
 
         // Ajouter les métriques
         $colis->getCollection()->transform(function ($item) {
