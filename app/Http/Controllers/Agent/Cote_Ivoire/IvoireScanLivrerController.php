@@ -55,8 +55,20 @@ class IvoireScanLivrerController extends Controller
             $query->where('statut_paiement', $request->paiement);
         }
 
-        // Pagination native au niveau SQL avec tri sur la clé primaire id
-        $colis = $query->orderBy('id', 'desc')->paginate(10);
+        // Pagination optimisée (Deferred Join / Late Row Lookup) pour éviter l'erreur Out of sort memory
+        // 1. Obtenir les IDs paginés
+        $paginator = $query->orderBy('id', 'desc')->select('id')->paginate(10);
+        
+        // 2. Récupérer les enregistrements complets avec relations pour ces IDs
+        $colisIds = $paginator->pluck('id');
+        $items = Colis::with(['agenceExpedition', 'agenceDestination', 'conteneur'])
+            ->whereIn('id', $colisIds)
+            ->orderBy('id', 'desc')
+            ->get();
+            
+        // 3. Assigner la collection complète au paginateur
+        $paginator->setCollection($items);
+        $colis = $paginator;
 
         // Ajouter les métriques
         $colis->getCollection()->transform(function ($item) {

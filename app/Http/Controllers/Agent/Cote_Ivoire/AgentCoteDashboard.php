@@ -195,13 +195,11 @@ class AgentCoteDashboard extends Controller
         $agent = Auth::guard('agent')->user();
         $agenceId = $agent->agence_id;
 
-        $query = Colis::with(['agenceExpedition', 'agenceDestination', 'conteneur'])
+        $query = Colis::query()
                     ->where(function($q) use ($agenceId) {
                         $q->where('agence_expedition_id', $agenceId)
                           ->orWhere('agence_destination_id', $agenceId);
-                    })
-                    ->orderBy('id', 'desc');
-       
+                    });
 
         // Filtre de recherche
         if ($request->has('search') && !empty($request->search)) {
@@ -231,7 +229,20 @@ class AgentCoteDashboard extends Controller
             $query->where('statut_paiement', $request->paiement);
         }
 
-        $colis = $query->paginate(10);
+        // Pagination optimisée (Deferred Join / Late Row Lookup) pour éviter l'erreur Out of sort memory
+        // 1. Obtenir les IDs paginés
+        $paginator = $query->orderBy('id', 'desc')->select('id')->paginate(10);
+        
+        // 2. Récupérer les enregistrements complets avec relations pour ces IDs
+        $colisIds = $paginator->pluck('id');
+        $items = Colis::with(['agenceExpedition', 'agenceDestination', 'conteneur'])
+            ->whereIn('id', $colisIds)
+            ->orderBy('id', 'desc')
+            ->get();
+            
+        // 3. Assigner la collection complète au paginateur
+        $paginator->setCollection($items);
+        $colis = $paginator;
         // Compter le nombre de tableaux (types de colis) dans le champ colis (JSON)
         $colis->getCollection()->transform(function ($item) {
             $colisData = json_decode($item->colis, true);
