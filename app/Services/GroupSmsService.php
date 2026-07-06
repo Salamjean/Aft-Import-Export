@@ -123,10 +123,15 @@ class GroupSmsService
         // Supprimer tous les caractères non numériques
         $cleaned = preg_replace('/[^0-9]/', '', $number);
 
-        // Si le numéro commence par + ou 00, on le traite comme international. Sinon, s'il fait 10 chiffres (Côte d'Ivoire), on ajoute 225
-        // En Côte d'Ivoire, les numéros ont 10 chiffres. Ex: 0707XXXXXX -> 2250707XXXXXX
-        if (strlen($cleaned) == 10 && (str_starts_with($cleaned, '01') || str_starts_with($cleaned, '05') || str_starts_with($cleaned, '07') || str_starts_with($cleaned, '08') || str_starts_with($cleaned, '09'))) {
-            $cleaned = '225' . $cleaned;
+        // Si le numéro fait 10 chiffres, on applique la logique par pays
+        if (strlen($cleaned) == 10) {
+            if (str_starts_with($cleaned, '06')) {
+                // Numéro français commençant par 06 (on enlève le premier 0 et on ajoute 33)
+                $cleaned = '33' . substr($cleaned, 1);
+            } elseif (str_starts_with($cleaned, '01') || str_starts_with($cleaned, '05') || str_starts_with($cleaned, '07') || str_starts_with($cleaned, '08') || str_starts_with($cleaned, '09')) {
+                // Numéro ivoirien (on garde le 0 et on ajoute 225)
+                $cleaned = '225' . $cleaned;
+            }
         }
 
         return $cleaned;
