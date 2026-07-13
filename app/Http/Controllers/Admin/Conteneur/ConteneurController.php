@@ -13,10 +13,18 @@ class ConteneurController extends Controller
 {
     public function index()
     {
-        $conteneurs = Conteneur::with(['colis.agenceExpedition'])
-            ->where('statut','ouvert')
+        $conteneurs = Conteneur::where('statut','ouvert')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
+            
+        foreach ($conteneurs as $conteneur) {
+            $colis = Colis::with('agenceExpedition')
+                ->where(function($query) use ($conteneur) {
+                    $query->where('statuts_individuels', 'LIKE', '%"Conteneur #' . $conteneur->id . '"%')
+                          ->orWhere('statuts_individuels', 'LIKE', '%Conteneur #' . $conteneur->id . ' (%');
+                })->get();
+            $conteneur->setRelation('colis', $colis);
+        }
         
         return view('admin.conteneur.index', compact('conteneurs'));
     }
@@ -117,9 +125,16 @@ class ConteneurController extends Controller
     }
 
     public function history(){
-        $conteneurs = Conteneur::withCount(['colis' => function($query) {
-            $query->whereIn('statut', ['charge', 'decharge', 'livre', 'annule']);
-        }])->where('statut','fermer')->paginate(10);
+        $conteneurs = Conteneur::where('statut','fermer')->paginate(10);
+        
+        foreach ($conteneurs as $conteneur) {
+            $count = Colis::where(function($query) use ($conteneur) {
+                $query->where('statuts_individuels', 'LIKE', '%"Conteneur #' . $conteneur->id . '"%')
+                      ->orWhere('statuts_individuels', 'LIKE', '%Conteneur #' . $conteneur->id . ' (%');
+            })->whereIn('statut', ['charge', 'decharge', 'livre', 'annule'])->count();
+            
+            $conteneur->colis_count = $count;
+        }
         
         return view('admin.conteneur.history', compact('conteneurs'));
     }
@@ -127,11 +142,16 @@ class ConteneurController extends Controller
     public function showColis(Request $request, $conteneurId)
     {
         try {
-            $conteneur = Conteneur::with(['colis' => function($query) {
-                $query->whereNotIn('statut', ['valide', 'entrepot']);
-            }])->findOrFail($conteneurId);
+            $conteneur = Conteneur::findOrFail($conteneurId);
 
-            $conteneur->setRelation('colis', $conteneur->colis->sortByDesc('created_at'));
+            $colis = Colis::where(function($query) use ($conteneurId) {
+                $query->where('statuts_individuels', 'LIKE', '%"Conteneur #' . $conteneurId . '"%')
+                      ->orWhere('statuts_individuels', 'LIKE', '%Conteneur #' . $conteneurId . ' (%');
+            })->whereNotIn('statut', ['valide', 'entrepot'])
+              ->orderBy('created_at', 'desc')
+              ->get();
+
+            $conteneur->setRelation('colis', $colis);
 
             return view('admin.conteneur.colis', compact('conteneur'));
             
@@ -181,11 +201,16 @@ public function open($id)
     public function downloadConteneurPDF($conteneurId)
     {
         try {
-            $conteneur = Conteneur::with(['colis' => function($query) {
-                $query->whereNotIn('statut', ['valide', 'entrepot']);
-            }])->findOrFail($conteneurId);
+            $conteneur = Conteneur::findOrFail($conteneurId);
 
-            $conteneur->setRelation('colis', $conteneur->colis->sortByDesc('created_at'));
+            $colis = Colis::where(function($query) use ($conteneurId) {
+                $query->where('statuts_individuels', 'LIKE', '%"Conteneur #' . $conteneurId . '"%')
+                      ->orWhere('statuts_individuels', 'LIKE', '%Conteneur #' . $conteneurId . ' (%');
+            })->whereNotIn('statut', ['valide', 'entrepot'])
+              ->orderBy('created_at', 'desc')
+              ->get();
+
+            $conteneur->setRelation('colis', $colis);
 
             // Calculer les statistiques pour chaque colis et regrouper les produits
             foreach ($conteneur->colis as $colis) {

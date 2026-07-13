@@ -412,7 +412,9 @@ class AgentChargerController extends Controller
 
             // Mise à jour du colis avec le nouveau conteneur
             $colis->statuts_individuels = json_encode($statutsIndividuels);
-            $colis->conteneur_id = $conteneurId; // Mettre à jour l'ID du conteneur
+            if (empty($ancienConteneurId)) {
+                $colis->conteneur_id = $conteneurId; // Ne définir l'ID principal que s'il n'y en avait pas avant
+            }
 
             // ✅ LOGIQUE PRINCIPALE : Vérifier si TOUTES les unités sont chargées
             $tousCharges = $this->verifierTousCharges($statutsIndividuels);

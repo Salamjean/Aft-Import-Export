@@ -14,11 +14,16 @@ class IvoireController extends Controller
     public function showColis(Request $request, $conteneurId)
     {
         try {
-            $conteneur = Conteneur::with(['colis' => function($query) {
-                $query->whereNotIn('statut', ['valide', 'entrepot']);
-            }])->findOrFail($conteneurId);
+            $conteneur = Conteneur::findOrFail($conteneurId);
 
-            $conteneur->setRelation('colis', $conteneur->colis->sortByDesc('created_at'));
+            $colis = \App\Models\Colis::where(function($query) use ($conteneurId) {
+                $query->where('statuts_individuels', 'LIKE', '%"Conteneur #' . $conteneurId . '"%')
+                      ->orWhere('statuts_individuels', 'LIKE', '%Conteneur #' . $conteneurId . ' (%');
+            })->whereNotIn('statut', ['valide', 'entrepot'])
+              ->orderBy('created_at', 'desc')
+              ->get();
+
+            $conteneur->setRelation('colis', $colis);
 
             return view('ivoire.conteneur.list', compact('conteneur'));
             
@@ -60,9 +65,15 @@ class IvoireController extends Controller
     public function downloadConteneurPDF($conteneurId)
     {
         try {
-            $conteneur = Conteneur::with(['colis'])->findOrFail($conteneurId);
+            $conteneur = Conteneur::findOrFail($conteneurId);
 
-            $conteneur->setRelation('colis', $conteneur->colis->sortByDesc('created_at'));
+            $colis = \App\Models\Colis::where(function($query) use ($conteneurId) {
+                $query->where('statuts_individuels', 'LIKE', '%"Conteneur #' . $conteneurId . '"%')
+                      ->orWhere('statuts_individuels', 'LIKE', '%Conteneur #' . $conteneurId . ' (%');
+            })->orderBy('created_at', 'desc')
+              ->get();
+
+            $conteneur->setRelation('colis', $colis);
 
             // Calculer les statistiques pour chaque colis
             foreach ($conteneur->colis as $colis) {

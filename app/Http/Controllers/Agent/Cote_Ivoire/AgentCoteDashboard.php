@@ -79,8 +79,14 @@ class AgentCoteDashboard extends Controller
 
     // Conteneurs actifs
     $conteneursActifs = Conteneur::where('statut', 'fermer')
-        ->whereHas('colis', function($query) use ($agenceId) {
-            $query->where('agence_destination_id', $agenceId);
+        ->whereExists(function ($query) use ($agenceId) {
+            $query->select(\Illuminate\Support\Facades\DB::raw(1))
+                  ->from('colis')
+                  ->where('agence_destination_id', $agenceId)
+                  ->where(function($q) {
+                      $q->whereRaw('colis.statuts_individuels LIKE CONCAT(\'%\"Conteneur #\', conteneurs.id, \'\"%\')')
+                        ->orWhereRaw('colis.statuts_individuels LIKE CONCAT(\'%Conteneur #\', conteneurs.id, \' (%\')');
+                  });
         })
         ->count();
 
@@ -161,8 +167,14 @@ class AgentCoteDashboard extends Controller
 
         // Filtrer les conteneurs fermés qui contiennent des colis de l'agence de destination de l'agent
         $conteneurs = Conteneur::where('statut', 'fermer')
-            ->whereHas('colis', function($query) use ($agent) {
-                $query->where('agence_destination_id', $agent->agence_id);
+            ->whereExists(function ($query) use ($agent) {
+                $query->select(\Illuminate\Support\Facades\DB::raw(1))
+                      ->from('colis')
+                      ->where('agence_destination_id', $agent->agence_id)
+                      ->where(function($q) {
+                          $q->whereRaw('colis.statuts_individuels LIKE CONCAT(\'%\"Conteneur #\', conteneurs.id, \'\"%\')')
+                            ->orWhereRaw('colis.statuts_individuels LIKE CONCAT(\'%Conteneur #\', conteneurs.id, \' (%\')');
+                      });
             })
             ->orderBy('created_at', 'desc')
             ->paginate(10);

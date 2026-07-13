@@ -13,14 +13,27 @@ class GroupSmsService
     protected $apiKey;
     protected $senderId;
 
+    // Allmysms
+    protected $allmysmsLogin;
+    protected $allmysmsApiKey;
+    protected $allmysmsSenderId;
+
     public function __construct()
     {
         $this->apiUrl = config('services.yellika.api_url', 'https://app.1smsafrica.com/api/v3');
         $this->apiKey = config('services.yellika.api_key');
+        // On conserve l'ancien pour Yellika si besoin
         $this->senderId = config('services.yellika.sender_id', 'Plateau app');
+
+        // Configuration Allmysms
+        $this->allmysmsLogin = env('ALLMYSMS_LOGIN', '');
+        $this->allmysmsApiKey = env('ALLMYSMS_API_KEY', '');
+        // Nouveau Sender ID pour Allmysms (par défaut on reprend l'ancien s'il n'est pas défini)
+        $this->allmysmsSenderId = env('ALLMYSMS_SENDER_ID', $this->senderId);
     }
 
-    public function sendSms($recipient, $message)
+    // Ancien système d'envoi Yellika (conservé comme demandé)
+    public function sendSmsYellika($recipient, $message)
     {
         $recipientClean = $this->cleanPhoneNumber($recipient);
 
@@ -35,11 +48,11 @@ class GroupSmsService
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ])->post($this->apiUrl . '/sms/send', [
-                'recipient' => $recipientClean,
-                'sender_id' => $this->senderId,
-                'type' => 'plain',
-                'message' => $message,
-            ]);
+                        'recipient' => $recipientClean,
+                        'sender_id' => $this->senderId,
+                        'type' => 'plain',
+                        'message' => $message,
+                    ]);
 
             if ($response->successful()) {
                 Log::info("SMS envoyé avec succès à {$recipientClean}");
@@ -50,6 +63,52 @@ class GroupSmsService
             }
         } catch (\Exception $e) {
             Log::error("Exception lors de l'envoi du SMS à {$recipientClean}: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    // Nouveau système d'envoi Allmysms
+    public function sendSms($recipient, $message)
+    {
+        $recipientClean = $this->cleanPhoneNumber($recipient);
+
+        if (empty($recipientClean)) {
+            Log::warning("Numéro de téléphone vide ou invalide: {$recipient}");
+            return false;
+        }
+
+        // Ajout obligatoire de la mention STOP pour conserver l'expéditeur (Free, Orange, etc.)
+        if (stripos($message, 'STOP') === false && str_starts_with($recipientClean, '33')) {
+            $message .= ' - STOP au 36143';
+        }
+
+        try {
+            $smsData = [
+                'DATA' => [
+                    'MESSAGE' => $message,
+                    'TPOA' => $this->allmysmsSenderId,
+                    'ALERTING' => 1,
+                    'SMS' => [
+                        ['MOBILEPHONE' => $recipientClean]
+                    ]
+                ]
+            ];
+
+            $response = Http::withoutVerifying()->asForm()->post('https://api.allmysms.com/http/9.0/sendSms/', [
+                'login' => $this->allmysmsLogin,
+                'apiKey' => $this->allmysmsApiKey,
+                'smsData' => json_encode($smsData)
+            ]);
+
+            if ($response->successful()) {
+                Log::info("SMS envoyé avec succès (Allmysms) à {$recipientClean}");
+                return true;
+            } else {
+                Log::error("Erreur d'envoi SMS (Allmysms) à {$recipientClean}: " . $response->body());
+                return false;
+            }
+        } catch (\Exception $e) {
+            Log::error("Exception lors de l'envoi du SMS (Allmysms) à {$recipientClean}: " . $e->getMessage());
             return false;
         }
     }
