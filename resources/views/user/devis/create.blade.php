@@ -728,16 +728,7 @@
             let currentAgenceDestinationId = null;
 
             // Données des agences depuis le backend
-            const agencesData = @json(
-                $agences->mapWithKeys(function ($agence) {
-                    return [
-                        $agence->name => [
-                            'id' => $agence->id,
-                            'devise' => $agence->devise,
-                            'pays' => $agence->pays,
-                        ],
-                    ];
-                }));
+            const agencesData = @json($agencesData ?? $agences->mapWithKeys(fn($a) => [$a->name => ['id' => $a->id, 'devise' => $a->devise, 'pays' => $a->pays]]));
 
             // Gestion des étapes
             function showStep(step) {

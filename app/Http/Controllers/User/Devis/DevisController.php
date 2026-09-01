@@ -157,9 +157,18 @@ class DevisController extends Controller
     public function create()
     {
         $agences = Agence::all();
+        $agencesData = $agences->mapWithKeys(function ($agence) {
+            return [
+                $agence->name => [
+                    'id' => $agence->id,
+                    'devise' => $agence->devise,
+                    'pays' => $agence->pays,
+                ],
+            ];
+        });
         $user = Auth::user();
 
-        return view('user.devis.create', compact('agences', 'user'));
+        return view('user.devis.create', compact('agences', 'agencesData', 'user'));
     }
 
     public function store(Request $request)
