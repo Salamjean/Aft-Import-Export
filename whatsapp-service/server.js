@@ -155,7 +155,26 @@ async function resolveWhatsAppJid(number) {
 }
 
 // Route Page d'accueil / Interface de scan
-app.get(['/', '/whatsapp'], (req, res) => {
+app.get(['/', '/whatsapp'], async (req, res) => {
+    // Déconnexion directe sans jamais changer de page ni d'URL
+    if (req.query.action === 'logout') {
+        console.log('[WhatsApp] Déconnexion demandée via ?action=logout');
+        try {
+            if (sock) await sock.logout();
+        } catch (e) {}
+        try {
+            fs.rmSync(authFolder, { recursive: true, force: true });
+            console.log('[WhatsApp] Fichiers de session auth supprimés.');
+        } catch (e) {}
+        sock = null;
+        connectionStatus = 'scan_needed';
+        qrCodeDataURL = null;
+        qrCodeRaw = null;
+        connectedPhone = null;
+        setTimeout(connectToWhatsApp, 1000);
+        return res.redirect(req.path || '/whatsapp');
+    }
+
     res.send(`
     <!DOCTYPE html>
     <html lang="fr">
@@ -192,7 +211,9 @@ app.get(['/', '/whatsapp'], (req, res) => {
                     ? `<div class="status-badge status-connected"><i class="fas fa-check-circle me-1"></i> Connecté : +${connectedPhone}</div>
                        <p class="text-success fw-semibold">Le service est opérationnel ! Vos messages envoyés depuis Laravel partiront directement via ce numéro.</p>
                        <div>
-                           <button type="button" id="btnDisconnect" onclick="disconnectWhatsApp()" class="btn btn-outline-danger btn-sm mt-3"><i class="fas fa-sign-out-alt me-1"></i> Déconnecter ce compte</button>
+                           <a href="?action=logout" onclick="return confirm('Voulez-vous vraiment déconnecter ce compte WhatsApp ?');" class="btn btn-outline-danger btn-sm mt-3">
+                               <i class="fas fa-sign-out-alt me-1"></i> Déconnecter ce compte
+                           </a>
                        </div>`
                     : connectionStatus === 'scan_needed' && qrCodeDataURL
                     ? `<div class="status-badge status-scan"><i class="fas fa-qrcode me-1"></i> Scan du QR Code requis</div>
