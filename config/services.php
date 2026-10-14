@@ -43,6 +43,7 @@ return [
 
     'whatsapp' => [
         'url' => env('WHATSAPP_SERVICE_URL', 'http://127.0.0.1:3000'),
+        'public_url' => env('WHATSAPP_PUBLIC_URL', 'http://localhost:3000'),
         'enabled' => env('WHATSAPP_ENABLED', true),
     ],
 

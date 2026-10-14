@@ -260,7 +260,7 @@
                 <div class="small text-muted">Numéro expéditeur : +{{ $whatsappStatus['phone'] }} &bull; Les messages sont envoyés automatiquement et gratuitement.</div>
             </div>
         </div>
-        <a href="http://localhost:3000" target="_blank" class="btn btn-sm btn-outline-success">
+        <a href="{{ config('services.whatsapp.public_url', 'http://localhost:3000') }}" target="_blank" class="btn btn-sm btn-outline-success">
             <i class="fas fa-cog me-1"></i> Gérer la session
         </a>
     </div>
@@ -273,7 +273,7 @@
                 <div class="small text-muted">Scannez le QR Code une fois pour activer l'envoi de messages depuis votre numéro.</div>
             </div>
         </div>
-        <a href="http://localhost:3000" target="_blank" class="btn btn-sm btn-dark">
+        <a href="{{ config('services.whatsapp.public_url', 'http://localhost:3000') }}" target="_blank" class="btn btn-sm btn-dark">
             <i class="fas fa-qrcode me-1"></i> Scanner le QR Code
         </a>
     </div>
