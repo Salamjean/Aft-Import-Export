@@ -26,8 +26,10 @@ class SmsController extends Controller
         $clients = User::whereHas('colis')->withCount('colis')->get();
         // Récupérer les utilisateurs qui n'ont JAMAIS envoyé de colis (prospects)
         $prospects = User::whereDoesntHave('colis')->get();
+        // Statut WhatsApp
+        $whatsappStatus = $this->smsService->getWhatsAppStatus();
 
-        return view('admin.client.sms', compact('conteneurs', 'clients', 'prospects'));
+        return view('admin.client.sms', compact('conteneurs', 'clients', 'prospects', 'whatsappStatus'));
     }
 
     public function previewRecipients(Request $request)
@@ -69,7 +71,7 @@ class SmsController extends Controller
             $filtres
         );
 
-        return back()->with('success', "SMS envoyé avec succès à {$nombreDestinataires} destinataire(s).");
+        return back()->with('success', "Message WhatsApp envoyé avec succès à {$nombreDestinataires} destinataire(s).");
     }
 
     public function sendIndividualSms(Request $request)
@@ -101,9 +103,9 @@ class SmsController extends Controller
         $sent = $this->smsService->sendSms($contact, $request->message);
 
         if ($sent) {
-            return back()->with('success', "SMS envoyé avec succès à {$name} ({$contact})");
+            return back()->with('success', "Message WhatsApp envoyé avec succès à {$name} ({$contact})");
         } else {
-            return back()->with('error', "Erreur lors de l'envoi du SMS à {$name}.");
+            return back()->with('error', "Erreur lors de l'envoi du message WhatsApp à {$name}. Vérifiez que WhatsApp est connecté.");
         }
     }
 
@@ -117,15 +119,17 @@ class SmsController extends Controller
         $prospects = User::whereDoesntHave('colis')->get();
         $count = 0;
 
-        foreach ($prospects as $prospect) {
+        foreach ($prospects as $index => $prospect) {
             if ($prospect->contact) {
                 if ($this->smsService->sendSms($prospect->contact, $request->message)) {
                     $count++;
                 }
+                // Pause de sécurité anti-blocage
+                sleep(1);
             }
         }
 
-        return back()->with('success', "SMS de prospection envoyé avec succès à {$count} prospect(s).");
+        return back()->with('success', "Message WhatsApp de prospection envoyé avec succès à {$count} prospect(s).");
     }
 
     public function sendProspectIndividualSms(Request $request)
@@ -144,9 +148,9 @@ class SmsController extends Controller
         $sent = $this->smsService->sendSms($user->contact, $request->message);
 
         if ($sent) {
-            return back()->with('success', "SMS de prospection envoyé avec succès à {$user->name} ({$user->contact})");
+            return back()->with('success', "Message WhatsApp de prospection envoyé avec succès à {$user->name} ({$user->contact})");
         } else {
-            return back()->with('error', "Erreur lors de l'envoi du SMS à {$user->name}.");
+            return back()->with('error', "Erreur lors de l'envoi du message WhatsApp à {$user->name}. Vérifiez que WhatsApp est connecté.");
         }
     }
 }

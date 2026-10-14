@@ -276,8 +276,8 @@
 
         <div class="mdc-list-item mdc-drawer-item">
           <a class="mdc-drawer-link" href="{{route('admin.sms.index')}}">
-            <i class="fas fa-sms mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true"></i>
-            Envoi SMS
+            <i class="fab fa-whatsapp mdc-list-item__start-detail mdc-drawer-item-icon" style="color: #25D366;" aria-hidden="true"></i>
+            Envoi WhatsApp
           </a>
         </div>
 

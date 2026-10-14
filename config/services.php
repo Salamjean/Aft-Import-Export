@@ -41,4 +41,9 @@ return [
         'sender_id' => env('YELLIKA_SENDER_ID', 'Plateau app'),
     ],
 
+    'whatsapp' => [
+        'url' => env('WHATSAPP_SERVICE_URL', 'http://127.0.0.1:3000'),
+        'enabled' => env('WHATSAPP_ENABLED', true),
+    ],
+
 ];

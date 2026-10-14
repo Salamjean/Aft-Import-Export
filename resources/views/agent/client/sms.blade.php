@@ -250,10 +250,39 @@
 }
 </style>
 
-<!-- Section Envoi groupé SMS -->
-<div class="card card-modern mt-4">
+<!-- Statut de la passerelle WhatsApp -->
+@if(isset($whatsappStatus) && $whatsappStatus['connected'])
+    <div class="alert alert-success d-flex align-items-center justify-content-between p-3 mt-3 mb-2" style="border-radius: 8px; border-left: 5px solid #25D366;">
+        <div class="d-flex align-items-center">
+            <i class="fab fa-whatsapp fa-2x me-3" style="color: #25D366;"></i>
+            <div>
+                <strong>Passerelle WhatsApp connectée et active</strong>
+                <div class="small text-muted">Numéro expéditeur : +{{ $whatsappStatus['phone'] }} &bull; Les messages sont envoyés automatiquement et gratuitement.</div>
+            </div>
+        </div>
+        <a href="http://localhost:3000" target="_blank" class="btn btn-sm btn-outline-success">
+            <i class="fas fa-cog me-1"></i> Gérer la session
+        </a>
+    </div>
+@else
+    <div class="alert alert-warning d-flex align-items-center justify-content-between p-3 mt-3 mb-2" style="border-radius: 8px; border-left: 5px solid #ffc107;">
+        <div class="d-flex align-items-center">
+            <i class="fab fa-whatsapp fa-2x me-3 text-warning"></i>
+            <div>
+                <strong>WhatsApp n'est pas encore connecté</strong>
+                <div class="small text-muted">Scannez le QR Code une fois pour activer l'envoi de messages depuis votre numéro.</div>
+            </div>
+        </div>
+        <a href="http://localhost:3000" target="_blank" class="btn btn-sm btn-dark">
+            <i class="fas fa-qrcode me-1"></i> Scanner le QR Code
+        </a>
+    </div>
+@endif
+
+<!-- Section Envoi groupé WhatsApp -->
+<div class="card card-modern mt-3">
     <div class="card-header card-header-modern">
-        <h3 class="card-title"><i class="fas fa-sms me-2"></i>Envoi de SMS groupés (Agent)</h3>
+        <h3 class="card-title"><i class="fab fa-whatsapp me-2"></i>Envoi de messages WhatsApp groupés (Agent)</h3>
     </div>
     <div class="card-body p-4">
         <form action="{{ route('agent.sms.send-group') }}" method="POST" id="smsForm">
@@ -305,13 +334,13 @@
             </div>
             
             <div class="form-group mb-3">
-                <label for="message" class="form-label">Message SMS <span class="text-danger">*</span></label>
-                <textarea name="message" id="message" rows="6" class="form-control form-control-modern" required placeholder="Rédigez votre SMS ici..."></textarea>
-                <small id="charCounter" class="char-counter">0 / 160 caractère(s) | 1 SMS</small>
+                <label for="message" class="form-label">Message WhatsApp <span class="text-danger">*</span></label>
+                <textarea name="message" id="message" rows="6" class="form-control form-control-modern" required placeholder="Rédigez votre message WhatsApp ici..."></textarea>
+                <small id="charCounter" class="char-counter">0 caractère(s)</small>
             </div>
             
             <button type="submit" class="btn btn-primary-custom px-4" id="submitBtn">
-                <i class="fas fa-paper-plane me-2"></i> Envoyer les SMS groupés
+                <i class="fab fa-whatsapp me-2"></i> Envoyer les messages WhatsApp groupés
             </button>
         </form>
     </div>
@@ -350,7 +379,7 @@
                                     <button type="button" class="btn btn-action btn-send-individual" 
                                             data-user-id="{{ $user->id }}" 
                                             data-user-name="{{ $user->name }} {{ $user->prenom }}">
-                                        <i class="fas fa-sms me-1"></i> SMS individuel
+                                        <i class="fab fa-whatsapp me-1" style="color: #25D366;"></i> WhatsApp direct
                                     </button>
                                 </td>
                             </tr>
@@ -376,7 +405,7 @@
     <div class="col-md-12">
         <div class="card card-modern">
             <div class="card-header card-header-modern text-white">
-                <h3 class="card-title"><i class="fas fa-user-friends me-2"></i>Envoi groupé de prospection (Prospects)</h3>
+                <h3 class="card-title"><i class="fab fa-whatsapp me-2"></i>Envoi groupé de prospection WhatsApp (Prospects)</h3>
             </div>
             <div class="card-body p-4">
                 <form action="{{ route('agent.sms.send-prospect-group') }}" method="POST">
@@ -390,14 +419,14 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="prospect_message" class="form-label">Message de prospection <span class="text-danger">*</span></label>
-                                <textarea name="message" id="prospect_message" rows="4" class="form-control form-control-modern" required placeholder="Rédigez votre SMS de prospection ici..."></textarea>
-                                <small id="prospectCharCounter" class="char-counter">0 / 160 caractère(s) | 1 SMS</small>
+                                <label for="prospect_message" class="form-label">Message WhatsApp de prospection <span class="text-danger">*</span></label>
+                                <textarea name="message" id="prospect_message" rows="4" class="form-control form-control-modern" required placeholder="Rédigez votre message WhatsApp de prospection ici..."></textarea>
+                                <small id="prospectCharCounter" class="char-counter">0 caractère(s)</small>
                             </div>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary-custom px-4">
-                        <i class="fas fa-bullhorn me-2"></i> Envoyer aux prospects
+                        <i class="fab fa-whatsapp me-2"></i> Envoyer aux prospects sur WhatsApp
                     </button>
                 </form>
             </div>
@@ -437,7 +466,7 @@
                                     <button type="button" class="btn btn-action btn-send-prospect-individual" 
                                             data-user-id="{{ $user->id }}" 
                                             data-user-name="{{ $user->name }} {{ $user->prenom }}">
-                                        <i class="fas fa-sms me-1"></i> SMS individuel
+                                        <i class="fab fa-whatsapp me-1" style="color: #25D366;"></i> WhatsApp direct
                                     </button>
                                 </td>
                             </tr>
@@ -539,7 +568,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             previewDiv.innerHTML = html;
             submitBtn.disabled = false;
-            submitBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i> Envoyer les SMS groupés';
+            submitBtn.innerHTML = '<i class="fab fa-whatsapp me-2"></i> Envoyer les messages WhatsApp groupés';
         })
         .catch(error => {
             console.error('Error:', error);
@@ -565,19 +594,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         function updateCounter() {
             const count = textarea.value.length;
-            let smsParts = 1;
-            
-            if (count > 160) {
-                smsParts = Math.ceil(count / 153);
-            }
-            
-            counter.textContent = `${count} / 160 caractère(s) | ${smsParts} SMS`;
-            
-            if (count > 160) {
-                counter.style.color = '#ff9900';
-            } else {
-                counter.style.color = '#6c757d';
-            }
+            counter.textContent = `${count} caractère(s)`;
         }
         
         textarea.addEventListener('input', updateCounter);
@@ -596,7 +613,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const userName = this.getAttribute('data-user-name');
             
             Swal.fire({
-                title: 'Destinataire du SMS',
+                title: 'Destinataire du message WhatsApp',
                 text: `Voulez-vous envoyer au client (Expéditeur) ou à son Destinataire ?`,
                 icon: 'question',
                 showCancelButton: true,
@@ -619,11 +636,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const typeText = typeDestinataire === 'expediteur' ? 'Expéditeur' : 'Destinataire';
         
         Swal.fire({
-            title: `Envoyer un SMS au ${typeText.toLowerCase()}`,
+            title: `Envoyer un WhatsApp au ${typeText.toLowerCase()}`,
             html: `
                 <div class="mb-2 text-start"><small class="text-muted">Pour : ${userName}</small></div>
-                <textarea id="individual_sms_input" class="swal2-textarea" placeholder="Rédigez votre SMS ici..." rows="4" required></textarea>
-                <div class="text-end"><small id="swalCharCounter" class="text-muted">0 / 160 | 1 SMS</small></div>
+                <textarea id="individual_sms_input" class="swal2-textarea" placeholder="Rédigez votre message WhatsApp ici..." rows="4" required></textarea>
+                <div class="text-end"><small id="swalCharCounter" class="text-muted">0 caractère(s)</small></div>
             `,
             focusConfirm: false,
             showCancelButton: true,
@@ -636,16 +653,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 textInput.addEventListener('input', () => {
                     const count = textInput.value.length;
-                    let parts = 1;
-                    if (count > 160) {
-                        parts = Math.ceil(count / 153);
-                    }
-                    counter.textContent = `${count} / 160 | ${parts} SMS`;
-                    if (count > 160) {
-                        counter.style.color = '#ff9900';
-                    } else {
-                        counter.style.color = '#6c757d';
-                    }
+                    counter.textContent = `${count} caractère(s)`;
                 });
             },
             preConfirm: () => {
@@ -675,11 +683,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const userName = this.getAttribute('data-user-name');
             
             Swal.fire({
-                title: `Envoyer un SMS au prospect`,
+                title: `Envoyer un WhatsApp au prospect`,
                 html: `
                     <div class="mb-2 text-start"><small class="text-muted">Pour : ${userName}</small></div>
-                    <textarea id="prospect_individual_sms_input" class="swal2-textarea" placeholder="Rédigez votre SMS ici..." rows="4" required></textarea>
-                    <div class="text-end"><small id="swalProspectCharCounter" class="text-muted">0 / 160 | 1 SMS</small></div>
+                    <textarea id="prospect_individual_sms_input" class="swal2-textarea" placeholder="Rédigez votre message WhatsApp ici..." rows="4" required></textarea>
+                    <div class="text-end"><small id="swalProspectCharCounter" class="text-muted">0 caractère(s)</small></div>
                 `,
                 focusConfirm: false,
                 showCancelButton: true,
@@ -692,16 +700,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     textInput.addEventListener('input', () => {
                         const count = textInput.value.length;
-                        let parts = 1;
-                        if (count > 160) {
-                            parts = Math.ceil(count / 153);
-                        }
-                        counter.textContent = `${count} / 160 | ${parts} SMS`;
-                        if (count > 160) {
-                            counter.style.color = '#ff9900';
-                        } else {
-                            counter.style.color = '#6c757d';
-                        }
+                        counter.textContent = `${count} caractère(s)`;
                     });
                 },
                 preConfirm: () => {

@@ -18,6 +18,10 @@ class GroupSmsService
     protected $allmysmsApiKey;
     protected $allmysmsSenderId;
 
+    // WhatsApp Microservice
+    protected $whatsappUrl;
+    protected $whatsappEnabled;
+
     public function __construct()
     {
         $this->apiUrl = config('services.yellika.api_url', 'https://app.1smsafrica.com/api/v3');
@@ -30,6 +34,64 @@ class GroupSmsService
         $this->allmysmsApiKey = env('ALLMYSMS_API_KEY', '');
         // Nouveau Sender ID pour Allmysms (par défaut on reprend l'ancien s'il n'est pas défini)
         $this->allmysmsSenderId = env('ALLMYSMS_SENDER_ID', $this->senderId);
+
+        // Configuration WhatsApp
+        $this->whatsappUrl = config('services.whatsapp.url', env('WHATSAPP_SERVICE_URL', 'http://127.0.0.1:3000'));
+        $this->whatsappEnabled = config('services.whatsapp.enabled', env('WHATSAPP_ENABLED', true));
+    }
+
+    /**
+     * Envoi de message via le microservice gratuit WhatsApp
+     */
+    public function sendWhatsAppMessage($recipient, $message)
+    {
+        $recipientClean = $this->cleanPhoneNumber($recipient);
+
+        if (empty($recipientClean)) {
+            Log::warning("Numéro de téléphone vide ou invalide pour WhatsApp: {$recipient}");
+            return false;
+        }
+
+        try {
+            $response = Http::timeout(15)->post("{$this->whatsappUrl}/send-message", [
+                'number'  => $recipientClean,
+                'message' => $message,
+            ]);
+
+            if ($response->successful() && $response->json('success') === true) {
+                Log::info("Message WhatsApp envoyé avec succès à {$recipientClean}");
+                return true;
+            } else {
+                $errorMsg = $response->json('error') ?? $response->body();
+                Log::error("Erreur d'envoi WhatsApp à {$recipientClean}: " . $errorMsg);
+                return false;
+            }
+        } catch (\Exception $e) {
+            Log::error("Exception lors de l'envoi WhatsApp à {$recipientClean}: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Vérification de l'état de connexion de WhatsApp
+     */
+    public function getWhatsAppStatus()
+    {
+        try {
+            $response = Http::timeout(3)->get("{$this->whatsappUrl}/status");
+            if ($response->successful()) {
+                return $response->json();
+            }
+        } catch (\Exception $e) {
+            Log::info("Passerelle WhatsApp locale non joignable : " . $e->getMessage());
+        }
+
+        return [
+            'connected' => false,
+            'status' => 'offline',
+            'phone' => null,
+            'hasQr' => false
+        ];
     }
 
     // Ancien système d'envoi Yellika (conservé comme demandé)
@@ -67,8 +129,8 @@ class GroupSmsService
         }
     }
 
-    // Nouveau système d'envoi Allmysms
-    public function sendSms($recipient, $message)
+    // Système d'envoi Allmysms (conservé)
+    public function sendSmsAllmysms($recipient, $message)
     {
         $recipientClean = $this->cleanPhoneNumber($recipient);
 
@@ -113,14 +175,28 @@ class GroupSmsService
         }
     }
 
+    // Méthode principale d'envoi : priorise WhatsApp si activé, sinon SMS Allmysms
+    public function sendSms($recipient, $message)
+    {
+        if ($this->whatsappEnabled) {
+            return $this->sendWhatsAppMessage($recipient, $message);
+        }
+
+        return $this->sendSmsAllmysms($recipient, $message);
+    }
+
     public function sendGroupSms($message, $filtres = [])
     {
         $contacts = $this->getFilteredContactsQuery($filtres);
         $count = 0;
 
-        foreach ($contacts as $contact) {
+        foreach ($contacts as $index => $contact) {
             if ($this->sendSms($contact, $message)) {
                 $count++;
+            }
+            // Pause de sécurité anti-blocage (1 seconde) entre chaque message WhatsApp
+            if ($this->whatsappEnabled && ($index + 1) < count($contacts)) {
+                sleep(1);
             }
         }
 
