@@ -188,7 +188,7 @@ app.get('/', (req, res) => {
                     connectionStatus === 'connected'
                     ? `<div class="status-badge status-connected"><i class="fas fa-check-circle me-1"></i> Connecté : +${connectedPhone}</div>
                        <p class="text-success fw-semibold">Le service est opérationnel ! Vos messages envoyés depuis Laravel partiront directement via ce numéro.</p>
-                       <form action="/logout" method="POST" onsubmit="return confirm('Voulez-vous vraiment déconnecter ce compte WhatsApp ?');">
+                       <form action="${req.baseUrl || ''}/logout" method="POST" onsubmit="return confirm('Voulez-vous vraiment déconnecter ce compte WhatsApp ?');">
                            <button type="submit" class="btn btn-outline-danger btn-sm mt-3"><i class="fas fa-sign-out-alt me-1"></i> Déconnecter ce compte</button>
                        </form>`
                     : connectionStatus === 'scan_needed' && qrCodeDataURL
@@ -212,10 +212,11 @@ app.get('/', (req, res) => {
         <script>
             // Actualisation automatique si non connecté
             const currentStatus = "${connectionStatus}";
+            const statusUrl = (window.location.pathname.endsWith('/') ? window.location.pathname.slice(0, -1) : window.location.pathname) + '/status';
             if (currentStatus !== 'connected') {
                 setInterval(async () => {
                     try {
-                        const res = await fetch('/status');
+                        const res = await fetch(statusUrl);
                         const data = await res.json();
                         if (data.status === 'connected' || (currentStatus === 'initializing' && data.status === 'scan_needed')) {
                             window.location.reload();
@@ -230,7 +231,7 @@ app.get('/', (req, res) => {
 });
 
 // Route statut JSON
-app.get('/status', (req, res) => {
+app.get(['/status', '/whatsapp/status'], (req, res) => {
     res.json({
         connected: connectionStatus === 'connected',
         status: connectionStatus,
@@ -240,7 +241,7 @@ app.get('/status', (req, res) => {
 });
 
 // Route de test de numéro pour vérifier la présence sur WhatsApp
-app.get('/check-number', async (req, res) => {
+app.get(['/check-number', '/whatsapp/check-number'], async (req, res) => {
     try {
         const number = req.query.number;
         if (!number) return res.status(400).json({ error: 'Paramètre number requis' });
