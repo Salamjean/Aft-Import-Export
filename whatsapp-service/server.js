@@ -191,9 +191,9 @@ app.get(['/', '/whatsapp'], (req, res) => {
                     connectionStatus === 'connected'
                     ? `<div class="status-badge status-connected"><i class="fas fa-check-circle me-1"></i> Connecté : +${connectedPhone}</div>
                        <p class="text-success fw-semibold">Le service est opérationnel ! Vos messages envoyés depuis Laravel partiront directement via ce numéro.</p>
-                       <form id="logoutForm" onsubmit="event.preventDefault(); disconnectWhatsApp();">
-                           <button type="submit" id="btnDisconnect" class="btn btn-outline-danger btn-sm mt-3"><i class="fas fa-sign-out-alt me-1"></i> Déconnecter ce compte</button>
-                       </form>`
+                       <div>
+                           <button type="button" id="btnDisconnect" onclick="disconnectWhatsApp()" class="btn btn-outline-danger btn-sm mt-3"><i class="fas fa-sign-out-alt me-1"></i> Déconnecter ce compte</button>
+                       </div>`
                     : connectionStatus === 'scan_needed' && qrCodeDataURL
                     ? `<div class="status-badge status-scan"><i class="fas fa-qrcode me-1"></i> Scan du QR Code requis</div>
                        <div class="qr-container"><img class="qr-image" src="${qrCodeDataURL}" alt="QR Code WhatsApp"></div>
@@ -213,7 +213,30 @@ app.get(['/', '/whatsapp'], (req, res) => {
         </div>
 
         <script>
-            // Déconnexion AJAX propre et compatible quel que soit le préfixe
+            function getApiUrl(endpoint) {
+                const isUnderWhatsapp = window.location.pathname.includes('/whatsapp');
+                return (isUnderWhatsapp ? '/whatsapp' : '') + endpoint;
+            }
+
+            function renderQr(qrData) {
+                const statusArea = document.getElementById('statusArea');
+                if (!statusArea) return;
+                statusArea.innerHTML = \`
+                    <div class="status-badge status-scan"><i class="fas fa-qrcode me-1"></i> Scan du QR Code requis</div>
+                    <div class="qr-container"><img class="qr-image" src="\${qrData}" alt="QR Code WhatsApp"></div>
+                    <div class="steps">
+                         <strong>Comment connecter :</strong>
+                         <ol>
+                             <li>Ouvrez <b>WhatsApp</b> sur le téléphone de l'entreprise.</li>
+                             <li>Appuyez sur <b>Menu (⋮)</b> ou <b>Réglages</b> &gt; <b>Appareils connectés</b>.</li>
+                             <li>Appuyez sur <b>Connecter un appareil</b> et scannez ce code.</li>
+                         </ol>
+                    </div>
+                    <small class="text-muted"><i class="fas fa-sync fa-spin me-1"></i> Cette page détectera automatiquement la connexion...</small>
+                \`;
+            }
+
+            // Déconnexion 100% en tâche de fond sans jamais recharger ni naviguer
             async function disconnectWhatsApp() {
                 if (!confirm('Voulez-vous vraiment déconnecter ce compte WhatsApp ?')) return;
                 const btn = document.getElementById('btnDisconnect');
@@ -221,35 +244,52 @@ app.get(['/', '/whatsapp'], (req, res) => {
                     btn.disabled = true;
                     btn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i> Déconnexion en cours...';
                 }
-                try {
-                    const basePath = window.location.pathname.endsWith('/') 
-                        ? window.location.pathname.slice(0, -1) 
-                        : window.location.pathname;
-                    const targetUrl = (basePath ? basePath : '') + '/logout';
-                    await fetch(targetUrl, { 
-                        method: 'POST',
-                        headers: { 'Accept': 'application/json' }
-                    });
-                    setTimeout(() => window.location.reload(), 1000);
-                } catch(e) {
-                    window.location.reload();
-                }
-            }
 
-            // Actualisation automatique si non connecté
-            const currentStatus = "${connectionStatus}";
-            const statusUrl = (window.location.pathname.endsWith('/') ? window.location.pathname.slice(0, -1) : window.location.pathname) + '/status';
-            if (currentStatus !== 'connected') {
-                setInterval(async () => {
+                const statusArea = document.getElementById('statusArea');
+                if (statusArea) {
+                    statusArea.innerHTML = \`
+                        <div class="status-badge status-wait"><i class="fas fa-spinner fa-spin me-1"></i> Déconnexion et génération du nouveau code...</div>
+                        <p class="text-muted">Veuillez patienter quelques instants...</p>
+                    \`;
+                }
+
+                try {
+                    await fetch(getApiUrl('/logout'), { method: 'POST', headers: { 'Accept': 'application/json' } });
+                } catch(e) {}
+
+                // Polling toutes les 1.5s pour afficher le nouveau QR Code dès qu'il arrive
+                let attempts = 0;
+                const timer = setInterval(async () => {
+                    attempts++;
                     try {
-                        const res = await fetch(statusUrl);
+                        const res = await fetch(getApiUrl('/status'));
                         const data = await res.json();
-                        if (data.status === 'connected' || (currentStatus === 'initializing' && data.status === 'scan_needed')) {
+                        if (data.status === 'scan_needed' && data.qrCodeDataURL) {
+                            clearInterval(timer);
+                            renderQr(data.qrCodeDataURL);
+                        } else if (data.status === 'connected') {
+                            clearInterval(timer);
                             window.location.reload();
                         }
-                    } catch(e) {}
-                }, 3000);
+                    } catch(err) {}
+
+                    if (attempts > 20) {
+                        clearInterval(timer);
+                        window.location.reload();
+                    }
+                }, 1500);
             }
+
+            // Écouteur régulier pour actualiser dès que le scan est effectué
+            setInterval(async () => {
+                try {
+                    const res = await fetch(getApiUrl('/status'));
+                    const data = await res.json();
+                    if (data.status === 'connected' && !document.querySelector('.status-connected')) {
+                        window.location.reload();
+                    }
+                } catch(e) {}
+            }, 3000);
         </script>
     </body>
     </html>
@@ -262,7 +302,8 @@ app.get(['/status', '/whatsapp/status'], (req, res) => {
         connected: connectionStatus === 'connected',
         status: connectionStatus,
         phone: connectedPhone,
-        hasQr: !!qrCodeDataURL
+        hasQr: !!qrCodeDataURL,
+        qrCodeDataURL: qrCodeDataURL
     });
 });
 
