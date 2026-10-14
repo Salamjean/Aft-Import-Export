@@ -155,7 +155,7 @@ async function resolveWhatsAppJid(number) {
 }
 
 // Route Page d'accueil / Interface de scan
-app.get('/', (req, res) => {
+app.get(['/', '/whatsapp'], (req, res) => {
     res.send(`
     <!DOCTYPE html>
     <html lang="fr">
@@ -191,19 +191,19 @@ app.get('/', (req, res) => {
                     connectionStatus === 'connected'
                     ? `<div class="status-badge status-connected"><i class="fas fa-check-circle me-1"></i> Connecté : +${connectedPhone}</div>
                        <p class="text-success fw-semibold">Le service est opérationnel ! Vos messages envoyés depuis Laravel partiront directement via ce numéro.</p>
-                       <form action="${req.baseUrl || ''}/logout" method="POST" onsubmit="return confirm('Voulez-vous vraiment déconnecter ce compte WhatsApp ?');">
-                           <button type="submit" class="btn btn-outline-danger btn-sm mt-3"><i class="fas fa-sign-out-alt me-1"></i> Déconnecter ce compte</button>
+                       <form id="logoutForm" onsubmit="event.preventDefault(); disconnectWhatsApp();">
+                           <button type="submit" id="btnDisconnect" class="btn btn-outline-danger btn-sm mt-3"><i class="fas fa-sign-out-alt me-1"></i> Déconnecter ce compte</button>
                        </form>`
                     : connectionStatus === 'scan_needed' && qrCodeDataURL
                     ? `<div class="status-badge status-scan"><i class="fas fa-qrcode me-1"></i> Scan du QR Code requis</div>
                        <div class="qr-container"><img class="qr-image" src="${qrCodeDataURL}" alt="QR Code WhatsApp"></div>
                        <div class="steps">
-                           <strong>Comment connecter :</strong>
-                           <ol>
-                               <li>Ouvrez <b>WhatsApp</b> sur le téléphone de l'entreprise.</li>
-                               <li>Appuyez sur <b>Menu (⋮)</b> ou <b>Réglages</b> &gt; <b>Appareils connectés</b>.</li>
-                               <li>Appuyez sur <b>Connecter un appareil</b> et scannez ce code.</li>
-                           </ol>
+                            <strong>Comment connecter :</strong>
+                            <ol>
+                                <li>Ouvrez <b>WhatsApp</b> sur le téléphone de l'entreprise.</li>
+                                <li>Appuyez sur <b>Menu (⋮)</b> ou <b>Réglages</b> &gt; <b>Appareils connectés</b>.</li>
+                                <li>Appuyez sur <b>Connecter un appareil</b> et scannez ce code.</li>
+                            </ol>
                        </div>
                        <small class="text-muted"><i class="fas fa-sync fa-spin me-1"></i> Cette page s'actualise automatiquement dès la connexion...</small>`
                     : `<div class="status-badge status-wait"><i class="fas fa-spinner fa-spin me-1"></i> Initialisation en cours...</div>
@@ -213,6 +213,29 @@ app.get('/', (req, res) => {
         </div>
 
         <script>
+            // Déconnexion AJAX propre et compatible quel que soit le préfixe
+            async function disconnectWhatsApp() {
+                if (!confirm('Voulez-vous vraiment déconnecter ce compte WhatsApp ?')) return;
+                const btn = document.getElementById('btnDisconnect');
+                if (btn) {
+                    btn.disabled = true;
+                    btn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i> Déconnexion en cours...';
+                }
+                try {
+                    const basePath = window.location.pathname.endsWith('/') 
+                        ? window.location.pathname.slice(0, -1) 
+                        : window.location.pathname;
+                    const targetUrl = (basePath ? basePath : '') + '/logout';
+                    await fetch(targetUrl, { 
+                        method: 'POST',
+                        headers: { 'Accept': 'application/json' }
+                    });
+                    setTimeout(() => window.location.reload(), 1000);
+                } catch(e) {
+                    window.location.reload();
+                }
+            }
+
             // Actualisation automatique si non connecté
             const currentStatus = "${connectionStatus}";
             const statusUrl = (window.location.pathname.endsWith('/') ? window.location.pathname.slice(0, -1) : window.location.pathname) + '/status';
@@ -257,7 +280,7 @@ app.get(['/check-number', '/whatsapp/check-number'], async (req, res) => {
 });
 
 // Route d'envoi de message (appelée par Laravel)
-app.post('/send-message', async (req, res) => {
+app.post(['/send-message', '/whatsapp/send-message'], async (req, res) => {
     try {
         const { number, message } = req.body;
 
@@ -318,23 +341,33 @@ app.post('/send-message', async (req, res) => {
     }
 });
 
-// Route de déconnexion
-app.post('/logout', async (req, res) => {
+// Route de déconnexion (POST ou GET, avec ou sans préfixe /whatsapp)
+app.all(['/logout', '/whatsapp/logout'], async (req, res) => {
+    console.log('[WhatsApp] Demande de déconnexion reçue...');
     try {
         if (sock) {
             await sock.logout();
         }
     } catch (e) {
-        console.error('Erreur lors du logout:', e);
+        console.warn('[WhatsApp] Erreur lors du logout:', e.message);
     }
     try {
         fs.rmSync(authFolder, { recursive: true, force: true });
-    } catch (e) {}
-    connectionStatus = 'disconnected';
+        console.log('[WhatsApp] Session auth_info_baileys supprimée avec succès.');
+    } catch (e) {
+        console.warn('[WhatsApp] Erreur lors de la suppression de la session:', e.message);
+    }
+    sock = null;
+    connectionStatus = 'scan_needed';
     qrCodeDataURL = null;
+    qrCodeRaw = null;
     connectedPhone = null;
-    setTimeout(connectToWhatsApp, 1500);
-    res.redirect('/');
+    setTimeout(connectToWhatsApp, 1000);
+
+    if (req.xhr || req.headers.accept?.includes('json')) {
+        return res.json({ success: true, message: 'Compte déconnecté avec succès.' });
+    }
+    res.redirect(req.originalUrl.includes('/whatsapp') ? '/whatsapp' : '/');
 });
 
 // Démarrage du serveur
