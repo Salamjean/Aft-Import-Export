@@ -1,15 +1,19 @@
-const {
-    default: makeWASocket,
+import makeWASocket, {
     useMultiFileAuthState,
     DisconnectReason,
     fetchLatestBaileysVersion
-} = require('@whiskeysockets/baileys');
-const express = require('express');
-const cors = require('cors');
-const QRCode = require('qrcode');
-const pino = require('pino');
-const path = require('path');
-const fs = require('fs');
+} from '@whiskeysockets/baileys';
+
+import express from 'express';
+import cors from 'cors';
+import QRCode from 'qrcode';
+import pino from 'pino';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -37,7 +41,6 @@ async function connectToWhatsApp() {
     sock = makeWASocket({
         version,
         logger: pino({ level: 'silent' }),
-        printQRInTerminal: true,
         auth: state,
         browser: ['AFT Import-Export', 'Chrome', '1.0.0'],
         connectTimeoutMs: 60000,
