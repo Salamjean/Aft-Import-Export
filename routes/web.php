@@ -553,3 +553,27 @@ Route::get('/admin/conteneurs/tous', function () {
     $conteneurs = \App\Models\Conteneur::all();
     return response()->json($conteneurs);
 })->name('admin.conteneurs.tous');
+
+// Filet de sécurité WhatsApp : si Apache envoie /logout ou /whatsapp sur Laravel
+Route::match(['get', 'post'], '/logout', function () {
+    try {
+        \Illuminate\Support\Facades\Http::timeout(5)->post('http://127.0.0.1:3000/logout');
+    } catch (\Throwable $e) {}
+    return redirect('/whatsapp');
+});
+
+Route::match(['get', 'post'], '/whatsapp/logout', function () {
+    try {
+        \Illuminate\Support\Facades\Http::timeout(5)->post('http://127.0.0.1:3000/logout');
+    } catch (\Throwable $e) {}
+    return redirect('/whatsapp');
+});
+
+Route::get('/whatsapp', function () {
+    try {
+        $response = \Illuminate\Support\Facades\Http::timeout(5)->get('http://127.0.0.1:3000/');
+        return response($response->body(), $response->status())->header('Content-Type', 'text/html');
+    } catch (\Throwable $e) {
+        return redirect('http://127.0.0.1:3000/');
+    }
+});
